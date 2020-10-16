@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifAbsence" table="ref_motif_absence"
+        repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefMotifAbsenceRepository" >
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_MOTIABSE" name="cdMotiabse"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idMotiabse" type="integer" column="ID_MOTIABSE">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdMotiabse" type="string" column="CD_MOTIABSE" length="50" nullable="true"/>
+        <field name="lbMotiabse" type="string" column="LB_MOTIABSE" length="500" nullable="true"/>
+        <field name="blAbsecomp" type="boolean" column="BL_ABSECOMP" nullable="true"/>
+        <field name="blAbsemedi" type="boolean" column="BL_ABSEMEDI" nullable="true"/>
+        <field name="blAbseautrrais" type="boolean" column="BL_ABSEAUTRRAIS" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="blAbsage" type="boolean" column="BL_ABSAGE" nullable="true"/>
+        <field name="cdMotiN4ds" type="string" column="CD_MOTI_N4DS" length="255" nullable="true"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+
+        <one-to-many field="AbsenceArretAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\AbsenceArretAgent" mapped-by="RefMotifAbsence">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
+    </entity>
+</doctrine-mapping>

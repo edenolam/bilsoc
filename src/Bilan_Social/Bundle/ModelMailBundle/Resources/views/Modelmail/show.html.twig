@@ -1,0 +1,54 @@
+{% extends '@ModelMail/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li>Gestion des modèles de mails</li>
+                <li class="active">Détails du modèle de mail</li>
+            </ol>
+        </div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h3>Modèle du mail : {{ modelmail.objet }}<a href="{{ path('modelmail_index') }}"><button class="btn btn-default pull-right">Retour à la liste</button></a></h3>
+        <hr>
+        <div id="corps-mail">
+            <div id="objet-mail" class="mail">
+                <p><label>Objet</label> {{ modelmail.objet }}</p>
+            </div>
+            <div id="contenu-mail" class="mail">
+                {{ modelmail.body|raw }}
+            </div>
+        </div>
+        <div id="mail-actif">
+            <hr>
+            <p>Modèle actif : {% if modelmail.blVali %}Oui{% else %}Non{% endif %}</p>
+            <hr>
+        </div>
+        <div id="action-mail">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="{{ path('modelmail_edit', { 'id': modelmail.id }) }}"><button class="btn button-tableau">Modifier</button></a>
+                </div>
+                <div class="col-sm-6">
+                    {{ form_start(delete_form) }}<input type="submit" value="Supprimer" class="btn button-tableau pull-right">{{ form_end(delete_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

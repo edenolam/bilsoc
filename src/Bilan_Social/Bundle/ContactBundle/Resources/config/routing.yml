@@ -1,0 +1,3 @@
+contact_homepage:
+    path:     /testsets
+    defaults: { _controller: ContactBundle:Default:index }

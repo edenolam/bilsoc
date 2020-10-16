@@ -1,0 +1,50 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/collectivite.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('collectivite_homepage') }}">Collectivités</a></li>
+                <li class="active">Historique du bilan social</li>
+            </ol>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="noMargin">Historique du bilan social</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover align-center" id='table-etat-bs'>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Etat</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if historique is defined and historique is not empty %}
+                            {% for evenement in historique %}
+                                <tr>
+                                    <td>{{ evenement.dtChgt|localizeddate('none', 'none', null, null, 'd MMMM Y - H:mm') }}</td>
+                                    <td>{{ etat_saisie_bilan_social[evenement.fgStat] }}</td>
+                                    <td>{{ type_bilan_social[evenement.cdTypebilasoci] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

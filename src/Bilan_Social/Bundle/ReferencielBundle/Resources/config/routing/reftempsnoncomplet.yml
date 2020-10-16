@@ -1,0 +1,28 @@
+reftempsnoncomplet_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefTempsNonComplet:index" }
+    methods:  GET
+
+reftempsnoncomplet_show:
+    path:     /{idTempnoncomp}/show
+    defaults: { _controller: "ReferencielBundle:RefTempsNonComplet:show" }
+    methods:  GET
+
+reftempsnoncomplet_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefTempsNonComplet:new" }
+    methods:  [GET, POST]
+
+reftempsnoncomplet_edit:
+    path:     /{idTempnoncomp}/edit
+    defaults: { _controller: "ReferencielBundle:RefTempsNonComplet:edit" }
+    methods:  [GET, POST]
+
+reftempsnoncomplet_delete:
+    path:     /{idTempnoncomp}/delete
+    defaults: { _controller: "ReferencielBundle:RefTempsNonComplet:delete" }
+    methods:  DELETE
+
+csv_export_reftempsnoncomplet:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefTempsNonComplet:generateCsv" }

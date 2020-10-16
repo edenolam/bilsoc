@@ -1,0 +1,57 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des sanctions disciplinaires</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refsanctiondisciplinaire_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refsanctiondisciplinaire') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Sanction Groupe 1</th>
+                    <th>Sanction Groupe 2</th>
+                    <th>Sanction Groupe 3</th>
+                    <th>Sanction Groupe 4</th>
+                    <th>Sanction stagiaire</th>
+                    <th>Sanction agent contractuel</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refSanctionDisciplinaire in refSanctionDisciplinaires %}
+                    <tr>
+                        <td><a href="{{ path('refsanctiondisciplinaire_show', { 'idSancdisc': refSanctionDisciplinaire.idSancdisc }) }}">{{ refSanctionDisciplinaire.cdSancdisc }}</a></td>
+                        <td>{{ refSanctionDisciplinaire.lbSancdisc }}</td>
+                        <td>{% if refSanctionDisciplinaire.bl614G1 %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refSanctionDisciplinaire.bl614G2 %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refSanctionDisciplinaire.bl614G3 %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refSanctionDisciplinaire.bl614G4 %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refSanctionDisciplinaire.bl614G5 %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refSanctionDisciplinaire.bl614G6 %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refSanctionDisciplinaire.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refSanctionDisciplinaire} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refsanctiondisciplinaire_show', { 'idSancdisc': refSanctionDisciplinaire.idSancdisc }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refsanctiondisciplinaire_edit', { 'idSancdisc': refSanctionDisciplinaire.idSancdisc }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

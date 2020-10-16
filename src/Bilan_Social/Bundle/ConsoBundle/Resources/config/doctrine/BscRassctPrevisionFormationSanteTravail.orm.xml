@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctPrevisionFormationSanteTravail" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscRassctPrevisionFormationSanteTravailRepository" table="bsc_rassct_prevision_formation_sante_travail">
+        <indexes>
+            <index name="FK_BSC_RASSCT_PREVISION_FORMATION_SANTE_TRAVAIL" columns="ID_BILASOCICONS"/>
+        </indexes>
+        <id name="idPrevFormSanteTrav" type="integer" column="ID_BSC_RASSCT_PREVISION_FORMATION_SANTE_TRAVAIL">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscRassctPrevisionFormationSanteTravails">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <field name="themeAction" type="string" column="THEME_ACTION" nullable="true" length="255" />
+        <field name="nbPersForm" type="integer" column="NB_PERSONNE_FORMEE" nullable="true"/>
+        <field name="orgaForm" type="string" column="ORGANISME_FORMATION" nullable="true"/>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

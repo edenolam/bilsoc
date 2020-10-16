@@ -1,0 +1,21 @@
+.align-center{text-align:center !important;}
+.flex{display:flex;}
+.display-none{display:none;}
+#download-text{padding:40px;}
+
+/* liste des étapes du formulaire */
+.step-item{line-height:inherit;padding:10px;text-align:center;}
+.step-width{width:33.33%;text-align:center;}
+.craue_formflow_current_step p{border-bottom:1px solid black;padding-bottom:5px;}
+
+#table-coll_filter{display:none;}
+#liste-filtres table td{text-align:left;}
+
+table#table-coll{table-layout: fixed; margin:40px auto 0px auto;width:auto !important;}
+#table-coll-inner{overflow-x:scroll;}
+
+button a, button a:focus, button a:hover{color:#ffffff;text-decoration:none;}
+.suppr{cursor:pointer;padding:10px;}
+
+th button{color:#000;}
+

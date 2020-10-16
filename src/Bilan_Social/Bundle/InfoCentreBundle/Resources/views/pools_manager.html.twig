@@ -1,0 +1,81 @@
+{#
+	vue de selection (onglet 1) des échantillons (pools)
+#}
+{% set pools_empty = pools is defined and pools|length > 0 ? false : true %}
+<section id='pools-manager-wrapper'  class='infocentre-section-bloc'>
+	<div class="card">
+	    <div class="card-header" id="head_pools_manager">
+			<h3 data-toggle="collapse" data-target="#body_pools_manager" aria-expanded="false" aria-controls="body_pools_manager">
+				{{ "infocentre.pool_manager.section.title"|trans }}{#I - Gestion des échantillons#}
+				<i class="fa fa-chevron-down"></i>
+			</h3>
+		</div>
+		<div id="body_pools_manager" class="collapse" aria-labelledby="head_pools_manager">
+			<div class="card-body">
+				<div id='pools-list-wrapper'>
+					
+					{% if not pools_empty %}
+						<table id='table_pool_manager'class="table stripe">
+							<thead>
+								<tr>
+									<th>Nom de l'échantillon</th>
+									<th>Description de l'échantillon</th>
+									<th>Date de création</th>
+									<th>
+										<button type='button' class='btn btn-primary' id='new_pool_collapse' data-toggle="collapse" data-target="#new-pool-wrapper" aria-expanded="false" aria-controls="new-pool-wrapper">+</button>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							{% for pool in pools %}
+
+								{% if pool.blAct == 1 %}
+									<tr data-id-pool="{{ pool.id }}"
+										data-description="{{ pool.description }}" {{ current_pool is defined and  current_pool is not null and current_pool.id == pool.id ? 'class="selected_pool info"' : '' }}>
+
+										<td class='nom_pool'>{{ pool.nom }}{# <i class="fa fa-info-circle show_pool_details" aria-hidden="true"></i>#} </td>
+										<td class='description_pool'>{{ pool.description }}</td>
+										<td class='date_crea_pool'>{{ pool.dateCreation|date("d/m/Y") }}</td>
+										<td class="actions_pool">
+											<button class='btn btn-primary pool_action_button select_pool_action'
+													title="Sélectionner l'échantillon">
+												<i class="fa fa-edit"></i>
+											</button>
+
+											<button class='btn btn-info pool_action_button copy_pool_action'
+													title="Dupliquer l'échantillon">
+												<i class="fa fa-copy"></i>
+											</button>
+											<button class='btn btn-danger pool_action_button delete_pool_action'
+													title="Supprimer l'échantillon">
+												<i class="fa fa-trash-o"></i>
+											</button>
+										</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+							</tbody>
+						</table>
+					{% else %}
+						<p>Aucun échantillon.</p>
+					{% endif %}
+				</div>
+				<hr/>
+
+				<div id='new-pool-wrapper' class='collapse {{ pools_empty ? "in" : "" }}'>
+					<h3>{{ "infocentre.pool_manager.creapool.title"|trans }}</h3>
+					{{ form_start(form_create_pool, {'action': path('info_centre_create_pool')}) }}
+						<div class='col-md-2'>
+							{{ form_row(form_create_pool.nom) }}
+						</div>
+						<div class='col-md-10'>
+							{{ form_row(form_create_pool.description) }}
+						</div>
+					<input type='submit' form-target='' id='save_pool_create' class='btn btn-primary' value="Créer l'échantillon"/>
+					{{ form_end(form_create_pool) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

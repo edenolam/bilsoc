@@ -1,0 +1,28 @@
+refmotifarrivee_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMotifArrivee:index" }
+    methods:  GET
+
+refmotifarrivee_show:
+    path:     /{idMotiarri}/show
+    defaults: { _controller: "ReferencielBundle:RefMotifArrivee:show" }
+    methods:  GET
+
+refmotifarrivee_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMotifArrivee:new" }
+    methods:  [GET, POST]
+
+refmotifarrivee_edit:
+    path:     /{idMotiarri}/edit
+    defaults: { _controller: "ReferencielBundle:RefMotifArrivee:edit" }
+    methods:  [GET, POST]
+
+refmotifarrivee_delete:
+    path:     /{idMotiarri}/delete
+    defaults: { _controller: "ReferencielBundle:RefMotifArrivee:delete" }
+    methods:  DELETE
+
+csv_export_refmotifarrivee:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMotifArrivee:generateCsv" }

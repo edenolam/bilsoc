@@ -1,0 +1,8 @@
+modelmail_modelemail:
+    resource: "@ModelMailBundle/Resources/config/routing/modelmail.yml"
+    prefix:   /modelmail
+
+modelmail_modelemailinterneappli:
+        resource: "@ModelMailBundle/Resources/config/routing/modelmailinterneappli.yml"
+        prefix:   /modelmailinterneappli
+

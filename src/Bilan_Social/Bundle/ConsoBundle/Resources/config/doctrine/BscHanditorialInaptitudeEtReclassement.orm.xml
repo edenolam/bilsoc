@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscHanditorialInaptitudeEtReclassementRepository" name="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialInaptitudeEtReclassement" table="bsc_handitorial_inaptitude_et_reclassement">
+    <indexes>
+            <index name="FK_BSC_HANDI_INAPTITUDE_ET_RECLASSEMENT_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+    </indexes>
+    <id name="idBscHanditorialInaptitudeEtReclassement" type="integer" column="ID_BSC_HANDITORIAL_INAPTITUDE_ET_RECLASSEMENT">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <one-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscHanditorialInaptitudeEtReclassement">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" />
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+    </one-to-one>    
+    <field name="qA511" type="integer" column="Q_A511" nullable="true"/>
+    <field name="qA512" type="integer" column="Q_A512" nullable="true"/>
+    <field name="qA513" type="integer" column="Q_A513" nullable="true"/>
+    <field name="rA9" type="integer" column="R_A9" nullable="true"/>
+    <field name="rA91" type="integer" column="R_A91" nullable="true"/>
+    <field name="qA521" type="integer" column="Q_A521" nullable="true"/>
+    <field name="rA101" type="integer" column="R_A101" nullable="true"/>
+    <field name="qA522" type="integer" column="Q_A522" nullable="true"/>
+    <field name="qA523" type="integer" column="Q_A523" nullable="true"/>
+    <field name="qA62" type="integer" column="Q_A62" nullable="true"/>
+    <field name="qA72" type="integer" column="Q_A72" nullable="true"/>
+    <field name="qA8" type="boolean" column="Q_A8" nullable="true"/>
+    <field name="qA82" type="integer" column="Q_A82" nullable="true"/>
+    <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

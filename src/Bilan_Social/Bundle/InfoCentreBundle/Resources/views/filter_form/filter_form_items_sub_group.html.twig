@@ -1,0 +1,53 @@
+{#
+*	template de rendu d'un groupe de sous item du filter_form
+*
+*	/!\
+*	|	il ne doit pas être utilisé tel quel mais à l'intérieur 
+*	|	du filter_form.html.twig car utilisant les variables du template parent 
+*	/!\
+#}
+{% set is_sub_item = true %}
+{% set sub_group_config = field_options %}
+{% set sub_group_options = sub_group_config.__wrapping_options is defined ? sub_group_config.__wrapping_options : [] %}
+{% set sub_group_key = field_key %}
+
+{% set nb_in_row = fields_group|length %}
+{% if nb_in_row >= 4 %}
+	{% set col_class_on_sub_group_item = 'col-md-' ~ (12 / 4) %}
+{% elseif nb_in_row > 0 %}
+	{% set col_class_on_sub_group_item = 'col-md-' ~ (12 / nb_in_row) %}
+{% else %}
+	{% set col_class_on_sub_group_item  = 'col-md-12' %}
+{% endif %}
+{% set col_class_on_sub_group_item = sub_group_options.nb_col is defined ? 'col-md-' ~ sub_group_options.nb_col : col_class_on_sub_group_item %}
+{% set class_on_sub_group_item = sub_group_options.extra_class is defined ? sub_group_options.extra_class : '' %}
+{% set attr_on_sub_group_item = sub_group_options.extra_attr is defined ? sub_group_options.extra_attr : '' %}
+{% set attr_on_sub_group_item_str = "" %}
+{% if attr_on_sub_group_item is iterable %}
+	{% for attr_name, attr_value in attr_on_sub_group_item %}
+        {% set attr_on_sub_group_item_str = attr_on_sub_group_item_str ~ " " ~ attr_name ~ " = '" ~ attr_value ~ "' " %}
+	{% endfor %}
+{% elseif attr_on_sub_group_item is defined %}
+    {% set attr_on_sub_group_item_str = attr_on_sub_group_item_str ~ " " ~ attr_on_sub_group_item %}
+{% endif %}
+{# {% for field_key, field_options in attribute(sub_group_options,sub_fields_key) %}
+	{% if attribute(filter_form,field_key) is defined %}
+		{% set nb_in_group = nb_in_group + 1 %}
+	{% endif %}
+{% endfor %}
+{% if nb_in_group >= 4 %}
+	{% set col_class_on_group_item = 'col-md-' ~ (12 / 4) %}
+{% elseif nb_in_group > 0 %}
+	{% set col_class_on_group_item = 'col-md-' ~ (12 / nb_in_group) %}
+{% else %}
+	{% set col_class_on_group_item = 'col-md-12' %}
+{% endif %} #}
+{% set col_class_for_group_item = "sub_item" %}
+
+<div class="sub_items_wrapper {{ col_class_on_sub_group_item }} {{ class_on_sub_group_item }}" {{ attr_on_sub_group_item_str }}>
+	{% for field_key, field_options in attribute(sub_group_config,sub_fields_key) %}
+		{#  if (field_key not in reserved_keys) or (field_key == sub_fields_key) #}
+		
+		{{ include('@InfoCentre/filter_form/filter_form_item.html.twig') }}
+	{% endfor %}
+</div>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\UserBundle\Entity\HistoriqueConnexion" table="historique_connexion">
+        <id name="idHistConn" type="integer" column="ID_HIST_CONN">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="idUtil" type="string" column="ID_UTIL" length="20" nullable="true"/>
+        <field name="dtConn" type="datetime" column="DT_CONN" nullable="true"/>
+    </entity>
+</doctrine-mapping>

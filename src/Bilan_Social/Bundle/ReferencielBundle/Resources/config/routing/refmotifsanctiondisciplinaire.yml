@@ -1,0 +1,28 @@
+refmotifsanctiondisciplinaire_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMotifSanctionDisciplinaire:index" }
+    methods:  GET
+
+refmotifsanctiondisciplinaire_show:
+    path:     /{idMotiSancdisc}/show
+    defaults: { _controller: "ReferencielBundle:RefMotifSanctionDisciplinaire:show" }
+    methods:  GET
+
+refmotifsanctiondisciplinaire_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMotifSanctionDisciplinaire:new" }
+    methods:  [GET, POST]
+
+refmotifsanctiondisciplinaire_edit:
+    path:     /{idMotiSancdisc}/edit
+    defaults: { _controller: "ReferencielBundle:RefMotifSanctionDisciplinaire:edit" }
+    methods:  [GET, POST]
+
+refmotifsanctiondisciplinaire_delete:
+    path:     /{idMotiSancdisc}/delete
+    defaults: { _controller: "ReferencielBundle:RefMotifSanctionDisciplinaire:delete" }
+    methods:  DELETE
+
+csv_export_refmotifsanctiondisciplinaire:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMotifSanctionDisciplinaire:generateCsv" }

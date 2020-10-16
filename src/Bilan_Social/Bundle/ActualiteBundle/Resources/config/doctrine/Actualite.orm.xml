@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity repository-class="Bilan_Social\Bundle\ActualiteBundle\Repository\ActualiteRepository" name="Bilan_Social\Bundle\ActualiteBundle\Entity\Actualite">
+        <id name="id" type="integer" column="ID_ACTUALITE">
+            <generator strategy="AUTO"/>
+        </id>
+<!--        <field name="nameImg" type="string" column="nameImg" length="255" nullable="true"/>
+        <field name="pathImg" type="string" column="pathImg" length="255" nullable="true"/>-->
+<!--        <field name="nameDocument" type="string" column="nameDocument" length="255" nullable="true"/>
+        <field name="pathDocument" type="string" column="pathDocument" length="255" nullable="true"/>-->
+        <field name="fileKeyImg" type="string" column="fileKeyImg" lenght="255" nullable="false"/>
+        <field name="fileKeyDoc" type="string" column="fileKeyDoc" lenght="255" nullable="true"/>
+        <field name="titreActu" type="string" column="Titre_actu" length="255" nullable="true"/>
+        <field name="texteActu" type="text" column="Texte_actu" nullable="true"/>
+        <field name="blPublish" type="boolean" column="bl_Publish"/>
+        <field name="DtDebut" type="datetime" column="DtDebut" nullable="true"/>
+        <field name="DtFin" type="datetime" column="DtFin" nullable="true"/>
+
+        <many-to-many field="cdgDepartements" inversed-by="actualites" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\CdgDepartement">
+            <join-table name="CDG_DEPARTEMENTS_ACTUALITES">
+                <join-columns>
+                    <join-column name="ID_ACTUALITE" referenced-column-name="ID_ACTUALITE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="ID_CDG_DEPARTEMENT" referenced-column-name="ID_CDG_DEPARTEMENT" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+        <many-to-many field="cdgs" inversed-by="actualites" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Cdg">
+            <join-table name="CDG_ACTUALITES">
+                <join-columns>
+                    <join-column name="ID_ACTUALITE" referenced-column-name="ID_ACTUALITE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="ID_CDG" referenced-column-name="ID_CDG" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

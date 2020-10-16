@@ -1,0 +1,223 @@
+referenciel_refacteviolencephysique:
+    resource: "@ReferencielBundle/Resources/config/routing/refacteviolencephysique.yml"
+    prefix:   /admin/refacteviolencephysique
+
+referenciel_homepage:
+    path:     /admin/referenciel
+    defaults: { _controller: ReferencielBundle:Default:index }
+
+referenciel_refavancementpromotionconcours:
+        resource: "@ReferencielBundle/Resources/config/routing/refavancementpromotionconcours.yml"
+        prefix:   /admin/refavancementpromotionconcours
+
+referenciel_refcadreemploi:
+        resource: "@ReferencielBundle/Resources/config/routing/refcadreemploi.yml"
+        prefix:   /admin/refcadreemploi
+
+referenciel_refcategorie:
+        resource: "@ReferencielBundle/Resources/config/routing/refcategorie.yml"
+        prefix:   /admin/refcategorie
+
+referenciel_refcategorieboeth:
+        resource: "@ReferencielBundle/Resources/config/routing/refcategorieboeth.yml"
+        prefix:   /admin/refcategorieboeth
+
+referenciel_refcontraintetravail:
+        resource: "@ReferencielBundle/Resources/config/routing/refcontraintetravail.yml"
+        prefix:   /admin/refcontraintetravail
+
+referenciel_refcycletravail:
+        resource: "@ReferencielBundle/Resources/config/routing/refcycletravail.yml"
+        prefix:   /admin/refcycletravail
+
+referenciel_refemploifonctionnel:
+        resource: "@ReferencielBundle/Resources/config/routing/refemploifonctionnel.yml"
+        prefix:   /admin/refemploifonctionnel
+
+referenciel_refemploinonpermanent:
+        resource: "@ReferencielBundle/Resources/config/routing/refemploinonpermanent.yml"
+        prefix:   /admin/refemploinonpermanent
+
+referenciel_reffiliere:
+        resource: "@ReferencielBundle/Resources/config/routing/reffiliere.yml"
+        prefix:   /admin/reffiliere
+
+referenciel_reffonctionpublique:
+        resource: "@ReferencielBundle/Resources/config/routing/reffonctionpublique.yml"
+        prefix:   /admin/reffonctionpublique
+
+referenciel_refformation:
+        resource: "@ReferencielBundle/Resources/config/routing/refformation.yml"
+        prefix:   /admin/refformation
+
+referenciel_refgrade:
+        resource: "@ReferencielBundle/Resources/config/routing/refgrade.yml"
+        prefix:   /admin/refgrade
+
+referenciel_refinaptitude:
+        resource: "@ReferencielBundle/Resources/config/routing/refinaptitude.yml"
+        prefix:   /admin/refinaptitude
+
+referenciel_refinaptitudeboeth:
+        resource: "@ReferencielBundle/Resources/config/routing/refinaptitudeboeth.yml"
+        prefix:   /admin/refinaptitudeboeth
+
+referenciel_refmesureboeth:
+        resource: "@ReferencielBundle/Resources/config/routing/refmesureboeth.yml"
+        prefix:   /admin/refmesureboeth
+
+referenciel_refmotifabsence:
+        resource: "@ReferencielBundle/Resources/config/routing/refmotifabsence.yml"
+        prefix:   /admin/refmotifabsence
+
+referenciel_refmotifarrivee:
+        resource: "@ReferencielBundle/Resources/config/routing/refmotifarrivee.yml"
+        prefix:   /admin/refmotifarrivee
+
+referenciel_refmotifdepart:
+        resource: "@ReferencielBundle/Resources/config/routing/refmotifdepart.yml"
+        prefix:   /admin/refmotifdepart
+
+referenciel_refmotifentretien:
+        resource: "@ReferencielBundle/Resources/config/routing/refmotifentretien.yml"
+        prefix:   /admin/refmotifentretien
+
+referenciel_refmotifgreve:
+        resource: "@ReferencielBundle/Resources/config/routing/refmotifgreve.yml"
+        prefix:   /admin/refmotifgreve
+
+referenciel_refnaturehandicapboeth:
+        resource: "@ReferencielBundle/Resources/config/routing/refnaturehandicapboeth.yml"
+        prefix:   /admin/refnaturehandicapboeth
+
+referenciel_reforganismeformation:
+        resource: "@ReferencielBundle/Resources/config/routing/reforganismeformation.yml"
+        prefix:   /admin/reforganismeformation
+
+referenciel_refpositionstatutaire:
+        resource: "@ReferencielBundle/Resources/config/routing/refpositionstatutaire.yml"
+        prefix:   /admin/refpositionstatutaire
+
+referenciel_refpourcentagetempapartiel:
+        resource: "@ReferencielBundle/Resources/config/routing/refpourcentagetempapartiel.yml"
+        prefix:   /admin/refpourcentagetempapartiel
+
+referenciel_refstagetitularisation:
+        resource: "@ReferencielBundle/Resources/config/routing/refstagetitularisation.yml"
+        prefix:   /admin/refstagetitularisation
+
+referenciel_refstatut:
+        resource: "@ReferencielBundle/Resources/config/routing/refstatut.yml"
+        prefix:   /admin/refstatut
+
+referenciel_refstructureorigine:
+        resource: "@ReferencielBundle/Resources/config/routing/refstructureorigine.yml"
+        prefix:   /admin/refstructureorigine
+
+referenciel_reftempsnoncomplet:
+        resource: "@ReferencielBundle/Resources/config/routing/reftempsnoncomplet.yml"
+        prefix:   /admin/reftempsnoncomplet
+
+referenciel_reftempspartiel:
+        resource: "@ReferencielBundle/Resources/config/routing/reftempspartiel.yml"
+        prefix:   /admin/reftempspartiel
+
+referenciel_reftrancheage:
+        resource: "@ReferencielBundle/Resources/config/routing/reftrancheage.yml"
+        prefix:   /admin/reftrancheage
+
+referenciel_reftypecollectivite:
+        resource: "@ReferencielBundle/Resources/config/routing/reftypecollectivite.yml"
+        prefix:   /admin/reftypecollectivite
+
+referenciel_reftypemissionprevention:
+        resource: "@ReferencielBundle/Resources/config/routing/reftypemissionprevention.yml"
+        prefix:   /admin/reftypemissionprevention
+
+referenciel_refactionprevention:
+        resource: "@ReferencielBundle/Resources/config/routing/refactionprevention.yml"
+        prefix:   /admin/refactionprevention
+
+referenciel_refvalidationexperience:
+        resource: "@ReferencielBundle/Resources/config/routing/refvalidationexperience.yml"
+        prefix:   /admin/refvalidationexperience
+
+referenciel_refgroupepositionstatutaire:
+    resource: "@ReferencielBundle/Resources/config/routing/refgroupepositionstatutaire.yml"
+    prefix:   /admin/refgroupepositionstatutaire
+
+referenciel_refmaladieprofessionnelle:
+        resource: "@ReferencielBundle/Resources/config/routing/refmaladieprofessionnelle.yml"
+        prefix:   /admin/refmaladieprofessionnelle
+
+referenciel_reftypeactivite:
+        resource: "@ReferencielBundle/Resources/config/routing/reftypeactivite.yml"
+        prefix:   /admin/reftypeactivite
+
+referenciel_refnaturelesion:
+        resource: "@ReferencielBundle/Resources/config/routing/refnaturelesion.yml"
+        prefix:   /admin/refnaturelesion
+
+referenciel_refelementmateriel:
+        resource: "@ReferencielBundle/Resources/config/routing/refelementmateriel.yml"
+        prefix:   /admin/refelementmateriel
+
+referenciel_refn4ds:
+        resource: "@ReferencielBundle/Resources/config/routing/refn4ds.yml"
+        prefix:   /admin/refn4ds
+
+referenciel_reftypecdd:
+        resource: "@ReferencielBundle/Resources/config/routing/reftypecdd.yml"
+        prefix:  /admin/reftypecdd
+
+referenciel_refsanctiondisciplinaire:
+        resource: "@ReferencielBundle/Resources/config/routing/refsanctiondisciplinaire.yml"
+        prefix:  /admin/refsanctiondisciplinaire
+
+referenciel_refmotifsanctiondisciplinaire:
+        resource: "@ReferencielBundle/Resources/config/routing/refmotifsanctiondisciplinaire.yml"
+        prefix:  /admin/refmotifsanctiondisciplinaire
+
+referenciel_ref_siege_lesion:
+        resource: "@ReferencielBundle/Resources/config/routing/refsiegelesion.yml"
+        prefix:  /admin/refsiegelesion
+        
+referenciel_ref_domaine_diplome:
+        resource: "@ReferencielBundle/Resources/config/routing/refdomainediplome.yml"
+        prefix:  /admin/refdomainediplome
+        
+referenciel_refdomaineprofessionnel:
+        resource: "@ReferencielBundle/Resources/config/routing/refdomaineprofessionnel.yml"
+        prefix:   /admin/refdomaineprofessionnel
+        
+referenciel_reftypesurclassdemo:
+        resource: "@ReferencielBundle/Resources/config/routing/reftypesurclassdemo.yml"
+        prefix:   /admin/reftypesurclassdemo
+
+referenciel_refcourtier:
+        resource: "@ReferencielBundle/Resources/config/routing/refcourtier.yml"
+        prefix:   /refcourtier
+        
+referenciel_refdomainespecialite:
+        resource: "@ReferencielBundle/Resources/config/routing/refdomainespecialite.yml"
+        prefix:   /refdomainespecialite
+
+referenciel_reffamillemetier:
+        resource: "@ReferencielBundle/Resources/config/routing/reffamillemetier.yml"
+        prefix:   /reffamillemetier
+
+referenciel_refmetier:
+        resource: "@ReferencielBundle/Resources/config/routing/refmetier.yml"
+        prefix:   /refmetier
+
+referenciel_refnaturemaj:
+        resource: "@ReferencielBundle/Resources/config/routing/refnaturemaj.yml"
+        prefix:   /refnaturemaj
+
+referenciel_refspecialite:
+        resource: "@ReferencielBundle/Resources/config/routing/refspecialite.yml"
+        prefix:   /refspecialite
+
+referenciel_reftypesurclassdemo:
+        resource: "@ReferencielBundle/Resources/config/routing/reftypesurclassdemo.yml"
+        prefix:   /reftypesurclassdemo

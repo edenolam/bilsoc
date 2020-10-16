@@ -1,0 +1,84 @@
+<div class="modal fade" id="1312" tabindex="-1" role="dialog" aria-labelledby="1312" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="1312">Indicateur 1312 de l'année {{ indicateur_precedent.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="background-color: #efefef">
+                {% if indicateur_precedent.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.annee }}
+                {% else %}
+                    <table width="100%" id="ind131Table" class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center"></th>
+
+                                {% if questionCollectiviteConsolide.q6 == true  %}
+                                <th colspan="3" style="text-align: center">Nombre de contractuels sur emploi non permanent en Equivalent Temps Plein Rémunéré sur l'année {{ indicateur_precedent.annee }}</th>
+                                {% endif %}
+
+                                <th style="text-align: center"></th>
+
+                                {% if questionCollectiviteConsolide.q5 == true  %}
+                                <th colspan="3" style="text-align: center">Nombre de contractuels sur emploi non permanent en Equivalent Temps Plein Rémunéré sur l'année {{ indicateur_precedent.annee }}</th>
+                                {% endif %}
+
+                            </tr>
+
+                            <tr>
+                                <th style="text-align: center"></th>
+
+                                {% if questionCollectiviteConsolide.q6 == true  %}
+                                <th style="text-align: center">Hommes 1.3.1(2.1)</th>
+                                <th style="text-align: center">Femmes 1.3.1(2.2)</th>
+                                <th class="filiTable" style="text-align: center">Total</th>
+                                {% endif %}
+
+                                <th style="text-align: center"></th>
+
+                                {% if questionCollectiviteConsolide.q5 == true  %}
+                                <th style="text-align: center">Hommes 1.3.1(2.3)</th>
+                                <th style="text-align: center">Femmes 1.3.1(2.4)</th>
+                                <th class="filiTable" style="text-align: center">Total</th>
+                                {% endif %}
+
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                        {% set total1 = 0%}
+                        {% set total2 = 0%}
+
+                        {% for tag in indicateur_precedent.indicateur %}
+                            {% set total1 = tag.R_13122 + tag.R_13121 %}
+                            {% set total2 = tag.R_13123 + tag.R_13124 %}
+                            <tr>
+                                <td id="emplTd" style="min-width: 200px">{{ tag.LB_EMPLNONPERM }}</td>
+
+                                {% if questionCollectiviteConsolide.q6 == true  %}
+                                <td id="r13121">{{ tag.R_13121 }}</td>
+                                <td id="r13122">{{ tag.R_13122 }}</td>
+                                <td class="filiTable" id="lineTot1" style="text-align: center">{{ total1 }}</td>
+                                {% endif %}
+
+                                <td></td>
+
+                                {% if questionCollectiviteConsolide.q5 == true  %}
+                                <td id="r13123">{{ tag.R_13123 }}</td>
+                                <td id="r13124">{{ tag.R_13124 }}</td>
+                                <td class="filiTable" id="lineTot2" style="text-align: center">{{ total2 }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,204 @@
+{% xlsdocument %}
+    {% set anonyme_txt = "" %}
+    {% set empty_txt = "" %}
+
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+    
+    {% set blueStyle = { fill: {
+                            fillType: 'solid',
+                            startColor: {
+                                rgb: '8DB4E2'
+                            },
+                            endColor: {
+                                rgb: '8DB4E2'
+                            }
+                        },
+                        borders: {
+                            allBorders: {
+                                borderStyle: 'thin',
+                                color: {
+                                    rgb: '000000'
+                                }
+                            }
+                        },
+                        alignment: {
+                            horizontal: 'center',
+                            vertical: 'center',
+                            wrapText: true,
+                        },
+                        font: {
+                            bold: true
+                        } } %}
+    
+    {% set yellowStyle = {borders: {
+                            allBorders: {
+                                borderStyle: 'thin',
+                                color: {
+                                    rgb: '000000'
+                                }
+                            },
+                        },
+                        alignment: {
+                            horizontal: 'center',
+                            vertical: 'center',
+                            wrapText: true,
+                        },
+                        fill: {
+                            fillType: 'solid',
+                            startColor: {
+                                rgb: 'FFCC00'
+                            },
+                            endColor: {
+                                rgb: 'FFCC00'
+                            }
+                        } } %}
+    
+    {% set redStyle = { fill: {
+                            fillType: 'solid',
+                            startColor: {
+                                rgb: 'AD5362'
+                            },
+                            endColor: {
+                                rgb: 'AD5362'
+                            }
+                        },
+                        borders: {
+                            allBorders: {
+                                borderStyle: 'thin',
+                                color: {
+                                    rgb: '000000'
+                                }
+                            }
+                        },
+                        alignment: {
+                            horizontal: 'center',
+                            vertical: 'center',
+                            wrapText: true,
+                        },
+                        font: {
+                            bold: true
+                        } } %}
+                        
+    {% set alignStyle = { alignment: {
+                            horizontal: 'center',
+                            vertical: 'center',
+                            wrapText: true,
+                        } } %}
+                        
+    {% xlssheet {
+        columnDimension: {
+            'default': {
+                width: '25'
+            }
+        }
+        } %}
+        {% xlsrow %}
+            {% xlscell { style: blueStyle } %} ID agent {% endxlscell %}
+            {% xlscell { style: blueStyle } %} Nom {% endxlscell %}
+            {% xlscell { style: blueStyle } %} Prénom {% endxlscell %}
+            {% xlscell { style: blueStyle } %} Genre Q1 {% endxlscell %}
+            {% xlscell { style: blueStyle } %} Date de naissance {% endxlscell %}
+            {% xlscell { style: blueStyle } %} SIRET coll {% endxlscell %}
+            {% xlscell { style: blueStyle } %} Statut Q2.0 {% endxlscell %}
+            {% xlscell { style: yellowStyle } %} Code métier {% endxlscell %}
+            {% xlscell { style: yellowStyle } %} Intitulé métier {% endxlscell %}
+            {% xlscell { style: yellowStyle } %} Niveau de diplôme {% endxlscell %}
+            {% xlscell { style: yellowStyle } %} Spécialité {% endxlscell %}
+            {% xlscell { style: redStyle } %} B2 - 1a - A quelle catégorie de B.O.E.T.H. appartient cet agent ? {% endxlscell %}
+            {% xlscell { style: redStyle } %} B2 - 1b - Quelle est la nature de son (ses) handicap(s) ? {% endxlscell %}
+            {% xlscell { style: redStyle } %} B2 - 2 - Un agent ayant bénéficié d'un avis d'inaptitude au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+            {% xlscell { style: redStyle } %} B2 - 2a - Quel avis d'inaptitude a été prononcé au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+            {% xlscell { style: redStyle } %} B2 - 2b - Si une mesure a été prise au cours de l'année {{ AnneeCamp }} consécutivement à cet avis d'inaptitude, laquelle ? {% endxlscell %}
+            {% xlscell { style: redStyle } %} B2 - 3 - Un agent ayant bénéficié d'un avis d'inaptitude avant l'année {{ AnneeCamp }} ? {% endxlscell %}
+            {% xlscell { style: redStyle } %} B2 - 3a - Quel avis d'inaptitude a été prononcé avant l'année {{ AnneeCamp }} ? {% endxlscell %}
+            {% xlscell { style: redStyle } %} B2 - 3b - Si une mesure a été prise au cours de l'année 2017 consécutivement à cette inaptitude prononcée avant l'année {{ AnneeCamp }}, laquelle ? {% endxlscell %}
+        {% endxlsrow %}
+        {% for agent in agents %}
+            {% xlsrow %} 
+                {% xlscell { style: alignStyle } %} {{ agent.idBilasociagen }} {% endxlscell %}
+                {% xlscell { style: alignStyle } %} {{ not anonymisation ? agent.lbNom : anonyme_txt }} {% endxlscell %}
+                {% xlscell { style: alignStyle } %} {{ not anonymisation ? agent.lbPren : anonyme_txt }} {% endxlscell %}
+                {% xlscell { style: alignStyle } %} {% if (agent.cdSexe == 1) %} Homme {% else %} Femme {% endif %} {% endxlscell %}
+                {% xlscell { style: alignStyle } %} {{ agent.lbDatenais }} {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.collectivite is not null) %} 
+                        {{ agent.collectivite.nmSire }}
+                    {% endif %}  {% endxlscell %}
+                {% xlscell { style: alignStyle } %} 
+                    {% if (agent.refStatut is not null) %} 
+                        {{ agent.refStatut.lbStat }}
+                    {% endif %}
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Gpeec is not null and agent.Gpeec.refMetier) %} 
+                        {{ agent.Gpeec.refMetier.cdMetier }} 
+                    {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Gpeec is not null and agent.Gpeec.refMetier) %} 
+                        {{ agent.Gpeec.refMetier.lbMetier|raw }} 
+                    {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Gpeec is not null and agent.Gpeec.idDomaineDiplomeGpeec) %} 
+                        {{ agent.Gpeec.idDomaineDiplomeGpeec.lbDomaineDiplome|raw }} 
+                    {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.GpeecPlus is not null and agent.GpeecPlus.refSpecialite) %} 
+                        {{ agent.GpeecPlus.refSpecialite.lbSpecialite|raw }} 
+                    {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Handitorials is not null and agent.Handitorials.idCategorieHanditorialBoeth) %} 
+                        {{ agent.Handitorials.idCategorieHanditorialBoeth.lbCategorieboeth|raw }} 
+                    {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Handitorials is not null and agent.Handitorials.idNatureHandicapBoeth) %} 
+                        {{ agent.Handitorials.idNatureHandicapBoeth.lbNathandiboeth|raw }} 
+                    {% endif %} {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Handitorials is not null and agent.Handitorials.blAvisInaptitudeEnCours) %} 
+                        {% if(agent.Handitorials.blAvisInaptitudeEnCours == 1) %} 
+                            Oui 
+                        {% else %}
+                            Non 
+                        {% endif %} 
+                    {% endif %} {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Handitorials is not null and agent.Handitorials.idInaptitudeEnCoursAnnee) %} 
+                        {{ agent.Handitorials.idInaptitudeEnCoursAnnee.lbInaptitudeboeth|raw }} 
+                    {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Handitorials is not null and agent.Handitorials.idMesureInaptitudeEnCoursAnnee) %} 
+                        {{ agent.Handitorials.idMesureInaptitudeEnCoursAnnee.lbMesureboeth|raw }} 
+                    {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Handitorials is not null and agent.Handitorials.blAvisInaptitudeAvant) %} 
+                        {% if(agent.Handitorials.blAvisInaptitudeAvant == 1) %} 
+                            Oui 
+                        {% else %} 
+                            Non 
+                    {% endif %} {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Handitorials is not null and agent.Handitorials.idInaptitudeAvantAnnee) %} 
+                        {{ agent.Handitorials.idInaptitudeAvantAnnee.lbInaptitudeboeth|raw }} 
+                    {% endif %} 
+                {% endxlscell %}
+                {% xlscell { style: alignStyle } %}
+                    {% if (agent.Handitorials is not null and agent.Handitorials.idMesureInaptitudeAvantAnnee) %} 
+                        {{ agent.Handitorials.idMesureInaptitudeAvantAnnee.lbMesureboeth|raw }} 
+                    {% endif %} 
+                {% endxlscell %}
+            {% endxlsrow %}
+        {% endfor %}
+    {% endxlssheet %}
+{% endxlsdocument %}

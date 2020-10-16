@@ -1,0 +1,86 @@
+{
+	"data":[
+		{
+			"code":-1,
+			"lbl":"Non communiqué"		
+		},{
+			"code":1,
+			"lbl":"Mise à disposition dans une autre structure ou collectivité",
+			"cd_moda_sortie_coll":"MD001",
+			"lbl_moda_sortie_coll":"Mise à disposition dans une autre collectivité ou structure (Ne prendre en compte que les mises à disposition complètes)"
+		},{
+			"code":10,
+			"lbl":"Fin de contrat",
+			"cd_moda_sortie_coll":"MD011",
+			"lbl_moda_sortie_coll":"Fin de contrat (inclure les départs de remplaçants, ne pas inclure les agents contractuels mis en stage dans l'année 2017)"
+		},{
+			"code":11,
+			"lbl":"Départ en congé de fin d'activité"		
+		},{
+			"code":12,
+			"lbl":"Départ à la retraite",
+			"cd_moda_sortie_coll":"MD013",
+			"lbl_moda_sortie_coll":"Départ à la retraite"
+		},{
+			"code":13,
+			"lbl":"Licenciement",
+			"cd_moda_sortie_coll":"MD014",
+			"lbl_moda_sortie_coll":"Licenciement"
+		},{
+			"code":14,
+			"lbl":"Décès",
+			"cd_moda_sortie_coll":"MD015",
+			"lbl_moda_sortie_coll":"Décès"
+		},{
+			"code":15,
+			"lbl":"Autres cas (révocation, abandon de poste ... )",
+			"cd_moda_sortie_coll":"MD016",
+			"lbl_moda_sortie_coll":"Autres cas  (révocation, abandon de poste, perte de la nationalité française, etc.)"
+		},{
+			"code":16,
+			"lbl":"Transfert de compétence",
+			"cd_moda_sortie_coll":"MD017",
+			"lbl_moda_sortie_coll":"Transfert de compétence"
+		},{
+			"code":-2,
+			"lbl":"Non connu",
+			"cd_moda_sortie_coll":null	
+		},{
+			"code":2,
+			"lbl":"Détachement dans une autre structure",
+			"cd_moda_sortie_coll":"MD005",
+			"lbl_moda_sortie_coll":"Détachement dans une autre structure. Agents de la collectivité qui ont été détachés dans l'année 2017 dans une autre structure (fonction publique d'Etat, fonction publique hospitalière)"
+		},{
+			"code":3,
+			"lbl":"Mise en disponibilité, congé parental, départ pour accomplir leur service national"	
+		},{
+			"code":4,
+			"lbl":"Décharge de service pour exercice de mandats syndicaux (article 100)",
+			"cd_moda_sortie_coll":"MD002",
+			"lbl_moda_sortie_coll":"Décharge totale de service pour exercice de mandats syndicaux (article 100)"
+		},{
+			"code":5,
+			"lbl":"Congé formation"	
+		},{
+			"code":6,
+			"lbl":"Mutation",
+			"cd_moda_sortie_coll":"MD008",
+			"lbl_moda_sortie_coll":"Mutation (changement de collectivité)"
+		},{
+			"code":7,
+			"lbl":"Fin de détachement dans votre collectivité",
+			"cd_moda_sortie_coll":"MD009",
+			"lbl_moda_sortie_coll":"Fin de détachement dans votre collectivité (agents originaires d'autres structures:fonction publique d'Etat, fonction publique hospitalière, …dont le détachement dans votre collectivité s'est terminé dans l'année 2017)"
+		},{
+			"code":8,
+			"lbl":"Décharge d'emploi et de fonction",
+			"cd_moda_sortie_coll":"MD010",
+			"lbl_moda_sortie_coll":"Décharge d'emploi et de fonctions ou agent pris en charge par le CNFPT ou le CDG"
+		},{
+			"code":9,
+			"lbl":"Démission",
+			"cd_moda_sortie_coll":"MD012",
+			"lbl_moda_sortie_coll":"Démission"
+		}
+	]
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifEntretien" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefMotifEntretienRepository" table="ref_motif_entretien">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_MOTIENTR" name="cdMotientr"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idMotientr" type="integer" column="ID_MOTIENTR">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdMotientr" type="string" column="CD_MOTIENTR" length="50" nullable="true"/>
+        <field name="lbMotientr" type="string" column="LB_MOTIENTR" length="255" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgentsRetour" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refMotifEntretienRetour"/>
+        <one-to-many field="bilanSocialAgentsDepart" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refMotifEntretienDepart"/>
+    </entity>
+</doctrine-mapping>

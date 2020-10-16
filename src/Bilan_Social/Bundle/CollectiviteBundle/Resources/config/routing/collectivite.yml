@@ -1,0 +1,213 @@
+collectivite_homepage:
+    path:     /
+    defaults: { _controller: CollectiviteBundle:Collectivite:index }
+    options:
+        expose: true
+
+collectivite_edit:
+    path:     /edit/{id}
+    defaults: { _controller: CollectiviteBundle:Collectivite:editCollectivite }
+
+collectivite_modifications:
+    path:     /modifications/{id}
+    defaults: { _controller: CollectiviteBundle:Collectivite:modificationsCollectivite }
+    options:
+        expose: true
+
+collectivite_modifications_historisation_creation:
+    path:     /modifications_historisation/creation/{siret}
+    defaults: { _controller: CollectiviteBundle:Collectivite:CollectiviteModificationsCreationHistorisation }
+    options:
+        expose: true
+
+collectivite_modifications_historisation_suppression:
+    path:     /modifications_historisation/suppression/{siret}
+    defaults: { _controller: CollectiviteBundle:Collectivite:CollectiviteModificationsSuppressionHistorisation }
+    options:
+        expose: true
+
+collectivite_modifications_historisation_get_all_creation:
+    path:     /creation/{params}
+    defaults: { _controller: CollectiviteBundle:Collectivite:getCollectiviteHistorisation }
+    options:
+        expose: true
+
+valider_collectivite:
+    path:     /valider
+    defaults: { _controller: CollectiviteBundle:Collectivite:validerCollectivite }
+    options:
+        expose: true
+
+refuser_collectivite:
+    path:     /refuser
+    defaults: { _controller: CollectiviteBundle:Collectivite:refuserCollectivite }
+    options:
+        expose: true
+unlock_Account:
+    path:     /DévérouillageCompte/{idUtil}
+    defaults: { _controller: CollectiviteBundle:Collectivite:UnlockAccount }
+    options:
+        expose: true
+
+collectivite_modification_masse_import:
+    path:     /modification-masse-import
+    defaults: { _controller: CollectiviteBundle:Collectivite:modificationMasseImport }
+    options:
+        expose: true
+
+collectivite_modification_masse:
+    path:     /modification-masse
+    defaults: { _controller: CollectiviteBundle:Collectivite:modificationMasse }
+    options:
+        expose: true
+
+collectivite_fiche:
+    path:     /fiche/{id}
+    defaults: { _controller: CollectiviteBundle:Collectivite:ficheCollectivite, id: null }
+    options:
+        expose: true
+
+collectivite_liste_demande_creation:
+    path:     /liste-demande-creation
+    defaults: { _controller: CollectiviteBundle:Collectivite:ListeDemandeCreationCollectivite }
+    options:
+        expose: true
+
+collectivite_valider_demande_creation:
+    path:     /valider-demande-creation/{id}
+    defaults: { _controller: CollectiviteBundle:Collectivite:validerDemandeCreationCollectivite }
+
+valider_crea_collectivite:
+    path:     /valider-creation
+    defaults: { _controller: CollectiviteBundle:Collectivite:validerCreationCollectivite }
+    options:
+        expose: true
+
+refuser_crea_collectivite:
+    path:     /refuser-creation
+    defaults: { _controller: CollectiviteBundle:Collectivite:refuserCreationCollectivite }
+    options:
+        expose: true
+
+collectivite_exporter:
+    path:     /exporter-collectivite
+    defaults: { _controller: CollectiviteBundle:Collectivite:exporterCollectivite }
+    options:
+        expose: true
+
+collectivite_enregistrer_parametrage:
+    path:     /enregistrer-parametrage
+    defaults: { _controller: CollectiviteBundle:Collectivite:setParametrage }
+    options:
+        expose: true
+
+collectivite_parametrage:
+    path:     /parametrage
+    defaults: { _controller: CollectiviteBundle:Collectivite:getParametrage }
+    options:
+        expose: true
+
+collectivite_remove_parametrage:
+    path:     /supprimer-parametrage
+    defaults: { _controller: CollectiviteBundle:Collectivite:removeParametrage }
+    options:
+        expose: true
+
+collectivite_recherche:
+    path:     /recherche
+    defaults: { _controller: CollectiviteBundle:Collectivite:recherche }
+
+formulaire_echange_ajax:
+    path:   /formulaire-echange
+    defaults: { _controller: CollectiviteBundle:Collectivite:formulaireHistoriqueEchangeAjax}
+    options:
+        expose: true
+
+supprimer_echange_ajax:
+    path:   /supprimer-echange
+    defaults: { _controller: CollectiviteBundle:Collectivite:supprimerEchangeAjax}
+    options:
+        expose: true
+
+submit_echange:
+    path:     /submit-echange
+    defaults: { _controller: CollectiviteBundle:Collectivite:submitEchange }
+    options:
+        expose: true
+
+reload_tableau_echange:
+    path:     /reload-tableau-echange
+    defaults: { _controller: CollectiviteBundle:Collectivite:reloadTableauEchangeAjax }
+    options:
+        expose: true
+
+historique_echanges:
+    path:     /historique-echanges
+    defaults: { _controller: CollectiviteBundle:Collectivite:historiqueEchanges }
+
+get_cdg_ajax:
+    path:     /get-cdg-ajax
+    defaults: { _controller: CollectiviteBundle:Collectivite:getCdgAjax }
+    options:
+        expose: true
+
+get_historique_echange_by_collectivite:
+    path:     /get_historique_echange_by_collectivite/{idColl}
+    defaults: { _controller: CollectiviteBundle:Collectivite:getHistoriqueEchangeByCollectivite }
+    options:
+        expose: true
+
+message_reset_password:
+    path:     /message-reset-password
+    defaults: { _controller: CollectiviteBundle:Cdg:messageResetPassword }
+
+message_reset_password_by_admin:
+    path:     /message-reset-password-admin
+    defaults: { _controller: CollectiviteBundle:Cdg:messageResetPasswordByAdmin }
+
+index_modifications:
+    path:     /index-modifications
+    defaults: { _controller: CollectiviteBundle:Collectivite:indexModifications }
+    options:
+        expose: true
+
+ajax_get_collectivite:
+    path:     /gestion
+    defaults: { _controller: CollectiviteBundle:Collectivite:gestionCollectivite }
+    options:
+        expose: true
+ajax_get_collectivite_historisation_creation_worktable:
+    path:     /gestion_historisation_collectivite_creation
+    defaults: { _controller: CollectiviteBundle:Collectivite:gestionCollectiviteHistorisationCreation }
+    options:
+        expose: true
+
+ajax_get_collectivite_historisation_erreur_worktable:
+    path:     /gestion_historisation_collectivite_erreur
+    defaults: { _controller: CollectiviteBundle:Collectivite:gestionCollectiviteHistorisationErreur }
+    options:
+        expose: true
+
+ajax_get_collectivite_historisation_suppression_worktable:
+    path:     /gestion_historisation_collectivite_suppression
+    defaults: { _controller: CollectiviteBundle:Collectivite:gestionCollectiviteHistorisationSuppresion }
+    options:
+        expose: true
+
+get_surclass_demo_by_reftypecoll:
+    path:     /get-type-coll/{idTypeColl}
+    defaults: { _controller: CollectiviteBundle:Collectivite:getSurclassDemoByReftypecoll }
+    options:
+        expose: true
+
+index_historisation:
+    path:     /historisation
+    defaults: { _controller: CollectiviteBundle:Collectivite:indexHistorisationCdg }
+    options:
+        expose: true
+
+#check_surclass_demo_by_reftypecoll:
+#    path:     /check-type-coll/{idTypeColl}
+#    defaults: { _controller: CollectiviteBundle:Collectivite:checkSurclassDemoByReftypecoll }
+#    options:
+#        expose: true

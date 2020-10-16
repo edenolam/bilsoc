@@ -1,0 +1,1 @@
+UPDATE `ref_n4ds` SET `BL_OBLI` = '0' WHERE `ref_n4ds`.`CD_VALEUR` = 'S10.G01.00.003.007';

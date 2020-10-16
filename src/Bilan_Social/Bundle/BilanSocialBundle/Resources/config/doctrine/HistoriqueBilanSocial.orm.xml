@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\BilanSocialBundle\Entity\HistoriqueBilanSocial" repository-class="Bilan_Social\Bundle\BilanSocialBundle\Repository\HistoriqueBilanSocialRepository" table="historique_bilan_social">
+        <id name="idHistbilasoci" type="integer" column="ID_HISTBILASOCI">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="enquete" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+            <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" nullable="true"/>
+        </many-to-one>
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" nullable="true"/>
+        </many-to-one>
+        <many-to-one field="departement" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement">
+            <join-column name="ID_DEPA" referenced-column-name="ID_DEPA" nullable="true"/>
+        </many-to-one>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="false">
+          <options>
+            <option name="fixed"/>
+          </options>
+        </field>
+        <field name="cdTypebilasoci" type="string" column="CD_TYPEBILASOCI" length="1" nullable="true">
+          <options>
+            <option name="fixed"/>
+          </options>
+        </field>
+        <field name="dtChgt" type="datetime" column="DT_CHGT" nullable="false"/>
+    </entity>
+</doctrine-mapping>

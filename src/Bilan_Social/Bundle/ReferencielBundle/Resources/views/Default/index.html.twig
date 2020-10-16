@@ -1,0 +1,457 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listes des référentiels</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped" id='referenciel'>
+                    <thead>
+                        <tr>
+                            <th>Référentiel</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td>
+                                <a href="{{ path('refacteviolencephysique_index') }}">
+                                    Acte Violence physique
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <a href="{{ path('refactionprevention_index') }}">
+                                    Actions liées à la prévention
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refavancementpromotionconcours_index') }}">
+                                    Avancement promotion concours
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refcadreemploi_index') }}">
+                                    Cadre emploi
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refcategorie_index') }}">
+                                    Categories
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refcategorieboeth_index') }}">
+                                    Categories B.O.E.T.H.
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refcontraintetravail_index') }}">
+                                    Contrainte travail
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refcourtier_index') }}">
+                                    Courtier
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refcycletravail_index') }}">
+                                    Cycle travail
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refdomainediplome_index') }}">
+                                    Domaine diplôme
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refdomaineprofessionnel_index') }}">
+                                    Domaine professionnel
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refdomainespecialite_index') }}">
+                                    Domaine spécialité
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refelementmateriel_index') }}">
+                                    Element matériel
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refemploifonctionnel_index') }}">
+                                    Emploi Fonctionnel
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refemploinonpermanent_index') }}">
+                                    Emploi non permanent
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reffamillemetier_index') }}">
+                                    Famille métier
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reffiliere_index') }}">
+                                    Filières
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reffonctionpublique_index') }}">
+                                    Fonction publique
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refformation_index') }}">
+                                    Formation
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refgrade_index') }}">
+                                    Grades
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refgroupepositionstatutaire_index') }}">
+                                    Groupe position statutaires
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refinaptitude_index') }}">
+                                    Inaptitudes
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refinaptitudeboeth_index') }}">
+                                    Inaptitudes B.O.E.T.H.
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmaladieprofessionnelle_index') }}">
+                                    Maladies Professionnelles
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmesureboeth_index') }}">
+                                    Mesures d'inaptitudes B.O.E.T.H.
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmetier_index') }}">
+                                    Métier
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmotifarrivee_index') }}">
+                                    Motifs arrivées
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmotifabsence_index') }}">
+                                    Motifs absences
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmotifentretien_index') }}">
+                                    Motifs entretiens
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmotifdepart_index') }}">
+                                    Motifs départs
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmotifgreve_index') }}">
+                                    Motifs grèves
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refmotifsanctiondisciplinaire_index') }}">
+                                    Motifs sanction disciplinaire
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <a href="{{ path('refnaturehandicapboeth_index') }}">
+                                    Nature handicap B.O.E.T.H.
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refnaturelesion_index') }}">
+                                    Natures de lésion
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refnaturemaj_index') }}">
+                                    Nature MAJ
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reforganismeformation_index') }}">
+                                    Organisme de formation
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refpositionstatutaire_index') }}">
+                                    Position statutaire
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refpourcentagetempapartiel_index') }}">
+                                    Pourcentage temps partiel
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refsanctiondisciplinaire_index') }}">
+                                    Sanction disciplinaire
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refsiegelesion_index') }}">
+                                    Siège lesion
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refspecialite_index') }}">
+                                    Spécialité
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refstagetitularisation_index') }}">
+                                    Stage titularisation
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refstatut_index') }}">
+                                    Statut
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refstructureorigine_index') }}">
+                                    Structure d'origine
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reftempsnoncomplet_index') }}">
+                                    Temps non complet
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reftempspartiel_index') }}">
+                                    Temps partiel
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reftrancheage_index') }}">
+                                    Tranche d'âge
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reftypecdd_index') }}">
+                                    Type de CDD
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reftypeactivite_index') }}">
+                                    Type d'activité
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reftypecollectivite_index') }}">
+                                    Type de collectivité
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('reftypemissionprevention_index') }}">
+                                    Type de mission de prévention
+                                </a>
+                            </td>
+                        </tr>
+{#                        <tr>#}
+{#                            <td>#}
+{#                                <a href="{{ path('reftypesurclassdemo_index') }}">#}
+{#                                    Type sur class demo#}
+{#                                </a>#}
+{#                            </td>#}
+{#                        </tr>#}
+                        <tr>
+                            <td>
+                                <a href="{{ path('refvalidationexperience_index') }}">
+                                    Validation d'expérience
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('refn4ds_index') }}">
+                                    N4DS
+                                </a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                {#<div class="col-lg-2">
+                    <h1>Compte</h1>
+                    <div class="containerFormCompte">
+                        <label>Liste des référentiels :</label>
+                        <select class="form-control liste">
+
+                            <option value="0" >Veuillez selectionnez un referenciel</option>
+                            <option value="refacteviolencephysique_index" >acte violence physique</option>
+                            <option value="refavancementpromotionconcours_index" >avancement promotion concours</option>
+                            <option value="refcadreemploi_index" >cadre emploi</option>
+                            <option value="refcategorie_index" >categorie</option>
+                            <option value="refcontraintetravail_index" >contrainte travail</option>
+                            <option value="refcycletravail_index" >cycle travail</option>
+                            <option value="refemploifonctionnel_index" >emploi fonctionnel</option>
+                            <option value="refemploinonpermanent_index" >emploi non permanent</option>
+                            <option value="reffiliere_index" >filiere</option>
+                            <option value="reffonctionpublique_index" >fonction publique</option>
+                            <option value="refformation_index" >formation</option>
+                            <option value="refgrade_index" >grade</option>
+                            <option value="refinaptitude_index" >inaptitude</option>
+                            <option value="refmotifarrivee_index" >motif arrivee</option>
+                            <option value="refmotifabsence_index" >motif absence</option>
+                            <option value="refmotifgreve_index" >motif greve</option>
+                            <option value="refmotifdepart_index" >motif depart</option>
+                            <option value="reforganismeformation_index" >organisme formation</option>
+                            <option value="refpositionstatutaire_index" >position statutaire</option>
+                            <option value="refpourcentagetempapartiel_index" >pourcentage tempa partiel</option>
+                            <option value="refstagetitularisation_index" >stage titularisation</option>
+                            <option value="refstatut_index" >statut</option>
+                            <option value="refstructureorigine_index" >structure origine</option>
+                            <option value="reftempsnoncomplet_index" >temps non complet</option>
+                            <option value="reftrancheage_index" >tranche age</option>
+                            <option value="reftypecollectivite_index" >type collectivite</option>
+                            <option value="refvalidationexperience_index" >validation experience</option>
+                        </select>
+
+
+                    </div>
+                </div>#}
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock body %}

@@ -1,0 +1,28 @@
+refstructureorigine_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefStructureOrigine:index" }
+    methods:  GET
+
+refstructureorigine_show:
+    path:     /{idStruorig}/show
+    defaults: { _controller: "ReferencielBundle:RefStructureOrigine:show" }
+    methods:  GET
+
+refstructureorigine_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefStructureOrigine:new" }
+    methods:  [GET, POST]
+
+refstructureorigine_edit:
+    path:     /{idStruorig}/edit
+    defaults: { _controller: "ReferencielBundle:RefStructureOrigine:edit" }
+    methods:  [GET, POST]
+
+refstructureorigine_delete:
+    path:     /{idStruorig}/delete
+    defaults: { _controller: "ReferencielBundle:RefStructureOrigine:delete" }
+    methods:  DELETE
+
+csv_export_refstructureorigine:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefStructureOrigine:generateCsv" }

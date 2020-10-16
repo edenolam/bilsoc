@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMetier" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefMetierRepository"  table="ref_metier">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_METIER" name="cdMetier"/>
+        </unique-constraints>
+        <id name="idMetier" type="integer" column="ID_METIER">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdMetier" type="string" column="CD_METIER" length="50" nullable="true"/>
+        <field name="lbMetier" type="string" column="LB_METIER" length="350" nullable="true"/>
+        <field name="lbAutAppColl" type="string" column="LB_AUTRES_APPELLATIONS_COLLECTIVITES" nullable="false"/>
+        <field name="cdN4ds" type="string" column="CD_N4DS" nullable="true"/>
+        <field name="blMetiPrinc" type="boolean" column="BL_METIER_PRINCIPAL" nullable="false"/>
+        <field name="blCons" type="boolean" column="BL_CONSOLIDE" nullable="false"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        
+        <many-to-one field="RefFamilleMetier" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFamilleMetier" inversed-by="RefMetier">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+            <join-column name="ID_FAMILLE_METIER" referenced-column-name="ID_FAMILLE_METIER" />
+        </many-to-one>
+        <one-to-many field="gpeec_metier" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Gpeec" mapped-by="refMetier">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="idMetierSauvegarde" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SauvegardeDonneesAgents" mapped-by="idMetier">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

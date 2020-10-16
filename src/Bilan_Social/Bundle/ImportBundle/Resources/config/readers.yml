@@ -1,0 +1,6 @@
+services:
+    bs.import.csv_reader:
+        class: Bilan_Social\Bundle\ImportBundle\Reader\CsvReader
+        arguments:
+            - 'imports/users.csv'
+            - ';'

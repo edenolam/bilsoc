@@ -1,0 +1,54 @@
+bilan_social_homepage:
+    path:     /
+    defaults: { _controller: BilanSocialBundle:BilanSocial:index }
+    options:
+        expose: true
+bilan_social_reinitialisation:
+    path:     /reinitialisation
+    defaults: { _controller: BilanSocialBundle:BilanSocial:reinitialisation }
+    options:
+        expose: true
+        
+bilan_social_lock_initialisation:
+    path:     /lock_initialisation
+    defaults: { _controller: BilanSocialBundle:BilanSocial:lockInitialisation }
+    options:
+        expose: true
+        
+bilan_social_delete_initialisation:
+    path:     /delete_initialisation
+    defaults: { _controller: BilanSocialBundle:BilanSocial:deleteInitialisation }
+    options:
+        expose: true
+
+bilan_social_saveInitialisation:
+    path:     /saveInitialisation
+    defaults: { _controller: BilanSocialBundle:BilanSocial:saveInitialisation }
+    options:
+        expose: true
+
+bilan_social_checkbsexists:
+    path:     /checkbsexists
+    defaults: { _controller: BilanSocialBundle:BilanSocial:checkbsexists }
+    options:
+        expose: true
+        
+bilan_social_vide_generate:
+    path:     /bilansocialvide
+    defaults: { _controller: BilanSocialBundle:BilanSocial:generateBilanSocialVide }
+    options:
+        expose: true
+        
+bilan_social_export_dgcl:
+    path:     /exportdgcl
+    defaults: { _controller: BilanSocialBundle:BilanSocial:exportDGCL }
+    options:
+        expose: true
+    
+bilan_social_historique:
+    path:     /historique
+    defaults: { _controller: BilanSocialBundle:BilanSocial:historique }
+    
+bilan_social_historique_collectivite:
+    path:     /historique-collectivite
+    defaults: { _controller: BilanSocialBundle:BilanSocial:historiqueCollectivite }

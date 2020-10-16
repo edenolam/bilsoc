@@ -1,0 +1,941 @@
+{% extends '@Apa/layout.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var index = {{ stepIndex }};
+        {% if enquetecoll.blHand %}
+        var Hand = true;
+        {% else %}
+        var Hand = false;
+        {% endif %}
+        var anne_campagne = {{ anne_campagne }};
+    </script>
+
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set droitCdg = app.session.get('droit') %}
+
+    <div>
+        <div class="col-xs-9 {% if is_granted("ROLE_CDG") and droitCdg == 'voir' %}input-disabled{% endif %}">
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="alert alert-success text-center">
+                    <strong>{{ flash_message }}</strong>
+                </div>
+            {% endfor %}
+            {{ form_start(form) }}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">Identité de l'agent</h3>
+                            <a target="_blank" href="{{ path('faq_index_client') }}">
+                                <img style="width: 42px; height: auto; margin-top: -34px;" src="{{ asset("img/icone/DescriptionSite-Faq.png") }}" class="icone-menu pull-right"/>
+                            </a>
+                        </div>
+                        <div class="panel-body apa" style='text-align: center'>
+                            <div class="customFrom">
+                                {{ form_row(form.lbNom) }}
+                            </div>
+                            <div class="customFrom">
+                                {{ form_row(form.lbPren) }}
+                            </div>
+                            <div style="display:block; width:400px; margin:auto">
+                                {{ form_row(form.commAgent) }}
+                            </div>
+                        </div>
+                    </div>
+
+            <div id="wizard">
+                <section id="section_statut" style="display:none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">Statut</h3>
+                        </div>
+                        <div class="panel-body apa">
+                            <div>
+
+                                {{ form_row(form.lbDatenais) }}
+                                {{ form_row(form.cdSexe) }}
+                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and ((enquetecoll.blRast == true or enquetecoll.blGepe == true) or enquetecoll.blDgcl == true) )) %} {{ form_row(form.blAgenremu3112) }} {% endif %}
+                                <div id="infotextTemp" {% if (form.blAgenremu3112.vars.value != 2) %}class="hidden"{% else %} {% endif %}>
+                                    <div class="alert alert-info" role="alert">
+                                        Mise à disposition dans une autre collectivité ou structure (ne prendre en compte que les mises à disposition
+                                        complètes)" <br>
+                                        Ou en Décharge totale de service pour exercice de mandats syndicaux (article 100) <br>
+                                        Ou en Congé formation encore rémunéré par la collectivité (max 1 an) )<br>
+                                    </div>
+                                </div>
+                                <div id="agent_remunere"{% if (form.blAgenremu3112.vars.value == 0 and form.blAgenremu3112.vars.value is not empty) %} {% else %}class="hidden" {% endif %}>
+                                    {{ form_row(form.blAgenremuanne) }}
+                                    <div id="Agenremuanne"
+                                         {% if (form.blAgenremuanne.vars.value  == 0 and form.blAgenremuanne.vars.value is not empty) %} {% else %}class="hidden" {% endif %}>
+                                         {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %} {{ form_row(form.blPosiactinonremu) }} {% endif %}
+                                        <div id="particuliereNonRemu"
+                                             {% if (form.blPosiactinonremu.vars.value == 0 and form.blPosiactinonremu.vars.value is not empty) %}{% else %}class="hidden" {% endif %}>
+                                             <label>
+                                                Quelle est sa position particulière ?
+                                                <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q270RefPosistat" aria-hidden="true"></span>
+                                            </label>
+                                            {{ form_row(form.refPositionStatutairenonremu) }}
+                                            <div id="back">
+                                                <p>Cliquer sur le lien si vous ne voulez pas enregistrer l'agent <a
+                                                            href="{{ path('bilansocialagent_list_agent') }}">retour à la liste d'agent</a>
+                                                <p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div id="q42Non"
+                                     {% if (form.blAgenremuanne.vars.value  == 0 and form.blAgenremuanne.vars.value is not empty) %}class="hidden"{% else %}{% endif %}>
+                                    {{ form_row(form.refStatut) }}
+                                    <div id="permanent" {% if (form.refStatut.vars.value  == 3 ) %}{% else %}class="hidden" {% endif %}>
+                                        {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                            {{ form_row(form.blCdi) }}
+                                            <div id="refTypeCdd"
+                                                 {% if (form.blCdi.vars.value == 0 and form.blCdi.vars.value is not empty) %}{% else %}class="hidden" {% endif %}>
+                                                <label>
+                                                    Quel est le type de CDD ?
+                                                    <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qTypeCdd" aria-hidden="true"></span>
+                                                </label>
+                                                {{ form_row(form.refTypeCdd) }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div id="stagtituPerm"
+                                         {% if (form.refStatut.vars.value  == 1 ) or (form.refStatut.vars.value  == 2) or (form.refStatut.vars.value  == 3) %}{% else %}class="hidden" {% endif %}>
+                                        <div id="stagtitu"
+                                            {% if (form.refStatut.vars.value  == 1 ) or (form.refStatut.vars.value  == 2) or (form.refStatut.vars.value  == 3) %}{% else %}class="hidden" {% endif %}>
+                                            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                                <p style='color:black'><strong> Q5.1 - L'agent est-il arrivé (nouvel arrivant ou déjà présent mis en stage avec changement de statut) ou a-t-il été réintégré suite à une période d’absence dans la collectivité au cours de l’année  {{ campagne.nmAnne }} ?</strong></p>
+                                                {{ form_row(form.blAgenarriannecoll) }}
+                                            {% endif %}
+                                        </div>
+                                        <div id="perm" {% if (form.refStatut.vars.value  == 3 ) %}{% else %}class="hidden" {% endif %}>
+                                            <div>
+                                                {{ form_row(form.dtArriStat) }}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            {% if (enquetecoll.blBilasoci == true) %}
+                                                {{ form_row(form.blEmplfonc) }}
+                                                <div id="graddeta" {% if (form.blEmplfonc.vars.value  == 1 ) %}{% else %}class="hidden" {% endif %}>
+                                                    {#                                            {{ form_row(form.refGradeDeta) }}#}
+                                                    {{ form_row(form.RefCadreEmploiDeta) }}
+                                                </div>
+
+                                                <div id="blEmplfoncyes" {% if (form.blEmplfonc.vars.value  == 1 ) %}{% else %}class="hidden" {% endif %}>
+                                                    {{ form_row(form.blStruorigposistat) }}
+                                                    <p>De quelle fonction publique est-il détaché ?</p>
+                                                    {{ form_row(form.refFonctionPublique) }}
+                                                    <div id="fonctionpublique"
+                                                         {% if (form.refFonctionPublique.vars.value  == 1 ) or (form.refFonctionPublique.vars.value  == 2 ) %}{% else %}class="hidden" {% endif %}>
+                                                        {#                                        <label>Question 8.2.1 a afficher si reponse 8.2 = FPE/FPH</label>#}
+                                                        {{ form_row(form.refCadreEmploiOrigin) }}
+
+                                                    </div>
+                                                    <div>
+                                                        {{ form_row(form.FiliereEmpFonc) }}
+
+                                                    </div>
+                                                    <div>
+
+                                                        {{ form_row(form.refEmploiFonctionnel) }}
+                                                    </div>
+                                                    <div>
+
+                                                        {{ form_row(form.dtDetaemplfonc) }}
+                                                    </div>
+
+                                                </div>
+                                            {% endif %}
+                                            
+                                            <div id="blEmplfoncno"{% if (form.blEmplfonc.vars.value == 0 and form.blEmplfonc.vars.value is not empty) %} {% else %}class="hidden" {% endif %}>
+                                                {{ form_row(form.blPosiacti) }}
+                                                <div id="particuliere"
+                                                     {% if (form.blPosiacti.vars.value == 0 and form.blEmplfonc.vars.value is not empty) %}{% else %}class="hidden" {% endif %}>
+                                                    <label>
+                                                        Quelle est sa position particulière ?
+                                                        <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q270RefPosistat" aria-hidden="true"></span>
+                                                    </label>
+                                                    {{ form_row(form.refPositionStatutaire) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+
+
+                                            {{ form_row(form.refCategorie) }}
+                                            {{ form_row(form.refFiliere) }}
+                                            {{ form_row(form.RefCadreEmploi) }}
+                                            <div id="grade_emploi_perm">
+                                                {{ form_row(form.refGrade) }}
+                                            </div>
+                                            {# Question a afficher si reponse Question 5.1  = oui#}
+                                            <div id="refMotifArrivee" {% if (form.blAgenarriannecoll.vars.value  == 1 ) %}{% else %}class="hidden" {% endif %}>
+                                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                                    {{ form_row(form.refMotifArrivee) }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div id="EmploiPermanent">
+                                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                                    {{ form_row(form.blAcqustatanne) }}
+                                                    <div id="blAcqustatanne" {% if (form.blAcqustatanne.vars.value == 1 ) %}{% else %}class="hidden" {% endif %}>
+                                                        {{ form_row(form.blAgentitustaganne) }}
+                                                        <div id="blAgentitustaganne"
+                                                            {% if (form.blAgentitustaganne.vars.value  == 1 ) %}{% else %}class="hidden" {% endif %}>
+                                                            {% if (enquetecoll.blBilasoci == true) %}
+                                                                {{ form_row(form.refStageTitularisation) }}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div id="bilan_social_bundle_apabundle_bilansocialagent_blAgenremu3112no">
+                                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                                    {{ form_row(form.lbDatedepacoll) }}
+                                                    {{ form_row(form.refMotifDepart) }}
+                                                {% endif %}
+                                                <div id="deces">
+                                                    {% if (enquetecoll.blBilasoci == true) %}
+                                                        {{ form_row(form.cdMotidece) }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div id="EmploiPermanent2">
+                                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                                    <div id="motiArrietStat">
+                                                        {{ form_row(form.RefMouvinteanne) }}
+                                                    </div>
+                                                {% endif %}
+                                                <div id="blPromavanstaganne"
+                                                    {% if (form.refStatut.vars.value  == 1 ) or (form.refStatut.vars.value  == 2) %}{% else %}class="hidden" {% endif %} >
+                                                    {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                                        {{ form_row(form.blPromavanstaganne) }}
+                                                        {#<p>si oui a cette question afficher ( VOIR CHOIX MULTIPLE )</p>#}
+                                                        <div id="blPromavanstaganneyes"
+                                                             {% if (form.blPromavanstaganne.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>
+                                                            {#                                        <p>Q18.1 - Quel est le motif de promotion, d'avancement ou de mise en stage….. (Choix multiples)</p>#}
+                                                            {{ form_row(form.refAvancementPromotionConcours) }}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                                {{ form_row(form.blTempcomp) }}
+                                            {% endif %}
+                                            {#      <p>si non a cette question afficher </p>#}
+
+                                            <div id="refTempsNonComplet"
+                                                {% if (form.blTempcomp.vars.value  == 0 and form.blTempcomp.vars.value  is not empty) %}{% else %}class="hidden" {% endif %}>
+                                                {% if (enquetecoll.blBilasoci == true) %}
+                                                    {{ form_row(form.refTempsNonComplet) }}
+                                                {% endif %}
+                                            </div>
+                                            {% if (enquetecoll.blBilasoci == true) %}
+                                                <div>
+                                                    {{ form_row(form.refContrainteTravail) }}
+                                                </div>
+                                            {% endif %}
+                                            <div id="q11non" {% if (form.blTempcomp.vars.value  == 1 ) %}{% else %}class="hidden" {% endif %}>
+                                                <label>
+                                                    Q12.1 - L'agent est-il à temps plein ?
+                                                    <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q121TempsPlein" aria-hidden="true"></span>
+                                                </label>
+                                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+                                                    {{ form_row(form.blTempplein) }}
+                                                {% endif %}
+                                            {#   <p>si non a cette question afficher </p>#}
+                                                <div>
+                                                    <div id="refTempsPartiel"
+                                                         {% if (form.blTempplein.vars.value  == 0 and form.blTempplein.vars.value is not empty) %}{% else %}class="hidden" {% endif %}>
+                                                         {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true)) %}
+                                                            <label>
+                                                                Q12.2 - Quel est le type de temps partiel ?
+                                                                <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q122TempsPartiel" aria-hidden="true"></span>
+                                                            </label>
+                                                            {{ form_row(form.refTempsPartiel) }}
+                                                            {{ form_row(form.refPourcentageTempaPartiel) }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% if (enquetecoll.blBilasoci == true) %}
+                                                <span style="color:black;font-weight: bold; display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: 700;">Q28 - L'agent a-t il fait une demande de temps partiel dans l'année {{ anne_campagne }}
+                                                    ? </span>
+                                                {{ form_row(form.blDemapart) }}
+
+                                                <div id="Demapart" {% if (form.blDemapart.vars.value != 0) %}{% else %}class="hidden" {% endif %}>
+                                                    {{ form_label(form.nbDemapart, "Q28.1 - Nombre de demandes présentées par l'agent :") }} <span
+                                                            style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal"
+                                                            alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q28_1"
+                                                            aria-hidden="true"></span>
+                                                    {{ form_row(form.nbDemapart) }}
+
+                                                    {{ form_label(form.nbDemapartacce, "Q28.2 - Nombre de demandes acceptées pour l'agent :") }} <span
+                                                            style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal"
+                                                            alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q28_2"
+                                                            aria-hidden="true"></span>
+                                                    {{ form_row(form.nbDemapartacce) }}
+
+                                                    {{ form_label(form.nbPremdemasati, "Q28.3 - Nombre de premières demandes satisfaites pour l'agent :") }}
+                                                    {{ form_row(form.nbPremdemasati) }}
+
+                                                    {{ form_label(form.nbModiemplpermtempcomp, "Q28.4 - Nombre de modifications de quotités pour l'agent : ") }}
+                                                    <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal"
+                                                          alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q28_4"
+                                                          aria-hidden="true"></span>
+                                                    {{ form_row(form.nbModiemplpermtempcomp) }}
+
+                                                    {{ form_label(form.nbAgenempltempcompnonrenou, "Q28.5 - Nombre de retours au temps plein pour l'agent : ") }}
+                                                    <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal"
+                                                          alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q28_5"
+                                                          aria-hidden="true"></span>
+                                                    {{ form_row(form.nbAgenempltempcompnonrenou) }}
+                                                </div>
+                                            {% endif %}
+                                            <div {% if (informationGenerales is not null) %} {% if (informationGenerales.q2  == true) %} {% else %}class="hidden" {% endif %} {% endif %}>
+                                                {% if (enquetecoll.blBilasoci == true) %}
+                                                    {{ form_row(form.refCycleTravail) }}
+                                                    <span style="color:black;font-weight: bold; display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: 700;">Q24.1 - Est-ce que ce cycle de travail a été délibéré avant le 1er janvier 2002 ?</span>
+                                                    {{ form_row(form.blCyclTrav) }}
+                                                {% endif %}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="nonPermanent" {% if (form.refStatut.vars.value  == 4 ) %}{% else %}class="hidden" {% endif %}>
+                                        <label>
+                                            Question 2.6 - Quel est le type de contrat non permanent ?
+                                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q26RefEmpNonPerma" aria-hidden="true"></span>
+                                        </label>
+                                        {{ form_row(form.refEmploiNonPermanent) }}
+                                        <div id="refEmploiNonPermanent"
+                                             {% if (form.refEmploiNonPermanent.vars.value  == 1 ) %}{% else %}class="hidden" {% endif %}>
+                                            {{ form_row(form.refStructureOrigine) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="section_remuneration" style="display:none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">Rémunerations</h3>
+                        </div>
+                        <div class="panel-body apa">
+                            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blGepe == true))) %}
+{#                                <div id='etprTabq13'>#}
+{#                                    <label>Q13 - Quel est le nombre d'heures rémunérées dans l'année ?</label>#}
+{#                                    {% form_theme form.etpragent '@Apa/fields_child.html.twig' %}#}
+{#                                    <table class="table" id="mytable1">#}
+{#                                        <thead>#}
+{#                                            <tr>#}
+{#                                                <th>période de</th>#}
+{#                                                <th>au</th>#}
+{#                                                <th>Statut</th>#}
+{#                                                <th>Type de contrat</th>#}
+{#                                                <th>Filière</th>#}
+{#                                                <th>Cadre emploi</th>#}
+{#                                                <th>Nb heures</th>#}
+{#                                                <th>ETPR</th>#}
+{#                                                <th id="button">#}
+{#                                                    <button id="add-etpragent" type="button" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"#}
+{#                                                                                                                                      aria-hidden="true"></span>#}
+{#                                                    </button>#}
+{#                                                </th>#}
+{#                                            </tr>#}
+{#                                        </thead>#}
+{#                                        <tbody class="form1" data-prototype="{{ form_widget(form.etpragent.vars.prototype)|e ('html_attr') }}">#}
+{#                                            {% for etpr in form.etpragent %}#}
+{#                                                <tr>#}
+{#                                                    {{ form_widget(etpr) }}#}
+{#                                                    <td>#}
+{#                                                        <button type="button" class="remove btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>#}
+{#                                                    </td>#}
+{#                                                </tr>#}
+{#                                            {% endfor %}#}
+{#                                        </tbody>#}
+{#                                    </table>#}
+{#                                </div>#}
+{#                                <div>#}
+{#                                    {% if (enquetecoll.blBilasoci == true) %}#}
+{#                                        <label>Q29.1 - Montant total des rémunérations annuelles brutes : </label>#}
+{#                                        {% form_theme form.RemunerationGlobaleAgent '@Apa/fields_child.html.twig' %}#}
+{#                                        <table class="table" id="mytable2">#}
+{#                                            <thead>#}
+{#                                            <tr>#}
+{#                                                <th>Statut</th>#}
+{#                                                <th>Filière</th>#}
+{#                                                <th>Catégorie (ABC et Mayotte)</th>#}
+{#                                                <th style="width: 110px">Total des heures payées</th>#}
+{#                                                <th>Montant total de la rémunération brute</th>#}
+{#                                                <th>Dont primes et indemnités au titre de l'article 111</th>#}
+{#                                                <th>Dont primes et indemnités (y.c. heures supplémentaires) relevant de l'article 88 (hors remboursement de frais)</th>#}
+{#                                                <th>Dont heures supplémentaires ou complémentaires</th>#}
+{#                                                <th>Dont NBI</th>#}
+{#                                                <th id="button">#}
+{#                                                    <button id="add-RemunerationGlobaleAgent" type="button" class="btn btn-success pull-right"><span#}
+{#                                                                class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>#}
+{#                                                </th>#}
+{#                                            </tr>#}
+{#                                            </thead>#}
+
+{#                                            <tbody class="form2" data-prototype="{{ form_widget(form.RemunerationGlobaleAgent.vars.prototype)|e ('html_attr') }}">#}
+
+{#                                            {% for Remuneration in form.RemunerationGlobaleAgent %}#}
+{#                                                <tr>#}
+{#                                                    {{ form_widget(Remuneration) }}#}
+{#                                                    <td>#}
+{#                                                        <button type="button" class="remove btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span>#}
+{#                                                        </button>#}
+{#                                                    </td>#}
+{#                                                </tr>#}
+{#                                            {% endfor %}#}
+{#                                            </tbody>#}
+{#                                        </table>#}
+{#                                    {% endif %}#}
+{#                                    <div {% if informationColectiviteAgent is not null and  informationGenerales.blHeursupp  == 1 %} {% else %} class="hidden" {% endif %}>#}
+{#                                        <label>Cet agent est-il concerné par les heures supplémentaires ou complémentaires ?</label>#}
+{#                                        {{ form_row(form.blHeureSuppComp) }}#}
+{#                                    </div>#}
+{#                                    <div id="nbHeureSupp" {% if informationColectiviteAgent is not null and  informationGenerales.blHeursupp  == 1 and form.blHeureSuppComp.vars.value == 1 %} {% else %}class="hidden" {% endif %}>#}
+{#                                        {% if (enquetecoll.blBilasoci == true) %}#}
+{#                                            <label>- Q30.1 - Nombre d'heures supplémentaires réalisées et rémunérées : </label>#}
+{#                                            {% form_theme form.HeuSuppReaRemAgent '@Apa/fields_child.html.twig' %}#}
+{#                                            <table class="table" id="mytable6">#}
+{#                                                <thead>#}
+{#                                                <tr>#}
+{#                                                    <th>Statut</th>#}
+{#                                                    <th>Filière</th>#}
+{#                                                    <th>Cadre emploi</th>#}
+{#                                                    <th>Temps complet</th>#}
+{#                                                    <th>Montant total des rémunérations annuelles brutes des heures supplémentaires</th>#}
+{#                                                    <th id="button">#}
+{#                                                        <button id="add-HeuSuppReaRemAgent" type="button" class="btn btn-success pull-right"><span#}
+{#                                                                    class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>#}
+{#                                                    </th>#}
+{#                                                </tr>#}
+{#                                                </thead>#}
+
+{#                                                <tbody class="form6" data-prototype="{{ form_widget(form.HeuSuppReaRemAgent.vars.prototype)|e ('html_attr') }}">#}
+
+{#                                                {% for HeuSuppReaRemAgent in form.HeuSuppReaRemAgent %}#}
+{#                                                    <tr>#}
+{#                                                        {{ form_widget(HeuSuppReaRemAgent) }}#}
+{#                                                        <td>#}
+{#                                                            <button type="button" class="remove btn btn-danger pull-right"><span#}
+{#                                                                        class="glyphicon glyphicon-trash"></span></button>#}
+{#                                                        </td>#}
+{#                                                    </tr>#}
+{#                                                {% endfor %}#}
+{#                                                </tbody>#}
+{#                                            </table>#}
+{#                                        {% endif %}#}
+{#                                        #}{#                        {{ form_row(form.nbHeursupp) }}#}
+{#                                    </div>#}
+{#                                    <div id="nbHeureComp" {% if informationColectiviteAgent is not null and informationGenerales.blHeurcomp  == 1 and form.blHeureSuppComp.vars.value == 1 %} {% else %}class="hidden" {% endif %}>#}
+{#                                        {% if (enquetecoll.blBilasoci == true) %}#}
+{#                                            <label>- Q30.2 - Nombre d'heures complémentaires réalisées et rémunérées : </label>#}
+{#                                            {% form_theme form.HeuCompReaRemAgent '@Apa/fields_child.html.twig' %}#}
+{#                                            <table class="table" id="mytable7">#}
+{#                                                <thead>#}
+{#                                                <tr>#}
+{#                                                    <th>Statut</th>#}
+{#                                                    <th>Filière</th>#}
+{#                                                    <th>Cadre emploi</th>#}
+{#                                                    <th>Temps complet</th>#}
+{#                                                    <th>Montant total des rémunérations annuels brutes des heures complémentaires</th>#}
+{#                                                    <th id="button">#}
+{#                                                        <button id="add-HeuCompReaRemAgent" type="button" class="btn btn-success pull-right"><span#}
+{#                                                                    class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>#}
+{#                                                    </th>#}
+{#                                                </tr>#}
+{#                                                </thead>#}
+
+{#                                                <tbody class="form7" data-prototype="{{ form_widget(form.HeuCompReaRemAgent.vars.prototype)|e ('html_attr') }}">#}
+
+{#                                                {% for HeuCompReaRemAgent in form.HeuCompReaRemAgent %}#}
+{#                                                    <tr>#}
+{#                                                        {{ form_widget(HeuCompReaRemAgent) }}#}
+{#                                                        <td>#}
+{#                                                            <button type="button" class="remove btn btn-danger pull-right"><span#}
+{#                                                                        class="glyphicon glyphicon-trash"></span></button>#}
+{#                                                        </td>#}
+{#                                                    </tr>#}
+{#                                                {% endfor %}#}
+{#                                                </tbody>#}
+{#                                            </table>#}
+{#                                        {% endif %}#}
+{#                                    </div>#}
+{#                                </div>#}
+
+                                {% if (enquetecoll.blBilasoci == true) %}
+
+                                    <div style=" display:block; width: 100% ; overflow-x: scroll; white-space: nowrap;">
+                                        <label>Q29.1 - Montant total des rémunérations annuelles brutes :</label>
+                                        {% form_theme form.RemunerationAgent '@Apa/fields_child.html.twig' %}
+                                        <table class="table" id="mytable1">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-xs-1">période de</th>
+                                                <th class="col-xs-1">au</th>
+                                                <th class="col-xs-1">Statut</th>
+                                                <th class="col-xs-1">Type de contrat</th>
+                                                <th colspan="1">Temps de travail</th>
+                                                <th class="col-xs-1">Catégorie</th>
+                                                <th colspan="1">Filière</th>
+                                                <th colspan="1">Montant total de la rémunération brute</th>
+                                                <th colspan="1">Dont primes et indemnités au titre de l'article 111</th>
+                                                <th colspan="1">Dont NBI</th>
+                                                <th colspan="1">Dont HC/HS</th>
+                                                <th colspan="1">Dont SFT</th>
+                                                <th colspan="1">Dont IR</th>
+                                                <th colspan="1">Nombre d'heures supplémentaires</th>
+                                                <th colspan="1">Nombre d'heures complémentaires</th>
+
+                                                <th colspan="1" id="button">
+                                                    <button id="add-RemunerationAgent" type="button" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                    </button>
+                                                </th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody class="form1" data-prototype="{{ form_widget(form.RemunerationAgent.vars.prototype)|e ('html_attr') }}">
+
+                                            {% for Remuneration in form.RemunerationAgent %}
+                                                <tr>
+                                                    {{ form_widget(Remuneration) }}
+                                                    <td>
+                                                        <button type="button" class="remove btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% endif %}
+
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+                <section id="section_absences" style="display:none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">Absences</h3>
+                        </div>
+                        <div class="panel-body apa">
+                           {# {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true) or collectivite.blCollDGCL == true) %} #}
+                            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true)) %}
+                                {{ form_row(form.blAgenabse) }}
+
+                                <div id="AbsenceArret" {% if (form.blAgenabse.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>
+
+                                    <b style="margin-bottom: 5px; display: block">Pour les accidents de travail et maladies professionnelles, nous vous invitons à
+                                        ajouter une ligne (+) pour chaque évènement survenu en {{ anne_campagne }} ou {{ anne_campagne-1 }} ayant entrainé des
+                                        absences en {{ anne_campagne }}</b>
+                                    {% form_theme form.AbsenceArretAgents '@Apa/fields_child.html.twig' %}
+                                    <table class="table rassct_table" id="mytable8">
+                                        <thead>
+                                        <tr>
+                                            {% if (enquetecoll.blRast == true) %}
+                                                <th style="width: 65px;">Accident avec arrêt</th>
+                                                <th style="width: 18.2%;">Motif D'absence</th>
+                                                <th style="width: 4%">Nombre de jours d'absence <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q201NbJourAbs" aria-hidden="true"></span></th>
+                                                <th style="width: 4%">Nombre d'arrêt(s)</th>
+                                                <th style="width: 70px;">Evènement survenu en...</th>
+                                            {% else %}
+                                                <th style="width: 10%;">Accident avec arrêt</th>
+                                                <th style="width: 60%;">Motif D'absence</th>
+                                                <th style="width: 10%">Nombre de jours d'absence <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q201NbJourAbs" aria-hidden="true"></span></th>
+                                                <th style="width: 10%">Nombre d'arrêt(s)</th>
+                                                <th style="width: 10%;">Evènement survenu en...</th>
+                                            {% endif %}
+                                            {% if (enquetecoll.blRast == true) %}
+                                                <th style="color: #24819B; width: 9.8%;">Nature lésion</th>
+                                                <th style="color: #24819B; width: 9.8%;">Siege lésion</th>
+                                                <th style="color: #24819B; width: 9.8%;">Element matériel</th>
+                                                <th style="color: #24819B; width: 9.8%;">Maladie professionnelle</th>
+                                                <th style="color: #24819B; width: 9.8%;">Type d'activité ayant entrainé la maladie professionnelle</th>
+                                                <th style="color: #24819B; width: 9.8%;">Type d'activité ayant entrainé l'arrêt de travail</th>
+                                            {% endif %}
+                                            <th id="button">
+                                                <button id="add-AbsenceArretAgents" type="button" class="btn btn-success pull-right"><span
+                                                            class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                                            </th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody class="form8" data-prototype="{{ form_widget(form.AbsenceArretAgents.vars.prototype)|e ('html_attr') }}">
+                                        {% for AbsenceArretAgents in form.AbsenceArretAgents %}
+                                        <tr>
+                                            {{ form_widget(AbsenceArretAgents) }}
+                                            <td>
+                                                <button type="button" class="remove btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </td>
+                                        <tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endif %}
+
+                            {#                           <div id="rassct">
+                                                            {% if (enquetecoll.blRast == true) %}
+                                                                {% include '@Apa/bilansocialagent/rassctTemplateForm.html.twig' %}
+                                                            {% endif %}
+                                                        </div>
+                            #}
+
+                            {# {{ form_row(form.AbsenceArretAgents) }}#}
+                            {#                {{ form_row(form.AbsenceArretAgent) }}#}
+                          {#  {% if collectivite.blCollDGCL == true %}#}
+                                <div id="DgclJoursCarence" {% if (enquetecoll.blBilasoci == false) or (form.blAgenabse.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>
+                                    <div class="">
+                                        <label><strong>{% trans with {'%annee%': campagne.nmAnne} %}agent.blJoursCarence.label{% endtrans %}</strong></label>
+                                        {{ form_row(form.Dgcl.blJoursCarence) }}
+                                        <div id='DgclJoursCarenceDetails' {% if (form.Dgcl.blJoursCarence.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>
+                                            <label><strong>{% trans with {'%annee%': campagne.nmAnne} %}agent.nbJoursCarence.label{% endtrans %}</strong></label>
+                                            {{ form_row(form.Dgcl.nbJoursCarence) }}
+                                            {{ form_row(form.Dgcl.nbMontantCarence) }}
+                                        </div>
+                                    </div>
+                                </div>
+                          {#  {% endif %}#}
+                            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blHand == true))) %}
+                                {{ form_row(form.nbAllotempinvtrav) }}
+                                {{ form_row(form.nbAllotempinvapro) }}
+                                {{ form_row(form.nbAllotempinvaautrecas) }}
+                            {% endif %}
+{#                            <div {% if (informationGenerales is not null) %} {% if (informationGenerales.q4  == true) %} {% else %}class="hidden" {% endif %} {% endif %}>#}
+{#                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true)) %}#}
+{#                                    {{ form_row(form.blEntrdepacong) }}#}
+{#                                    <div id="blEntrdepacong" {% if (form.blEntrdepacong.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>#}
+{#                                        {{ form_row(form.refMotifEntretienDepart) }}#}
+{#                                    </div>#}
+{#                                {% endif %}#}
+{#                            </div>#}
+
+{#                            <div {% if (informationGenerales is not null) %} {% if (informationGenerales.q5  == true) %} {% else %}class="hidden" {% endif %} {% endif %}>#}
+{#                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true)) %}#}
+{#                                    {{ form_row(form.blEntrretocong) }}#}
+{#                                    <div id="blEntrretocong" {% if (form.blEntrretocong.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>#}
+{#                                        {{ form_row(form.refMotifEntretienRetour) }}#}
+{#                                    </div>#}
+{#                                {% endif %}#}
+{#                            </div>#}
+                        </div>
+                    </div>
+                </section>
+                <section id="section_formation" style="display:none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">Formation</h3>
+                        </div>
+                        <div class="panel-body apa">
+                            {% if (enquetecoll.blBilasoci == true) %}
+                                {{ form_row(form.blFormsuiv) }}
+                                <div id="FormationAgent" {% if (form.blFormsuiv.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>
+                                    {% form_theme form.FormationAgents '@Apa/fields_child.html.twig' %}
+                                    <table class="table" id="mytable9">
+                                        <thead>
+                                        <tr>
+                                            <th class="th-formation">Formation <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q33Formation" aria-hidden="true"></span></th>
+                                            <th>Organisme de formation</th>
+                                            <th>Nb jours de formation</th>
+                                            <th>CPF</th>
+
+                                            <th id="button">
+                                                <button id="add-FormationAgents" type="button" class="btn btn-success pull-right"><span
+                                                            class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                                            </th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody class="form9" data-prototype="{{ form_widget(form.FormationAgents.vars.prototype)|e ('html_attr') }}">
+                                        {% for FormationAgents in form.FormationAgents %}
+                                        <tr>
+                                            {{ form_widget(FormationAgents) }}
+                                            <td>
+                                                <button type="button" class="remove btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </td>
+                                        <tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endif %}
+                            {% if (enquetecoll.blBilasoci == true) %}
+                                <label>
+                                    Q34.1 - L'agent a-t-il sollicité une VAE ?
+                                    <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q341Vae" aria-hidden="true"></span>
+                                </label>
+                                {{ form_row(form.blVae) }}
+                                <div id="bilan_social_bundle_apabundle_bilansocialagent_blVaeyes"
+                                     {% if (form.blVae.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>
+                                    {{ form_row(form.idEbcf) }}
+                                </div>
+
+                                <label>
+                                    Q35.1 - L'agent a-t-il effectué un bilan de compétences ?
+                                    <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q351BilaComp" aria-hidden="true"></span>
+                                </label>
+                                {{ form_row(form.blBilacomp) }}
+                                <div id="bilan_social_bundle_apabundle_bilansocialagent_blBilacompyes"
+                                     {% if (form.blBilacomp.vars.value  == 1) %}{% else %}class="hidden" {% endif %}>
+                                    {{ form_row(form.nbBilacomp) }}
+
+
+
+                                    {{ form_row(form.blCongform) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+                <section id="section_autres" style="display:none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">Autres</h3>
+                        </div>
+                        <div class="panel-body apa">
+                            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blHand == true)) %}
+                                <div {% if (informationGenerales is not null) %} {% if (informationGenerales.q3  == true) %} {% else %}class="hidden" {% endif %} {% endif %}>
+                                    {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blHand == true)) %}
+                                        <label>
+                                            Q19 - L'agent est-il BOETH ?
+                                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q19Boeth" aria-hidden="true"></span>
+                                        </label>
+                                        {{ form_row(form.blBoeth) }}
+                                    {% endif %}
+                                    <div id="handitorial">
+                                        {% if enquetecoll.blHand == true %}
+                                            {% include '@Apa/bilansocialagent/handTemplateForm.html.twig' %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div id="cet" {% if (informationGenerales is not null) %} {% if (informationGenerales.q6  == true) %} {% else %}class="hidden" {% endif %} {% endif %}>
+                                    {% if (enquetecoll.blBilasoci == true) %}
+                                        <label>
+                                            Q26 - L'agent a-t-il un CET ?
+                                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q26Cet" aria-hidden="true"></span>
+                                        </label>
+                                        {{ form_row(form.blCet) }}
+
+                                        <div id="blCetyes" {% if (form.blCet.vars.value  == 1) %}class="" {% else %}class="hidden" {% endif %}>
+                                            {{ form_row(form.blCetOuvert) }}
+                                            {{ form_row(form.nbJourcumu3112) }}
+                                            {{ form_row(form.nbJourvers3112) }}
+                                            {{ form_row(form.nbJourdepe3112) }}
+                                            {{ form_row(form.nbJourinde3112) }}
+                                            {{ form_row(form.nbJourprisrafp3112) }}
+                                            {{ form_row(form.nbJourdonneBenef) }}
+
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div id="q271"{% if (informationGenerales is not null) %} {% if (informationGenerales.q7  == true) %} {% else %}class="hidden" {% endif %} {% endif %}>
+                                    {% if (enquetecoll.blBilasoci == true) %}
+                                        {{ form_row(form.blTeletrav) }}
+                                    {% endif %}
+                                </div>
+                                <div id="afficher271" {% if (form.blTeletrav.vars.value  == 1) %}class="" {% else %}class="hidden" {% endif %}>
+
+                                    {{ form_row(form.blTeletravBenef) }}
+
+                                </div>
+
+                                {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and (enquetecoll.blRast == true or enquetecoll.blHand == true))) %}
+                                    {{ form_row(form.blAgenprev) }}
+                                    <div id="blAgenprevyes" {% if (form.blAgenprev.vars.value  == 1) %}class="" {% else %}class="hidden" {% endif %}>
+                                        {{ form_row(form.refTypeMissionPrevention) }}
+                                    </div>
+                                    {{ form_row(form.blDemainap) }}
+                                    <div id="inapdema" {% if (form.blDemainap.vars.value  == 1) %}class="" {% else %}class="hidden" {% endif %}>
+                                        {{ form_row(form.refInapDema) }}
+                                    </div>
+
+                                    {{ form_row(form.blDeciinap) }}
+                                {% endif %}
+                                <div id="inapdeci" {% if (form.blDeciinap.vars.value  == 1) %}class="" {% else %}class="hidden" {% endif %}>
+                                    {{ form_row(form.refInapdeci) }}
+                                    <div id="FiliereInaptitude" class="hidden">
+                                        {{ form_row(form.FiliereInaptitude) }}
+
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {#  {{ form_row(form.cdUtilcrea) }}
+                      {{ form_row(form.cdUtilmodi) }}#}
+                </section>
+                {% if EnqueteCollectiviteparam.blGepe == 1 %}
+                <section id="section_gpeec" style="display:none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">GPEEC</h3>
+                        </div>
+                        <div class="panel-body apa">
+
+                            {% if enquetecoll.blGepe == true %}
+                                <input id='currentMetier' type='hidden' value='{{ currentMetier }}' />
+                                <div id="gpeec">
+                                    {{ form_row(form.Gpeec.idDomaineDiplomeGpeec) }}
+                                    <!-- Gpeec -->
+                                    {#  {% for metier in form.Gpeec %}
+                                          {{ dump(metier.vars.data) }}
+                                          {% endfor %}#}
+                                    <label>Quelle est la fonction occupée par l'agent au 31/12/{{ anne_campagne }} (métier répertoire CNFPT) ?</label><br/>
+                                    <p>3 possibilités vous sont proposées pour retrouver le métier exercé par l'agent: </p>
+                                    <ul>
+                                        <li>Le top 30 des métiers les plus présents dans la FPT</li>
+                                        <li>La recherche par famille de métiers</li>
+                                        <li>la barre de recherche libre</li>
+                                    </ul>
+                                    <p>Recherche par famille :</p>
+                                    <select id="domainePro">
+                                        <option></option>
+                                        {% for domaine in domainePro %}
+                                            <option value="{{ domaine.idDomaineProfessionnel }}">{{ domaine.lbDomaineProfessionnel }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <select id="familleMetier">
+                                        <option></option>
+                                        {% for famille in familleMetier %}
+                                            <option value="{{ famille.idFamilleMetier }}">{{ famille.lbFamilleMetier }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <table id="listmetier" class="table table-striped" style="width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th>Libellé métier</th>
+                                            <th>Autre appellation</th>
+                                            <th>Sélection</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+
+                                    <div class="hidden">{{ form_widget(form.Gpeec.refMetier) }}</div>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    {% if enquetecoll.blGpeecPlus == true %}
+                        <input id='currentSpecialite' type='hidden' value='{{ currentSpecialite }}' />
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">GPEEC +</h3>
+                            </div>
+                            <div class="panel-body apa">
+
+                                <div id="gpeec_plus">
+                                    <!-- Gpeec -->
+                                    {#  {% for metier in form.Gpeec %}
+                                          {{ dump(metier.vars.data) }}
+                                          {% endfor %}#}
+                                    <label>Quelle est la spécialité de ce diplôme ?</label><br/>
+
+                                    <select id="domaineSpecialite">
+                                        <option></option>
+                                        {% for spe in domaineSpecialite %}
+                                            <option value="{{ spe.idDomaineSpecialite }}">{{ spe.lbDomaineSpecialite }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <table id="listspecialite" class="table table-striped" style="width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 45%;">Libellé spécialité</th>
+                                            <th style="width: 10%;">Sélection</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+
+                                    <div class="hidden">{{ form_widget(form.GpeecPlus.refSpecialite) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </section>
+                {% endif %}
+            </div>
+            {#<div class="pull-right" style="display: inline-block; margin: 3px;">
+
+                {{ form_row(form.valider) }}
+            </div>#}
+            <div class="pull-right" style="display: inline-block;  margin: 3px;">
+                <input type='text' name="currentstep" id="currentstep" class="hidden">
+                {{ form_row(form.enregistrer_new) }}
+
+            </div>
+
+            {{ form_row(form.pcFillAgent) }}
+            {{ form_row(form._token) }}
+            {{ form_end(form, {'render_rest': false}) }}
+            <a href="{{ path('bilansocialagent_index') }}">
+                <button type="button" class="btn btn-primary">retour au menu</button>
+            </a>
+        </div>
+    </div>
+    <div class="row footerBilanSocial">
+        <p>Conditions générales</p>
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            changeDetect = false;
+            $(document).change();
+
+
+            function initForm271() {
+                var q27Res = $('input[name="bilan_social_bundle_apabundle_bilansocialagent[blTeletrav]"]').filter(':checked').val();
+
+                if (q27Res == "1") {
+                    $('#afficher271').show();
+                    alert(1);
+                } else {
+                    $('#afficher271').hide();
+                    alert(0);
+                }
+
+            }
+
+            initForm271();
+            $("#bilan_social_bundle_apabundle_bilansocialagent_blTeletrav").on("click", function () {
+                alert(3);
+                initForm271();
+            });
+        });
+    </script>
+
+{% endblock %}
+

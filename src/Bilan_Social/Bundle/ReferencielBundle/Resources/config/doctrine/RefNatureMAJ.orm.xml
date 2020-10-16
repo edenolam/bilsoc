@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefNatureMAJ" table="ref_nature_maj"
+            repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefNatureMAJRepository" >
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <id name="idNatureMAJ" type="integer" column="ID_NATURE_MAJ">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="lbNatureMAJ" type="string" column="LB_STAT" length="100" nullable="true"/>
+        <field name="cdStat" type="string" column="CD_STAT" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="blCrea" type="integer" column="BL_CREA" length="50" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="historiqueCollectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\HistoriqueCollectivite" mapped-by="refNatureMAJ" />
+
+    </entity>
+</doctrine-mapping>

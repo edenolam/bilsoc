@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind7141"  table="ind_7141">
+        <indexes>
+            <index name="FK_7141_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_7141_CATEGORIE" columns="ID_CATE"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_CATE" name="IDXU1_IND_7141"/>
+		</unique-constraints>
+        <id name="id7141" type="integer" column="ID_7141">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind7141s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE" nullable="false"/>
+        </many-to-one>
+
+        <field name="r71411" type="integer" column="R_71411" nullable="true" />
+        <field name="r71412" type="integer" column="R_71412" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

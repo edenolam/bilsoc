@@ -1,0 +1,39 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('reffiliere_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refFiliere.cdFili }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refFiliere.lbFili }}</td>
+                </tr>
+                <tr>
+                    <th>Emploi fonctionnel</th>
+                    <td>{% if refFiliere.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refFiliere.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refFiliere} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('reffiliere_edit', { 'idFili': refFiliere.idFili }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

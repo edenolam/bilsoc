@@ -1,0 +1,31 @@
+{
+	"data":[
+		{
+			"code":-1,
+			"lbl":"Non communiqué",
+			"cd_type_formation":null	
+		},{
+			"code":1,
+			"lbl":"Formation initiale (FIA, FAE, FAT)",
+			"cd_type_formation":null	
+		},{
+			"code":-2,
+			"lbl":"Non connu",
+			"cd_type_formation":null	
+		},{
+			"code":2,
+			"lbl":"Formation continue ou diplômante (y compris dans le cadre de VAE)",
+			"cd_type_formation":null	
+		},{
+			"code":3,
+			"lbl":"Préparation concours de la Fonction publique",
+			"cd_type_formation":"F001",
+			"lbl_type_formation":"Préparations aux concours et examens d'accès à la F.P.T."
+		},{
+			"code":4,
+			"lbl":"Formation personnelle",
+			"cd_type_formation":"F006",
+			"lbl_type_formation":"Formation personnelle (hors congés formation)"
+		}
+	]
+}

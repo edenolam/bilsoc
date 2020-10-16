@@ -1,0 +1,3 @@
+enquete_enquete:
+    resource: "@EnqueteBundle/Resources/config/routing/enquete.yml"
+    prefix:   /enquete

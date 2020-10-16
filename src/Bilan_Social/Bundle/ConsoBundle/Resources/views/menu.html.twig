@@ -1,0 +1,496 @@
+<a href="#menu-toggle" class="menu-toggle"> <i class="fa fa-angle-double-left" aria-hidden="true"></i> Cacher le menu</a>
+<div id="wrapper" class="col-md-3 menu-conso">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="clearfix">
+        <div class="menu-header noPadding consolideHeader">
+            {% if app.user.username is defined %}
+                <div class="align-center">
+                {% if(is_granted("ROLE_CDG")) %}
+                    {% set cdg = user_cdg.findCDGByUtilisateur(app.user) %}
+                      <img src="{{ asset(cdg.pathLogo) }}" alt="{{ cdg.nameLogo }}" class="logo_cdg img-responsive center-block"/>
+                    {% elseif(is_granted("ROLE_COLLECTIVITY")) %}
+                        {% set cdg = user_cdg.findCdgByCollectivite(app.user) %}
+
+                          <img src="{{ asset(cdg.pathLogo) }}" alt="{{ cdg.nameLogo }}" class="logo_cdg img-responsive center-block"/>
+
+                    {% elseif(is_granted("ROLE_ADMIN")) %}
+
+
+                {% endif %}
+                </div>
+
+                <label class="raisonSociale"> <strong>
+                        {# {% if (is_granted("ROLE_COLLECTIVITY") and not is_granted('ROLE_PREVIOUS_ADMIN')) %} #}
+                        {% if (is_granted("ROLE_COLLECTIVITY")) %}
+
+                            {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+                                {{ collectiviteinfo.lbColl }}
+                            {% endfor %}
+
+                        {# {% elseif(is_granted("ROLE_PREVIOUS_ADMIN")) %} #}
+                        {% elseif(is_granted("ROLE_CDG")) %}
+                            {% for cdginfo in user_cdg.findOneByCdgByUtilisateur(app.user) %}
+                                {{ cdginfo.lbCdg }}<br />
+                            {% endfor %}
+                            {% if app.session.get('user_siret') is defined and app.session.get('user_siret') is not null %}
+                                <p>Connecté en tant que {{ app.session.get('user_siret') }}</p>
+                                {# {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+                                    <p>Connecté en tant que  {{ collectiviteinfo.nmSire }}</p>
+                                    <a href="{{ path('enquete_suivi', {'_switch_user': '_exit'}) }}">Se déconnecter</a>
+                                {% endfor %} #}
+                               {# {{ collectiviteinfo.nmSire }} #}
+                                 {% if contactPrincipalCollectivite is not null %}
+                                    <p>Nom : {{ contactPrincipalCollectivite.lbNom }}</p>
+                                    <p>Prénom : {{ contactPrincipalCollectivite.lbPren }}</p>
+                                    <p>Nom de la collectivité : {{ contactPrincipalCollectivite.collectivite.lbColl }} </p>
+                                    <p>Fonction : {{ contactPrincipalCollectivite.lbFonc }}</p>
+                                    <p>Téléphone : {{ contactPrincipalCollectivite.lbTele }}</p>
+                                    <p>Email : {{ contactPrincipalCollectivite.lbMail }}</p>
+                                {% endif %}
+                                <a href="{{ path('remove_cdg_session') }}" onclick="window.close()">Se déconnecter</a>
+                            {% endif %}
+                        {% elseif (is_granted("ROLE_ADMIN")) %}
+                            ADMIN
+                        {% endif %}
+                    </strong>
+                </label>
+
+
+                {% if is_granted("ROLE_COLLECTIVITY") %}
+                    <br /><label>Siret : {{ app.user.username }}</label><br />
+                    <label>Dernière connexion le {{app.user.dtlastconn|date('d M Y')}} <br> à {{app.user.dtlastconn|date('H:i:s')}}</label>
+                    <div>
+                            <a href="{{ path('logout') }}" class='logout'><span class="glyphicon glyphicon-off" aria-hidden="true"></span>Déconnexion</a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <ul class="sidebar-nav">
+            {% if (app.session.get('user_siret') is not defined and app.session.get('user_siret') is null) or is_granted("ROLE_COLLECTIVITY") %}
+            <li class="sidebar-brand menu-li">
+                <a href="{{ path('homepage') }}">
+                    <div class="col-xs-12 menu-div accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <i class="fa fa-home fa-2x" aria-hidden="true" ></i>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span>Accueil</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            {% endif %}
+            {% if bilanConso is not null%}
+               {# {% if (bilanConso.fgstat == 1 or bilanConso.fgstat == 2 or bilanConso.fgstat == 5) and is_granted('ROLE_COLLECTIVITY') %}
+                    <div class="notready">
+                    {% endif %}#}
+                {% endif %}
+
+                {% if consolideApaExist is not empty and bilanConso is not null%}
+                    {% if consolideApaExist.blapa and bilanConso.fgStat in [0,3,4] %}
+                        {% if is_granted('ROLE_CDG') or (is_granted('ROLE_COLLECTIVITY') and bilanConso.blUpdated == 0) %}
+                            <hr class="separateur_menu">
+                            <li>
+
+                                <a href="{#{{ path('bilansocialagent_list_agent')}}#}#"  data-toggle="modal" data-target="#myModal">
+                                    <div class="col-xs-12 menu-div ColorBlack" style="display: flex ">
+                                        {#                        <div class="col-xs-3 unlock" style="display: flex; justify-content: center; align-items: center">#}
+                                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+
+                                            {#                            <i class="ColorWhite fa fa-unlock-alt fa-3x" aria-hidden="true"></i>#}
+                                            <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-9">
+
+                                            <div>
+                                                <span>
+                                                    Revenir à <br>l'agent par agent
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+{#                <li>
+                    {% if QuestionnaireExist is not null %}
+                        <a href="{{ path('bilan_conso_edit') }}">
+                            <div class="col-xs-12 menu-div  unlock ColorWhite" style="display: flex ">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <i class="ColorWhite fa fa-unlock-alt fa-3x" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div>
+                                        <span>Informations Collectivité</span>
+#}
+
+                                        {#  <div class="progress" style="margin-bottom: 0px;">
+
+                                              <div class="progress-bar-white" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                                  <span class="sr-only ">100% Complete</span>
+                                              </div>
+                                              <span class="progress-completed ColorBlack">100%</span>
+                                          </div>#}
+{#                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+
+                                            </div>
+
+                                        </div>
+                                        <span class="noMargin">
+                                            Saisie
+                                        </span>
+                                        <span class="progress-completed">100%</span>
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+                        </a>
+                    {% endif %}
+
+                </li>
+#}
+
+                        {% if EnqueteCollectiviteparam.blBilaSoci == true or ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blRast == true) ) %}
+                            <li>
+                                
+                                <div class="col-xs-12 menu-div sous-menu {{ app.request.attributes.get('_route') == 'bilan_conso_effectif_edit' ? 'currentPage' }}" style="display: flex " >
+                                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                        <a href="{{path('bilan_conso_effectif_edit')}}">
+                                            <img src="{{ asset("img/icone/DescriptionSite-24.png") }}" class=" icone-menu"/>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div>
+                                            <a href="{{path('bilan_conso_effectif_edit')}}">
+                                                <span>Effectifs</span>
+                                                <div class="progress">
+                                                    <div id="pbEff" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoEff == 1 %}  {% elseif bilanConso.blIncoEff == 2  %} blue {% elseif bilanConso.blIncoEff == 3 %} orange {% elseif bilanConso.blIncoEff == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.effectif|round }}% {% endif %}">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <p class="noMargin"></p>
+                                            <ul>
+                                                <li><a href="{{path('bilan_conso_effectif_edit')}}#Titulaire" class="anchor" > Titulaires </a></li>
+                                                <li><a href="{{path('bilan_conso_effectif_edit')}}#ContractuelEmploiPermanent" class="anchor">Contractuel sur emploi permanent</a></li>
+                                                <li><a href="{{path('bilan_conso_effectif_edit')}}#ContractuelEmploiNonPermanent" class="anchor">Contractuel sur emploi non permanent</a></li>
+                                            </ul>
+
+                                            <span id="ValEff" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.effectif|round}}% {% endif %}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if EnqueteCollectiviteparam.blBilaSoci == true or ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blhand == true) ) %}
+                            <li>
+                                <a href="{{path('bilan_conso_mouv_edit')}}">
+                                    <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == 'bilan_conso_mouv_edit' ? 'currentPage' }}" style="display: flex " >
+                                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                            <img src="{{ asset("img/icone/DescriptionSite-23.png") }}" class=" icone-menu"/>
+                                        </div>
+                                        <div class="col-xs-9">
+
+                                            <div>
+                                                <span>Mouvements</span>
+                                                <div class="progress">
+                                                    <div id="pbMouv" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoMouv == 1 %}  {% elseif bilanConso.blIncoMouv == 2  %} blue {% elseif bilanConso.blIncoMouv == 3 %} orange {% elseif bilanConso.blIncoMouv == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.mouvement|round }}% {% endif %}">
+                                                    </div>
+                                                </div>
+                                                <p class="noMargin">
+
+                                                </p>
+                                                <span id="ValMouv" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.mouvement|round}}% {% endif %}</span>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% if EnqueteCollectiviteparam.blBilaSoci == true or ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blhand == true) ) %}
+                            <li>
+                                <a href="{{path('bilan_conso_tpstrav_edit')}}">
+                                    <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == 'bilan_conso_tpstrav_edit' ? 'currentPage' }}" style="display: flex">
+                                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                            <img src="{{ asset("img/icone/DescriptionSite-22.png") }}" class="icone-menu"/>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div>
+                                                <span> Absences et temps de travail</span>
+                                                <div class="progress">
+                                                    <div id="pbTpsTrav" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoTpsTrav == 1 %}  {% elseif bilanConso.blIncoTpsTrav == 2  %} blue {% elseif bilanConso.blIncoTpsTrav == 3 %} orange {% elseif bilanConso.blIncoTpsTrav == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.tempstravail|round }}% {% endif %}">
+                                                    </div>
+                                                </div>
+                                                <p class="noMargin"></p>
+                                                <span id="ValTpsTrav" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.tempstravail|round}}% {% endif %}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if EnqueteCollectiviteparam.blBilaSoci == true %}
+                            <li>
+                                <a href="{{path('bilan_conso_remuneration_edit')}}">
+                                    <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == 'bilan_conso_remuneration_edit' ? 'currentPage' }}" style="display: flex">
+                                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                            <img src="{{ asset("img/icone/DescriptionSite-13.png") }}" class="icone-menu"/>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div>
+                                                <span> Rémunération</span>
+                                                <div class="progress">
+                                                    <div id="pbRemuneration" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoRemuneration == 1 %}  {% elseif bilanConso.blIncoRemuneration == 2  %} blue {% elseif bilanConso.blIncoRemuneration  == 3 %} orange {% elseif bilanConso.blIncoRemuneration == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.remuneration|round }}% {% endif %}">
+                                                    </div>
+                                                </div>
+                                                <p class="noMargin"></p>
+                                                <span id="ValRemuneration" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.remuneration|round}}% {% endif %}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% if EnqueteCollectiviteparam.blBilaSoci == true or ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blhand == true) ) %}
+                        <li>
+                            <a href="{{path('bilan_conso_conditions_edit')}}">
+                                <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == 'bilan_conso_conditions_edit' ? 'currentPage' }}" style="display: flex">
+                                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                        <img src="{{ asset("img/icone/DescriptionSite-21.png") }}" class="icone-menu"/>
+                                    </div>
+                                    <div class="col-xs-9">
+
+                                        <div>
+                                            <span> Conditions </span>
+                                            <div class="progress">
+                                                <div id="pbConditions" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoConditions == 1 %}  {% elseif bilanConso.blIncoConditions == 2  %} blue {% elseif bilanConso.blIncoConditions == 3 %} orange {% elseif bilanConso.blIncoConditions == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.condition|round }}% {% endif %}">
+                                                </div>
+                                            </div>
+                                            <p class="noMargin">
+
+                                            </p>
+                                            <span id="ValConditions" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.condition|round}}% {% endif %}</span>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if EnqueteCollectiviteparam.blBilaSoci == true %}
+                            <li>
+                                <a href="{{path('bilan_conso_formation_edit')}}">
+                                    <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == 'bilan_conso_formation_edit' ? 'currentPage' }}" style="display: flex">
+                                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                            <img src="{{ asset("img/icone/DescriptionSite-14.png") }}" class="icone-menu"/>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div>
+                                                <span> Formation </span>
+                                                <div class="progress">
+                                                    <div id="pbFormation" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoFormation == 1 %}  {% elseif bilanConso.blIncoFormation == 2  %} blue {% elseif bilanConso.blIncoFormation  == 3 %} orange {% elseif bilanConso.blIncoFormation == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.formation|round }}% {% endif %}">
+                                                    </div>
+                                                </div>
+                                                <p class="noMargin"></p>
+                                                <span id="ValFormation" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.formation|round}}% {% endif %}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if EnqueteCollectiviteparam.blBilaSoci == true or (collectivite.blCtCdg != true and (EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blRast == true)) %}
+                            <li>
+                                <a href="{{path('bilan_conso_droit_edit')}}">
+                                    <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == 'bilan_conso_droit_edit' ? 'currentPage' }}" style="display: flex">
+                                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                            <img src="{{ asset("img/icone/DescriptionSite-20.png") }}" class="icone-menu"/>
+                                        </div>
+                                        <div class="col-xs-9">
+
+                                            <div>
+                                                <span>  Droits Sociaux </span>
+                                                <div class="progress">
+                                                    <div id="pbDroit" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoDroit == 1 %}  {% elseif bilanConso.blIncoDroit == 2  %} blue {% elseif bilanConso.blIncoDroit  == 3 %} orange {% elseif bilanConso.blIncoDroit == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.droit|round }}% {% endif %}">
+                                                    </div>
+                                                </div>
+                                                <p class="noMargin"></p>
+                                                <span id="ValDroit" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.droit|round}}% {% endif %}</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% if (EnqueteCollectiviteparam.blRast == true ) %}
+                        <li>
+                            <a href="{{path('bilan_conso_rassct_edit')}}">
+                                <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == '#' ? 'currentPage' }}" style="display: flex">
+                                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                        <img src="{{ asset("img/icone/DescriptionSite-17.png") }}" class="icone-menu"/>
+                                    </div>
+                                    <div class="col-xs-9">
+
+                                        <div>
+                                            <span> Rassct</span>
+                                            <div class="progress">
+                                            <div id="pbRassct" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoRassct == 1 %}  {% elseif bilanConso.blIncoRassct == 2  %} blue {% elseif bilanConso.blIncoRassct  == 3 %} orange {% elseif bilanConso.blIncoRassct == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.rassct|round }}% {% endif %}">
+                                                </div>
+                                            </div>
+                                            <p class="noMargin">
+
+                                            </p>
+                                            <span id="ValRassct" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.rassct|round}}% {% endif %}</span>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if (EnqueteCollectiviteparam.blhand == true ) %}
+                        <li>
+                            <a href="{{path('bilan_conso_handitorial_edit')}}">
+                                <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == '#' ? 'currentPage' }}" style="display: flex">
+                                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                        <img src="{{ asset("img/icone/DescriptionSite-19.png") }}" class="icone-menu"/>
+                                    </div>
+                                    <div class="col-xs-9">
+
+                                        <div>
+                                            <span> Handitorial</span>
+                                            <div class="progress">
+                                            <div id="pbHanditorial" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoHanditorial == 1 %}  {% elseif bilanConso.blIncoHanditorial == 2  %} blue {% elseif bilanConso.blIncoHanditorial  == 3 %} orange {% elseif bilanConso.blIncoHanditorial == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.handitorial|round }}% {% endif %}">
+                                                </div>
+                                            </div>
+                                            <p class="noMargin">
+
+                                            </p>
+                                            <span id="ValHanditorial" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.handitorial|round}}% {% endif %}</span>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if (EnqueteCollectiviteparam.blGepe == true ) %}
+                        <li>
+                            <a href="{{path('bilan_conso_gpeec_edit')}}">
+                                <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == '#' ? 'currentPage' }}" style="display: flex">
+                                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                        <img src="{{ asset("img/icone/DescriptionSite-18.png") }}" class="icone-menu"/>
+                                    </div>
+                                    <div class="col-xs-9">
+
+                                        <div>
+                                            <span> Gpeec</span>
+                                            <div class="progress">
+                                                <div id="pbGpeec" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoGpeec == 1 %}  {% elseif bilanConso.blIncoGpeec == 2  %} blue {% elseif bilanConso.blIncoGpeec  == 3 %} orange {% elseif bilanConso.blIncoGpeec == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.gpeec|round }}% {% endif %}">
+                                                </div>
+                                            </div>
+                                            <p class="noMargin">
+
+                                            </p>
+                                            <span id="ValGpeec" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.gpeec|round}}% {% endif %}</span>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </a>
+                        </li>
+                    {% endif %}
+                 {#   {% if collectivite.blCollDgcl == true %}#}
+                     {#   <li>
+                            <a href="{{path('bilan_conso_dgcl_edit')}}">
+                                <div class="col-xs-12 menu-div {{ app.request.attributes.get('_route') == '#' ? 'currentPage' }}" style="display: flex">
+                                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                        <img src="{{ asset("img/logos/logo_dgcl.jpg") }}" class="icone-menu"/>
+                                    </div>
+                                    <div class="col-xs-9">
+
+                                        <div>
+                                            <span> Enquête Dgcl : jours de carence</span>
+                                            <div class="progress">
+                                                <div id="pbDgcl" class="progress-bar progress-bar-white {% if bilanConso is not null%} {% if bilanConso.blIncoDgcl == 1 %}  {% elseif bilanConso.blIncoDgcl == 2  %} blue {% elseif bilanConso.blIncoDgcl  == 3 %} orange {% elseif bilanConso.blIncoDgcl == 4 %} progress-bar-white {%endif %} {%endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width : {% if bilanConso is not null%} {{ nombreQuestion.moyenne.dgcl|round }}% {% endif %}">
+                                                </div>
+                                            </div>
+                                            <p class="noMargin">
+
+                                            </p>
+                                            <span id="ValDgcl" class="progress-completed">{% if bilanConso is not null%} {{nombreQuestion.moyenne.dgcl|round}}% {% endif %}</span>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </a>
+                        </li>#}
+                 {#   {% endif %}#}
+
+                {% if bilanConso is not null%}
+                 {#   {% if bilanConso.fgstat == 1 %}
+                    </div>
+                {% endif %}#}
+            {% endif %}
+
+        </ul>
+    </div>
+
+    {% if(bilanConso.dtCrea is defined) %}
+        <div id="myModal" class="modal fade backconsolidemodal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                        <p>Attention, vous allez revenir à l’agent par agent datant du
+                            ({{ bilanConso.dtCrea|date('d-m-Y') }}), l’ensemble des données saisies en consolidé
+                            depuis cette date seront perdues.<br><br>Souhaitez-vous continuer ? </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="clearConsolide" class="btn btn-primary pull-right">Oui</button>
+                        <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Non</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    {% endif %}
+</div>

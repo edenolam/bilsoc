@@ -1,0 +1,36 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS apa2cons_ind414_417
+$$
+
+CREATE PROCEDURE apa2cons_ind414_417(idBilaSociCons INT, idColl INT, idEnqu INT)
+COMMENT ''
+LANGUAGE SQL
+NOT DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+BEGIN
+
+	declare vQ414 tinyint(1);
+	declare vR4141  int(11);
+	declare vR4142  int(11);
+	declare vQ415 tinyint(1);
+	declare vQ4161 tinyint(1);
+	declare vQ4162 tinyint(1);
+	declare vQ4163 tinyint(1);
+	declare vQ417 tinyint(1);
+	
+	SELECT  BL_DOCURISQPRO, NM_ANNECREA, NM_ANNEDERNMAJ,	BL_PLANPREVRISQPSYSOCI, BL_DEMAPREVTROUMUSCU, BL_DEMAPREVRISQCANC, BL_AUTRDEMAPREV, BL_REGISANTSECUTRAV	
+	INTO vQ414, vR4141, vR4142, vQ415, vQ4161, vQ4162, vQ4163, vQ417
+	FROM information_colectivite_agent
+	WHERE ID_COLL = idColl
+	AND ID_ENQU = idEnqu;
+	
+	UPDATE bilan_social_consolide SET Q_414 = vQ414, R_4141 = vR4141, R_4142 = vR4142, Q_415 = vQ415,  
+			Q_4161 = vQ4161, Q_4162 = vQ4162, Q_4163 = vQ4163, Q_417 = vQ417   
+	WHERE ID_BILASOCICONS = idBilaSociCons; 
+	
+	
+	
+END
+$$

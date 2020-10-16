@@ -1,0 +1,134 @@
+#
+# ficher de route de base de l'InfoCentreBundle
+#
+# prefix des routes : /info_centre
+#
+info_centre_index:
+  path:     /collectivite
+  defaults: { _controller: InfoCentreBundle:InfoCentre:index }
+
+info_centre_departement_index:
+  path:     /departements
+  defaults: { _controller: InfoCentreBundle:InfoCentreDepartements:index}
+
+info_centre_departement_get_data_ajax:
+  path:     /departements_ajax
+  defaults: { _controller: InfoCentreBundle:InfoCentreDepartements:getDepartementDataToExport}
+  options:
+    expose: true
+
+info_centre_departement_get_list_export:
+  path: /departements_list_export
+  defaults: { _controller: InfoCentreBundle:InfoCentreDepartements:getListTasksExportDepa}
+  options:
+    expose: true
+info_centre_departement_get_export:
+  path:     /departements_an_export
+  defaults: { _controller: InfoCentreBundle:InfoCentreDepartements:getTaskExportDepa }
+  options:
+    expose: true
+
+info_centre_collectivite_get_data_ajax:
+  path:     /collectivite_ajax
+  defaults: { _controller: InfoCentreBundle:InfoCentre:getCollectiviteDataToExport}
+  options:
+    expose: true
+
+info_centre_create_pool:
+  path:     /create_pool
+  defaults: { _controller: InfoCentreBundle:InfoCentre:createPool }
+info_centre_clone_pool:
+  path:     /clone_pool
+  defaults: { _controller: InfoCentreBundle:InfoCentre:clonePool }
+  options:
+    expose: true
+info_centre_delete_pool:
+  path:     /delete_pool
+  defaults: { _controller: InfoCentreBundle:InfoCentre:deletePool }
+  options:
+    expose: true
+
+getUserTasks:
+  path:     /get_task_fiche
+  defaults: { _controller: InfoCentreBundle:InfoCentre:getUserTasks }
+  options:
+    expose: true
+
+
+info_centre_select_pool:
+  path:     /select_pool
+  defaults: { _controller: InfoCentreBundle:InfoCentre:selectPool }
+  options:
+    expose: true
+info_centre_get_filter_form:
+  path:     /get_filter_form
+  defaults: { _controller: InfoCentreBundle:InfoCentre:getFilterForm }
+  options:
+    expose: true
+info_centre_apply_filter:
+  path:     /apply_filter
+  defaults: { _controller: InfoCentreBundle:InfoCentre:applyFilters }
+  options:
+    expose: true
+info_centre_get_filter_results:
+  path:     /get_filter_result
+  defaults: { _controller: InfoCentreBundle:InfoCentre:processCurrentFilterDatatable }
+  options:
+    expose: true
+info_centre_get_pool_items:
+  path:     /get_pool_items
+  defaults: { _controller: InfoCentreBundle:InfoCentre:getCurrentPoolItemsDatatable }
+  options:
+    expose: true
+info_centre_include_to_pool:
+  path:     /include_to_pool
+  defaults: { _controller: InfoCentreBundle:InfoCentre:includeToPool }
+  options:
+    expose: true
+info_centre_remove_from_pool:
+  path:     /remove_from_pool
+  defaults: { _controller: InfoCentreBundle:InfoCentre:removeFromPool }
+  options:
+    expose: true
+info_centre_pool_export:
+  path:     /export_pool
+  defaults: { _controller: InfoCentreBundle:InfoCentre:exportPool }
+  options:
+    expose: true
+info_centre_field_auto_complete:
+  path:     /field_auto_complete
+  defaults: { _controller: InfoCentreBundle:InfoCentre:getAutoComplete }
+  options:
+    expose: true
+info_centre_edit_pool:
+  path:     /edit_pool
+  defaults: { _controller: InfoCentreBundle:InfoCentre:saveEditPool }
+  options:
+    expose: true
+info_centre_check_pool_secret_stat:
+  path:     /check_pool_secret_stat
+  defaults: { _controller: InfoCentreBundle:InfoCentre:checkPoolSecretStat }
+  options:
+    expose: true
+info_centre_check_pool_secret_stat_table:
+  path:     /check_pool_secret_stat_table
+  defaults: { _controller: InfoCentreBundle:InfoCentre:checkPoolSecretStatV }
+  options:
+    expose: true
+info_centre_get_file_from_bsfm:
+  path:     /get_file
+  defaults: { _controller: InfoCentreBundle:InfoCentre:getFileFromBsfm }
+  options:
+    expose: true
+
+infocentre_get_pool_export_bsltm_file:
+  path:     /get_export_file
+  defaults: { _controller: InfoCentreBundle:InfoCentre:getPoolExportFile }
+  options:
+    expose: true
+
+infocentre_get_header_export_hrg_file:
+  path:     /get_export_hrg_file
+  defaults: { _controller: InfoCentreBundle:InfoCentre:getExportHRGFile }
+  options:
+    expose: true

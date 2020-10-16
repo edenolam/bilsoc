@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\HistoriqueCollectivite" repository-class="Bilan_Social\Bundle\CollectiviteBundle\Repository\HistoriqueCollectiviteRepository" table="historique_collectivite">
+    <indexes>
+      <index name="FK_COLLECTIVITE_HISTORIQUE_COLLECTIVITE" columns="ID_COLL"/>
+    </indexes>
+    <id name="idHistcoll" type="integer" column="ID_HISTCOLL">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="lbTypeArch" type="string" column="LB_TYPE_ARCH" length="20" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nmAnciSire" type="string" column="NM_ANCI_SIRE" length="20" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nmNouvSire" type="string" column="NM_NOUV_SIRE" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nmSireAbso" type="string" column="NM_SIRE_ABSO" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dtArch" type="datetime" column="DT_ARCH" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite" inversed-by="historiqueCollectivite">
+        <join-column name="ID_COLL" referenced-column-name="ID_COLL" />
+    </many-to-one>
+    <many-to-one target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefNatureMAJ" field="refNatureMAJ" inversed-by="historiqueCollectivite">
+        <join-column name="ID_NATURE_MAJ" referenced-column-name="ID_NATURE_MAJ" />
+    </many-to-one>
+    <many-to-one target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement" field="departement" inversed-by="historiqueCollectivites">
+        <join-column name="ID_DEPA" referenced-column-name="ID_DEPA" />
+    </many-to-one>
+
+  </entity>
+</doctrine-mapping>

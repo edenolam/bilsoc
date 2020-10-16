@@ -1,0 +1,301 @@
+{
+    "rows" : {
+        "row_1" : {
+            "title_block" : "En --ANNEE--, votre collectivité a rémunéré...",
+            "blocks" : {
+                "block_1" : {
+                    "type" : "block",
+                    "show_condition" : ["blapa","bln4ds","blbasecarr","blcons","bldgcl"],
+                    "show" : null,
+                    "class" : "oui etape1",
+                    "id" : "non_vide",
+                    "text" : "Au moins un agent",
+                    "direction" : "left",
+                    "force_arrow" : false,
+                    "default_on" : true,
+                    "force_offset": null
+                },
+                "block_2" : {
+                    "type" : "block",
+                    "show_condition" : ["blbilasocivide"],
+                    "show": null,
+                    "class" : "non etape1 last",
+                    "id" : "vide",
+                    "text" : "Aucun agent",
+                    "direction" : "right",
+                    "force_arrow" : false,
+                    "default_on" : true,
+                    "force_offset": null
+                }
+            }
+        },
+        "row_2" : {
+            "height_force" : "50",
+            "blocks" : {
+                "block_1" : {
+                    "type" : "title",
+                    "show_condition" : ["blapa","bln4ds","blbasecarr","blcons","bldgcl"],
+                    "show" : null,
+                    "class" : "non_vide unselected DESACTIVE",
+                    "id" : "excel",
+                    "text" : "Vous avez déjà réalisé votre --BS-- --ANNEE-- via excel...",
+                    "direction" : "left",
+                    "force_arrow" : false,
+                    "force_offset": null
+                },
+                "block_2" : {
+                    "type" : "input_button",
+                    "show_condition" : ["blbilasocivide"],
+                    "show" : null,
+                    "class" : "vide unselected last DESACTIVE",
+                    "id" : "bs_vide",
+                    "text" : "Transmettre enquêtes --ANNEE-- vide",
+                    "direction" : "right",
+                    "force_arrow" : false,
+                    "data" : "data-name=bsvide data-function=doOnGenerateEmptyBSClick data-trans=initbilan.import.vide_text data-title=initbilan.import.vide_title",
+                    "function" : "initBsVide(event)",
+                    "force_offset": null
+                }
+            }
+        },
+        "row_3" : {
+            "height_force" : "40",
+            "blocks" : {
+                "block_1" : {
+                    "type" : "block",
+                    "size" : 4,
+                    "show_condition" : ["bldgcl"],
+                    "show" : null,
+                    "id" : "btn_dgcl_oui",
+                    "text" : "Oui",
+                    "class" : "non_vide unselected  etape2 last DESACTIVE",
+                    "direction" : "left",
+                    "force_arrow" : false,
+                    "force_offset": null
+                },
+                "block_2" : {
+                    "type" : "block",
+                    "size" : 8,
+                    "show_condition" :  [
+                            "blapa",
+                            "blcons",
+                            "bln4ds",
+                            "blbasecarr"
+                    ],
+                    "show" : null,
+                    "class" : "non_vide unselected etape2 DESACTIVE",
+                    "id" : "precision",
+                    "text" : "Non",
+                    "direction" : "right",
+                    "force_arrow" : true,
+                    "force_offset" : "col-xs-offset-2"
+                }
+            }
+        },
+        "row_4" : {
+            "height_force" : "60",
+            "blocks" : {
+                "block_1" : {
+                    "type" : "input_file",
+                    "show_condition" : ["bldgcl"],
+                    "show" : null,
+                    "id" : "dgcl",
+                    "id_input" : "file-dgcl",
+                    "class" : "btn_dgcl_oui unselected last DESACTIVE",
+                    "text" : " importer TXT DGCL",
+                    "title_block" : "Import DGCL",
+                    "title_block_class" : "shortcut_dgcl",
+                    "direction" : "left",
+                    "force_arrow" : false,
+                    "function" : "initDgcl(event)",
+                    "data" : "data-name=DGCL data-function=doOnDGCLActionClick data-trans=initbilan.import.dgcl_text data-title=initbilan.import.dgcl_title",
+                    "force_offset": null
+                },
+                "block_2" : {
+                    "type" : "title",
+                    "show_condition" :  [
+                        "blapa",
+                        "blcons",
+                        "bln4ds",
+                        "blbasecarr"
+                    ],
+                    "show" : null,
+                    "class" : "precision unselected DESACTIVE",
+                    "id" : "niveau",
+                    "text" : "Vous souhaitez saisir...",
+                    "direction" : "right",
+                    "force_arrow" : false,
+                    "force_offset": null
+                }
+            }
+        },
+        "row_5" : {
+            "height_force" : "60",
+            "blocks" : {
+                "block_1" : {
+                    "type" : "block",
+                    "show_condition" : ["blapa"],
+                    "show" : "blapa",
+                    "size" : 8,
+                    "class" : "precision etape3 unselected DESACTIVE",
+                    "id" : "btn-bsInitType-apa",
+                    "text" : "Agent par agent",
+                    "direction" : "left",
+                    "force_arrow" : true,
+                    "force_offset": null
+                },
+                "block_2" : {
+                    "type" : "block",
+                    "show_condition" : ["blcons"],
+                    "size" : 4,
+                    "show" : null,
+                    "class" : "precision last etape3 unselected DESACTIVE",
+                    "id" : "btn-bsInitType-cons",
+                    "text" : "Tableau par tableau",
+                    "direction" : "right",
+                    "force_arrow" : true,
+                    "force_offset": "col-xs-offset-7"
+                }
+            }
+        },
+        "row_6" : {
+            "height_force" : "60",
+            "blocks" : {
+                "block_1" : {
+                    "type" : "title",
+                    "show_condition" : ["blapa"],
+                    "show" : null,
+                    "size" : 8,
+                    "id" : "remplissage",
+                    "text" : "Vous souhaitez pré-remplir à partir de...",
+                    "direction" : "left",
+                    "force_arrow" : false,
+                    "class" : "btn-bsInitType-apa unselected DESACTIVE",
+                    "force_offset": null
+                },
+                "block_2" : {
+                    "type" : "input_button",
+                    "show_condition" : ["blcons"],
+                    "size" : 4,
+                    "show" : "blcons",
+                    "id" : "btn-conso",
+                    "class" : "btn-bsInitType-cons unselected last DESACTIVE",
+                    "text" : "Saisie manuelle sans pré-remplissage",
+                    "direction" : "right",
+                    "force_arrow" : false,
+                    "data" : "data-name=conso data-function=doOnManuActionClick data-trans=initbilan.import.conso_text data-title=initbilan.import.conso_title",
+                    "function": "initConso(event)",
+                    "force_offset": null
+                }
+            }
+
+
+
+        },
+        "row_7" : {
+            "height_force" : "40",
+            "blocks" : {
+                "block_1" : {
+                    "type" : "block",
+                    "show_condition" : ["bln4ds"],
+                    "size" : 5,
+                    "class" : "btn-bsInitType-apa unselected etape4 last DESACTIVE",
+                    "show" : null,
+                    "id" : "arrow-n4ds",
+                    "text" : null,
+                    "direction" : "left",
+                    "force_arrow" : false,
+                    "force_offset": null,
+                    "force_size_dynamic" : true
+                },
+                "block_2" : {
+                    "type" : "block",
+                    "show_condition" : ["blbasecarr"],
+                    "size" : 2,
+                    "class" : "btn-bsInitType-apa unselected etape4 last DESACTIVE",
+                    "show" : null,
+                    "id" : "arrow-base-carriere",
+                    "text" : null,
+                    "direction" : "right",
+                    "force_arrow" : false,
+                    "force_offset": null,
+                    "force_size_dynamic" : true
+                },
+                "block_3" : {
+                    "type" : "block",
+                    "show_condition" : ["blapa"],
+                    "show" : null,
+                    "size" : 5,
+                    "id" : "arrow-manu",
+                    "class" : "btn-bsInitType-apa unselected etape4 last DESACTIVE",
+                    "text" : null,
+                    "direction" : "right",
+                    "force_arrow" : false,
+                    "force_offset": null,
+                    "force_size_dynamic" : true
+                }
+
+            }
+        },
+        "row_8" : {
+            "height_force" : "70",
+            "blocks" : {
+                "block_1" : {
+                    "type" : "input_file",
+                    "show_condition" : ["bln4ds"],
+                    "size" : 5,
+                    "class" : "arrow-n4ds last unselected DESACTIVE",
+                    "show" : null,
+                    "id" : "apa-n4ds",
+                    "id_input" : "file-n4ds-apa",
+                    "title_block" : "Import N4DS",
+                    "title_block_class" : "shortcut_n4ds",
+                    "text" : "Import N4DS pré-remplissage maximum",
+                    "text_second" : "Pré-remplissage maximum",
+                    "direction" : "right",
+                    "force_arrow" : false,
+                    "data" : "data-name=N4DS data-function=doOnN4DSActionClick data-trans=initbilan.import.n4ds_text data-title=initbilan.import.n4ds_title",
+                    "function" : "initN4ds(event)",
+                    "force_offset": null,
+                    "force_size_dynamic" : true,
+                    "help_tooltip":{
+                        "html":true,
+                        "txt":"<p class='small'><i class='fa fa-warning text-danger'aria-hidden='true'></i> Tout fichier <b>N4DS</b> sera purgé de toutes ses <b>données sensibles</b> sur <b>ce poste de travail</b> avant d'être envoyés au serveur pour intégration.</p>"
+                    }
+                },
+                "block_2" : {
+                    "type" : "input_button",
+                    "class" : "arrow-base-carriere last unselected DESACTIVE",
+                    "show_condition" : ["blbasecarr"],
+                    "size" : 2,
+                    "show" : null,
+                    "id" : "apa-base-carriere",
+                    "text" : "Les données de votre Centre de Gestion",
+                    "direction" : "right",
+                    "force_arrow" : false,
+                    "data" : "data-name=BaseCarriere data-function=doOnBaseCarrActionClick data-trans=initbilan.import.carriere_text data-title=initbilan.import.carriere_title",
+                    "function" : "initBaseCarriere(event)",
+                    "force_offset": null,
+                    "force_size_dynamic" : true
+                },
+                "block_3" : {
+                    "type" : "input_button",
+                    "show_condition" : ["blapa"],
+                    "show" : null,
+                    "size" : 5,
+                    "id" : "apa-manu",
+                    "class" : "arrow-manu last unselected DESACTIVE",
+                    "text" : "Pas de pré-remplissage",
+                    "text_second" : "Saisie manuelle",
+                    "direction" : "left",
+                    "force_arrow" : false,
+                    "data" : "data-name=Apa data-function=doOnManuActionClick data-trans=initbilan.import.apa_text data-title=initbilan.import.apa_title",
+                    "function" : "initApa(event)",
+                    "force_offset": null,
+                    "force_size_dynamic" : true
+                }
+            }
+        }
+
+    }
+}

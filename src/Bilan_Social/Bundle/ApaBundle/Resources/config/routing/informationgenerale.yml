@@ -1,0 +1,19 @@
+informationgenerale_show:
+    path:     /{idInfogene}/show
+    defaults: { _controller: "ApaBundle:InformationGenerale:show" }
+    methods:  GET
+
+informationgenerale_new:
+    path:     /new
+    defaults: { _controller: "ApaBundle:InformationGenerale:new" }
+    methods:  [GET, POST]
+
+informationgenerale_edit:
+    path:     /{idInfogene}/edit
+    defaults: { _controller: "ApaBundle:InformationGenerale:edit" }
+    methods:  [GET, POST]
+
+informationgenerale_delete:
+    path:     /{idInfogene}/delete
+    defaults: { _controller: "ApaBundle:InformationGenerale:delete" }
+    methods:  DELETE

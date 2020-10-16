@@ -1,0 +1,7 @@
+<div class=' pull-left'>
+    {% if is_granted('ROLE_CDG') %}
+        <a href="{{ path('switch_to_cdg') }}">
+            <button type="button" class="btn btn-primary pull-left" style="margin-bottom: 5px;" onClick="window.close()">Retour au suivi des enquêtes</button>
+        </a>  &nbsp; Connecté en tant que ( {{ libCol }} : {{ siretCol }})
+    {% endif %}
+</div>

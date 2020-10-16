@@ -1,0 +1,3 @@
+bilansocial_bilansocial:
+    resource: "@BilanSocialBundle/Resources/config/routing/bilan_social.yml"
+    prefix: /bilan_social

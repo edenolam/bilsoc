@@ -1,0 +1,277 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@ReferencielBundle/Resources/config/services.yml" }
+    - { resource: "@ModelVuesBundle/Resources/config/services.yml" }
+    - { resource: "@JasperServerBundle/Resources/config/services.yml" }
+    - { resource: "@ImportCarriereBundle/Resources/config/services.yml" }
+    - { resource: "@ImportCarriereBundle/Resources/config/parameters.yml" }
+    - { resource: "@AnalyseBundle/Resources/config/services.yml" }
+    - { resource: "@CoreBundle/Resources/config/services.yml" }
+    - { resource: "@InfoCentreBundle/Resources/config/services.yaml" }
+    - { resource: "@LongTaskManagerBundle/Resources/config/services.yaml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: fr
+
+framework:
+    assets: ~
+    #esi: ~
+    translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.root_dir%/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id: ~
+        save_path: ~ # In order to authorize Single Sign Out from CAS https://github.com/l3-team/CasBundle#configuration-of-the-single-sign-out
+    fragments: ~
+    workflows:
+        Enquete:
+            type: 'state_machine'
+            supports:
+                - Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete
+            initial_place: new
+            places:
+                - new
+                - edit
+                - import_bc
+                - param
+            transitions:
+                new_to_import:
+                    from: new
+                    to: import_bc
+                edit_to_import:
+                    from: edit
+                    to: import_bc
+                import_to_param:
+                    from: import_bc
+                    to: param
+                param_to_edit:
+                    from: param
+                    to: edit
+                param_to_import:
+                    from: param
+                    to: import_bc
+                import_to_edit:
+                    from: import_bc
+                    to: edit
+                 
+                 
+    #http_method_override: true
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        backup_interval: 600000
+        campagne_service: "@campagne_service"
+        collectivite_consolide_service: "@collectivite_consolide_service"
+        consolide_service: "@consolide_service"
+        user_collectivite: "@user_collectivite"
+        check_droit_service: "@check_droit_service"
+        user_cdg: "@user_cdg"
+        utilisateur_cdg: "@utilisateur_cdg"
+        utilisateur_droits: "@utilisateur_droits"
+        enquete_Collectivite: "@enquete_Collectivite"
+        current_enquete: "@current_enquete"
+        current_enquete_departement: "@current_enquete_departement"
+        information_generale_agent: "@information_generale_agent"
+        question_collectivite: "@question_collectivite"
+        information_collectivite_agent: "@information_collectivite_agent"
+        etat_saisie_bilan_social: '%etat.saisie.bilan.social%'
+        type_bilan_social: '%type.bilan.social%'
+        civilite: '%utilisateur.civilite%'
+        information_bilansocial_saisie : '@information_bilansocial_saisie'
+        app_version : '%app.version%'
+        modele_analyse_service: "@modele_analyse_service"
+        cms_url: https://www.donnees-sociales.fr/
+        host_prefix: '%host_prefix%'
+        matomo_url: '%matomo_url%'
+        matomo_id_site: '%matomo_id_site%'
+        info_centre_config_finder: '@info_centre_config_finder'
+        #file_manager: '@file_manager.file_manager'
+    form_themes:
+        - 'bootstrap_3_layout.html.twig'
+    default_path: '%kernel.project_dir%/src/Bilan_Social/Bundle'
+    paths:
+        '%kernel.project_dir%/src/Bilan_Social/Bundle/InfoCentreBundle/Resources/views': InfoCentreBundle
+        #'%kernel.project_dir%/src/Bilan_Social/Bundle/LongTaskManagerBundle/Resources/views': LongTaskManagerBundle
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        server_version: 5.7
+
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.root_dir%/data/data.db3'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+        mapping_types:
+            bit: boolean
+            enum: string
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        dql:
+            numeric_functions:
+                conv: Bilan_Social\Bundle\CoreBundle\DqlFunction\MySqlConv
+        mappings:
+            gedmo_translatable:
+                type: annotation
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
+                is_bundle: false
+            gedmo_translator:
+                type: annotation
+                prefix: Gedmo\Translator\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+                alias: GedmoTranslator # (optional) it will default to the name set for the mapping
+                is_bundle: false
+            gedmo_loggable:
+                type: annotation
+                prefix: Gedmo\Loggable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                alias: GedmoLoggable # (optional) it will default to the name set for the mapping
+                is_bundle: false
+            gedmo_tree:
+                type: annotation
+                prefix: Gedmo\Tree\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                alias: GedmoTree # (optional) it will default to the name set for the mapping
+                is_bundle: false
+                
+        # cache doctrine
+        # metadata_cache_driver: apcu
+        # query_cache_driver: apcu
+        # result_cache_driver: apcu
+        # second_level_cache:
+        #     region_cache_driver:
+        #         type: apcu
+        #         #id: snc_second_level_cache
+        #     enabled: true
+        #     log_enabled: true
+        #     regions:
+        #         referentiel_entities:
+        #             cache_driver:
+        #                 type: apcu
+        #             lifetime: 86400 # 1 day
+# Doctrine extension
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            timestampable: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host:      '%mailer_host%'
+    username:  '%mailer_user%'
+    password:  '%mailer_password%'
+    port: '%mailer_port%'
+    encryption: '%mailer_encryption%'
+    stream_options:
+        ssl:
+            verify_peer: false
+            verify_peer_name: false
+
+white_october_breadcrumbs:
+    separator:          '/'
+    separatorClass:     'separator'
+    listId:             'wo-breadcrumbs'
+    listClass:          'breadcrumb'
+    itemClass:          ''
+    linkRel:            ''
+    locale:             ~ # defaults to null, so the default locale is used
+    translation_domain: ~ # defaults to null, so the default domain is used
+#    viewTemplate:       'WhiteOctoberBreadcrumbsBundle::microdata.html.twig'
+
+services:
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
+
+ivory_ck_editor:
+    configs:
+        my_config:
+            toolbar: [  [ 'Bold','Italic','Underline' ], [ 'NumberedList','BulletedList','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], [ 'Styles', 'Format','Font','FontSize' ], [ 'TextColor','BGColor' ] ]
+
+# JasperServer service
+hboie_jasper_report:
+    host: "%jasper_host%"
+    username: "%jasper_user%"
+    password: "%jasper_password%"
+    org_id: "%jasper_org_id%"
+
+# Fos Js Routing
+fos_js_routing:
+    cache_control:
+        # All are optional, defaults shown
+        public: true   # can be true (public) or false (private)
+        maxage: null    # integer value, e.g. 300
+        smaxage: null   # integer value, e.g. 300
+        expires: null   # anything that can be fed to "new \DateTime($expires)", e.g. "5 minutes"
+        vary: []
+
+# L3 CAS bundle config
+l3_cas:
+    host: '%cas_host%'                             # Cas Server
+    path: '%cas_path%'                             # App path if not in root (eg. /cas)
+    port: '%cas_port%'                              # Server port
+    ca: '%cas_ca%'                                   # SSL Certificate
+    handleLogoutRequest: '%cas_handleLogoutRequest%' # Single sign out activation (default: false)
+    casLogoutTarget: '%cas_casLogoutTarget%'         # Redirect path after logout
+    force: '%cas_force%'
+
+# Redis pour le cache doctrine
+#snc_redis:
+#    clients:
+#        default:
+#            type: predis
+#            alias: default
+#            dsn: 'redis://localhost'
+#            logging: '%kernel.debug%'
+    # doctrine:
+    #     metadata_cache:
+    #         client: default
+    #         entity_manager: default
+    #     result_cache:
+    #         client: default
+    #         entity_manager: default
+    #     query_cache:
+    #         client: default
+    #         entity_manager: default
+    #     second_level_cache:
+    #         client: default
+    #         entity_manager: default
+
+# html purifier
+exercise_html_purifier:
+    default:
+        Cache.SerializerPath: '%kernel.cache_dir%/htmlpurifier'

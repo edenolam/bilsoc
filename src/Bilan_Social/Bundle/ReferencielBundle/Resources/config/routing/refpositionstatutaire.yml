@@ -1,0 +1,28 @@
+refpositionstatutaire_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefPositionStatutaire:index" }
+    methods:  GET
+
+refpositionstatutaire_show:
+    path:     /{idPosistat}/show
+    defaults: { _controller: "ReferencielBundle:RefPositionStatutaire:show" }
+    methods:  GET
+
+refpositionstatutaire_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefPositionStatutaire:new" }
+    methods:  [GET, POST]
+
+refpositionstatutaire_edit:
+    path:     /{idPosistat}/edit
+    defaults: { _controller: "ReferencielBundle:RefPositionStatutaire:edit" }
+    methods:  [GET, POST]
+
+refpositionstatutaire_delete:
+    path:     /{idPosistat}/delete
+    defaults: { _controller: "ReferencielBundle:RefPositionStatutaire:delete" }
+    methods:  DELETE
+
+csv_export_refpositionstatutaire:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefPositionStatutaire:generateCsv" }

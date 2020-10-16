@@ -1,0 +1,35 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refelementmateriel_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refElementMateriel.cdElementmat }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refElementMateriel.lbElementmat }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refElementMateriel.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refElementMateriel} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refelementmateriel_edit', { 'idElementmat': refElementMateriel.idElementmat }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

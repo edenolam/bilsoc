@@ -1,0 +1,1098 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+
+    <div class="col-md-9 contentConsolide pull-right" style='padding-right:0;padding-left:0;'>
+        {# <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-23.png") }}" class=" icone-menu"/> Mouvements {% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_PREVIOUS_ADMIN') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3> #}
+        <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-23.png") }}" class=" icone-menu"/> Mouvements 
+
+            {% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 4) and canwrite == true %}
+                <button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>
+            {% endif %}
+            
+            {% if consolide != null and is_granted('ROLE_CDG') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}
+                <button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>
+            {% endif %}
+
+            </h3>
+        <div id="incoh_wrapper">
+        <div id="incoh">
+
+            <div id="incohpanel" class="panel panel-default">
+
+                <span class="pull-right buttonmoins" id="HideShowIncoh" title="Réduire" ></span>
+
+                Incohérences <span id="nbErreur" class="badge"></span>
+                <table id="incoherenceTable" width="50%" class="table table-striped table-hover table-bordered">
+                    <tbody>
+                        {% if incoherenceList != null and incoherenceList.count() > 0  %}
+                            {% for tag in incoherenceList %}
+                                {% if tag.form == '2' %}
+                                    <tr>
+                                        <td><a href="#" onclick="openError('{{tag.idToggle1}}', '{{tag.idToggle2}}', '{{tag.field}}')">{{tag.tableNum}}</a>
+                                        </td>
+                                        <td>{{ tag.message }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <br/>
+                <div id='incoh-legende'>
+                    <div>
+                        <p>Contrôle de cohérence :</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-error'>&nbsp;</span>Erreur de cohérence</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-atte'>&nbsp;</span>Donnée(s) en attente</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-vali'>&nbsp;</span>Validé</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="ghost hidden"></div>
+    </div>
+
+    <!--  Tab 1.5.0 -->
+    <div class="panel panel-default col-md-9 contentConsolide pull-right">
+        {# {{ dump(EnqueteCollectiviteparam.blBilaSoci) }} #}
+
+        {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blGepe == true   )) %}
+            {% if questionCollectiviteConsolide.q9 == true or questionCollectiviteConsolide.q10 == true   %}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.5.0 - Départs dans l'année {{AnneeCamp}}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb150" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd150 == 1 %} {% elseif consolide.blIncoInd150 == 2 %} blue {% elseif consolide.blIncoInd150 == 3 %} orange {% elseif consolide.blIncoInd150 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd150 }}%{% endif %};">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb150-value status">{% if consolide != null %} {% if consolide.blIncoInd150 == 1  or consolide.blIncoInd150 == null %} A saisir {% elseif consolide.blIncoInd150 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd150 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd150 == 4 %}{% if totalInd150 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd150 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-150" title="Fiche 1.5.0" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle150" title="Agrandir" ></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <div class="panel-body ind_totaux_inside" id="ind150" style="display: none;">
+
+                </div>
+
+            {% endif %}
+        {% endif %}
+
+        <!--  Tab 1.5.1  -->
+        {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blGepe == true ) %}
+            {% if questionCollectiviteConsolide.q7 == true  and  1==1 %}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.5.1 - ARRIVEES D'AGENTS SUR EMPLOI FONCTIONNEL au cours de l'année {{AnneeCamp}} : par statut d'origine, selon le grade de détachement et le sexe
+
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb151" class="progress-bar effectif" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd151 }}% {% endif %}" >
+                                    <span class="sr-only ind151-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb151-value status">{% if consolide != null %}{% if consolide.moyenneInd151 == 0 %} A saisir {% elseif consolide.moyenneInd151 == 100 %}{% if totalInd151 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd151 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-151" title="Fiche 1.5.1" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle151" title="Agrandir" ></span>
+
+
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <div class="panel-body ind_totaux_inside" id="ind151" style="display: none;">
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!--  Tab 1.5.2 -->
+        {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blGepe == true   )) %}
+            {% if questionCollectiviteConsolide.q12 == true and  1==1%}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.5.2 - Arrivées de fonctionnaires dans l'année {{AnneeCamp}}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb152" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd152 == 1 %} {% elseif consolide.blIncoInd152 == 2 %} blue {% elseif consolide.blIncoInd152 == 3 %} orange {% elseif consolide.blIncoInd152 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd152 }}%{% endif %};">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb152-value status">{% if consolide != null %} {% if consolide.blIncoInd152 == 1 or consolide.blIncoInd152 == null %} A saisir {% elseif consolide.blIncoInd152 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd152 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd152 == 4 %}{% if totalInd152 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd152 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-152" title="Fiche 1.5.2" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle152" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind152" style="display: none;">
+
+                </div>
+            {% endif %}
+
+            <!--  Tab 1.5.3.1 -->
+            {% if questionCollectiviteConsolide.q13 == true and  1==1%}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.5.3.1 - Arrivées de contractuels sur emplois permanents dans l'année {{AnneeCamp}} - Recrutements de remplaçants, réintégrations et retours
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb1531" class="progress-bar effectif" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd1531 }}% {% endif %}" >
+                                    <span class="sr-only ind1531-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb1531-value status">{% if consolide != null %}{% if consolide.moyenneInd1531 == 0 %} A saisir {% elseif consolide.moyenneInd1531 == 100 %}{% if totalInd1531 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd1531 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-1531" title="Fiche 1.5.3.1" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle1531" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind1531" style="display: none;">
+
+                </div>
+            {% endif %}
+
+            <!--  Tab 1.5.3.2 -->
+            {% if questionCollectiviteConsolide.q13 == true and  1==1%}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.5.3.2 - Arrivées de contractuels sur emplois permanents dans l'année {{AnneeCamp}} - Recrutements contractuels sur emploi permanent (hors remplaçants, réintégrations et retours)
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb1532" class="progress-bar effectif" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd1532 }}% {% endif %}" >
+                                    <span class="sr-only ind1532-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb1532-value status">{% if consolide != null %}{% if consolide.moyenneInd1532 == 0 %} A saisir {% elseif consolide.moyenneInd1532 == 100 %}{% if totalInd1532 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd1532 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-1532" title="Fiche 1.5.3.2" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle1532" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind1532" style="display: none;">
+
+                </div>
+            {% endif %}
+
+            <!--  Tab 1.5.4 à 5 -->
+            {% if questionCollectiviteConsolide.q1 == true %}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.5.4-1.5.5 Titularisations, promotions et avancements dans l'année {{AnneeCamp}}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb154" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd154 == 1 %} {% elseif consolide.blIncoInd154 == 2 %} blue {% elseif consolide.blIncoInd154 == 3 %} orange {% elseif consolide.blIncoInd154 == 4 %} green {% endif %} {% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd154 }}% {% endif %}">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb154-value status">{% if consolide != null %}{% if consolide.blIncoInd154 == 1 or consolide.blIncoInd154 == null %} A saisir {% elseif consolide.blIncoInd154 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd154 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd154 == 4 %}{% if totalInd154_5 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd154_5 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-154" title="Fiche 1.5.4 - 1.5.6" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle154" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body" id="ind154" style="display: none;">
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!--  Tab 1.5.8 -->
+        {% if questionCollectiviteConsolide.q1 == true and  EnqueteCollectiviteparam.blBilaSoci == true %}
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        1.5.6 Avancements de grade dans l'année {{AnneeCamp}} par filière et catégorie hiérarchique
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb158" class="progress-bar effectif" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd158 }}% {% endif %}" >
+                                <span class="sr-only ind158-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb158-value status">{% if consolide != null %}{% if consolide.moyenneInd158 == 0 %} A saisir {% elseif consolide.moyenneInd158 == 100 %}{% if totalInd158 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd158 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle158" title="Agrandir" ></span>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind158" style="display: none;">
+
+            </div>
+        {% endif %}
+
+        <!--  Tab 1.5.7 -->
+        {% if questionCollectiviteConsolide.q1 == true and  EnqueteCollectiviteparam.blBilaSoci == true %}
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        1.5.7 Nombre d'agents fonctionnaires et contractuels sur emploi permanent ayant bénéficié d'un accompagnement par un conseiller en évolution professionnelle
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb157" class="progress-bar effectif" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd157 }}% {% endif %}" >
+                                <span class="sr-only ind157-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb157-value status">{% if consolide != null %}{% if consolide.moyenneInd157 == 0 %} A saisir {% elseif consolide.moyenneInd157 == 100 %}{% if totalInd157 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd157 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle157" title="Agrandir" ></span>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind157" style="display: none;">
+
+            </div>
+        {% endif %}
+
+        <!--  Tab 1.6.1 -->
+        {%  if (EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blHand == true  )) %}
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true  %}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.6.1 Nombre d'agents handicapés (y compris reclassés) par catégorie hiérarchique, statut et sexe
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb161" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd161 == 1 %} {% elseif consolide.blIncoInd161 == 2 %} blue {% elseif consolide.blIncoInd161 == 3 %} orange {% elseif consolide.blIncoInd161 == 4 %} green {% endif %} {% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd161 }}% {% endif %}">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb161-value status">{% if consolide != null %}{% if consolide.blIncoInd161 == 1 or consolide.blIncoInd161 == null %} A saisir {% elseif consolide.blIncoInd161 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd161 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd161 == 4 %}{% if totalInd161 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd161 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-161" title="Fiche 1.6.1 & 1.6.2" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle161" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind161" style="display: none;"></div>
+            {% endif %}
+
+            <!--  Tab 1.6.2 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        1.6.2 Respect de l'obligation d'emploi et dépenses réalisées partiellement l'obligation d'emploi (ouvrant droit à réduction des unités manquantes) et taux d'emploi
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb162" class="progress-bar effectif" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd162 }}% {% endif %}" >
+                                <span class="sr-only ind162-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb162-value status">{% if consolide != null %}{% if consolide.moyenneInd162 == 0 %} A saisir {% elseif consolide.moyenneInd162 == 100 %}{% if totalInd162 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd162 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle162" title="Agrandir" ></span>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind162" style="display: none;">
+
+            </div>
+        {% endif %}
+
+        <!--  Tab 1.7.1 -->
+        {% if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blHand == true or EnqueteCollectiviteparam.blRast == true  ) %}
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true    %}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.7.1 - Répartition par sexe et tranche d'âge des effectifs des fonctionnaires et des contractuels présents dans les effectifs au 31/12/{{ AnneeCamp }}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb171" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd171 == 1 %} {% elseif consolide.blIncoInd171 == 2 %} blue {% elseif consolide.blIncoInd171 == 3 %} orange {% elseif consolide.blIncoInd171 == 4 %} green {% endif %} {% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd171 }}% {% endif %}">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb171-value status">{% if consolide != null %}{% if consolide.blIncoInd171 == 1 or consolide.blIncoInd171 == null %} A saisir {% elseif consolide.blIncoInd171 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd171 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd171 == 4 %}{% if totalInd171 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd171 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle171" title="Agrandir"></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind171" style="display: none;">
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+
+        {% if questionCollectiviteConsolide.q9 == true or questionCollectiviteConsolide.q10 == true  %}
+            <div id="dialog-fiche-150" title="Fiche 1.5.0" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                L’indicateur 1.5.0. recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Quels sont les agents à recenser ?<br/>
+                    *     les fonctionnaires<br/>
+                    *      les agents contractuels occupant un emploi permanent (indicateur 1.2.1.)<br/>
+                    *      ayant quitté votre collectivité au cours de l’année {{AnneeCamp}}<br/>
+                    *      pour ce qui correspond au dernier mouvement de l'année<br/>
+                    Les agents contractuels qui ont cumulé des contrats avec des périodes fréquentes d'interruption ne doivent être comptés qu'une fois.<br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/>
+                    *      selon le motif de leur départ<br/>
+                    -          mise à disposition totale auprès d’une autre collectivité ou structure (articles 25 et 61 de la loi du 26 janvier 1984) ;<br/>
+                    -          détachement auprès d’une autre collectivité ou structure (article 64 de la loi du 26 janvier 1984) ;<br/>
+                    -          placement dans une position autre que l'activité ou le détachement : disponibilité, congé parental, accomplissement du service national, congé spécial (articles 72 à 75 et 99 de la loi du 26 janvier 1984) ;<br/>
+                    -          décharge totale  d’activité de service pour exercice d’un mandat syndical (5ème alinéa de l’article 100 de la loi du 26 janvier 1984) ;<br/>
+                    -          congé formation  (article 57 - 6° de la loi du 26 janvier 1984) ;<br/>
+                            Ne pas comptabiliser les agents en décharge d’activité de courte durée pour leur permettre de suivre un stage de formation.<br/>
+                    -          mutation dans une autre collectivité (article 51 de la loi du 26 janvier 1984) ;<br/>
+                    -          fin de détachement auprès de votre collectivité d’un fonctionnaire issu d’une autre collectivité ou d’une autre Fonction Publique ;<br/>
+                    -          pris en charge par le CNFPT ou un Centre de Gestion à l’issue de la période de surnombre (article 97 de la loi du 26 janvier 1984) ;<br/>
+                    -          démission (article 96 de la loi du 26 janvier 1984) ;<br/>
+                    -          fin de contrat non suivie d’une titularisation ou d’une nomination stagiaire ;<br/>
+                    -          retraite ;<br/>
+                    -          licenciement ;<br/>
+                    -          décès ;<br/>
+                    -          transfert de compétence.<br/>
+                    <br/>
+                    *       selon la catégorie hièrarchique<br/>
+
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+        {% if questionCollectiviteConsolide.q7 == true  %}
+            <div id="dialog-fiche-151" title="Fiche 1.5.1" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                L’indicateur 1.5.1. recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l’objet de calculs automatiques.<br/>
+                    <br/>
+                    Quels sont les agents à recenser ?<br/>
+                    <br/>
+                    * les fonctionnaires titulaires occupant un emploi fonctionnel en application de l'art 53 de la loi du 26 janvier 1984<br/>
+                    dont ceux appartenant au cadre d'emploi d'administrateur, d'attaché ou d'ingénieur<br/>
+                    * les agents contractuels recrutés sur un emploi fonctionnel en application de l'art 47 de la loi du 26 janvier 1984<br/>
+                    * rémunérés à la date du 31 décembre {{AnneeCamp}} :<br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/>
+                    * par cadre d'emploi d'administrateurs, d'attachés et d'ingénieurs<br/>
+                    - les fonctionnaires des filières administratives et techniques occupant un emploi fonctionnel de direction doivent être recensés selon leur grade de détachement. Parmi ceux-ci, on comptabilise ceux ayant un cadre d'emploi d'administrateur, d'attaché ou d'ingénieur.<br/>
+                    - les contractuels sur emploi permanent sont recensés uniquement sur l'emploi fonctionnel occupé.<br/>
+
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+        {% if questionCollectiviteConsolide.q12 == true  %}
+            <div id="dialog-fiche-152" title="Fiche 1.5.2" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    L’indicateur 1.5.2. recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    <br/>
+                    Quels sont les agents à recenser ?<br/>
+                    *      les fonctionnaires stagiaires et titulaires (indicateur 1.1.1.)<br/>
+                    <br/>
+                    Remarque importante :<br/>
+                    - les fonctionnaires recrutés sur un emploi fonctionnel de direction doivent être comptabilisés uniquement dans leurs cadres d'emplois et grades respectifs même s'ils ont déjà été comptabilisés dans l'indicateur 1.5.1.<br/>
+                    <br/>
+                    *      recrutés dans votre collectivité au cours de l’année {{AnneeCamp}}<br/>
+                    <br/>
+                    *      pour ce qui correspond au premier mouvement de l'année<br/>
+                    Les agents qui demeurent dans la collectivité après un changement de statut (par exemple) ne doivent pas être comptés ici.<br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    *      par filière et cadre d'emplois<br/>
+                    <br/>
+                    *      selon le motif de recrutement<br/>
+                    -          colonne 1.5.2(1) : par recrutement direct ;<br/>
+                    -          colonne 1.5.2(2) : par voie de concours (externe, interne, 3ème concours, concours réservé) ;<br/>
+                    -          colonne 1.5.2(3) : par intégration directe ;<br/>
+                            article 13bis alinéa 1 et 14 de la loi n°83-364 du 13 juillet 1983, et article 68-1 de la loi n°84-53 du 26 janvier 1984 modifiés par la loi 2009-972 du 3 août 2009<br/>
+                    -          colonne 1.5.2(4) : par voie de mutation d’une autre collectivité ;<br/>
+                    -          colonne 1.5.2(5) à 1.5.2(8) : par voie de détachement d’une autre structure ;<br/>
+                            Ne pas comptabiliser les fonctionnaires détachés au sein de votre collectivité.<br/>
+                    -           colonne 1.5.2(9) : par voie de réintégration après congé parental, détachement ou disponibilité ;<br/>
+                    -           colonne 1.5.2(10) : par transfert de compétence (dont reprise d'activité).<br/>
+                    <br/>
+                    *      Par temps complet ou temps non complet et par sexe<br/>
+                    Les fonctionnaires recensés dans les colonnes 1.5.2(1) à 1.5.2(11), doivent être à nouveau décomptés par temps complet et temps non complet et sexe dans les colonnes 1.5.2(12) à 1.5.2(15), tous motifs de recrutement confondus.<br/>
+                </p>
+            </div>
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q13 == true  %}
+            <div id="dialog-fiche-1531" title="Fiche 1.5.3" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    L’indicateur 1.5.3. recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l’objet de calculs automatiques.<br/>
+                    <br/>
+                    Quels sont les agents à recenser ?<br/>
+                    *      les agents contractuels<br/>
+                    *      recrutés dans votre collectivité au cours de l’année {{AnneeCamp}} sur un emploi permanent<br/>
+                        (cf. la notion d’emploi permanent précisée sur la fiche 1.2.1)<br/>
+                    <br/>
+                    ==> ATTENTION :<br/>
+                    Les agents recrutés pour effectuer un remplacement sont à recenser sur une seule ligne, dans un pavé situé au dessus du tableau.<br/>
+                    <br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    *     par référence aux filières et cadres d'emplois ou emplois fonctionnels<br/>
+                    -          Les agents contractuels recrutés sur un  éventuel emploi spécifique qui ne peut pas être rattaché à une filière sont à recenser à la ligne "AUTRES CAS hors filière" en fin de tableau.<br/>
+                    *      par temps complet ou temps non complet<br/>
+                    *      par sexe<br/>
+                </p>
+            </div>
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q13 == true  %}
+            <div id="dialog-fiche-1532" title="Fiche 1.5.3" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    L’indicateur 1.5.3. recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l’objet de calculs automatiques.<br/>
+                    <br/>
+                    Quels sont les agents à recenser ?<br/>
+                    *      les agents contractuels<br/>
+                    *      recrutés dans votre collectivité au cours de l’année {{AnneeCamp}} sur un emploi permanent<br/>
+                        (cf. la notion d’emploi permanent précisée sur la fiche 1.2.1)<br/>
+                    <br/>
+                    ==> ATTENTION :<br/>
+                    Les agents recrutés pour effectuer un remplacement sont à recenser sur une seule ligne, dans un pavé situé au dessus du tableau.<br/>
+                    <br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    *     par référence aux filières et cadres d'emplois ou emplois fonctionnels<br/>
+                    -          Les agents contractuels recrutés sur un  éventuel emploi spécifique qui ne peut pas être rattaché à une filière sont à recenser à la ligne "AUTRES CAS hors filière" en fin de tableau.<br/>
+                    *      par temps complet ou temps non complet<br/>
+                    *      par sexe<br/>
+                </p>
+            </div>
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q1 == true and questionCollectiviteConsolide.q3 == true %}
+            <div id="dialog-fiche-154" title="Fiche 1.5.4 - 1.5.6" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    Les indicateurs 1.5.4 à 1.5.6 recensent les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    <br/>
+                    Quels sont les agents à recenser à l’indicateur 1.5.4 ?<br/>
+                    <br/>
+                    *    les fonctionnaires stagiaires ayant fait l’objet, au cours de l’année, d’une décision :<br/>
+                    -          de titularisation,<br/>
+                    -          de prolongation exceptionnelle de stage,<br/>
+                    -          de licenciement en cours ou en fin de stage.<br/>
+                    <br/>
+                    *  les agents contractuels ayant fait l’objet, au cours de l’année, d’une décision :<br/>
+                    -          d’une titularisation directe (sans stage) dont il convient d’isoler ceux qui relèvent de la réglementation applicable aux travailleurs handicapés (article 38 de la loi du 26 janvier 1984)<br/>
+                    -          d’une nomination stagiaire dans la cadre de la loi du 12 mars 2012<br/>
+                    -          d’une nomination stagiaire en dehors du cadre de la loi du 12 mars 2012<br/>
+                    <br/>
+                    Quels sont les agents à recenser à l’indicateur 1.5.5  ?<br/>
+                    <br/>
+                    *    les fonctionnaires ayant fait l’objet, au cours de l’année, d’une décision :<br/>
+                    -          d’avancement de grade,<br/>
+                    -          d’avancement d’échelon,<br/>
+                    -          de promotion interne au sein de votre collectivité.<br/>
+                    <br/>
+                    Quels sont les agents à recenser à l’indicateur 1.5.6  ?<br/>
+                    <br/>
+                    - les agents titularisés dans le cadre de la loi  n° 2012-347 du 12 mars 2012 (Loi Sauvadet) en 2013, 2014 et 2015
+                    par titularisation directe (1) ou après sélection professionnelle (2) .<br/>
+                    <br/>
+                    (1) : Recrutement réservé sans concours pour les agents de cat. C (art. 18- I -3° de la loi du 12 mars 2012) hors sélection professionnelle<br/>
+                    <br/>
+                    (2) : Sélection professionnelle (art. 18- I -1° de la loi du 12 mars 2012)<br/>
+
+                </p>
+            </div>
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true  %}
+            <div id="dialog-fiche-161" title="Fiche 1.6.1 & 1.6.2" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    <b>
+                        L'indicateur 1.6.1 recense, en nombre de personnes physiques (1 personne = 1 unité),
+                        les agents occupant un emploi de travailleur en situation de handicap pour toutes les collectivités,
+                        y compris celles ayant moins de 20 agents.<br />
+                        L'indicateur 1.6.2 totalise les montants en euros (€) des dépenses mentionnées aux I, II, III et IV de l'article 6 du décret numéro 2006-501 du 3 mai 2006
+                    </b><br />
+                    L'indicateur 1.6.2 (2) recense les taux d'emploi direct et légal des personnes en situation de handicap (BOETH)<br /><br />
+
+                    <b>Qui sont les personnes bénéficaires de l'obligation d'emploi ?</b><br /><br />
+                    Les bénéficiaires de l’obligation d’emploi sont définis à l’article L5212-13 du code du travail
+                    (les travailleurs reconnus handicapés par la CDAPH, les titulaires de l'allocation aux adultes handicapés, etc).
+                    S’y ajoutent les agents reclassés et les bénéficiaires d’une allocation temporaire d’invalidité définis à l’article L323-5 du même code.<br /><br />
+
+                    <b>Quels sont les agents à recenser à l'indicateur 1.6.1 ?</b><br />
+                    * les fonctionnaires titulaires et stagiaires<br />
+                    * <b>les contractuels</b> (sur emploi permanent ou non permanent)<br />
+                    * <b>rémunérés au 31/12/{{AnneeCamp}}</b><br /><br />
+
+                    <b>Quelles sont les dépenses à recenser à l'indicateur 1.6.2(1) ?</b><br />
+                    Il s’agit des dépenses mentionnées à l'article L323-8-6-1 du code du travail et aux I à IV de l’article 6 du décret n°2006-501 sur le fonds pour l'insertion des personnes en situation de handicap dans la foncton publique :<br />
+                    -I : sous-traitance: contrats avec les entreprises adaptées, ESAT, etc (dépenses réalisées en application de l'article L.323-8 du code du travail, mentionnées au troisième alinéa de l'article L.323-8-6-1 de ce même code). Les dépenses sont égales au prix des fournitures et prestations figurant au contrat.<br />
+                    -II : dépenses en vue de faciliter l’insertion professionnelle des personnes en situation de handicap mentionnées au troisième alinéa du IV de l'article L.328-8-6-1 du code du travail.<br />
+                    -III : dépenses pour accueillir ou maintenir dans l’emploi les personnes lourdement handicapées, mentionnées au troisième alinéa du IV de l'article L.328-8-6-1 du code du travail. La totalité de ces dépenses est comptabilisée par l'employeur pour le double de son montant dès lors qu'elle dépasse, pour l'agent concerné, 35% du traitement annuel minimum servi à un agent occupant à temps complet un emploi public apprécié au 31 décembre de l'année écoulée (17490,24 euros). Dans le cas contraire,la dépense n'est pas pris en compte au III mais pourra éventuellement selon sa nature être intégrée à la ligne des dépenses de type II (dépenses affectées à des mesures en vue de faciliter l'insertion professionnelle).<br />
+                    -IV : dépenses  d’aménagement de poste de travail pour maintien dans l’emploi des agents reconnus inaptes à l’exercice de leur fonctions et ne relevant pas des catégories d’agents mentionnées à l’article 2 du décret. Le coût de la dépense pour un agent (la dépense doit donc être individualisée) doit excéder 10% du traitement brut  annuel minimum (17490,24 euros) pour être pris en compte.* <br /><br />
+
+                    <b>Comment sont calculées les unités déductibles à l'indicateur 1.6.2(1) ?</b><br />
+                    Ces dépenses, énumérées ci-dessus dans I, II,III et IV, sont converties en unités déductibles du nombre d'unités manquantes pour atteindre le taux d'emploi minimal de 6% imposé par la loi. Le nombre d'unités manquantes correspond à la différence entre le nombre total de personnes rémunérées par l'employeur auquel est appliquée la proportion de 6%, arrondi à l'unité inférieure, et celui des bénéficaires de l'obligation d'emploi (article L323-8-6-1 du code du travail).<br />
+                    La conversion des dépenses en unités déductibles s'effectue de la manière suivante: somme des montants de dépenses de l'année écoulée/montant du traitement brut annuel minimum de la fonction publique au 31 décembre de l'année écoulée <b>(17490,24 euros).</b> Le nombre d'unités déductibles est plafonné à la moitié du nombre  d'agents qui devraient effectivement être rémunérés par l'employeur pour respecter l'obligation d'emploi (art 4 du décret n°2006-501 relatif au FIPHFP)<br /><br />
+
+                    <b><i>remarque : pour le calcul des dépenses comme celui des unités déductibles, il est conseillé de se reporter au guide d'aide à la déclaration annuelle au FIPHFP sur le site du FIPHFP</i></b><br /><br />
+
+                    <b>Comment sont calculés les taux d'emploi à l'indicateur 1.6.2(2) ?</b><br />
+
+                    Le taux d’emploi direct  est le taux d'emploi de travailleur en situation de handicap:(bénéficiaires de l’obligation d’emploi/effectif total)X100.<br />
+                    Le taux d’emploi légal prend en compte les travailleurs en situation de handicap et les dépenses donnant lieu à unités déductibles : <br />
+                    [(bénéficiaires de l’obligation d’emploi+nombre d’unités déductibles)/effectif total] X100.
+                </p>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {% set NumForm = '2' %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        // Attention à vérifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var numForm = '2';
+        var nomForm = 'effectif';
+        var nbInd =   {{ nombreQuestion.nmquestion.mouvement }};
+
+        function initTab() {
+            if (currentTab != "") saveTab();
+            $('#content').html("");
+            $('#content').load('{{ path('bilan_conso_mouv_edit') }}', function () { });
+            currentTab = "0";
+        }
+
+        // Vide le cache notamment pour IE9
+        $.ajaxSetup({cache: false});
+        initTab();
+
+
+        var idToggleCurr = "";
+        var idDivCurr = "";
+
+        $(document).ready(function () {
+
+                $('#HideShowIncoh').on('click', function() {
+                    var incohHeight = $('#incoh').height();
+                    $("#incoh_wrapper").css('height', incohHeight);
+                    $("#incoh").affix({
+                        offset: {
+                          top: distance
+                        }
+                    });
+                });
+
+                // TABLEAU 150X
+                {% if questionCollectiviteConsolide.q9 == true or questionCollectiviteConsolide.q10 == true  %}
+                    addToggle("toggle150", "ind150");
+
+                $("#open-fiche-150").on("click", function () {
+                    $("#dialog-fiche-150").removeClass("displayNone");
+                    dialogFiche150.dialog("open");
+                });
+
+                {% endif %}
+
+                // TABLEAU 151X
+                {% if questionCollectiviteConsolide.q7 == true %}
+                    addToggle("toggle151", "ind151");
+
+                $("#open-fiche-151").on("click", function () {
+                    $("#dialog-fiche-151").removeClass("displayNone");
+                    dialogFiche151.dialog("open");
+                });
+
+                {% endif %}
+
+                // TABLEAU 152
+        {% if questionCollectiviteConsolide.q12 == true   %}
+
+                addToggle("toggle152", "ind152");
+
+                $("#open-fiche-152").on("click", function () {
+                    $("#dialog-fiche-152").removeClass("displayNone");
+                    dialogFiche152.dialog("open");
+                });
+
+        {% endif %}
+
+                // TABLEAU 1531
+        {% if questionCollectiviteConsolide.q13 == true   %}
+
+                addToggle("toggle1531", "ind1531");
+
+                $("#open-fiche-1531").on("click", function () {
+                    $("#dialog-fiche-1531").removeClass("displayNone");
+                    dialogFiche1531.dialog("open");
+                });
+
+        {% endif %}
+
+                // TABLEAU 1532
+        {% if questionCollectiviteConsolide.q13 == true   %}
+
+                addToggle("toggle1532", "ind1532");
+
+                $("#open-fiche-1532").on("click", function () {
+                    $("#dialog-fiche-1532").removeClass("displayNone");
+                    dialogFiche1532.dialog("open");
+                });
+
+        {% endif %}
+
+        // TABLEAU 154
+        {% if questionCollectiviteConsolide.q1 == true %}
+
+                addToggle("toggle154", "ind154");
+
+                $("#open-fiche-154").on("click", function () {
+                    $("#dialog-fiche-154").removeClass("displayNone");
+                    dialogFiche154.dialog("open");
+                });
+
+        {% endif %}
+
+        // TABLEAU 157
+        {% if questionCollectiviteConsolide.q1 == true  %}
+
+        addToggle("toggle157", "ind157");
+
+        {% endif %}
+
+        // TABLEAU 158
+        {% if questionCollectiviteConsolide.q1 == true  %}
+
+                addToggle("toggle158", "ind158");
+
+        {% endif %}
+
+
+        // TABLEAU 171
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true  %}
+
+                addToggle("toggle171", "ind171");
+
+        {% endif %}
+
+
+        // TABLEAU 161
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true  %}
+
+                addToggle("toggle161", "ind161");
+                $("#open-fiche-161").on("click", function () {
+                    $("#dialog-fiche-161").removeClass("displayNone");
+                    dialogFiche161.dialog("open");
+                });
+
+        {% endif %}
+
+        // TABLEAU 162
+        addToggle("toggle162", "ind162");
+
+
+                initCount(numForm);
+                disabled();
+            });
+
+
+            /*
+             * METHODES GENERALES
+             */
+
+            function initDiv(idDiv) {
+                if (idDiv == undefined || idDiv == "null" || idDiv == "") {
+                } else {
+                    if (idDiv == "ind150") {
+                        $('#ind150').load('{{ path('bilan_conso_effectif_ind150_edit') }}', function() {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind151") {
+                        $('#ind151').load('{{ path('bilan_conso_effectif_ind151_edit') }}', function() {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initCount(numForm);
+                            disabled();
+                        });
+
+                    } else if (idDiv == "ind152") {
+                        $('#ind152').load('{{ path('bilan_conso_effectif_ind152_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind1531") {
+                        $('#ind1531').load('{{ path('bilan_conso_effectif_ind1531_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initCount(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind1532") {
+                        $('#ind1532').load('{{ path('bilan_conso_effectif_ind1532_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initCount(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind154") {
+                        $('#ind154').load('{{ path('bilan_conso_effectif_ind154_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind157") {
+                        $('#ind157').load('{{ path('bilan_conso_effectif_ind157_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initCount(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind158") {
+                        $('#ind158').load('{{ path('bilan_conso_effectif_ind158_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initCount(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind161") {
+                        $('#ind161').load('{{ path('bilan_conso_effectif_ind161_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind162") {
+                        $('#ind162').load('{{ path('bilan_conso_effectif_ind162_edit') }}', function() {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                             initLight(numForm);
+                             disabled();
+                        });
+                    } else if (idDiv == "ind171") {
+                        $('#ind171').load('{{ path('bilan_conso_effectif_ind171_edit') }}', function () {
+			    // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                             initLight(numForm);
+                             disabled();
+			});
+		   }
+                }
+            }
+
+            $('#HideShowIncoh').click(function () {
+                HideShowIncoh();
+            });
+
+/*
+            function setIncoherenceTable(responsejson) {
+                incoherenceList = responsejson.list;
+                var table = document.getElementById('incoherenceTable');
+                var rowLength = table.rows.length;
+                for (var i = rowLength-1; i >= 0; i -= 1) {
+                    table.deleteRow(i);
+                }
+
+                var i = 0;
+
+                for (var idx in incoherenceList) {
+                    var incoh = incoherenceList[idx];
+
+                    var row = table.insertRow(i);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+
+                    var lien = "<a href=\"#\" onclick=\"openError('"+incoh.idToggle1+"', '"+incoh.idToggle2+"', '"+incoh.field+"')\">"+incoh.tableNum+"</a>";
+                    cell1.innerHTML = lien;
+                    cell2.innerHTML = incoh.message;
+                    i++;
+                }
+
+                setIncoherenceLight(numForm);
+                setPgInd('150', responsejson.blIncoInd150, responsejson.moyenneInd150, nomForm);
+                setPgInd('151', responsejson.blIncoInd151, responsejson.moyenneInd151, nomForm);
+                setPgInd('152', responsejson.blIncoInd152, responsejson.moyenneInd152, nomForm);
+                setPgInd('1531', responsejson.blIncoInd1531, responsejson.moyenneInd1531, nomForm);
+                setPgInd('1532', responsejson.blIncoInd1532, responsejson.moyenneInd1532, nomForm);
+                setPgInd('154', responsejson.blIncoInd154, responsejson.moyenneInd154, nomForm);
+                setPgInd('158', responsejson.blIncoInd158, responsejson.moyenneInd158, nomForm);
+                setPgInd('161', responsejson.blIncoInd161, responsejson.moyenneInd161, nomForm);
+                setPgInd('162', responsejson.blIncoInd162, responsejson.moyenneInd162, nomForm);
+                setPgInd('171', responsejson.blIncoInd171, responsejson.moyenneInd171, nomForm);
+                getMoyenneMouv(responsejson);
+                setPgMenu('Mouv', responsejson.blIncoMouv);
+            }*/
+        function setIncoherenceTable(responsejson) {
+            incoherenceList = responsejson.list.mouvement;
+            /*console.log(incoherenceList);*/
+            var table = document.getElementById('incoherenceTable');
+
+            var tbody = $(table).find('tbody');
+
+            var html_table_incoh = '';
+            $.each(incoherenceList, function() {
+                // console.log(this);
+                html_table_incoh += '<tr>';
+                html_table_incoh += '<td>'+"<a href=\"#\" onclick=\"openError('" + this.idToggle1 + "', '" + this.idToggle2 + "', '" + this.field + "')\">" + this.tableNum + "</a></td>";
+                html_table_incoh += '<td>'+ this.message +'</td>';
+                html_table_incoh += '</tr>';
+            });
+            $(tbody).html(html_table_incoh);
+
+            setIncoherenceLight(numForm);
+
+            $.each(responsejson.mouvement.pgInd, function() {
+                setPgInd(this.ind, this.blinco, this.moyenne, nomForm);
+            });
+
+            getMoyenneMouv(responsejson);
+            setPgMenu('Mouv','mouvement', responsejson);
+        }
+
+
+            var getMoyenneMouv = function (response)
+            {
+                var total = Math.ceil(Math.ceil(response.pc.pcMouvement) / nbInd);
+                $('#ValMouv').html(total + "%");
+                $('#pbMouv').css('width', total + "%");
+            }
+
+
+
+        {% if questionCollectiviteConsolide.q9 == true or questionCollectiviteConsolide.q10 == true or questionCollectiviteConsolide.q11 == true  %}
+            var dialogFiche150 = $("#dialog-fiche-150").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche150.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q7 == true  %}
+            var dialogFiche151 = $("#dialog-fiche-151").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche151.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q12 == true %}
+            var dialogFiche152 = $("#dialog-fiche-152").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche152.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q13 == true %}
+            var dialogFiche1531 = $("#dialog-fiche-1531").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche1531.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q13 == true %}
+            var dialogFiche1532 = $("#dialog-fiche-1532").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche1532.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q1 == true and questionCollectiviteConsolide.q3 == true %}
+            var dialogFiche154 = $("#dialog-fiche-154").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche154.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true %}
+            var dialogFiche161 = $("#dialog-fiche-161").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche161.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+        {% endif %}
+
+
+
+    </script>
+
+{% endblock %}

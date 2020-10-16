@@ -1,0 +1,190 @@
+
+{#{{ dump(params) }}
+{{ dump(data.idInitBs) }}#}
+  {#{{ dump() }}#}
+
+{% for config in config_init %}
+{#
+    blbilasocivide
+    blbilasoci
+    blrast
+    blhand
+    blgepe
+    blgpeecplus
+    blapa
+    blcons
+    bln4ds
+    blbasecarr
+    bldgcl#}
+    {% for row in config %}
+       {#<div {% if loop.index != 1 and  data.idInitBs == null %} style="opacity: 0.3" {% endif %}>#}
+
+        {% if row.title_block is defined and row.title_block is not null %}
+            <div class="row actif">
+                <div style="text-align: center" id="first_block" class="col-xs-12 {% if data is not defined or data.idInitBs is null %}ACTIVE{% endif %}">
+                    <div id="id-blDeclAgen" class="cigbs-initbs-box cigbs-active">
+                        <p>{{ row.title_block|replace({'--ANNEE--': AnneeCamp }) }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row init_row" {% if row.height_force is defined %} style="height: {{ row.height_force }}px;"{% endif  %}>
+
+        {% set activeBlockCount = 0 %}
+
+
+
+        {% for block in row.blocks %}
+            {% set condition_to_show = false %}
+
+            {% if  block.show_condition == "true" %}
+                {% set condition_to_show = true %}
+            {% else %}
+                {% for condition in  block.show_condition %}
+                    {% if params[condition] == true %}
+                        {% set condition_to_show = true %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if condition_to_show == true %}
+                {% set activeBlockCount = activeBlockCount + 1 %}
+            {% endif %}
+        {% endfor %}
+        {#{{ dump(activeBlockCount) }}#}
+        {% if activeBlockCount > 0 %}
+            {% set size_block = 12 / activeBlockCount %}
+        {% else %}
+            {% set size_block = 12 %}
+        {% endif %}
+        {#{{ dump(size_block) }}#}
+        {% for block in row.blocks %}
+            {% if block.show_condition is defined %}
+                {% set condition_to_show = false %}
+                {% if  block.show_condition == "true" %}
+                     {% set condition_to_show = true %}
+                {% else %}
+                    {% for condition in  block.show_condition %}
+                        {% if params[condition] == true %}
+                            {% set condition_to_show = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if  condition_to_show == true  %}
+                    {% if block.show is defined and block.show == true %}
+                        {% if block.type == 'block' %}
+                            <div id="{{ block.id }}" style="cursor: pointer;" {% if block.function is defined  %} onclick="{{ block.function }}" {% endif %} class='{% if block.force_offset is defined and block.force_offset is not null and size_block == 12 %}{{ block.force_offset }}{%  endif  %} {% if block.force_size_dynamic is defined and block.force_size_dynamic == true and activeBlockCount == 2 %} col-xs-6 block {% else %}{% if block.size is defined and size_block != 12 %} col-xs-{{ block.size }} block {% elseif block.force_arrow == true %} col-xs-8 block  {% else %} col-xs-{{ size_block }} block {% endif %}{% endif %}  {{ block.class }} {% if block.default_on is defined and block.default_on == true and data.idInitBs is null %} ACTIVE {% else %} DESACTIVE {% endif %}' >
+
+                                <div>
+                                    <div class="top {{ block.direction }} {% if size_block == 12 and block.force_arrow != true %} center {% endif %}{#{% if alone %} col-xs-7 {% endif %}#}">
+                                        <span class="{% if block.direction == "left" %} text-left {% elseif block.direction == "right" %} text-right {% endif %} {% if size_block == 12 and block.force_arrow != true %} center {% endif %}">  {{ block.text }} </span>
+                                    </div>
+                                </div>
+                                {% if block.direction == "right" %}
+                                    <div class="col-xs-6 bottom {{ block.direction }} {% if size_block == 12 and block.force_arrow != true %} center {% endif %}" >
+                                        <div class="triangle_{{ block.direction }}"></div>
+                                    </div>
+                                    <div class="col-xs-6"></div>
+                                {% endif %}
+
+                                {% if block.direction == "left" %}
+                                    <div class="col-xs-6"></div>
+                                    <div class="col-xs-6 bottom {{ block.direction }} {% if size_block == 12 and block.force_arrow != true %} center {% endif %}" >
+                                        <div class="triangle_{{ block.direction }}"></div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {#{% if data.idInitBs == null %} class="disabled" {% endif %}#}
+                        {% elseif block.type == 'input_button' %}
+                            <div {% if block.data is defined  %}{{ block.data }}{% endif %} style="text-align: center; white-space: normal; cursor: pointer;  {% if row.height_force is defined %} height: inherit; {% endif  %}" id="{{ block.id }}" {% if data.idInitBs is not null %}disabled {% endif %} {% if block.function is defined  %} onclick="{{ block.function }}" {% endif %} class='cigbs-initbs-box {{ block.type }} {{ block.class }} {% if block.force_size_dynamic is defined and block.force_size_dynamic == true and activeBlockCount == 2 %} col-xs-6 block {% else %}{% if block.size is defined and size_block != 12 %} col-xs-{{ block.size }} block {% elseif block.force_arrow == true %} col-xs-8 block  {% else  %} col-xs-{{ size_block }} block {% endif %} {% endif %}'>
+                                {% if  params.blbilasoci == true %}
+                                {% set bs  = "Bilan social"%}
+                                    {% else %}
+                                        {% set bs = "enquête" %}
+                                    {% endif %}
+                                {% include '@BilanSocial/block_init_tooltip_help.html.twig' with {"block": block } %}
+                                <p> {{ block.text|replace({'--ANNEE--': AnneeCamp, "--BS--" : bs }) }}</p>
+                               {# <button class='btn init-bs btn-classic' {% if block.function is defined  %}onclick="{{ block.function }}" {% endif %} >{{ block.text }}</button>#}
+                            </div>
+                        {% elseif block.type == 'title' %}
+                            <div  style="text-align: center; {% if row.height_force is defined %} height: inherit;{% endif  %}" id="{{ block.id }}" style="text-align: center; cursor: pointer;" {% if block.function is defined  %} onclick="{{ block.function }}" {% endif %} class='cigbs-initbs-box {{ block.class }} {% if block.force_size_dynamic is defined and block.force_size_dynamic == true and activeBlockCount == 2 %} col-xs-6 block {% else %} {% if block.size is defined and size_block != 12 %} col-xs-{{ block.size }} block {% elseif block.force_arrow == true %} col-xs-8 block  {% else  %} col-xs-{{ size_block }} block {% endif %} {% endif %}'>
+
+                                {% if  params.blbilasoci == true %}
+                                    {% set bs  = "Bilan social"%}
+                                {% else %}
+                                    {% set bs = "enquête" %}
+                                {% endif %}
+                                {% include '@BilanSocial/block_init_tooltip_help.html.twig' with {"block": block } %}
+                                <p> {{ block.text|replace({'--ANNEE--': AnneeCamp, "--BS--" : bs }) }}</p>
+                            </div>
+                        {% elseif block.type == 'input_file' %}
+                            {% set has_shortcut_class = block.title_block_class is defined and 'shortcut' in block.title_block_class ? "has_shortcut" : "" %}
+                            <div {% if block.id is defined and block.id is not null %}id="{{ block.id }}"{% endif %}{% if row.height_force is defined %} style="height: inherit; cursor: pointer;"{% endif  %} {% if  data.idInitBs == null %} disabled {% endif %} class="cigbs-initbs-box block {{ block.type }} {{ block.class }} {% if block.size is defined and size_block != 12 %} col-xs-{{ block.size }} {% elseif block.force_arrow == true %} col-xs-8 {% else  %} col-xs-{{ size_block }} {% endif %} {{ has_shortcut_class }}" {% if block.data is defined  %}{{ block.data }}{% endif %}>
+                                {% if block.title_block is defined %}
+                                    <span class="title_import  {% if block.title_block_class is defined  and block.title_block_class is not null %} {{ block.title_block_class }}{% endif %} {{ has_shortcut_class }}" >
+                                        {{ block.title_block }}
+                                    </span>
+                                {% endif %}
+                                <div class="col-xs-12" style="height: 100%;">
+
+                                    <span class="center" style="height: 100%;">
+                                        <label  style="text-align: center; cursor: pointer;" {% if data.idInitBs is not  null %}disabled {% endif %} for="{#file-dgcl#}{% if block.id_input is defined and block.id_input is not null %}{{ block.id_input }}{% else %}{{ block.id }}{% endif %}" class="cigbs-custom-file-upload" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}>
+                                            <i class="fa fa-cloud-upload"></i> {{ block.text|replace({'--ANNEE--': AnneeCamp }) }}
+                                            {% include '@BilanSocial/block_init_tooltip_help.html.twig' with {"block": block } %}
+                                        </label>
+                                        <input style="text-align: center; cursor: pointer;"  type="file" {#id="file-dgcl"#} id="{% if block.id_input is defined and block.id_input is not null %}{{ block.id_input }}{% else %}{{ block.id }}{% endif %}" name="{{ block.id }}" class="col-xs-6" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}/>
+                                    </span>
+                                    {#<p class="file-dgcl col-xs-2"></p>#}
+                                    {# <button class='btn btn-classic col-xs-4' id='btn-import-DGCL'
+                                        {% if block.function is defined  %} onclick="{{ block.function }}" {% endif %}>Importer
+                                    </button>#}
+                                </div>
+                            </div>
+                               {# <div id="{{ block.id }}"  class='cigbs-initbs-box {{ block.class }} {% if block.size is defined and size_block != 12 %} col-xs-{{ block.size }} block {% elseif block.force_arrow == true %} col-xs-8 block  {% else  %} col-xs-{{ size_block }} block {% endif %}' >
+                                    #}{#<div class='cigbs-initbs-box {% if data.idInitBs == null %} disabled {% endif %}'>#}{#
+                                        <input type="file" name=" {{ block.id }}"  {% if data.idInitBs == null %}disabled {% endif %}">
+                                        <label class='btn init-bs btn-classic {{ block.class }}' {% if data.idInitBs == null %} #}{#disabled #}{#{% endif %} for=" {{ block.id }}" {% if block.function is defined  %} onclick="{{ block.function }}" {% endif %}>{{ block.text }}</label>
+
+                                    #}{#</div>#}{#
+                                </div>#}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{#
+
+<div class='row'>
+    <div id="id-blBsExis-to" class='col-xs-6' style="height: 100px">
+
+        <div class="col-xs-12">
+            <div class="top left">
+                <span> Au moins un agent ?  </span>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-6" ></div>
+            <div class="col-xs-6 bottom left" >
+                <div class="triangle_left"></div>
+            </div>
+        </div>
+    </div>
+    <div id="id-bsVide-to" class='col-xs-6' style="height: 100px">
+        <div class="col-xs-12">
+            <div class="top right">
+                <span> Aucun agent ?  </span>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-6 bottom right" >
+                <div class="triangle_right"></div>
+            </div>
+            <div class="col-xs-6" ></div>
+        </div>
+    </div>
+</div>#}

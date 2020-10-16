@@ -1,0 +1,357 @@
+{% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+    {% if formConditions431 is defined %}
+        {% set bilan_social_consolide = formConditions431.vars.data %}
+        {{ form_start(formConditions431) }}
+
+        {{ form_row(formConditions431.q4311) }}
+
+        <div id="ind431a" style="display: none;">
+            <h5>
+                Champ : le tableau qui suit concerne tous les agents, titulaires et contractuels, y compris sur un emploi non permanent.
+            </h5>
+
+            <table width="100%" id="ind4311Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="2"></th>
+                        <th colspan="2" style="text-align: center">Nombre d'actes de violence physique (y compris violences sexuelles) envers le personnel au cours de l'année {{AnneeCamp}}</th>
+                        <th class="filiTable" rowspan="2" style="text-align: center">Total</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formConditions431.ind431s %}
+                    {% set row_data = tag.vars.value %}
+                    {% set total_431 = row_data.r43111 + row_data.r43112 %}
+                    <tr idTrCate="{{tag.refActeViolencePhysique.vars.value}}" id="431idTr_{{tag.refActeViolencePhysique.vars.value}}">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            {{ form_widget(tag.refActeViolencePhysique) }}
+                            {{ tag.refActeViolencePhysique.vars.data.lbActviolphys}}
+                        </td>
+                        <td id="r43111" data-col-group='row_total_r431'>{{ form_widget(tag.r43111) }}</td>
+                        <td id="r43112" data-col-group='row_total_r431'>{{ form_widget(tag.r43112) }}</td>
+                        <td class="filiTable" id="total_h_f" data-col-id='row_total_r431' data-col-group="lineTotr431">{{ total_431}}</td>
+                    </tr>
+                {% endfor %}
+                    <tr class="filiTable row_totaux" id="tot4311" style="text-align: center">
+                        {% set total_ind = bilan_social_consolide.getIndPileForBy('ind431s') %}
+                        {% set total_h = total_ind.r43111  %}
+                        {% set total_f = total_ind.r43112  %}
+                        <td>Total</td>
+                        <td style="text-align: center" data-col-group="lineTotr431">{{total_h}}</td>
+                        <td style="text-align: center" data-col-group="lineTotr431">{{total_f}}</td>
+                        <td style="text-align: center" data-col-id='lineTotr431'>{{total_h + total_f}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        
+        {{ form_row(formConditions431.q4312) }}
+        <div id="ind431b" style="display: none;">
+            <h5>
+                Champ : le tableau qui suit concerne tous les agents, titulaires et contractuels, y compris sur un emploi non permanent.
+            </h5>
+            <table width="100%" id="ind4312Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="2"></th>
+                        <th colspan="2" style="text-align: center">Nombre de signalements au DRH pour harcelement moral</th>
+                        <th class="filiTable" rowspan="2" style="text-align: center">Total</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formConditions431.ind431s %}
+                    {% set row_data = tag.vars.value %}
+                    {% set total_431 = row_data.r43121 + row_data.r43122 %}
+                    <tr idTrCate="{{tag.refActeViolencePhysique.vars.value}}" id="4312idTr_{{tag.refActeViolencePhysique.vars.value}}">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            {{ form_widget(tag.refActeViolencePhysique) }}
+                            {{ tag.refActeViolencePhysique.vars.data.lbActviolphys}}
+                        </td>
+                        <td id="r43121" data-col-group="row_total_r431">{{ form_widget(tag.r43121) }}</td>
+                        <td id="r43122" data-col-group="row_total_r431">{{ form_widget(tag.r43122) }}</td>
+                        <td class="filiTable" id="total_h_f" data-col-id='row_total_r431' data-col-group="lineTotr431">{{ total_431}}</td>
+                    </tr>
+                {% endfor %}
+                    <tr class="filiTable row_totaux" id="tot4312" style="text-align: center">
+                        {% set total_ind = bilan_social_consolide.getIndPileForBy('ind431s') %}
+                        {% set total_h = total_ind.r43121  %}
+                        {% set total_f = total_ind.r43122  %}
+                        <td>Total</td>
+                        <td style="text-align: center" data-col-group="lineTotr431">{{total_h}}</td>
+                        <td style="text-align: center" data-col-group="lineTotr431">{{total_f}}</td>
+                        <td style="text-align: center" data-col-id='lineTotr431'>{{total_h + total_f}}</td>
+                    </tr>
+                </tbody>             
+            </table>
+        </div>
+        <br/>        
+
+        {{ form_row(formConditions431.q4313) }}
+        <div id="ind431c" style="display: none;">
+            <h5>
+                Champ : le tableau qui suit concerne tous les agents, titulaires et contractuels, y compris sur un emploi non permanent.
+            </h5>
+            <table width="100%" id="ind4313Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="2"></th>
+                        <th colspan="2" style="text-align: center">Nombre de signalements au DRH pour harcelement moral</th>
+                        <th class="filiTable" rowspan="2" style="text-align: center">Total</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formConditions431.ind431s %}
+                    {% set row_data = tag.vars.value %}
+                    {% set total_431 = row_data.r43131 + row_data.r43132 %}
+                    <tr idTrCate="{{tag.refActeViolencePhysique.vars.value}}" id="4313idTr_{{tag.refActeViolencePhysique.vars.value}}">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            {{ form_widget(tag.refActeViolencePhysique) }}
+                            {{ tag.refActeViolencePhysique.vars.data.lbActviolphys}}
+                        </td>
+                        <td id="r43131" data-col-group="row_total_r431">{{ form_widget(tag.r43131) }}</td>
+                        <td id="r43132" data-col-group="row_total_r431">{{ form_widget(tag.r43132) }}</td>
+                        <td class="filiTable" id="total_h_f" data-col-id='row_total_r431' data-col-group="lineTotr431">{{ total_431}}</td>
+                    </tr>
+                {% endfor %}
+                    <tr class="filiTable row_totaux" id="tot4313" style="text-align: center">
+                        {% set total_ind = bilan_social_consolide.getIndPileForBy('ind431s') %}
+                        {% set total_h = total_ind.r43131  %}
+                        {% set total_f = total_ind.r43132  %}
+                        <td>Total</td>
+                        <td style="text-align: center" data-col-group="lineTotr431">{{total_h}}</td>
+                        <td style="text-align: center" data-col-group="lineTotr431">{{total_f}}</td>
+                        <td style="text-align: center" data-col-id='lineTotr431'>{{total_h + total_f}}</td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+        <br/>          
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+        $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>        
+
+        {{ form_end(formConditions431) }}
+
+        <script type="text/javascript">
+
+        {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true %}
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            $(document).change();
+
+            function initForm4311() {
+                var q431Res = $('input[name="bscForm431[q4311]"]').filter(':checked').val();
+                if (q431Res == "1") {
+                    $('#ind431a').show();
+                } else {
+                    $('#ind431a').hide();
+                    $('#ind431a input').val(null);
+                }
+
+            }
+
+            function initForm4312() {
+                var q4312Res = $('input[name="bscForm431[q4312]"]').filter(':checked').val();
+                if (q4312Res == "1") {
+                    $('#ind431b').show();
+                } else {
+                    $('#ind431b').hide();
+                    $('#ind431b input').val(null);
+                }
+            }
+
+            function initForm4313() {
+                var q4313Res = $('input[name="bscForm431[q4313]"]').filter(':checked').val();
+                if (q4313Res == "1") {
+                    $('#ind431c').show();
+                } else {
+                    $('#ind431c').hide();
+                    $('#ind431c input').val(null);
+                }                
+            }
+
+            initForm4311();
+            $("#bscForm431_q4311").on("click", function () {
+                initForm4311();
+            });
+            
+            initForm4312();
+            $("#bscForm431_q4312").on("click", function () {
+                initForm4312();
+            });
+
+            initForm4313();
+            $("#bscForm431_q4313").on("click", function () {
+                initForm4313();
+            });
+            
+            //
+            // update431("ind4311Table", "tot4311", "r43111", "r43112");
+            // update431("ind4312Table", "tot4312", "r43121", "r43122");
+            // update431("ind4313Table", "tot4313", "r43131", "r43132");
+
+        });
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true %}
+        function changedR431(obj) {
+            // update431("ind4311Table", "tot4311", "r43111", "r43112");
+            // update431("ind4312Table", "tot4312", "r43121", "r43122");
+            // update431("ind4313Table", "tot4313", "r43131", "r43132");
+        }
+
+        {#function update431(tableId, totalId, r1, r2){#}
+        {#    var table431 = document.getElementById(tableId);#}
+        {#    var rowLength431 = table431.rows.length;#}
+        {#    var idxRowInput = 0;#}
+
+        {#    var mtTot1 = 0;#}
+        {#    var mtTot2 = 0;#}
+
+        {#    var mtTot1Glo = 0;#}
+        {#    var mtTot2Glo = 0;#}
+
+        {#    for (var i = 2; i < rowLength431; i += 1) {#}
+        {#        var row = table431.rows[i];#}
+        {#        var cellLength = row.cells.length;#}
+
+        {#        var lineTotalGlo = false;#}
+
+        {#        if (row.id.substring(0, 7) == totalId) {#}
+        {#            lineTotalGlo = true;#}
+
+        {#            for (var y = 0; y < cellLength; y += 1) {#}
+        {#                var cell = row.cells[y];#}
+        {#                if (y == 1) {#}
+        {#                    cell.innerHTML = mtTot1Glo;#}
+        {#                    mtTot1Glo = 0;#}
+        {#                } else if (y == 2) {#}
+        {#                    cell.innerHTML = mtTot2Glo;#}
+        {#                    mtTot2Glo = 0;#}
+        {#                }#}
+        {#            }#}
+        {#        }#}
+        {#        for (var y = 0; y < cellLength; y += 1) {#}
+        {#            var cell = row.cells[y];#}
+        {#            #}
+        {#            if (cell.id.substring(0, 6) == r1) {#}
+        {#                if ($('#bscForm431_ind431s_' + idxRowInput + '_'+r1).val() != "") {#}
+        {#                    mtTot1 += parseInt($('#bscForm431_ind431s_' + idxRowInput + '_'+r1).val());#}
+        {#                    mtTot1Glo += parseInt($('#bscForm431_ind431s_' + idxRowInput + '_'+r1).val());#}
+        {#                }#}
+        {#            } else if (cell.id.substring(0, 6) == r2) {#}
+        {#                console.log($('#bscForm431_ind431s_' + idxRowInput + '_'+r2));#}
+        {#                if ($('#bscForm431_ind431s_' + idxRowInput + '_'+r2).val() != "") {#}
+        {#                    console.log($('#bscForm431_ind431s_' + idxRowInput + '_'+r2));#}
+        {#                    mtTot2 += parseInt($('#bscForm431_ind431s_' + idxRowInput + '_'+r2).val());#}
+        {#                    mtTot2Glo += parseInt($('#bscForm431_ind431s_' + idxRowInput + '_'+r2).val());#}
+        {#                }#}
+        {#            }#}
+        {#        }#}
+
+        {#        if (!lineTotalGlo) {#}
+        {#            idxRowInput++;#}
+        {#        }#}
+        {#    }// end for line#}
+        {#}#}
+        {% endif %}
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                var qRes4311 = $('input[name="bscForm431[q4311]"]').filter(':checked').val();
+                var qRes4312 = $('input[name="bscForm431[q4312]"]').filter(':checked').val();
+                var qRes4313 = $('input[name="bscForm431[q4313]"]').filter(':checked').val();
+                var Res4311Status = checkIfZeroOrNull(qRes4311, 'ind4311Table', 'ind431a');
+                var Res4312Status = checkIfZeroOrNull(qRes4312, 'ind4312Table', 'ind431b');
+                var Res4313Status = checkIfZeroOrNull(qRes4313, 'ind4313Table', 'ind431c');
+                $('#bscForm431_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+                if (Res4311Status == true && Res4312Status == true && Res4313Status == true) {
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ path('bilan_conso_conditions_ind431_edit') }}',
+                        data: $('form').serialize(),
+                        success: function (responsejson) {
+
+                            if (responsejson.data == 1) {
+                                if (recordAuto) {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement automatique réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+                                } else {
+                                    $('#ind431').load('{{ path('bilan_conso_conditions_ind431_edit') }}', function () {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                        var next = $($this).next('.panel-heading');
+                                        if(next.length == 0) {
+                                            window.location.href = '{{ path('bilan_conso_formation_edit') }}';
+                                        }
+                                    });
+
+                                }
+                            } else if (responsejson.data == "-3") {
+                                $('#progImg').hide();
+                                $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                messageJS.dialog("open");
+                            } else {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                messageJS.dialog("open");
+                            }
+
+
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(xhr);
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                            messageJS.dialog("open");
+                        }
+
+                    });
+                } else {
+                    $('#progImg').hide();
+                }
+
+            });
+
+        });
+
+        </script>
+    {% endif %}

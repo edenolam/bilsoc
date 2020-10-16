@@ -1,0 +1,35 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refmaladieprofessionnelle_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refMaladieProfessionnelle.cdMaladiepro }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refMaladieProfessionnelle.lbMaladiepro }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refMaladieProfessionnelle.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refMaladieProfessionnelle} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refmaladieprofessionnelle_edit', { 'idMaladiepro': refMaladieProfessionnelle.idMaladiepro }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

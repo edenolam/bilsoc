@@ -1,0 +1,43 @@
+{#
+	fiche des longTask
+#}
+{# {% extends '@LongTaskManager/layout.html.twig' %} #}
+{% set base_paht_file_manager = "http://192.168.2.25:8091" %}
+{% block body %}
+	<div class='long_task_fiche col-md-2' data-task-key="{{ task.taskKey }}">
+		<span class='cancel_delete_longTask'><i class="fa fa-times-circle pull-right" data-task-key="{{ task.taskKey }}" data-task-status="{{ task.status }}"></i></span>
+		<p>{{ task.taskType }}</p>
+		<p>commencé le {{ task.startDate|date("d/m/Y à H:i", "Europe/Paris") }}</p>
+		<div>
+			{% if task.status == "RUNNING" or task.status == "READY_TO_RUN" %}
+				{% set ratio = (task.detailsDoneCount + task.detailsErrorCount) / task.detailsCount * 100 %}
+				{% set src_param = {"task_key": task.taskKey } %}
+				<p>traitement des données</p>
+				<div class="progress bs_progress_bar" data-progress-src="{{ path('long_task_manager_get_status_task') }}" data-progress-src-param="{{ src_param|json_encode() }}" data-progress-delay="10000">
+				  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ ratio }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ratio }}%; min-width:2em;">
+				    {{ ratio|round(0, 'floor') }}%
+				  </div>
+				</div>
+			{% elseif task.status == "FINISHING" %}
+				<p>traitement des données<i class="fas fa-check"></i></p>
+				<p>préparation du fichier<i class="fas fa-spinner"></i></p>
+			{% elseif task.status == "FINISHED"  %}
+				<p>terminé le {{ task.endDate|date("d/m/Y à H:i", "Europe/Paris") }}</p>
+				{% if task.fileInfos is defined and task.fileInfos is not null and task.fileInfos.originalFileName is defined%}
+					<a href="{{ file_manager.getPublicFileUrl(task.fileKey) }}" target="_blank">{{ task.fileInfos.originalFileName }}</a>
+					<p>taille du fichier : {{ task.fileInfos.fileContentSize }} octets<p>
+					<a href="{{ file_manager.getPublicFileUrl(task.fileKey) }}" target="_blank"><button> Récupérer le fichier </button></a>
+				{% else %}
+					<p> problème avec le fichier </p>
+				{% endif %}
+			{% endif %}
+			<p class='counts_info_container'>{{ task.detailsDoneCount }} / {{ task.detailsCount }} 
+				{% if task.detailsErrorCount is defined and task.detailsErrorCount > 0 %}
+					({{ task.detailsErrorCount }} erreurs)
+				{% endif %}
+			</p>
+		</div>
+	</div>
+{% endblock body %}
+
+

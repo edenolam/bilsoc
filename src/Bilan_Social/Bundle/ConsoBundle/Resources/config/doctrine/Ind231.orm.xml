@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind231" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind231Repository" table="ind_231">
+        <indexes>
+            <index name="FK_231_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+        <id name="id231" type="integer" column="ID_231">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind231s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <field name="r2311" type="integer" column="R_2311" nullable="true" />
+        <field name="r2312" type="integer" column="R_2312" nullable="true"/>
+        <field name="cdDema" type="string" column="CD_DEMA" length="3" nullable="true"/>
+        <field name="order" type="integer" column="ORDRE" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

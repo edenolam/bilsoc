@@ -1,0 +1,470 @@
+{# empty Twig template #}
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+
+    {% if formGpeecNbAgentsTituEmpPermaParFoncEtAge is defined %}
+        {% set bilan_social_consolide = formGpeecNbAgentsTituEmpPermaParFoncEtAge.vars.data %}
+        {{ form_start(formGpeecNbAgentsTituEmpPermaParFoncEtAge) }}
+
+            <table width="100%" id="bscGpeecNbAgentsTituEmpPermaParFoncEtAgeTable" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr entete="1">
+                        <th width="20%" rowspan="4">Fonction CNFPT</th>
+                        <th style="text-align: center">moins de 25 ans</th>
+                        <th style="text-align: center">25 à 29 ans</th>
+                        <th style="text-align: center">30 à 34 ans</th>
+                        <th style="text-align: center">35 à 39 ans</th>
+                        <th style="text-align: center">40 à 44 ans</th>
+                        <th style="text-align: center">45 à 49 ans</th>
+                        <th style="text-align: center">50 à 54 ans</th>
+                        <th style="text-align: center">55 à 59 ans</th>
+                        <th style="text-align: center">60 à 64 ans</th>
+                        <th style="text-align: center">65 ans et plus</th>
+                    </tr>
+
+                </thead>
+                <tbody id="421tbody" class='ind_table_totaux'>
+                    {% for tagFM in familleMetier %}
+                        <tr id="entetFil" hide="1" idFamilleMetier="{{ tagFM.idFamilleMetier }}" style="text-align: center">
+                            <td colspan="11">
+                                &nbsp;&nbsp;&nbsp;&nbsp;{{ tagFM.lbFamilleMetier }}
+                                {% for key,tot in arrayTotalFamilleMetier %}
+                                    {% if(key == tagFM.idFamilleMetier) %}
+                                        <span class="alerteConso">[{% if(tot) == null %} 0 {% else %} {{ tot }} {% endif %}]</span>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if idFamilleMetier == tagFM.idFamilleMetier%}
+                                    <input class="buttonmoins" type="button" id="toggleFamilleMetier_{{ tagFM.idFamilleMetier}}"
+                                           onclick="toggleFamilleMetier(this, {{ tagFM.idFamilleMetier}})" />
+                                {% endif%}
+
+                                {% if idFamilleMetier != tagFM.idFamilleMetier%}
+                                    <input class="buttonplus" type="button" id="toggleFamilleMetier_{{ tagFM.idFamilleMetier}}"
+                                           onclick="toggleFamilleMetier(this, {{ tagFM.idFamilleMetier}})" />
+                                {% endif%}
+                            </td>
+                        </tr>
+
+                        {% if idFamilleMetier == tagFM.idFamilleMetier%}
+                            {% for tag in formGpeecNbAgentsTituEmpPermaParFoncEtAge.bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp %}
+                                <tr  id="421trCE_{{tag.refMetier.vars.value}}">
+                                    <td>
+                                        {{ form_widget(tag.refMetier) }}
+                                        {{ tag.refMetier.vars.data.lbMetier }}
+                                    </td>
+                                    <td id="rNb1" style="text-align: center">{{ form_widget(tag.rNb1) }}</td>
+                                    <td id="rNb2" style="text-align: center">{{ form_widget(tag.rNb2) }}</td>
+                                    <td id="rNb3" style="text-align: center">{{ form_widget(tag.rNb3) }}</td>
+                                    <td id="rNb4" style="text-align: center">{{ form_widget(tag.rNb4) }}</td>
+                                    <td id="rNb5" style="text-align: center">{{ form_widget(tag.rNb5) }}</td>
+                                    <td id="rNb6" style="text-align: center">{{ form_widget(tag.rNb6) }}</td>
+                                    <td id="rNb7" style="text-align: center">{{ form_widget(tag.rNb7) }}</td>
+                                    <td id="rNb8" style="text-align: center">{{ form_widget(tag.rNb8) }}</td>
+                                    <td id="rNb9" style="text-align: center">{{ form_widget(tag.rNb9) }}</td>
+                                    <td id="rNb10" style="text-align: center">{{ form_widget(tag.rNb10) }}</td>
+
+                                </tr>
+
+                            {% endfor %}
+                            {% set total_fami = bilan_social_consolide.getIndPileForBy('bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp',['refMetier','refFamilleMetier'],idFamilleMetier) %}
+                            <tr class="filiTable row_totaux" id="totalFil">
+                                <td><b>Total {{ tagFM.lbFamilleMetier}} </b></td>
+                                <td style="text-align: center">{{ total_fami.rNb1 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb2 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb3 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb4 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb5 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb6 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb7 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb8 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb9 }}</td>
+                                <td style="text-align: center">{{ total_fami.rNb10 }}</td>
+
+                            </tr>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {# <tr id="totalHorsFil" class="filiTable" style="display: none">
+                        <td></td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb1}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb2}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb3}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb4}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb5}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb6}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb7}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb8}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb9}}</td>
+                        <td style="text-align: center">{{totalBscGpeecNbAgentsTituEmpPermaParFoncEtAge.rNb10}}</td>
+                    </tr> #}
+                    {% set total_ind = bilan_social_consolide.getIndPileForBy('bscGpeecNbAgentsTituEmpPermaParFoncEtAges') %}
+                    <tr id="totalFilGlo" class="filiTable row_totaux">
+                        <td><b>TOUTES FAMILLES METIER</b></td>
+                        <td style="text-align: center">{{ total_ind.rNb1 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb2 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb3 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb4 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb5 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb6 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb7 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb8 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb9 }}</td>
+                        <td style="text-align: center">{{ total_ind.rNb10 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display: none"/>
+
+        {{ form_end(formGpeecNbAgentsTituEmpPermaParFoncEtAge) }}
+
+        <script type="text/javascript">
+            $(document).ready(function ()
+            {
+                {% include 'stickyheader.txt' %}
+                getBrowserSetSticky(bscGpeecNbAgentsTituEmpPermaParFoncEtAgeTable);
+                
+                changeDetect = false;
+
+                $(document).change();
+                //updateNbAgentsTituEmpPermaParFoncEtAge();
+            });
+
+
+                /*
+                 * METHODES Tableau 4.2.2
+                 */
+
+                function toggleFamilleMetier(toggleObj, idFamilleMetier) {
+                    var css = toggleObj.getAttribute('class');
+
+                    {% if idFamilleMetier != null and idFamilleMetier != 0 %}
+                        // Sauvegarde auto
+                        if (currentTab != "")
+                            saveTab(currentTab);
+                    {% endif %}
+
+                        if (css == "buttonplus") {
+                            $('#nb_agents_titu_emp_perma_par_fonc_et_age').load('{{ path('bilan_conso_gpeec_bscGpeecNbAgentsTituEmpPermaParFoncEtAges_edit') }}?idFamilleMetier=' + idFamilleMetier, function () {
+                                disabled();
+                            });
+                        } else {
+                            $('#nb_agents_titu_emp_perma_par_fonc_et_age').load('{{ path('bilan_conso_gpeec_bscGpeecNbAgentsTituEmpPermaParFoncEtAges_edit') }}?idFamilleMetier=' + 0, function () {
+                                disabled();
+                            });
+                        }
+                    }
+
+                    function changedRNbAgentsTituEmpPermaParFoncEtAge(obj) {
+                        //updateNbAgentsTituEmpPermaParFoncEtAge();
+                    }
+
+                    function updateNbAgentsTituEmpPermaParFoncEtAge() {
+                        var tableBscGpeecNbAgentsTituEmpPermaParFoncEtAgeTable = document.getElementById('bscGpeecNbAgentsTituEmpPermaParFoncEtAgeTable');
+
+                        var rowLengthBscGpeecNbAgentsTituEmpPermaParFoncEtAgeTable = tableBscGpeecNbAgentsTituEmpPermaParFoncEtAgeTable.rows.length;
+                        var idxRowInput = 0;
+
+                        var mtTot1 = 0;
+                        var mtTot2 = 0;
+                        var mtTot3 = 0;
+                        var mtTot4 = 0;
+                        var mtTot5 = 0;
+                        var mtTot6 = 0;
+                        var mtTot7 = 0;
+                        var mtTot8 = 0;
+                        var mtTot9 = 0;
+                        var mtTot10 = 0;
+
+                        var mtTot1Fil = 0;
+                        var mtTot2Fil = 0;
+                        var mtTot3Fil = 0;
+                        var mtTot4Fil = 0;
+                        var mtTot5Fil = 0;
+                        var mtTot6Fil = 0;
+                        var mtTot7Fil = 0;
+                        var mtTot8Fil = 0;
+                        var mtTot9Fil = 0;
+                        var mtTot10Fil = 0;
+
+                        var mtTot1FilGlo = 0;
+                        var mtTot2FilGlo = 0;
+                        var mtTot3FilGlo = 0;
+                        var mtTot4FilGlo = 0;
+                        var mtTot5FilGlo = 0;
+                        var mtTot6FilGlo = 0;
+                        var mtTot7FilGlo = 0;
+                        var mtTot8FilGlo = 0;
+                        var mtTot9FilGlo = 0;
+                        var mtTot10FilGlo = 0;
+
+                        var mtTot1HorsFil = 0;
+                        var mtTot2HorsFil = 0;
+                        var mtTot3HorsFil = 0;
+                        var mtTot4HorsFil = 0;
+                        var mtTot5HorsFil = 0;
+                        var mtTot6HorsFil = 0;
+                        var mtTot7HorsFil = 0;
+                        var mtTot8HorsFil = 0;
+                        var mtTot9HorsFil = 0;
+                        var mtTot10HorsFil = 0;
+
+                        for (var i = 0; i < rowLengthBscGpeecNbAgentsTituEmpPermaParFoncEtAgeTable; i += 1) {
+                            var row = tableBscGpeecNbAgentsTituEmpPermaParFoncEtAgeTable.rows[i];
+
+                            if(row.getAttribute("entete") != undefined && row.getAttribute("entete") == "1") {
+                                continue;
+                            }
+
+                            var cellLength = row.cells.length;
+
+                            var lineTotalFil = false;
+                            var lineTotalFilGlo = false;
+
+                            if (row.id.substring(0, 8) == "entetFil") {
+                                continue;
+                            }
+
+                            if (row.id.substring(0, 12) == "totalHorsFil") {
+                                for (var y = 0; y < cellLength; y += 1) {
+                                    var cell = row.cells[y];
+                                    if (y == 1) {
+                                        mtTot1HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 2) {
+                                        mtTot2HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 3) {
+                                        mtTot3HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 4) {
+                                        mtTot4HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 5) {
+                                        mtTot5HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 6) {
+                                        mtTot6HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 7) {
+                                        mtTot7HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 8) {
+                                        mtTot8HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 9) {
+                                        mtTot9HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 10) {
+                                        mtTot10HorsFil = parseInt(cell.innerHTML);
+                                    }
+                                }
+                            }
+
+                            if (row.id.substring(0, 11) == "totalFilGlo") {
+                                lineTotalFilGlo = true;
+                                for (var y = 0; y < cellLength; y += 1) {
+                                    var cell = row.cells[y];
+                                    if (y == 1) {
+                                        cell.innerHTML = mtTot1FilGlo + mtTot1HorsFil;
+                                        mtTot1FilGlo = 0;
+                                    } else if (y == 2) {
+                                        cell.innerHTML = mtTot2FilGlo + mtTot2HorsFil;
+                                        mtTot2FilGlo = 0;
+                                    } else if (y == 3) {
+                                        cell.innerHTML = mtTot3FilGlo + mtTot3HorsFil;
+                                        mtTot3FilGlo = 0;
+                                    } else if (y == 4) {
+                                        cell.innerHTML = mtTot4FilGlo + mtTot4HorsFil;
+                                        mtTot4FilGlo = 0;
+                                    } else if (y == 5) {
+                                        cell.innerHTML = mtTot5FilGlo + mtTot5HorsFil;
+                                        mtTot5FilGlo = 0;
+                                    } else if (y == 6) {
+                                        cell.innerHTML = mtTot6FilGlo + mtTot6HorsFil;
+                                        mtTot6FilGlo = 0;
+                                    } else if (y == 7) {
+                                        cell.innerHTML = mtTot7FilGlo + mtTot7HorsFil;
+                                        mtTot7FilGlo = 0;
+                                    } else if (y == 8) {
+                                        cell.innerHTML = mtTot8FilGlo + mtTot8HorsFil;
+                                        mtTot8FilGlo = 0;
+                                    } else if (y == 9) {
+                                        cell.innerHTML = mtTot9FilGlo + mtTot9HorsFil;
+                                        mtTot9FilGlo = 0;
+                                    } else if (y == 10) {
+                                        cell.innerHTML = mtTot10FilGlo + mtTot10HorsFil;
+                                        mtTot10FilGlo = 0;
+                                    }
+                                }
+                            } else if (row.id.substring(0, 8) == "totalFil") {
+                                lineTotalFil = true;
+                                for (var y = 0; y < cellLength; y += 1) {
+                                    var cell = row.cells[y];
+                                    if (y == 1) {
+                                        cell.innerHTML = mtTot1Fil;
+                                        mtTot1Fil = 0;
+                                    } else if (y == 2) {
+                                        cell.innerHTML = mtTot2Fil;
+                                        mtTot2Fil = 0;
+                                    } else if (y == 3) {
+                                        cell.innerHTML = mtTot3Fil;
+                                        mtTot3Fil = 0;
+                                    } else if (y == 4) {
+                                        cell.innerHTML = mtTot4Fil;
+                                        mtTot4Fil = 0;
+                                    } else if (y == 5) {
+                                        cell.innerHTML = mtTot5Fil;
+                                        mtTot5Fil = 0;
+                                    } else if (y == 6) {
+                                        cell.innerHTML = mtTot6Fil;
+                                        mtTot6Fil = 0;
+                                    } else if (y == 7) {
+                                        cell.innerHTML = mtTot7Fil;
+                                        mtTot7Fil = 0;
+                                    } else if (y == 8) {
+                                        cell.innerHTML = mtTot8Fil;
+                                        mtTot8Fil = 0;
+                                    } else if (y == 9) {
+                                        cell.innerHTML = mtTot9Fil;
+                                        mtTot9Fil = 0;
+                                    } else if (y == 10) {
+                                        cell.innerHTML = mtTot10Fil;
+                                        mtTot10Fil = 0;
+                                    }
+                                }
+                            }
+
+                            for (var y = 0; y < cellLength; y += 1) {
+                                var cell = row.cells[y];
+
+                                if (cell.id.substring(0, 4) == "rNb2") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb2').val() != "") {
+                                        mtTot2 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb2').val());
+                                        mtTot2Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb2').val());
+                                        mtTot2FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb2').val());
+                                    }
+                                } else if (cell.id.substring(0, 4) == "rNb3") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb3').val() != "") {
+                                        mtTot3 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb3').val());
+                                        mtTot3Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb3').val());
+                                        mtTot3FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb3').val());
+                                    }
+                                } else if (cell.id.substring(0, 4) == "rNb4") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb4').val() != "") {
+                                        mtTot4 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb4').val());
+                                        mtTot4Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb4').val());
+                                        mtTot4FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb4').val());
+                                    }
+                                } else if (cell.id.substring(0, 4) == "rNb5") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb5').val() != "") {
+                                        mtTot5 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb5').val());
+                                        mtTot5Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb5').val());
+                                        mtTot5FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb5').val());
+                                    }
+                                } else if (cell.id.substring(0, 4) == "rNb6") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb6').val() != "") {
+                                        mtTot6 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb6').val());
+                                        mtTot6Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb6').val());
+                                        mtTot6FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb6').val());
+                                    }
+                                } else if (cell.id.substring(0, 4) == "rNb7") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb7').val() != "") {
+                                        mtTot7 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb7').val());
+                                        mtTot7Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb7').val());
+                                        mtTot7FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb7').val());
+                                    }
+                                } else if (cell.id.substring(0, 4) == "rNb8") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb8').val() != "") {
+                                        mtTot8 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb8').val());
+                                        mtTot8Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb8').val());
+                                        mtTot8FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb8').val());
+                                    }
+                                } else if (cell.id.substring(0, 4) == "rNb9") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb9').val() != "") {
+                                        mtTot9 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb9').val());
+                                        mtTot9Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb9').val());
+                                        mtTot9FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb9').val());
+                                    }
+                                } else if (cell.id.substring(0, 5) == "rNb10") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb10').val() != "") {
+                                        mtTot10 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb10').val());
+                                        mtTot10Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb10').val());
+                                        mtTot10FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb10').val());
+                                    }
+                                } else if (cell.id.substring(0, 4) == "rNb1") {
+                                    if ($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb1').val() != "") {
+                                        mtTot1 += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb1').val());
+                                        mtTot1Fil += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb1').val());
+                                        mtTot1FilGlo += parseInt($('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_bscGpeecNbAgentsTituEmpPermaParFoncEtAgesTemp_' + idxRowInput + '_rNb1').val());
+                                    }
+                                }
+                            }
+
+                            if (!lineTotalFil && !lineTotalFilGlo)
+                                idxRowInput++;
+                        }// end for line
+
+                    }
+
+                /*
+                 * METHODE AJAX SUBMIT
+                 */
+                $(function () {
+                    // Enregistrement en ajax
+                    $('form').on('submit', function (e) {
+                        var btn = $(this).find("input[type=submit]:focus");
+                        var value_valide = $(btn).data('valide');
+                        $('#bscFormGpeecNbAgentsTituEmpPermaParFoncEtAge_valide').val(value_valide);
+                        // Submit en ajax pour le fonctionnement d'appel par onglet
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ path('bilan_conso_gpeec_bscGpeecNbAgentsTituEmpPermaParFoncEtAges_edit') }}?idFamilleMetier={{idFamilleMetier}}',
+                            data: $('form').serialize(),
+                            success: function (responsejson) {
+
+                                if (responsejson.data == 1) {
+                                    if (recordAuto) {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement automatique réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+                                    } else {
+                                        $('#nb_agents_titu_emp_perma_par_fonc_et_age').load('{{ path('bilan_conso_gpeec_bscGpeecNbAgentsTituEmpPermaParFoncEtAges_edit') }}?idFamilleMetier={{idFamilleMetier}}', function () {
+                                            $('#progImg').hide();
+                                            $('#messageJS').html("Enregistrement réussi");
+                                            messageJS.dialog("open");
+                                            setIncoherenceTable(responsejson);
+                                        });
+
+                                    }
+                                } else if (responsejson.data == "-3") {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                    messageJS.dialog("open");
+                                } else {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                    messageJS.dialog("open");
+                                }
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(xhr);
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                                messageJS.dialog("open");
+                            }
+
+                        });
+
+                    });
+
+                });
+        </script>
+    {% endif %}

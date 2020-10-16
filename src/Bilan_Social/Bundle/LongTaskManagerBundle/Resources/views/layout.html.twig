@@ -1,0 +1,25 @@
+{# 
+	layout de base du LongTaskManager
+#}
+{% if not app.request.isXmlHttpRequest and (layout_ok is not defined or layout_ok != true) %}
+	{% set layout_ok = true %}
+	{% extends 'base.html.twig' %}
+	{% block javascripts %}
+	    {{ parent() }}
+	    <script type="text/javascript" src="{{ asset('js/LongTaskManager/longTaskManager.js') }}"></script>
+
+	{% endblock %}
+	{% block stylesheets %}
+	    {{ parent() }}
+	    <link rel="stylesheet" type="text/css" href="{{ asset('css/longTaskManager.css') }}"/>
+
+	{% endblock %}
+	{% block header %}
+	       {{ parent() }}
+
+	{% endblock %}
+
+	{% block body %}
+	    {{parent()}}
+	{% endblock %}
+{% endif %}

@@ -1,0 +1,473 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+    <div class="col-md-9 contentConsolide pull-right" style='padding-right:0;padding-left:0;'>
+        {# <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-19.png") }}" class="icone-menu"/> Handitorial{% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_PREVIOUS_ADMIN') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3> #}
+        <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-19.png") }}" class="icone-menu"/> Handitorial{% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_CDG') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3>
+        <div id="incoh_wrapper">
+        <div id="incoh">
+            <div id="incohpanel" class="panel panel-default">
+
+                <span class="pull-right buttonmoins" id="HideShowIncoh" title="Réduire" ></span>
+
+                Incohérences <span id="nbErreur" class="badge"></span>
+                <table id="incoherenceTable" width="50%" class="table table-striped table-hover table-bordered">
+                    <tbody>
+                        {% if incoherenceList != null and incoherenceList.count() > 0  %}
+                            {% for tag in incoherenceList %}
+                                {% if tag.form == '10' %}
+                                    <tr>
+                                        <td><a href="#" onclick="openError('{{tag.idToggle1}}', '{{tag.idToggle2}}', '{{tag.field}}')">{{tag.tableNum}}</a>
+                                        </td>
+                                        <td>{{ tag.message }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <br/>
+                <div id='incoh-legende'>
+                    <div>
+                        <p>Contrôle de cohérence :</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-error'>&nbsp;</span>Erreur de cohérence</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-atte'>&nbsp;</span>Donnée(s) en attente</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-vali'>&nbsp;</span>Validé</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="ghost hidden"></div>
+    </div>
+
+    <div class="panel panel-default col-md-9 contentConsolide pull-right">
+
+        <!--  Questions générales Handitorial -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Informations générales
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialQuestionsGenerales" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialQuestionsGenerales }}% {% endif %}" >
+                            <span class="sr-only handitorialQuestionsGenerales-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbhanditorialQuestionsGenerales-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialQuestionsGenerales == 0 %} A saisir {% elseif consolide.moyenneHanditorialQuestionsGenerales == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_questions_generales" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="questions_generales" style="display: none;">
+
+        </div>
+
+        <!--  Inaptitude et reclassement Handitorial -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Inaptitude et reclassement
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialInaptitudeEtReclassement" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialInaptitudeEtReclassement }}% {% endif %}" >
+                            <span class="sr-only handitorialInaptitudeEtReclassement-value">0%</span>
+                        </div>
+                    
+                    </div>
+                    <span class="pbhanditorialInaptitudeEtReclassement-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialInaptitudeEtReclassement == 0 %} A saisir {% elseif consolide.moyenneHanditorialInaptitudeEtReclassement == 100 %}{% if totalBscHanditorialInaptitudeEtReclassement == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscHanditorialInaptitudeEtReclassement != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_inaptitude_et_reclassement" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="inaptitude_et_reclassement" style="display: none;">
+
+        </div>
+
+        <!--  Inaptitude et reclassement - Cadre Emploi -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Répartition des agents inaptes ou reclassés selon le cadre d’emplois en {{AnneeCamp}}
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialInaptEtReclaCadreEmplois" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialInaptEtReclaCadreEmplois }}% {% endif %}" >
+                            <span class="sr-only handitorialInaptEtReclaCadreEmplois-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbhanditorialInaptEtReclaCadreEmplois-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialInaptEtReclaCadreEmplois == 0 %} A saisir {% elseif consolide.moyenneHanditorialInaptEtReclaCadreEmplois == 100 %}{% if totalBscHanditorialInaptEtReclaCadreEmplois == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscHanditorialInaptEtReclaCadreEmplois != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_inapt_et_recla_cadre_emplois" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="inapt_et_recla_cadre_emplois" style="display: none;">
+
+        </div>
+
+        <!--  Inaptitude et reclassement Metiers -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Répartition des agents inaptes ou reclassés selon le métier exercé en {{AnneeCamp}}
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialInaptEtReclaMetiers" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialInaptEtReclaMetiers }}% {% endif %}" >
+                            <span class="sr-only handitorialInaptEtReclaMetiers-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbhanditorialInaptEtReclaMetiers-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialInaptEtReclaMetiers == 0 %} A saisir {% elseif consolide.moyenneHanditorialInaptEtReclaMetiers == 100 %}{% if totalBscHanditorialInaptEtReclaMetiers == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscHanditorialInaptEtReclaMetiers != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_inapt_et_recla_metiers" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="inapt_et_recla_metiers" style="display: none;">
+
+        </div>
+
+        <!--  Inaptitude et reclassement Temps Complets -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Répartition des agents inaptes ou reclassés selon le temps de travail
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialInaptEtReclaTempsComplets" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialInaptEtReclaTempsComplets }}% {% endif %}" >
+                            <span class="sr-only handitorialInaptEtReclaTempsComplets-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbhanditorialInaptEtReclaTempsComplets-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialInaptEtReclaTempsComplets == 0 %} A saisir {% elseif consolide.moyenneHanditorialInaptEtReclaTempsComplets == 100 %}{% if totalBscHanditorialInaptEtReclaTempsComplets == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscHanditorialInaptEtReclaTempsComplets != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_inapt_et_recla_temps_complets" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="inapt_et_recla_temps_complets" style="display: none;">
+
+        </div>
+
+        <!--  Questions BOETH Handitorial -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Questions B.O.E.T.H.
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialQuestionsBoeths" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialQuestionsBoeths }}% {% endif %}" >
+                            <span class="sr-only handitorialQuestionsBoeths-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbhanditorialQuestionsBoeths-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialQuestionsBoeths == 0 %} A saisir {% elseif consolide.moyenneHanditorialQuestionsBoeths == 100 %}{% if totalBscHanditorialQuestionsBoeths == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscHanditorialQuestionsBoeths != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_questions_boeths" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="questions_boeths" style="display: none;">
+
+        </div>
+
+        <!--  Questions Cadre Emploi Handitorial -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Répartition des agents BOETH selon le cadre d’emplois en {{AnneeCamp}}
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialCadreEmplois" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialCadreEmplois }}% {% endif %}" >
+                            <span class="sr-only handitorialCadreEmplois-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbhanditorialCadreEmplois-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialCadreEmplois == 0 %} A saisir {% elseif consolide.moyenneHanditorialCadreEmplois == 100 %}{% if totalBscHanditorialCadreEmplois == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscHanditorialCadreEmplois != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_cadre_emplois" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="cadre_emplois" style="display: none;">
+
+        </div>
+
+        <!--  Questions Metiers Handitorial -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Répartition des agents BOETH selon le métier exercé en {{AnneeCamp}}
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialMetiers" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialMetiers }}% {% endif %}" >
+                            <span class="sr-only handitorialMetiers-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbhanditorialMetiers-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialMetiers == 0 %} A saisir {% elseif consolide.moyenneHanditorialMetiers == 100 %}{% if totalBscHanditorialMetiers == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscHanditorialMetiers != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_metiers" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="metiers" style="display: none;">
+
+        </div>
+
+        <!--  Questions Temps Complets Handitorial -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Répartition des agents BOETH selon le temps de travail
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbhanditorialTempsComplets" class="progress-bar handitorial" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneHanditorialTempsComplets }}% {% endif %}" >
+                            <span class="sr-only handitorialTempsComplets-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbhanditorialTempsComplets-value handitorial">{% if consolide != null %}{% if consolide.moyenneHanditorialTempsComplets == 0 %} A saisir {% elseif consolide.moyenneHanditorialTempsComplets == 100 %}{% if totalBscHanditorialTempsComplets == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscHanditorialTempsComplets != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_temps_complets" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="temps_complets" style="display: none;">
+
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {% set NumForm = '10' %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Attention à vérifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var numForm = '10';
+        var nomForm = 'handitorial';
+        var nbInd = {{ nombreQuestion.nmquestion.handitorial }};
+
+        var blGpeec = {{ enqueteCollActive.blGepe ? 1 : 0 }};
+
+        function initTab() {
+            if (currentTab != "") saveTab();
+            $('#content').html("");
+            $('#content').load('{{ path('bilan_conso_handitorial_edit') }}', function () { });
+            currentTab = "0";
+        }
+
+        $.ajaxSetup({cache: false});
+        initTab();
+
+        var idToggleCurr = "";
+        var idDivCurr = "";
+
+        $(document).ready(function ()
+        {
+            $('#HideShowIncoh').on('click', function() {
+                var incohHeight = $('#incoh').height();
+                $("#incoh_wrapper").css('height', incohHeight);
+                $("#incoh").affix({
+                    offset: {
+                      top: distance
+                    }
+                });
+            });
+
+            addToggle("toggle_questions_generales", "questions_generales");
+            addToggle("toggle_inaptitude_et_reclassement", "inaptitude_et_reclassement");
+            addToggle("toggle_inapt_et_recla_cadre_emplois", "inapt_et_recla_cadre_emplois");
+            addToggle("toggle_inapt_et_recla_metiers", "inapt_et_recla_metiers");
+            addToggle("toggle_inapt_et_recla_temps_complets", "inapt_et_recla_temps_complets");
+            addToggle("toggle_questions_boeths", "questions_boeths");
+            addToggle("toggle_cadre_emplois", "cadre_emplois");
+            addToggle("toggle_metiers", "metiers");
+            addToggle("toggle_temps_complets", "temps_complets");
+        });
+
+        /*
+         * METHODES GENERALES
+         */
+
+
+        function initDiv(idDiv) {
+        if (idDiv == undefined || idDiv == "null" || idDiv == "") {
+            } else {
+                if (idDiv == "questions_generales") {
+                    $('#questions_generales').load('{{ path('bilan_conso_handitorial_bscHanditorialQuestionsGenerales_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "inaptitude_et_reclassement") {
+                    $('#inaptitude_et_reclassement').load('{{ path('bilan_conso_handitorial_bscHanditorialInaptitudeEtReclassement_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "inapt_et_recla_cadre_emplois") {
+                    $('#inapt_et_recla_cadre_emplois').load('{{ path('bilan_conso_handitorial_bscHanditorialInaptEtReclaCadreEmplois_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "inapt_et_recla_metiers") {
+                    $('#inapt_et_recla_metiers').load('{{ path('bilan_conso_handitorial_bscHanditorialInaptEtReclaMetiers_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "inapt_et_recla_temps_complets") {
+                    $('#inapt_et_recla_temps_complets').load('{{ path('bilan_conso_handitorial_bscHanditorialInaptEtReclaTempsComplets_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "questions_boeths") {
+                    $('#questions_boeths').load('{{ path('bilan_conso_handitorial_bscHanditorialQuestionsBoeths_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "cadre_emplois") {
+                    $('#cadre_emplois').load('{{ path('bilan_conso_handitorial_bscHanditorialCadreEmplois_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "metiers") {
+                    $('#metiers').load('{{ path('bilan_conso_handitorial_bscHanditorialMetiers_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "temps_complets") {
+                    $('#temps_complets').load('{{ path('bilan_conso_handitorial_bscHanditorialTempsComplets_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+            }
+        }
+
+
+        $('#HideShowIncoh').click(function () {
+            HideShowIncoh();
+        });
+
+
+        function setIncoherenceTable(responsejson) {
+            incoherenceList = responsejson.list.handitorial;
+            var table = document.getElementById('incoherenceTable');
+
+            var tbody = $(table).find('tbody');
+
+            var html_table_incoh = '';
+            $.each(incoherenceList, function() {
+                // console.log(this);
+                html_table_incoh += '<tr>';
+                html_table_incoh += '<td>'+"<a href=\"#\" onclick=\"openError('" + this.idToggle1 + "', '" + this.idToggle2 + "', '" + this.field + "')\">" + this.tableNum + "</a></td>";
+                html_table_incoh += '<td>'+ this.message +'</td>';
+                html_table_incoh += '</tr>';
+            });
+            $(tbody).html(html_table_incoh);
+
+            setIncoherenceLight(numForm);
+
+            $.each(responsejson.handitorial.pgInd, function() {
+                setPgInd(this.ind, this.blinco, this.moyenne, nomForm);
+            });
+
+            getMoyenneHanditorial(responsejson);
+            setPgMenu('Handitorial','Handitorial', responsejson);
+        }
+
+
+        var getMoyenneHanditorial = function (response)
+        {
+            var total = Math.ceil(Math.ceil(response.pc.pcHanditorial) / nbInd);
+            $('#ValHanditorial').html(total + "%");
+            $('#pbHanditorial').css('width', total + "%");;
+
+        }
+
+
+    </script>
+
+{% endblock %}

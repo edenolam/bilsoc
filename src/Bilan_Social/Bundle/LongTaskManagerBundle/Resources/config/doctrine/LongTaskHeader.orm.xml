@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  	<entity repository-class="Bilan_Social\Bundle\LongTaskManagerBundle\Repository\LongTaskHeaderRepository" name="Bilan_Social\Bundle\LongTaskManagerBundle\Entity\LongTaskHeader" table="bsltm_longtask_header">
+	    <id name="id" type="integer" column="id" length="11">
+	      <generator strategy="AUTO"/>
+	    </id>
+	    
+	    <field name="owner_key" type="string" column="owner_key" length="20"/> 
+	    <field name="task_type" type="integer" column="task_type" length="11">
+	    	<options>
+	    		<options name="comment">Type de tache @see TaskTypeEnum</options>
+			</options>
+	    </field> 
+	    <field name="task_key" type="string" column="task_key" length="64"/> 
+	    <field name="start_date" type="datetime" column="start_date"/> 
+	    <field name="run_data" type="text" column="run_data">
+	    	<options>
+	    		<options name="comment">Paramètres d'exécution utilisable pour un replay</options>
+			</options>
+	    </field> 
+	    <field name="external_ref_id" type="integer" column="external_ref_id" length="11" nullable="true">
+	    	<options>
+	    		<options name="comment">Référence externe liée au run (ex: DGCL_GROUP header Id pour AGGREGATE_DGCL)</options>
+		        <!-- <option name="default">NULL</option> -->
+		    </options>
+	    </field> 
+	    <field name="details_count" type="integer" column="details_count" length="11">
+	    	<options>
+	    		<options name="comment">Nombre de sous-tache à traiter en tout</options>
+ 			</options>
+	    </field> 
+	    <field name="details_done_count" type="integer" column="details_done_count" length="11">
+	    	<options>
+	    		<options name="comment">Nombre de sous-tache traitées avec succès</options>
+		        <option name="default">0</option>
+		    </options>
+	    </field> 
+	    <field name="details_error_count" type="integer" column="details_error_count" length="11">
+	    	<options>
+	    		<options name="comment">Nombre de sous-tache en erreur</options>
+		        <option name="default">0</option>
+		    </options>
+	    </field> 
+	    <field name="end_date" type="datetime" column="end_date" nullable="true">
+	    	<!-- <options>
+		        <option name="default">NULL</option>
+		    </options> -->
+	    </field> 
+	    <field name="status" type="integer" column="status" length="11">
+	    	<options>
+		        <option name="default">0</option>
+		    </options>
+	    </field> 
+	    <field name="status_linked_data" type="string" column="status_linked_data" length="2000" nullable="true">
+	    	<!-- <options>
+		        <option name="default">NULL</option>
+		    </options> -->
+	    </field> 
+	    <field name="owner_email" type="string" column="owner_email" length="128" nullable="true">
+	    	<!-- <options>
+		        <option name="default">NULL</option>
+		    </options> -->
+	    </field> 
+
+	    <one-to-one field="poolExport" target-entity="Bilan_Social\Bundle\InfoCentreBundle\Entity\PoolExport" mapped-by="longTaskHeader">
+                <cascade><cascade-remove /></cascade>
+	        <join-column name="id" referenced-column-name="ID_TASK" />
+	    </one-to-one>
+		<indexes>
+	        <index columns="owner_key,status,task_type" name="bsltm_longtask_header_idx_2_10_3" />
+	    </indexes>
+	    <unique-constraints>
+	        <unique-constraint columns="task_key" name="bsltm_longtask_header_uidx_4" />
+	        <unique-constraint columns="owner_key,task_type,task_key" name="bsltm_longtask_header_uidx_2_3_4" />
+	    </unique-constraints>
+
+  	</entity>
+</doctrine-mapping>

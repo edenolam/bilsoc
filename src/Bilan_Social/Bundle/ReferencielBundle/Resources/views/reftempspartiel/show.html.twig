@@ -1,0 +1,41 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('reftempspartiel_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refTempsPartiel.cdTemppart }}</td>
+                </tr>
+                <tr>
+                    <th>libellé</th>
+                    <td>{{ refTempsPartiel.lbTemppart }}</td>
+                </tr>
+                <tr>
+                    <th>Code N4DS</th>
+                    <td>{{ refTempsPartiel.cdModaN4ds }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refTempsPartiel.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refTempsPartiel} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('reftempspartiel_edit', { 'idTemppart': refTempsPartiel.idTemppart }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+        </ul>
+    {% endblock %}
+

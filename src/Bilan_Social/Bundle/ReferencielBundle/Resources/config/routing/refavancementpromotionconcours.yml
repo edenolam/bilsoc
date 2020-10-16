@@ -1,0 +1,28 @@
+refavancementpromotionconcours_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefAvancementPromotionConcours:index" }
+    methods:  GET
+
+refavancementpromotionconcours_show:
+    path:     /{idAvanpromconc}/show
+    defaults: { _controller: "ReferencielBundle:RefAvancementPromotionConcours:show" }
+    methods:  GET
+
+refavancementpromotionconcours_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefAvancementPromotionConcours:new" }
+    methods:  [GET, POST]
+
+refavancementpromotionconcours_edit:
+    path:     /{idAvanpromconc}/edit
+    defaults: { _controller: "ReferencielBundle:RefAvancementPromotionConcours:edit" }
+    methods:  [GET, POST]
+
+refavancementpromotionconcours_delete:
+    path:     /{idAvanpromconc}/delete
+    defaults: { _controller: "ReferencielBundle:RefAvancementPromotionConcours:delete" }
+    methods:  DELETE
+
+csv_export_refavancementpromotionconcours:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefAvancementPromotionConcours:generateCsv" }

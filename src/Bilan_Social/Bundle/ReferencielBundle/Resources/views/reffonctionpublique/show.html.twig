@@ -1,0 +1,35 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('reffonctionpublique_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refFonctionPublique.cdFoncpubl }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refFonctionPublique.lbFoncpubl }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refFonctionPublique.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refFonctionPublique} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('reffonctionpublique_edit', { 'idFoncpubl': refFonctionPublique.idFoncpubl }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

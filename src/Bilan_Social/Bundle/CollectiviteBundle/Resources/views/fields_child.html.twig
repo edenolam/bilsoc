@@ -1,0 +1,24 @@
+{%- block form_row -%}
+
+<td style="text-align: center" {% if form.vars.errors %} {% endif %}>
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+</td>
+
+{%- endblock form_row -%}
+
+
+
+{%- block hidden_row -%}
+<tr style="display: none">
+    <td colspan="2">
+        {{- form_widget(form) -}}
+    </td>
+</tr>
+{%- endblock hidden_row -%}
+
+{%- block form_widget_compound -%}
+
+{{- block('form_rows') -}}
+
+{%- endblock form_widget_compound -%}

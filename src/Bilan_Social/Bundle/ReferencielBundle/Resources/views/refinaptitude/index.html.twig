@@ -1,0 +1,52 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des inaptitudes</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refinaptitude_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refinaptitude') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Demande</th>
+                    <th>Décision</th>
+                    <th>Filière</th>
+                    <th>Agent</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refInaptitude in refInaptitudes %}
+                    <tr>
+                        <td><a href="{{ path('refinaptitude_show', { 'idInap': refInaptitude.idInap }) }}">{{ refInaptitude.cdInap }}</a></td>
+                        <td>{{ refInaptitude.lbInap }}</td>
+                        <td>{% if refInaptitude.blDema %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refInaptitude.blFili %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refInaptitude.blDeci %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refInaptitude.blVisuagen %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refInaptitude.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refInaptitude} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refinaptitude_show', { 'idInap': refInaptitude.idInap }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refinaptitude_edit', { 'idInap': refInaptitude.idInap }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

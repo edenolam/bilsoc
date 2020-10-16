@@ -1,0 +1,594 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="col-md-9 contentConsolide pull-right" style='padding-right:0;padding-left:0;'>
+        {# <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-21.png") }}" class="icone-menu"/> Conditions{% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_PREVIOUS_ADMIN') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3> #}
+        <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-21.png") }}" class="icone-menu"/> Conditions{% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_CDG') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3>
+        <div id="incoh_wrapper">
+        <div id="incoh">
+{#             data-spy="affix" data-offset-top="300"#}
+
+            <div id="incohpanel" class="panel panel-default">
+
+                <span class="pull-right buttonmoins" id="HideShowIncoh" title="Réduire" ></span>
+
+                Incohérences <span id="nbErreur" class="badge"></span>
+                <table id="incoherenceTable" width="50%" class="table table-striped table-hover table-bordered">
+                    <tbody>
+                        {% if incoherenceList != null and incoherenceList.count() > 0  %}
+                            {% for tag in incoherenceList %}
+                                {% if tag.form == '5' %}
+                                    <tr>
+                                        <td><a href="#" onclick="openError('{{tag.idToggle1}}', '{{tag.idToggle2}}', '{{tag.field}}')">{{tag.tableNum}}</a>
+                                        </td>
+                                        <td>{{ tag.message }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <br/>
+                <div id='incoh-legende'>
+                    <div>
+                        <p>Contrôle de cohérence :</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-error'>&nbsp;</span>Erreur de cohérence</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-atte'>&nbsp;</span>Donnée(s) en attente</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-vali'>&nbsp;</span>Validé</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="ghost hidden"></div>
+    </div>
+
+    <div class="panel panel-default col-md-9 contentConsolide pull-right">
+
+        {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blRast == true  ) %}
+            <!--  Tab 4.1.1 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.1.1 - Agents affectés à la prévention
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb411" class="progress-bar condition" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd411 }}% {% endif %}" >
+                                <span class="sr-only ind411-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb411-value status">{% if consolide != null %}{% if consolide.moyenneInd411 == 0 %} A saisir {% elseif consolide.moyenneInd411 == 100 %} {% if totalInd411 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd411 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir {% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-411" title="Fiche 4.1.1" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle411" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind411" style="display: none;">
+
+            </div>
+                
+            <!--  Tab 4.1.3 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.1.3 - Nombre de visites médicales sur demande de l'agent
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb413" class="progress-bar condition" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd413 }}% {% endif %}" >
+                                <span class="sr-only ind413-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb413-value status">{% if consolide != null %}{% if consolide.moyenneInd413 == 0 %} A saisir {% elseif consolide.moyenneInd413 == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-413" title="Fiche 4.1.3" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle413" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind413" style="display: none;">
+
+            </div>
+                
+            <!--  Tab 4.1.4 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.1.4 - 4.1.7 - Documents et démarches de prévention
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb414" class="progress-bar condition {% if consolide != null %}{% if consolide.blIncoInd414 == 1 %} {% elseif consolide.blIncoInd414 == 2 %} blue {% elseif consolide.blIncoInd414 == 3 %} orange {% elseif consolide.blIncoInd414 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd414 }}%{% endif %};">
+                                <span class="sr-only ind414-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb414-value status">{% if consolide != null %} {% if consolide.blIncoInd414 == 1 or consolide.blIncoInd414 == null %} A saisir {% elseif consolide.blIncoInd414 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd414 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd414 == 4 %} Saisie cohérente {% endif%}{% else %} A saisir {% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-414" title="Fiche 4.1.4" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle414" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind414" style="display: none;">
+
+            </div>
+                
+            <!--  Tab 4.2.1 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.2.1 - Les accidents du travail* survenus dans l'année {{AnneeCamp}} (tous les agents sont concernés quel que soit leur statut -y compris les CONTRACTUELS SUR EMPLOI NON PERMANENT-), par cadre d'emplois et par sexe
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb421" class="progress-bar condition {% if consolide != null %}{% if consolide.blIncoInd421 == 1 %} {% elseif consolide.blIncoInd421 == 2 %} blue {% elseif consolide.blIncoInd421 == 3 %} orange {% elseif consolide.blIncoInd421 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd421 }}%{% endif %};">
+                                <span class="sr-only">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb421-value status">{% if consolide != null %} {% if consolide.blIncoInd421 == 1 or consolide.blIncoInd421 == null %} A saisir {% elseif consolide.blIncoInd421 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd421 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd421 == 4 %}{% if totalInd421 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd421 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir {% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle421" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind421" style="display: none;">
+
+            </div>
+
+            <!--  Tab 4.2.2 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.2.2 - Les maladies professionnelles ou à caractère professionnel ou contractées en service (tous les agents sont concernés quel que soit leur statut -y compris les CONTRACTUELS SUR EMPLOI NON PERMANENT), par cadre d'emplois et par sexe
+                    </div>
+                <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb422" class="progress-bar condition {% if consolide != null %}{% if consolide.blIncoInd422 == 1 %} {% elseif consolide.blIncoInd422 == 2 %} blue {% elseif consolide.blIncoInd422 == 3 %} orange {% elseif consolide.blIncoInd422 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd422 }}%{% endif %};">
+                                <span class="sr-only">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb422-value status">{% if consolide != null %} {% if consolide.blIncoInd422 == 1 or consolide.blIncoInd422 == null %} A saisir {% elseif consolide.blIncoInd422 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd422 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd422 == 4 %}{% if totalInd422 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd422 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir {% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle422" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind422" style="display: none;">
+
+            </div>
+
+        {% endif %}
+
+        {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blHand == true  ) %}
+            
+            <!--  Tab 4.2.3 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.2.3 - Inaptitude au cours de l'année {{AnneeCamp}}
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb423" class="progress-bar condition" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd423 }}% {% endif %}" >
+                                <span class="sr-only ind423-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb423-value status">{% if consolide != null %}{% if consolide.moyenneInd423 == 0 %} A saisir {% elseif consolide.moyenneInd423 == 100 %}{% if totalInd423 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd423 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle423" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind423" style="display: none;">
+
+            </div>
+                
+            <!--  Tab 4.2.4 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.2.4 - Nombre d'allocations temporaires d'invalidité (ATI) attribuées au cours de l'année {{AnneeCamp}}
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb424" class="progress-bar condition {% if consolide != null %}{% if consolide.blIncoInd424 == 1 %} {% elseif consolide.blIncoInd424 == 2 %} blue {% elseif consolide.blIncoInd424 == 3 %} orange {% elseif consolide.blIncoInd424 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd424 }}%{% endif %};">
+                                <span class="sr-only">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb424-value status">{% if consolide != null %} {% if consolide.blIncoInd424 == 1 or consolide.blIncoInd424 == null %} A saisir {% elseif consolide.blIncoInd424 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd424 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd424 == 4 %}{% if totalInd424 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd424 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir {% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle424" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind424" style="display: none;">
+
+            </div>
+
+            <!--  Tab 4.2.5 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.2.5 - Contrat d'assurance statutaire pour la prise en charge du risque maladie
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb425" class="progress-bar tpstrav" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd425 }}% {% endif %}" >
+                                <span class="sr-only ind425-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb425-value status">{% if consolide != null %}{% if consolide.moyenneInd425 == 0 %} A saisir 
+                            {% elseif consolide.moyenneInd425 == 100.0 %} Saisie cohérente {%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle425" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind425" style="display: none;">
+
+            </div>
+        {% endif %}
+
+        {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blRast == true  ) %}
+            <!--  Tab 4.3.1 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        4.3.1 - Nombre d'actes de violence physiques et de signalements pour actes de violences sexuelles, agissements sexiste, harcèlement moral et sexuel envers le personnel au cours de l'année {{AnneeCamp}}
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb431" class="progress-bar condition {% if consolide != null %}{% if consolide.blIncoInd431 == 1 %} {% elseif consolide.blIncoInd431 == 2 %} blue {% elseif consolide.blIncoInd431 == 3 %} orange {% elseif consolide.blIncoInd431 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd431 }}%{% endif %};">
+                                <span class="sr-only ind431-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb431-value status">{% if consolide != null %} {% if consolide.blIncoInd431 == 1 or consolide.blIncoInd431 == null %} A saisir {% elseif consolide.blIncoInd431 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd431 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd431 == 4 %}{% if totalInd4311 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd4311 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir {% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle431" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind431" style="display: none;">
+
+            </div>
+        {% endif %}
+
+<!--  Modale Fiche 4.1.4 à 4.1.6 -->
+
+    <div id="dialog-fiche-414" title="Fiche 4.1.4" class="displayNone" style="overflow:hidden;">
+        <p style="overflow-y: scroll; height: 400px;">
+            <b>L’indicateur 4.1.4 recense l’existence d’un Document unique d'évaluation des risques professionnels, (DUERP)</b><br />
+            Le DUERP réalisé et mis à jour annuellement par l’autorité territoriale, répertorie l'ensemble des risques professionnels (dont les RPS) auxquels sont exposés les agents,
+            afin d'organiser la prévention au sein du programme annuel de prévention
+            (circulaire RDFB1314079Cdu 28 mai 2013 rappelant les obligations des employeurs territoriaux en matière d’évaluation des risques professionnels).<br />
+
+            <b>L’indicateur 4.1.5 recense l’existence d’un plan de prévention des risques psychosociaux</b><br />
+            Un accord-cadre relatif à la prévention des risques psychosociaux (RPS) dans la fonction publique a été signé le 22 octobre 2013,
+            obligeant chaque employeur public à élaborer un plan d’évaluation et de prévention des RPS d’ici {{AnneeCamp}}. Ces plans sont réalisés sur la
+            base des diagnostics locaux qui sont intégrés au document unique d’évaluation des risques professionnels (DUERP).
+            Une circulaire du Premier ministre du 20 mars 2014 a fixé les conditions de mise en œuvre du plan national d'action pour la prévention des risques
+            psychosociaux dans les trois versants de la fonction publique. Une circulaire du 25 juillet 2014 fixe les modalités d'application de cet accord-cadre dans la fonction publique territoriale.<br />
+
+            <b>L’indicateur 4.1.6 recense les démarches éventuelles  de prévention des TMS et des CMR</b><br />
+            L’accord sur la santé et la sécurité au travail (SST) dans la Fonction publique signé le 20 novembre 2009 a instauré
+            un droit à un suivi médical post-professionnel des risques cancérogènes, mutagènes et toxiques pour la reproduction (CMR)
+            et a également prévu des actions de prévention des troubles musculo-squelettiques (TMS).<br />
+            CMR : les substances chimiques présentant un effet cancérogène, mutagène ou toxique pour la reproduction, qualifiées « CMR »,
+            englobent les substances qui, par inhalation, ingestion ou pénétration cutanée, peuvent soit produire le cancer ou en augmenter la fréquence,
+            soit produire des altérations génétiques héréditaires ou en augmenter la fréquence, soit porter atteinte aux fonctions ou capacités reproductives ou produire ou
+            augmenter la fréquence de faits indésirables non héréditaires sur la progéniture (l'article R. 4412-60 du code du travail définit les CMR).<br />
+            "MS : l’Institut national de veille sanitaire (INVS) définit les TMS comme « un ensemble d’affections péri-articulaires qui peuvent
+            affecter diverses structures des membres supérieurs, inférieurs et du dos : tendons, muscles, articulations, nerfs et système vasculaire ».
+            Ces troubles sont également appelés « pathologies d’hyper-sollicitation ».
+            Un guide méthodologique, fondé sur un recueil de pratiques, vise à accompagner les employeurs publics dans la mise en place d’un
+            dispositif de prévention des troubles musculo-squelettiques efficace et durable. Ce guide peut être téléchargé sur le site de la DGAFP : http://www.fonction-publique.gouv.fr/troubles-musculo-squelettiques-tms
+        </p>
+
+    </div>
+<!--  Modale Fiche 4.1.1 à 4.1.2 -->
+    <div id="dialog-fiche-411" title="Fiche 4.1.1" class="displayNone" style="overflow:hidden;">
+        <p>
+            <b> L'indicateur 4.1.1 :</b><br />
+            L’autorité territoriale désigne les agents chargés d’assurer les fonctions de conseil dans la mise en œuvre des règles d’hygiène et de sécurité.
+        </p>
+        <p>
+            <b> L'indicateur 4.1.2 :</b><br />
+            Chaque collectivité doit mettre en œuvre diverses mesures destinées à préserver la santé et l’intégrité physique des agents.
+        </p>
+    </div>
+<!--  Modale Fiche 4.1.4 à 4.1.6 -->
+    <div id="dialog-fiche-412" title="Fiche 4.1.2" class="displayNone" style="overflow:hidden;">
+
+    </div>
+
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {% set NumForm = '5' %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Attention à vérifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var numForm = '5';
+        var nomForm = 'conditions';
+        var nbInd = {{ nombreQuestion.nmquestion.conditions }};
+
+        function initTab() {
+            if (currentTab != "") saveTab();
+            $('#content').html("");
+            $('#content').load('{{ path('bilan_conso_conditions_edit') }}', function () { });
+            currentTab = "0";
+        }
+
+        $.ajaxSetup({cache: false});
+        initTab();
+
+        var idToggleCurr = "";
+        var idDivCurr = "";
+
+        $(document).ready(function () {
+
+            $('#HideShowIncoh').on('click', function() {
+                var incohHeight = $('#incoh').height();
+                $("#incoh_wrapper").css('height', incohHeight);
+                $("#incoh").affix({
+                    offset: {
+                      top: distance
+                    }
+                });
+            });
+
+            // TABLEAU 411
+            addToggle("toggle411", "ind411");
+             $("#open-fiche-411").on("click", function () {
+                $("#dialog-fiche-411").removeClass("displayNone");
+                dialogFiche411.dialog("open");
+            });
+            // TABLEAU 412
+            //addToggle("toggle412", "ind412");
+             /*$("#open-fiche-412").on("click", function () {
+                $("#dialog-fiche-412").removeClass("displayNone");
+                dialogFiche412.dialog("open");
+            });*/
+            // TABLEAU 413
+            addToggle("toggle413", "ind413");
+
+            // TABLEAU 414
+            addToggle("toggle414", "ind414");
+            $("#open-fiche-414").on("click", function () {
+                $("#dialog-fiche-414").removeClass("displayNone");
+                dialogFiche414.dialog("open");
+            });
+
+            // TABLEAU 421
+            addToggle("toggle421", "ind421");
+
+            // TABLEAU 422
+            addToggle("toggle422", "ind422");
+
+            // TABLEAU 423
+            addToggle("toggle423", "ind423");
+
+            // TABLEAU 424
+            addToggle("toggle424", "ind424");
+            
+            // TABLEAU 425
+            addToggle("toggle425", "ind425");
+
+            // TABLEAU 431
+            addToggle("toggle431", "ind431");
+
+             initCount(numForm);
+        });
+
+        /*
+         * METHODES GENERALES
+         */
+
+        function initDiv(idDiv) {
+            if (idDiv == undefined || idDiv == "null" || idDiv == "") {
+            } else {
+                if (idDiv == "ind411") {
+                    $('#ind411').load('{{ path('bilan_conso_conditions_ind411_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                } else if (idDiv == "ind413") {
+                    $('#ind413').load('{{ path('bilan_conso_conditions_ind413_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                } else if (idDiv == "ind414") {
+                    $('#ind414').load('{{ path('bilan_conso_conditions_ind414_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                } else if (idDiv == "ind421") {
+                    $('#ind421').load('{{ path('bilan_conso_conditions_ind421_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                } else if (idDiv == "ind422") {
+                    $('#ind422').load('{{ path('bilan_conso_conditions_ind422_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                } else if (idDiv == "ind423") {
+                    $('#ind423').load('{{ path('bilan_conso_conditions_ind423_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                } else if (idDiv == "ind424") {
+                    $('#ind424').load('{{ path('bilan_conso_conditions_ind424_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                } else if (idDiv == "ind425") {
+                    $('#ind425').load('{{ path('bilan_conso_conditions_ind425_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                } else if (idDiv == "ind431") {
+                    $('#ind431').load('{{ path('bilan_conso_conditions_ind431_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+            }
+        }
+
+        $('#HideShowIncoh').click(function () {
+            HideShowIncoh();
+        });
+
+
+        function setIncoherenceTable(responsejson) {
+            incoherenceList = responsejson.list.condition;
+            /*console.log(incoherenceList);*/
+            var table = document.getElementById('incoherenceTable');
+
+            var tbody = $(table).find('tbody');
+
+            var html_table_incoh = '';
+            $.each(incoherenceList, function() {
+                // console.log(this);
+                html_table_incoh += '<tr>';
+                html_table_incoh += '<td>'+"<a href=\"#\" onclick=\"openError('" + this.idToggle1 + "', '" + this.idToggle2 + "', '" + this.field + "')\">" + this.tableNum + "</a></td>";
+                html_table_incoh += '<td>'+ this.message +'</td>';
+                html_table_incoh += '</tr>';
+            });
+            $(tbody).html(html_table_incoh);
+
+            setIncoherenceLight(numForm);
+
+            $.each(responsejson.condition.pgInd, function() {
+                setPgInd(this.ind, this.blinco, this.moyenne, nomForm);
+            });
+
+            getMoyenneConditions(responsejson);
+            setPgMenu('Conditions','condition', responsejson);
+        }
+
+        var getMoyenneConditions = function (response)
+        {
+            var total = Math.ceil(Math.ceil(response.pc.pcConditions) / nbInd);
+            if(nbInd == 0){
+               total = 100;
+            }
+            $('#ValConditions').html(total + "%");
+            $('#pbConditions').css('width', total + "%");
+        }
+
+            var dialogFiche414 = $("#dialog-fiche-414").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche414.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+            var dialogFiche411 = $("#dialog-fiche-411").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche411.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+            {# /*var dialogFiche412 = $("#dialog-fiche-412").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche412.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });*/ #}
+
+
+
+    </script>
+
+{% endblock %}

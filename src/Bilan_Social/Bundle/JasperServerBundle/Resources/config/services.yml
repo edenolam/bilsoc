@@ -1,0 +1,4 @@
+services:
+#    jasper_server.example:
+#        class: Bilan_Social\Bundle\JasperServerBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

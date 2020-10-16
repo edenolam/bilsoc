@@ -1,0 +1,39 @@
+{% xlsdocument %}
+    {% set alignStyle = { alignment: {
+                            horizontal: 'center',
+                            vertical: 'center',
+                            wrapText: true,
+                        } } %}
+                        
+    {% xlssheet {
+        columnDimension: {
+            'A': {
+                width: '50'
+            },
+            'B': {
+                width: '125'
+            },
+            'C': {
+                width: '25'
+            },
+            'D': {
+                width: '25'
+            }
+        }
+        } %}
+        {% xlsrow %}
+            {% xlscell { style: alignStyle } %} Question {% endxlscell %}
+            {% xlscell { style: alignStyle } %} Réponse {% endxlscell %}
+            {% xlscell { style: alignStyle } %} Profil {% endxlscell %}
+            {% xlscell { style: alignStyle } %} Catégorie {% endxlscell %}
+        {% endxlsrow %}
+        {% for item in allFaq %}
+            {% xlsrow %}
+                {% xlscell { style: alignStyle } %} {{ item.question }} {% endxlscell %}
+                {% xlscell { style: alignStyle } %} {{ item.reponse|raw }} {% endxlscell %}
+                {% xlscell { style: alignStyle } %} {{ item.profil }} {% endxlscell %}
+                {% xlscell { style: alignStyle } %} {{ item.categorie }} {% endxlscell %}
+            {% endxlsrow %}
+        {% endfor %}
+    {% endxlssheet %}
+{% endxlsdocument %}

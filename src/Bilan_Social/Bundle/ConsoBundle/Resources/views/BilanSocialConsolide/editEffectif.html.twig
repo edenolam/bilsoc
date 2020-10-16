@@ -1,0 +1,1427 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="col-md-9 contentConsolide pull-right" style='padding-right:0;padding-left:0;'>
+        {# <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-24.png") }}" class=" icone-menu"/> Effectifs {% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_PREVIOUS_ADMIN') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3> #}
+        <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-24.png") }}" class=" icone-menu"/> Effectifs {% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_CDG') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3>
+
+    <div id="incoh_wrapper">
+        <div id="incoh">
+
+            <div id="incohpanel" class="panel panel-default">
+
+                <span class="pull-right buttonmoins" id="HideShowIncoh" title="Réduire" ></span>
+
+                Incohérences <span id="nbErreur" class="badge"></span>
+                <table id="incoherenceTable" width="50%" class="table table-striped table-hover table-bordered">
+                    <tbody>
+                        {% if incoherenceList != null and incoherenceList.count() > 0  %}
+                            {% for tag in incoherenceList %}
+                                {% if tag.form == '1' %}
+                                    <tr>
+                                        <td><a href="#" onclick="openError('{{tag.idToggle1}}', '{{tag.idToggle2}}', '{{tag.field}}')">{{tag.tableNum}}</a>
+                                        </td>
+                                        <td>{{ tag.message }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <br/>
+                <div id='incoh-legende'>
+                    <div>
+                        <p>Contrôle de cohérence :</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-error'>&nbsp;</span>Erreur de cohérence</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-atte'>&nbsp;</span>Donnée(s) en attente</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-vali'>&nbsp;</span>Validé</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="ghost hidden"></div>
+    </div>
+
+
+    <!--  Tab 1.1.0.X -->
+    <div class="panel panel-default col-md-9 contentConsolide pull-right">
+        {% if questionCollectiviteConsolide.q8 == true  and  EnqueteCollectiviteparam.blBilaSoci == true %}
+
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    {#<div class="col-xs-1 information">
+                        <span id="open-fiche-110" title="Fiche 1.1.0" class="buttonquestion"></span>
+                    </div>#}
+                    <div class="col-xs-8">
+                        1.1.0 - EMPLOIS FONCTIONNELS rémunérés au 31/12/{{AnneeCamp}} : nombre d'agents occupant un emploi fonctionnel administratif ou technique par statut d'origine, selon le grade de détachement et par sexe
+
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb110" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd110 == 1 %} {% elseif consolide.blIncoInd110 == 2 %} blue {% elseif consolide.blIncoInd110 == 3 %} orange {% elseif consolide.blIncoInd110 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd110 }}%{% endif %};">
+                                <span class="sr-only">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb110-value status">{% if consolide != null %}{% if consolide.blIncoInd110 == 1 or consolide.blIncoInd110 == null%} A saisir {% elseif consolide.blIncoInd110 == 2 %}Donnée(s) attendue(s){% elseif consolide.blIncoInd110 == 3 %}Donnée(s) incohérente(s){% elseif consolide.blIncoInd110 == 4 %}{% if totalInd110 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd110 != 0.0 %} Saisie cohérente{% endif %}{% endif %}{% else %} A saisir{% endif %}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-110" title="Fiche 1.1.0" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle110" title="Agrandir" ></span>
+
+
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="panel-body ind_totaux_inside" id="ind110" style="display: none;">
+
+            </div>
+
+        {% endif %}
+        
+        {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blRast == true) ) %}
+        <!--  Tab 1.1.1 -->
+            {% if questionCollectiviteConsolide.q2 == true and  1==1%}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.1.1 - Nombre de fonctionnaires occupant un emploi permanent rémunéré au 31/12/{{AnneeCamp}}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb111" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd111 == 1 %} {% elseif consolide.blIncoInd111 == 2 %} blue {% elseif consolide.blIncoInd111 == 3 %} orange {% elseif consolide.blIncoInd111 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd111 }}%{% endif %};">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb111-value status">{% if consolide != null %} {% if consolide.blIncoInd111 == 1 or consolide.blIncoInd111 == null%} A saisir {% elseif consolide.blIncoInd111 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd111 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd111 == 4 %}{% if totalInd111 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd111 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-111" title="Fiche 1.1.1" class="buttonquestion "></span>
+                            <span class="buttonplus" id="toggle111" title="Agrandir"></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="panel-body ind_totaux_inside" id="ind111" style="display: none;">
+
+                </div>
+
+            {% endif %}
+        {% endif %}
+
+        <!--  Tab 1.1.2 -->
+        {% if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blRast == true) ) %}
+            {% if questionCollectiviteConsolide.q2 == true and  1==1%}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.1.2 - Nombre de fonctionnaires occupant un emploi permanent à  temps complet au 31/12/{{AnneeCamp}} par sexe, cadre d'emplois et selon la quotité de temps de travail
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb112" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd112 == 1 %} {% elseif consolide.blIncoInd112 == 2 %} blue {% elseif consolide.blIncoInd112 == 3 %} orange {% elseif consolide.blIncoInd112 == 4 %} green {% endif %} {% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd112 }}% {% endif %}">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb112-value status">{% if consolide != null %}{% if consolide.blIncoInd112 == 1 or consolide.blIncoInd112 == null%} A saisir {% elseif consolide.blIncoInd112 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd112 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd112 == 4 %}{% if totalInd112 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd112 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-112" title="Fiche 1.1.2" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle112" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind112" style="display: none;">
+
+                </div>
+
+            {% endif %}
+        {% endif %}
+
+        <!--  Tab 1.1.3 -->
+        {% if questionCollectiviteConsolide.q2 == true and  EnqueteCollectiviteparam.blBilaSoci == true %}
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        1.1.3 - Nombre de fonctionnaires bénéficiaires d'un temps partiel de droit ou sur autorisation
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb113" class="test progress-bar  effectif {% if consolide != null %}{% if consolide.blIncoInd113 == 1 %} {% elseif consolide.blIncoInd113 == 2 %} blue {% elseif consolide.blIncoInd113 == 3 %} orange {% elseif consolide.blIncoInd113 == 4 %} green {% endif %}{% endif%}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd113 }}%{% endif%}">
+                                <span class="sr-only">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb113-value status">{% if consolide != null %} {% if consolide.blIncoInd113 == 1 or consolide.blIncoInd113 == null%} A saisir {% elseif consolide.blIncoInd113 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd113 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd113 == 4 %}{% if totalInd113 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd113 != 0.0 %} Saisie cohérente{% endif %}{% endif%} {% else %} A saisir{% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-113" title="Fiche 1.1.3" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle113" title="Agrandir" ></span>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind113" style="display: none;">
+
+            </div>
+        {% endif %}
+
+        <!--  Tab 1.1.4 -->
+        {% if questionCollectiviteConsolide.q1 == true and  1==1 %}
+            {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blRast == true) %}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.1.4 - Nombre de fonctionnaires en équivalent temps plein Rémunéré
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb114" class=" test progress-bar effectif  {% if consolide != null %}{% if consolide.blIncoInd114 == 1 %} {% elseif consolide.blIncoInd114 == 2 %} blue {% elseif consolide.blIncoInd114 == 3 %} orange {% elseif consolide.blIncoInd114 == 4 %} green {% endif %}{% endif%}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %} {{ consolide.moyenneInd114 }}% {% endif %}">
+
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb114-value status"> {% if consolide != null %}{% if consolide.blIncoInd114 == 1 or consolide.blIncoInd114 == null%} A saisir {% elseif consolide.blIncoInd114 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd114 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd114 == 4 %} {% if totalInd114 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd114 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir {% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-114" title="Fiche 1.1.4" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle114" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind114" style="display: none;">
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!--  Tab 1.2.1 -->
+        {% if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blRast == true) ) %}
+            {% if questionCollectiviteConsolide.q4 == true and  1==1%}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.2.1 - Effectifs des agents contractuels occupant un emploi permanent rémunérés au 31/12/{{AnneeCamp}} par référence à la filière et au type de recrutement
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb121" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd121 == 1 %} {% elseif consolide.blIncoInd121 == 2 %} blue {% elseif consolide.blIncoInd121 == 3 %} orange {% elseif consolide.blIncoInd121 == 4 %} green {% endif %}{% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %} {{ consolide.moyenneInd121 }}%{% endif %}">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb121-value status">{% if consolide != null %}{% if consolide.blIncoInd121 == 1 or consolide.blIncoInd121 == null%} A saisir {% elseif consolide.blIncoInd121 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd121 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd121 == 4 %}{% if totalInd121 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd121 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif %}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-121" title="Fiche 1.2.1" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle121" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind121" style="display: none;">
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!--  Tab 1.2.2 -->
+        {% if questionCollectiviteConsolide.q4 == true and  EnqueteCollectiviteparam.blBilaSoci == true %}
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        1.2.2 - Nombre d'agents contractuels au 31/12/{{AnneeCamp}} occupant un emploi permanent à temps complet par sexe, filière et selon la quotité de temps de travail
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb122" class="progress-bar effectif {% if consolide != null %} {% if consolide.blIncoInd122 == 1 %} {% elseif consolide.blIncoInd122 == 2 %} blue {% elseif consolide.blIncoInd122 == 3 %} orange {% elseif consolide.blIncoInd122 == 4 %} green {% endif %} {% endif%}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %} {{ consolide.moyenneInd122 }}%  {% endif%}" >
+                                <span class="sr-only ind122-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb122-value status">{% if consolide != null %} {% if consolide.blIncoInd122 == 1 or consolide.blIncoInd122 == null%} A saisir {% elseif consolide.blIncoInd122 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd122 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd122 == 4 %}{% if totalInd122 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd122 != 0.0 %} Saisie cohérente{% endif %}{% endif%} {% else %} A saisir {% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-122" title="Fiche 1.2.2" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle122" title="Agrandir" ></span>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind122" style="display: none;">
+
+            </div>
+        {% endif %}
+
+        <!--  Tab 1.2.3 -->
+        {% if questionCollectiviteConsolide.q4 == true and  EnqueteCollectiviteparam.blBilaSoci == true %}
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        1.2.3 - Nombre d'agents contractuels bénéficiaires d'un temps partiel de droit ou sur autorisation
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb123" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd123 == 1 %} {% elseif consolide.blIncoInd123 == 2 %} blue {% elseif consolide.blIncoInd123 == 3 %} orange {% elseif consolide.blIncoInd123 == 4 %} green {% endif %}{% endif%}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd123 }}%{% endif%}">
+                                <span class="sr-only">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb123-value status">{% if consolide != null %}{% if consolide.blIncoInd123 == 1 or consolide.blIncoInd123 == null%} A saisir {% elseif consolide.blIncoInd123 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd123 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd123 == 4 %}{% if totalInd123 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd123 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-123" title="Fiche 1.2.3" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle123" title="Agrandir" ></span>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind123" style="display: none;">
+
+            </div>
+        {% endif %}
+
+        <!--  Tab 1.2.4 -->
+        {% if questionCollectiviteConsolide.q3 == true and  1==1%}
+            {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blRast == true) %}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.2.4 - Nombre de contractuels en Equivalent Temps Plein Rémunéré
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb124" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd124 == 1 %} {% elseif consolide.blIncoInd124 == 2 %} blue {% elseif consolide.blIncoInd124 == 3 %} orange {% elseif consolide.blIncoInd124 == 4 %} green {% endif %}{% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd124 }}%{% endif %}">
+                                    <span class="sr-only">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb124-value status">{% if consolide != null %}{% if consolide.blIncoInd124 == 1 or consolide.blIncoInd124 == null %} A saisir {% elseif consolide.blIncoInd124 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd124 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd124 == 4 %}{% if totalInd124 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd124 != 0.0 %} Saisie cohérente{% endif %}{% endif %}{% else %} A saisir{% endif %}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-124" title="Fiche 1.2.4" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle124" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind124" style="display: none;">
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+
+        <!--  Tab 1.3.1 (1 et 2) -->
+        {% if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blRast == true) ) %}
+            {% if (questionCollectiviteConsolide.q5 == true or questionCollectiviteConsolide.q6 == true) and  1==1 %}
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            1.3.1 - Autres contractuels sur emploi non permanent en équivalent temps plein rémunéré
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb131" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd131 == 1 %} {% elseif consolide.blIncoInd131 == 2 %} blue {% elseif consolide.blIncoInd131 == 3 %} orange {% elseif consolide.blIncoInd131 == 4 %} green {% endif %}{% endif%}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd131 }}% {% endif%}">
+                                    <span class="sr-only">0%</span>
+                                </div>
+                            </div>
+                            <span class="pb131-value status">{% if consolide != null %}{% if consolide.blIncoInd131 == 1 or consolide.blIncoInd131 == null %} A saisir {% elseif consolide.blIncoInd131 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd131 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd131 == 4 %}{% if totalInd131 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd131 != 0.0 %} Saisie cohérente{% endif %}{% endif%} {% else %} A saisir {% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-131" title="Fiche 1.3.1" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle131" title="Agrandir" ></span>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body" id="ind131" style="display: none;">
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!--  Tab 1.3.2 -->
+        {% if EnqueteCollectiviteparam.blBilaSoci == true %}
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        1.3.2  - Recours à du personnel temporaire
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb132" class="progress-bar effectif {% if consolide != null %}{% if consolide.blIncoInd132 == 1 %} {% elseif consolide.blIncoInd132 == 2 %} blue {% elseif consolide.blIncoInd132 == 3 %} orange {% elseif consolide.blIncoInd132 == 4 %} green {% endif %}{% endif%}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd132 }}% {% endif%}">
+                                <span class="sr-only">0%</span>
+                            </div>
+                        </div>
+                        <span class="pb132-value status">{% if consolide != null %}{% if consolide.blIncoInd132 == 1 or consolide.blIncoInd132 == null %} A saisir {% elseif consolide.blIncoInd132 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd132 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd132 == 4 %}{% if totalInd132 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd132 != 0.0 %} Saisie cohérente{% endif %}{% endif%} {% else %} A saisir {% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-132" title="Fiche 1.3.2" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle132" title="Agrandir" ></span>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind132" style="display: none;">
+
+            </div>
+        {% endif  %}
+
+        <!--  Tab 1.4.0 -->
+        {% if EnqueteCollectiviteparam.blBilaSoci == true %}
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        1.4 - Effectifs des agents selon les positions statutaires particulières et par sexe au 31/12/{{AnneeCamp}}
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb140" class="progress-bar effectif" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %} {{ consolide.moyenneInd140 }}%{%endif%}" >
+                                <span class="sr-only">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb140-value status">{% if consolide != null %} {% if consolide.moyenneInd140 == 0 %} A saisir {% elseif consolide.moyenneInd140 == 100 %}{% if totalInd14 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd14 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-140" title="Fiche 1.4.0" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle140" title="Agrandir" ></span>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind140" style="display: none;">
+
+            </div>
+        {% endif %}
+
+
+        <!--  Modale Fiche 1.1.0 -->
+        {% if questionCollectiviteConsolide.q8 == true %}
+            <div id="dialog-fiche-110" title="Fiche 1.1.0" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+
+                    L'indicateur 1.1.0. recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.<br/>
+                    <br/><br/>
+                    Quels sont les agents à   recenser ?<br/>
+                    <br/><br/>
+                    * les fonctionnaires titulaires occupant un emploi fonctionnel en application de l'art 53 de la loi du 26 janvier 1984<br/>
+                    dont ceux appartenant au cadre d'emploi d'administrateur, d'attaché ou d'ingénieur<br/>
+                    <br/><br/>
+                    * les agents contractuels recrutés sur un emploi fonctionnel en application de l'art 47 de la loi du 26 janvier 1984<br/>
+                    <br/><br/>
+                    * rémunérés à  la date du 31 décembre {{AnneeCamp}} :<br/>
+                    <br/><br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/><br/>
+                    * par cadre d'emploi d'administrateurs, d'attachés et d'ingénieurs<br/>
+                    - les fonctionnaires des filières administratives et techniques occupant un emploi fonctionnel de direction doivent être recensés selon leur grade de détachement. Parmi ceux-ci, on comptabilise ceux ayant un cadre d'emploi d'administrateur, d'attaché ou d'ingénieur.<br/>
+                    - les contractuels sur emploi permanent sont recensés uniquement sur l'emploi fonctionnel occupé.<br/>
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.1.1 -->
+        {% if questionCollectiviteConsolide.q2 == true %}
+            <div id="dialog-fiche-111" title="Fiche 1.1.1" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+
+                    L'indicateur 1.1.1. recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.<br/>
+                    <br/><br/>
+                    Quels sont les agents à  recenser ?<br/>
+                    <br/><br/>
+                    * les fonctionnaires <br/>
+                    - titulaires<br/>
+                    - stagiaires.<br/>
+                    <br/><br/>
+                    Remarque importante :<br/>
+                    - les fonctionnaires occupant un emploi fonctionnel de direction doivent être comptabilisés uniquement dans leurs cadres d'emplois et grades respectifs
+                    même s'ils ont déjà  été comptabilisés dans l'indicateur 1.1.0. <br/>
+                    <br/><br/>
+                    * occupant un emploi permanent<br/>
+                    <br/>
+                    * rémunérés à  la date du 31 décembre {{AnneeCamp}} :<br/>
+                    - les fonctionnaires en activité dans votre collectivité ;<br/>
+                    - les fonctionnaires qui, n'exerçant pas leurs fonctions dans votre collectivité, sont mis à  la disposition d'autres structures ;<br/>
+                    - les fonctionnaires qui, détachés d'autres structures, sont en position d'activité dans votre collectivité ;<br/>
+                    - pour le CNFPT et les Centres de Gestion uniquement, les fonctionnaires dont ils assument la prise en charge (suite à  une suppression d'emploi, une fin de détachement sur emploi fonctionnel de direction...).<br/>
+                    <br/><br/>
+                    Ne doivent pas être comptabilisés :<br/>
+                    - les fonctionnaires détachés sur un emploi de cabinet qui n'est pas un emploi permanent<br/>
+                    au sens de la loi du 26 janvier 1984. Ils seront recensés à  l'indicateur 1.3.1  "Autres personnels "."<br/>
+                    au sens de la loi du 26 janvier 1984. Ils seront recensés à  l'indicateur 1.3.1 " Autres personnels ".<br/>
+                    - les fonctionnaires qui, n'étant pas en position d'activité, ne sont pas rémunérés à  la date du 31 décembre {{AnneeCamp}} (y compris les agents en disponibilité d'office après maladie) ;<br/>
+                    - les fonctionnaires qui, appartenant à  d'autres structures, sont mis à  la disposition de votre collectivité, mais ne sont pas rémunérés par votre collectivité et seront recensés dans leur collectivité d'origine ;<br/>
+                    - les fonctionnaires placés en CFA qui ne sont pas en activité et ne perçoivent qu'un revenu de remplacement ;<br/>
+                    - les fonctionnaires originaires de votre collectivité pris en charge par le CNFPT ou paruÂ  un Centre de gestion (suite à  une suppression d'emploi, une fin de détachement sur emploi fonctionnel de direction...) qui doivent être recensés par l'organisme qui les a pris en charge et qui les rémunère;<br/>
+                    - les fonctionnaires partis ou placés dans une position autre que l'activité qui ont perçu en décembre un rappel de traitementÃ‚Â <br/>
+                    <br/><br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/><br/>
+                    * par filière, cadre d'emplois et grade <br/>
+                    - les fonctionnaires occupant un emploi fonctionnel de direction doivent être comptabilisés uniquement dans leurs cadres d'emplois et grades respectifs même s'ils ont déjà  été comptabilisés dans l'indicateur 1.1.0<br/>
+                    - les stagiaires nommés par détachement (notamment suite à  concours, promotion interne ou reclassement pour inaptitude physique), qui avaient auparavant la qualité de titulaires dans votre collectivité, doivent être recensés uniquement en qualité de stagiaires, et donc ne pas être comptés au titre de leur grade ou cadre d'emplois d'origine.<br/>
+                    - les titulaires originaires d'autres collectivités ou structures, détachés dans la collectivité, doivent être recensés dans la filière, le cadres d'emplois et grade correspondant à  l'emploi dans lequel ils ont été nommés.<br/>
+                    <br/><br/>
+                    * selon les caractéristiques de leur emploi (temps complet ou non complet) <br/>
+                    - colonne 1.1.1(1) : effectif des fonctionnaires occupant un emploi à  temps complet, qu'ils exercent à  temps plein ou à  temps partiel (ces derniers font l'objet d'un recensement détaillé à  l'indicateur 1.1.1.) ;<br/>
+                    - colonnes 1.1.1(2) : effectif des fonctionnaires titulaires et stagiaires occupant un emploi à  temps NON complet (réf. : loi du 26 janvier 1984 - articles 104 à  108).<br/>
+                    Attention :<br/>
+                    - ne pas confondre "temps non complet" qui est une caractéristique de l'emploi (exprimée en 35èmes) et "temps partiel" qui est une modalité d'exercice (exprimée en pourcentage de temps plein) pour un agent occupant un emploi à  temps complet.<br/>
+                    <br/><br/>
+                    *      puis par sexe<br/>
+                    Les effectifs recensés dans les colonnes 1.1.1(1) à  1.1.1(4) doivent être à  nouveau recensés dans les colonnes 1.1.1(3) Ãƒâ€šÃ‚Â« Hommes Ãƒâ€šÃ‚Â» et 1.1.1(4) Ãƒâ€šÃ‚Â« Femmes Ãƒâ€šÃ‚Â». Les deux colonnes de total doivent donc être identiques.<br/>
+                    <br/><br/>
+                    <br/><br/>
+                    Notice : le décret crée un nouveau cadre d'emplois revalorisé pour les puéricultrices territoriales. La structure de carrière est articulée en deux grades, le premier grade comprenant deux classes. Par ailleurs, le décret fixe les conditions d'intégration des puéricultrices territoriales dans le nouveau cadre d'emplois. Il prévoit l'intégration immédiate des fonctionnaires appartenant à  la catégorie sédentaire. Les puéricultrices territoriales bénéficiant de la catégorie active disposent, quant à  elles, d'un droit d'option leur permettant soit d'intégrer ce nouveau cadre d'emplois en bénéficiant d'un reclassement plus favorable que les sédentaires, soit de conserver la catégorie active en restant dans le cadre d'emplois régi par le décret n° 92-859 du 28 aoà»t 1992 qui est mis en voie d'extinction.<br/>
+                    Références : le décret ainsi que les textes qu'il modifie peuvent être consultés, dans leur rédaction issue de cette modification, sur le site Légifrance (http://www.legifrance.gouv.fr).<br/>
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.1.2 -->
+        {% if questionCollectiviteConsolide.q2 == true %}
+            <div id="dialog-fiche-112" title="Fiche 1.1.2" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    L'indicateur 1.1.2. détaille les effectifs, en nombre de personnes physiques (1 personne = 1 unité), déjà  recensés à  l'indicateur 1.1.1. dans la colonne 1.1.1(1).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.<br/>
+                    <br/>
+                    Quels sont les agents à  recenser ?<br/>
+                    <br/><br/>
+                    * les fonctionnaires titulaires et stagiaires<br/>
+                    * occupant un emploi permanent à  temps complet<br/>
+                    * rémunérés à  la date du 31 décembre {{AnneeCamp}}<br/>
+                    <br/><br/>
+                    Remarque importante :<br/>
+                    Il s'agit des effectifs déjà  recensés à  l'indicateur 1.1.1. dans la colonne 1.1.1(1). Le total Hommes + Femmes de cet indicateur doit donc être identique à  celui de la colonne 1.1.1(1).<br/>
+                    <br/><br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/><br/>
+                    * par filière et cadre d'emplois (en lignes), selon les indications fournies dans la fiche de l'indicateur 1.1.1.<br/>
+                    <br/>
+                    * par quotité de temps de travail et par sexe (en colonnes)<br/>
+                    - temps plein : colonnes 1.1.2(1) et 1.1.2(2)<br/>
+                    - temps partiel : colonnes 1.1.2(3) à  1.1.2(8)<br/>
+                    <br/><br/>
+                    Précisions sur les temps partiels :<br/>
+                    Sous réserve de l'exception ci-dessous, tous les fonctionnaires à  temps partiel sont à  recenser, y compris les temps partiels de droit ou sur autorisation et les CPA. (La CPA été supprimée en 2011 mais elle s'applique toujours aux agents qui étaient déjà  en CPA à  cette date. Le décompte des CPA a toutefois été supprimé à  l'indicateur 1.1.3, car il concerne un nombre marginal d'agents)<br/>
+                    La quotité de temps de travail à  prendre en compte est celle qui figure sur la décision individuelle d'autorisation d'exercice à  temps partiel, calculée en base annuelle par rapport à  la durée légale du temps de travail. Cette quotité peut donc être différente de la durée hebdomadaire de service effectivement accomplie. Elle est également différente de la quotité rémunérée dans le cas particulier des temps partiels à  80% et à  90%.<br/>
+                    <br/><br/>
+                    Ne doivent pas être comptabilisés :<br/>
+                    Les fonctionnaires qui bénéficient d'un temps partiel thérapeutique prévu par l'article 57-4 bis de la loi du 26 janvier 1984 après avis du comité médical ou de la commission de réforme, cette forme particulière de temps partiel n'étant pas considérée comme un Ãƒâ€šÃ‚Â«Ãƒâ€šÃ‚Â temps partiel choisiÃƒâ€šÃ‚Â Ãƒâ€šÃ‚Â» relevant des dispositions de droit commun prévues par les articles 60 à  60 quater de la dite loi.<br/>
+                    <br/>
+
+                </p>
+
+            </div>
+        {% endif %}
+
+
+        <!--  Modale Fiche 1.1.3 -->
+        {% if questionCollectiviteConsolide.q2 == true %}
+            <div id="dialog-fiche-113" title="Fiche 1.1.3" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    L'indicateur 1.1.3. détaille les effectifs, en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.<br/>
+                    <br/><br/>
+                    Quels sont les agents à  recenser ?<br/>
+                    <br/><br/>
+                    *      les fonctionnaires titulaires et stagiaires<br/>
+                    <br/><br/>
+                    *      occupant un emploi permanent à  temps complet<br/>
+                    <br/><br/>
+                    *      rémunérés à  la date du 31 décembre {{AnneeCamp}}<br/>
+                    Il s'agit des fonctionnaires déjà  recensés à  l'indicateur 1.1.2. dans les colonnes 1.1.2(3) à  1.1.2(8).<br/>
+                    <br/><br/>
+                    *      et exerçant à  temps partiel sous les formes particulières (*) :<br/>
+                    -          du temps partiel de droit qui peut être accordé soit pour raison familiale (pour élever un enfant, donner des soins à  son conjoint, à  un enfant à  charge ou à  un ascendant, atteint d'un handicap), soit à  certains travailleurs handicapés (article 60 bis de la loi du 26 janvier 1984) ;<br/>
+                    -         du temps partiel sur autorisation pour les fonctionnaires en activité ou en service détaché, peuvent, en application de l'article 60 de la loi du 26 janvier 1984 susvisée, être autorisés, sur leur demande et sous réserve des nécessités du service, à  bénéficier d'un service à  temps partiel qui ne peut être inférieur au mi-temps;<br/>
+                    <br/><br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/><br/>
+                    *      par catégorie et par sexe<br/>
+                    Il s'agit des catégories hiérarchiques A, B et C visées à  l'article 5 de la loi du 26 janvier 1984. La répartition des fonctionnaires dans les catégories hiérarchiques a été établie par le décret n° 95-1018 du 14 septembre 1995.<br/>
+                    <br/><br/>
+                    *      par type de temps partiel concerné<br/>
+                    -          colonne 1.1.3(1) : temps partiel de droit,<br/>
+                    -          colonne 1.1.3(2) : temps partiel sur autorisation.<br/>
+                    <br/><br/>
+                    (*) cf. art1 décret n°2004-777 du 29 juillet 2004<br/>
+                    <br/>
+
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.1.4 -->
+        {% if questionCollectiviteConsolide.q1 == true %}
+            <div id="dialog-fiche-114" title="Fiche 1.1.4" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    Définition : L'Equivalent Temps Plein Rémunéré (ETPR) est proportionnel à  l'activité d'un agent, mesuré par sa quotité de temps de travail et par sa période d'activité sur l'année. Par contre, il ne tient pas compte des heures supplémentaires et/ou complémentaires effectuées par l'agent.<br/>
+                    La base de calcul pour un agent à  temps plein (35 heures), ayant été en activité toute l'année {{AnneeCamp}} correspond au nombre total d'heures payées soit 1 820 heures pour une année.<br/>
+                    Les périodes d'activités rémunérées sont incluses dans cette base de calcul (congés, absence, etc...).<br/>
+                    Le nombre d'heures payées à  prendre en compte pour un agent, est le nombre d'heures annuelles cumulées au dernier jour de l'année ou au dernier jour de travail de l'agent.<br/>
+                    <br/>
+                    Exemple : <br/>
+                    - Un agent à  temps plein rémunéré et présent toute l'année correspond à  1 ETPR, soit 1 820 heures<br/>
+                    - Un agent à  temps partiel (80 %) présent toute l'année correspond à  0,8 ETPR<br/>
+                    - Un agent à  temps non complet (25 heures par semaine) et ayant été présent 4 mois sur l'année correspond à  0,24 ETPR > calcul : (25 heures /35)*(4 mois /12) <br/>
+                    - Un agent à  temps partiel (80 %) étant repassé à  temps plein le 1er juin {{AnneeCamp}} correspond à  0,9 ETPR <br/>
+                    > calcul : (0,8 *(5 mois /12)) + (1*(7 mois /12)) <br/>
+                    - Cas des agents de la filière culturelle: un(e) assistant(e) d'enseignement artistique travaillant 20h hebdomadaire (temps plein de référence)  correspond à  1 ETPR (base 35 heures rémunérées). Un(e) professeur(e) d'enseignement artistique travaillant 16h hebdomadaire (temps plein de référence) correspond à  1 ETPR.<br/>
+                    Calcul par le nombre d'heures payées (y compris congés, absences, ...) <br/>
+                    - pour un  agent à  temps complet, soit 1 820 heures travaillées > 1 ETPR<br/>
+                    - pour un agent à  temps non complet, par exemple à  1 204 heures travaillées > 1 204 / 1 820 = 0,66 ETPR"<br/>
+
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.2.1 -->
+        {% if questionCollectiviteConsolide.q4 == true %}
+            <div id="dialog-fiche-121" title="Fiche 1.2.1" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    L'indicateur 1.2.1 recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.	<br/>
+                    <br/>
+                    Quels sont les agents à recenser ?<br/>
+                    <br/>
+                    * les agents contractuels recrutés sur un emploi permanent :<br/>
+                    - les agents de droit public listés ci-dessous en référence aux dispositions législatives qui autorisent leur recrutement, y compris les remplaçants de fonctionnaires momentanément indisponibles car ils sont affectés sur un emploi permanent ;<br/>
+                    - les agents de droit privé dont le contrat a été repris à l'occasion de la reprise d'activités transférées ou précédemment déléguées à des associations ;<br/>
+                    <br/>
+                    Ne doivent pas être comptabilisés :<br/>
+                    - les agents contractuels recrutés sur un emploi non permanent au sens de la loi du 26 janvier 1984 :  agents recrutés pour un besoin saisonnier ou occasionnel (article 3 de la loi du 26 janvier 1984) et collaborateurs de cabinet (article 110 de la loi du 26 janvier 1984) et collaborateurs de groupe d'élus (article 110-1 de la loi du 26 janvier 1984);<br/>
+                    - les assistants maternels et familiaux ;<br/>
+                    - les accueillants familiaux ;<br/>
+                    - les agents de droit privé recrutés dans le cadre d'un dispositif de résorption du chômage (contrat dits «aidés ») ;<br/>
+                    - les fonctionnaires exerçant dans votre collectivité dans le cadre d'un cumul d'emplois.<br/>
+                    <br/>
+                    * rémunérés à la date du 31 décembre {{AnneeCamp}}<br/>
+                    Ne doivent pas être comptabilisés :<br/>
+                    - les agents contractuels en congé sans traitement de toute nature, y compris les agents en congé de maladie qui n'ont pas ou plus de droit à rémunération ;<br/>
+                    - les agents contractuels placés en congés de fin d'activité (CFA).<br/>
+                    - les agents partis ou placés en congé sans traitement qui ont perçu en décembre un rappel de traitement<br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/>
+                    * par référence aux filières et cadres d'emplois<br/>
+                    - Les agents contractuels occupant un emploi fonctionnel au titre de l'article 47 de la loi du 26 janvier 1984 doivent être recensés uniquement dans les cadres d'emplois auxquels ils sont assimilés même s'ils ont déjà été comptabilisés dans l'indicateur 1.1.0<br/>
+                    <br/>
+                    * par référence aux cas de recrutement prévus par les articles 3-1, 3-2 et 3-3 de la loi statutaire n° 84-53 du 26 janvier 1984, modifié par la loi n°2012 du 12 mars 2012.<br/>
+                    - Colonne 1.2.1(1) : article 3-1 : pour assurer le remplacement temporaire de fonctionnaires ou d'agents contractuels autorisés à exercer leurs fonctions à temps partiel ou indisponibles en raison d'un congé annuel, d'un congé de maladie, d'un congé de maternité ou pour adoption, d'un congé parental ou d'un congé de présence parentale, d'un congé de solidarité familiale ou de l'accomplissement du service civil ou national, du rappel ou du maintien sous les drapeaux [...].<br/>
+                    - Colonne 1.2.1(2) : article 3-2 : pour faire face à une vacance temporaire d'emploi dans l'attente du recrutement d'un fonctionnaire et pour une durée déterminée n'excédant pas un an.<br/>
+                    - Colonne 1.2.1 (3) : article 3-3, 1° : lorsqu'il n'existe pas de cadre d'emplois de fonctionnaires susceptibles d'assurer les fonctions correspondantes.<br/>
+                    - Colonne 1.2.1 (4) : article 3-3, 2° : pour les emplois du niveau de la catégorie A lorsque les besoins des services ou la nature des fonctions le justifient.<br/>
+                    - Colonne 1.2.1 (5) : article 3-3, 3° : pour les emplois de secrétaire de mairie des communes et groupements de communes de moins de 1 000 habitants<br/>
+                    - Colonne 1.2.1 (6) : article 3-3, 4° : pour les emplois à temps non complet des communes et groupements de communes de moins de 1 000 habitants, lorsque la quotité de temps de travail est inférieure à 50 %.<br/>
+                    - Colonne 1.2.1 (7) : article 3-3, 5° : pour les emplois des communes de moins de 2 000 habitants et des groupements de communes de moins de 10 000 habitants dont la création ou la suppression dépend de la décision d'une autorité qui s'impose à la collectivité ou à l'établissement en matière de création, de changement de périmètre ou de suppression d'un service public.<br/>
+                    - Colonne 1.2.1 (8) : bénéficiaires de la réglementation relative aux travailleurs handicapés (article 38), pacte (article 38bis), emplois fonctionnels de direction dans les très grandes collectivités (article 47), agents contractuels maintenus en fonctions lors de la publication de la loi, agents contractuels transférés (article 136), autres agents contractuels exerçant sur emplois permanents (notamment agents de droit privé recrutés lors de la reprise d'activités précédemment confiées à une association).<br/>
+                    <br/>
+                    * selon les caractéristiques de leur emploi (temps complet ou non complet)<br/>
+                    - Colonne 1.2.1(9) : effectif des contractuels occupant un emploi à temps complet, qu'ils exercent à temps plein ou à temps partiel (ces derniers font l'objet d'un recensement détaillé à l'indicateur 1.2.2.) ;<br/>
+                    - Colonnes 1.2.1(10) : effectif des contractuels occupant un emploi à  temps NON complet.<br/>
+                    Attention :<br/>
+                    - ne pas confondre "temps non complet" qui est une caractéristique de l'emploi (exprimée en 35èmes) et "temps partiel" qui est une modalité d'exercice (exprimée en pourcentage de temps plein) pour un agent occupant un emploi à temps complet.<br/>
+                    <br/>
+                    * par tranches d'ancienneté<br/>
+                    Les agents recensés dans les colonnes 1.2.1(1) à 1.2.1(8) puis 1.2.1(9) à 1.2.1(10) doivent être de nouveau décomptés dans les colonnes 1.2.1(11) à 1.2.1(13), tous cas de recrutement confondus, selon l'ancienneté détenue au 31/12/{{AnneeCamp}}.<br/>
+                    <br/>
+                    * Agents par sexe, occupant tout type d'emploi dont ceux en CDI  :<br/>
+                    Les agents recensés dans les colonnes 1.2.1(1) à 1.2.1(8), puis dans les colonnes  1.2.1(9) à 1.2.1(10), 1.2.1(11) à 1.2.1(13) doivent encore une fois être décomptés par sexe pour tout type d'emploi puis CDI dans les colonnes  1.2.1(14) à 1.2.1(17), tous cas de recrutement confondus.<br/>
+                    <br/>
+                    Précisions sur les agents occupant un emploi en CDI  :<br/>
+                    En référence à la loi du 26 juillet 2005 et du 12 mars 2012 ci-après :<br/>
+                    - A la date de la publication de la loi L50 843-2005 du 26 juillet 2005, est de plein droit transformé en contrat en durée indéterminée l'engagement de l'agent qui satisfait, le 1er juin 2004 ou au plus tard au terme de son contrat en cours, aux conditions suivantes :<br/>
+                    1°) Être âgé d'au moins cinquante ans ;<br/>
+                    2°) Être en fonction à la date de publication de la présente loi ou bénéficier d'un congé en application des dispositions du décret du 15 février 1988.<br/>
+                    3°) Justifier d'une durée de services effectifs au moins égale à six ans (années qui ne sont donc pas forcément consécutives) au cours des huit dernières années;<br/>
+                    4°) Occuper un emploi en application des quatrième, cinquième ou sixième alinéas de l'article 3 de la loi n° 84-53 du 26 janvier 1984 dans la même collectivité ou le même établissement mentionné à l'article 2 de la même loi."<br/>
+                    - Par ailleurs, l'article 21 du chapitre II du titre Ier de la loi n° 2012-347 du 12 mars 2012 :<br/>
+                    A la date de publication de la présente loi, la transformation de son contrat en contrat à durée indéterminée est obligatoirement proposée à l'agent contractuel, employé par une collectivité territoriale ou un des établissements publics mentionnés à l'article 2 de la loi n° 84-53 du 26 janvier 1984 précitée conformément à l'article 3 de la même loi, dans sa rédaction antérieure à celle résultant de la présente loi, qui se trouve en fonction ou bénéficie d'un congé prévu par le décret pris en application de l'article 136 de ladite loi. Le droit défini au premier alinéa du présent article est subordonné à une durée de services publics effectifs, accomplis auprès de la même collectivité ou du même établissement public, au moins égale à six années au cours des huit années précédant la publication de la présente loi. Toutefois, pour les agents âgés d'au moins cinquante-cinq ans à cette même date, la durée requise est réduite à trois années au moins de services publics effectifs accomplis au cours des quatre années précédant la même date de publication."<br/>
+                    - Les cinquième et dernier alinéas du I de l'article 15 de la présente loi sont applicables pour l'appréciation de l'ancienneté prévue aux deuxième et troisième alinéas du présent article.<br/>
+                    Lorsque le représentant de l'Etat dans le département a déféré au tribunal administratif un contrat liant l'autorité locale à un agent, ce contrat ne peut être transformé en contrat à durée indéterminée en application du présent article qu'après l'intervention d'une décision juridictionnelle définitive confirmant sa légalité. La proposition conférant au contrat une durée indéterminée, prévue au premier alinéa, doit alors être expressément réitérée par l'autorité territoriale d'emploi. Le contrat accepté par l'agent intéressé est réputé avoir été conclu à durée indéterminée à compter de la date de publication de la présente loi.<br/>
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.2.2 -->
+        {% if questionCollectiviteConsolide.q4 == true %}
+            <div id="dialog-fiche-122" title="Fiche 1.2.2" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    1.2.2 - Nombre d'agents contractuels au 31/12/{{AnneeCamp}} occupant un emploi permanent à temps complet
+                    par sexe, cadre d'emplois et selon la quotité de temps de travail<br/>
+                    <br/>
+                    L'indicateur 1.2.2. détaille les effectifs, en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.<br/>
+                    <br/>
+                    Quels sont les agents à recenser ?<br/>
+                    *  les agents contractuels déjà recensés à l'indicateur 1.2.1<br/>
+                    * occupant un emploi permanent à temps complet, exerçant à temps plein ou à temps partiel<br/>
+                    Ne pas recenser les agents exerçant à temps non complet<br/>
+                    *  rémunérés à la date du 31 décembre {{AnneeCamp}}<br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/>
+                    * par filière et cadre d'emplois (en lignes), selon les indications fournies dans la fiche de l'indicateur 1.2.1.<br/>
+                    <br/>
+                    * par quotité de temps de travail et par sexe (en colonnes)<br/>
+                    - temps plein : colonnes 1.2.2(1) et 1.2.2(2)<br/>
+                    - temps partiel : colonnes 1.2.2(3) à 1.2.2(8)<br/>
+                    <br/>
+                    Précisions sur les temps partiels :<br/>
+                    Tous les contractuels à temps partiel sont à recenser, y compris les temps partiels de droit ou sur autorisation qui seront de nouveau décomptés à l'indicateur 1.2.3.<br/>
+                    La quotité de temps de travail à prendre en compte est celle qui figure sur la décision individuelle d'autorisation d'exercice à temps partiel, calculée en base annuelle par rapport à la durée légale du temps de travail. Cette quotité peut donc être différente de la durée hebdomadaire de service effectivement travaillée. Elle est également différente de la quotité rémunérée dans le cas particulier des temps partiels à 80% et à 90%.<br/>
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.2.3 -->
+        {% if questionCollectiviteConsolide.q4 == true %}
+            <div id="dialog-fiche-123" title="Fiche 1.2.3" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    L'indicateur 1.2.3. détaille les effectifs, en nombre de personnes physiques (1 personne = 1 unité),
+                    déjà recensés à l'indicateur 1.2.2.<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.<br/>
+                    <br/>
+                    Quels sont les agents à recenser ?<br/>
+                    <br/>
+                    *  les agents contractuels occupant un emploi permanent à temps complet rémunérés à la date du 31 décembre {{AnneeCamp}}<br/>
+                    *  et exerçant à temps partiel sous les formes particulières :<br/>
+                    - du temps partiel de droit qui peut être accordé soit pour raison familiale (pour élever un enfant, donner des soins à son conjoint, à un enfant à charge ou à un ascendant, atteint d'un handicap), soit à certains travailleurs handicapés (article 13 du décret n° 2004-777 du 29 juillet 2004 relatif à la mise en œuvre du temps partiel dans la Fonction Publique Territoriale) : colonnes 1.2.3(1) ;<br/>
+                    - du temps partiel sur autorisation (pour une durée de service qui ne peut être inférieure au mi-temps) pour les agents contractuels en activité employés depuis plus d'un an de façon continue à temps complet, sur leur demande et sous réserve des nécessités du service (art 10 du décret n°2004-777 du 29 juillet 2004) : colonne 1.2.3(2);<br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/>
+                    *  par catégorie et par sexe<br/>
+                    Il s'agit des catégories hiérarchiques A, B et C visées à l'article 5 de la loi du 26 janvier 1984. La répartition des agents contractuels dans les catégories hiérarchiques doit être effectuée sur la base de celle établie pour les fonctionnaires par le décret n° 95-1018 du 14 septembre 1995.<br/>
+                    <br/>
+                    *      par type de temps partiel concerné : colonnes 1.2.3(1) et (2)<br/>
+                    -          colonne 1.2.3(1) : temps partiel de droit,<br/>
+                    -          colonne 1.2.3(2) : temps partiel sur autorisation.<br/>
+
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.2.4 -->
+        {% if questionCollectiviteConsolide.q3 == true %}
+            <div id="dialog-fiche-124" title="Fiche 1.2.4" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    Définition : L'Equivalent Temps Plein Rémunéré (ETPR) est proportionnel à l'activité d'un agent, mesuré par sa quotité de temps de travail et par sa période d'activité sur l'année. Par contre, il ne tient pas compte des heures supplémentaires et/ou complémentaires effectuées par l'agent.<br/>
+                    La base de calcul pour un agent à temps plein (35 heures), ayant été en activité toute l'année {{AnneeCamp}} correspond au nombre total d'heures payées soit 1 820 heures pour une année.<br/>
+                    Les périodes d'activités rémunérées sont incluses dans cette base de calcul (congés, absence, etc...).<br/>
+                    Le nombre d'heures payées à prendre en compte pour un agent, est le nombre d'heures annuelles cumulées au dernier jour de l'année ou au dernier jour de travail de l'agent.<br/>
+                    <br/>
+                    Exemple : <br/>
+                    - Un agent à temps plein rémunéré et présent toute l'année correspond à 1 ETPR, soit 1 820 heures<br/>
+                    - Un agent à temps partiel (80 %) présent toute l'année correspond à 0,8 ETPR<br/>
+                    - Un agent à temps non complet (25 heures par semaine) et ayant été présent 4 mois sur l'année correspond à 0,24 ETPR > calcul : (25 heures /35)*(4 mois /12) <br/>
+                    - Un agent à temps partiel (80 %) étant repassé à temps plein le 1er juin {{AnneeCamp}} correspond à 0,9 ETPR <br/>
+                    > calcul : (0,8 *(5 mois /12)) + (1*(7 mois /12)) <br/>
+                    - Cas des agents de la filière culturelle: un(e) assistant(e) d'enseignement artistique travaillant 20h hebdomadaire (temps plein de référence)  correspond à 1 ETPR (base 35 heures rémunérées). Un(e) professeur(e) d'enseignement artistique travaillant 16h hebdomadaire (temps plein de référence) correspond à 1 ETPR.<br/>
+                    Calcul par le nombre d'heures payées (y compris congés, absences, ...) <br/>
+                    - pour un  agent à temps complet, soit 1 820 heures travaillées > 1 ETPR<br/>
+                    - pour un agent à temps non complet, par exemple à 1 204 heures travaillées > 1 204 / 1 820 = 0,66 ETPR<br/>
+
+
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.3.1 -->
+        {% if questionCollectiviteConsolide.q5 == true or questionCollectiviteConsolide.q6 == true %}
+            <div id="dialog-fiche-131" title="Fiche 1.3.1" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    Les indicateurs 1.3.1 - 1.3.2. recensent les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.<br/>
+                    <br/>
+                    Quels sont les agents à recenser à l'indicateur 1.3.1 ?<br/>
+                    <br/>
+                    *  les agents contractuels recrutés sur un emploi NON permanent<br/>
+                    Il s'agit des agents contractuels NON recensés à l'indicateur 1.2.1, qu'ils soient de droit public ou de droit privé.<br/>
+                    *  rémunérés à la date du 31 décembre {{AnneeCamp}} : colonnes 1.3.1(1) et 1.3.1(2)<br/>
+                    *  et pour certains, rémunérés au moins 1 jour dans l'année : colonnes 1.3.1(3) et 1.3.1(4)<br/>
+                    Les agents concernés qui étaient rémunérés au 31/12/{{AnneeCamp}} doivent donc être recensés dans ces deux colonnes.<br/>
+                    Remarque : si une personne a exercé sur plusieurs périodes distinctes au cours de l'année, ne la compter qu'une fois.<br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    <br/>
+                    *  par nature d'emploi « non permanent » (en ligne)<br/>
+                    * Collaborateurs de cabinet (article 110 de la loi du 26 janvier 1984)<br/>
+                    * Assistants maternels<br/>
+                    * Assistants familiaux : arrêté du 10 juillet 2008, agréé d'avenant n° 305 du 20 mars 2007 relatif aux assistants familiaux, travaillant dans les centres ou services d'accueil familial ou de placement familial spécialisé.<br/>
+                    * Accueillants familiaux : article 57 de la loi DALO (mars 2007); décret d'application n°2010-928 d'août 2010.<br/>
+                    * Agents contractuels recrutés pour faire face à un besoin lié à un accroissement temporaire ou saisonnier d'activité (art 3 de la loi 84-53 du 26 janvier 1984)<br/>
+                    * Contrat unique d'insertion (CUI) : créé en décembre 2008, le Contrat Unique d'Insertion - CUI - est déployé en métropole à compter du 1er janvier 2010. Il regroupe le Contrat Initiative Emploi (CUI-CIE) du secteur marchand et les Contrats d'Accompagnement dans l'Emploi (CUI-CAE) du secteur non-marchand.<br/>
+                    * Emplois d'avenir :<br/>
+                    Loi n° 2012-1189 du 26 octobre 2012 portant création des emplois d'avenir. « Code du travail Art. L. 5134-110. <br/>
+                    -  I. - L'emploi d'avenir a pour objet de faciliter l'insertion professionnelle des jeunes sans emploi âgés de seize à vingt-cinq ans soit sans qualification soit peu qualifiés et rencontrant des difficultés particulières d'accès à l'emploi, par leur recrutement dans des activités présentant un caractère d'utilité sociale ou ayant un fort potentiel de création d'emplois.»<br/>
+                    - II. - L'emploi d'avenir s'adresse en priorité aux jeunes mentionnés au I qui résident soit dans les zones urbaines sensibles, au sens de l'article 42 de la loi n° 95-115 du 4 février 1995 d'orientation pour l'aménagement et le développement du territoire, soit dans les zones d'emploi dans lesquelles le taux de chômage des jeunes de seize à vingt-cinq ans est supérieur à la moyenne nationale.»<br/>
+                    * Apprentis<br/>
+                    * Personnes bénéficiant d'une rémunération accessoire autorisée par la réglementation sur le cumul des emplois<br/>
+                    * Autres (agents non classables dans les catégories précédentes) : par exemple les intermittents du spectacle, les vacataires etc. Non compris les élus, comptables publics et vacataires de police.<br/>
+                    *  par sexe (en colonne)<br/>
+                    <br/>
+                    Quels sont les agents à recenser à l'indicateur 1.3.2 ?<br/>
+                    Ce sont les personnes de droit public ou privé qui sont dans le cadre d'une mission temporaire<br/>
+                    <br/>
+                    * Colonne 1.3.2(1) : présents à la date du 31 décembre {{AnneeCamp}}<br/>
+                    +        * Colonne 1.3.2(2) : présents au moins un jours dans l'année.<br/>
+                    Remarque : si une personne a exercé sur de plusieurs périodes distinctes au cours de l'année, ne la compter qu'une fois.<br/>
+                    <br/>
+                    Les agents qui étaient présents au 31/12/{{AnneeCamp}} doivent donc être recensés dans les deux colonnes.<br/>
+                    Comment sont-ils recensés ?<br/>
+                    * par nature d'emploi « non permanent » (en ligne)<br/>
+                    * Personnes employées comme personnels remplaçants mis à disposition par le centre de gestion.<br/>
+                    * Personnes employées dans le cadre du recours au service des entreprises mentionnées à l'article L. 1251-1 du code du travail (intérim) en référence à l'article 3-2 de la loi n° 84-53 du 26 janvier 1984<br/>
+
+                </p>
+
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 1.3.2 -->
+        <div id="dialog-fiche-132" title="Fiche 1.3.2" class="displayNone" style="overflow:hidden;">
+            <p style="overflow-y: scroll; height: 400px;">
+                Les indicateurs 1.3.1 - 1.3.2. recensent les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                Les cellules grisées (pré remplies par un zéro) font l'objet de calculs automatiques.<br/>
+                <br/>
+                Quels sont les agents à recenser à l'indicateur 1.3.1 ?<br/>
+                <br/>
+                *  les agents contractuels recrutés sur un emploi NON permanent<br/>
+                Il s'agit des agents contractuels NON recensés à l'indicateur 1.2.1, qu'ils soient de droit public ou de droit privé.<br/>
+                *  rémunérés à la date du 31 décembre {{AnneeCamp}} : colonnes 1.3.1(1) et 1.3.1(2)<br/>
+                *  et pour certains, rémunérés au moins 1 jour dans l'année : colonnes 1.3.1(3) et 1.3.1(4)<br/>
+                Les agents concernés qui étaient rémunérés au 31/12/{{AnneeCamp}} doivent donc être recensés dans ces deux colonnes.<br/>
+                Remarque : si une personne a exercé sur plusieurs périodes distinctes au cours de l'année, ne la compter qu'une fois.<br/>
+                <br/>
+                Comment sont-ils recensés ?<br/>
+                <br/>
+                *  par nature d'emploi « non permanent » (en ligne)<br/>
+                * Collaborateurs de cabinet (article 110 de la loi du 26 janvier 1984)<br/>
+                * Assistants maternels<br/>
+                * Assistants familiaux : arrêté du 10 juillet 2008, agréé d'avenant n° 305 du 20 mars 2007 relatif aux assistants familiaux, travaillant dans les centres ou services d'accueil familial ou de placement familial spécialisé.<br/>
+                * Accueillants familiaux : article 57 de la loi DALO (mars 2007); décret d'application n°2010-928 d'août 2010.<br/>
+                * Agents contractuels recrutés pour faire face à un besoin lié à un accroissement temporaire ou saisonnier d'activité (art 3 de la loi 84-53 du 26 janvier 1984)<br/>
+                * Contrat unique d'insertion (CUI) : créé en décembre 2008, le Contrat Unique d'Insertion - CUI - est déployé en métropole à compter du 1er janvier 2010. Il regroupe le Contrat Initiative Emploi (CUI-CIE) du secteur marchand et les Contrats d'Accompagnement dans l'Emploi (CUI-CAE) du secteur non-marchand.<br/>
+                * Emplois d'avenir :<br/>
+                Loi n° 2012-1189 du 26 octobre 2012 portant création des emplois d'avenir. « Code du travail Art. L. 5134-110. <br/>
+                -  I. - L'emploi d'avenir a pour objet de faciliter l'insertion professionnelle des jeunes sans emploi âgés de seize à vingt-cinq ans soit sans qualification soit peu qualifiés et rencontrant des difficultés particulières d'accès à l'emploi, par leur recrutement dans des activités présentant un caractère d'utilité sociale ou ayant un fort potentiel de création d'emplois.»<br/>
+                - II. - L'emploi d'avenir s'adresse en priorité aux jeunes mentionnés au I qui résident soit dans les zones urbaines sensibles, au sens de l'article 42 de la loi n° 95-115 du 4 février 1995 d'orientation pour l'aménagement et le développement du territoire, soit dans les zones d'emploi dans lesquelles le taux de chômage des jeunes de seize à vingt-cinq ans est supérieur à la moyenne nationale.»<br/>
+                * Apprentis<br/>
+                * Personnes bénéficiant d'une rémunération accessoire autorisée par la réglementation sur le cumul des emplois<br/>
+                * Autres (agents non classables dans les catégories précédentes) : par exemple les intermittents du spectacle, les vacataires etc. Non compris les élus, comptables publics et vacataires de police.<br/>
+                *  par sexe (en colonne)<br/>
+                <br/>
+                Quels sont les agents à recenser à l'indicateur 1.3.2 ?<br/>
+                Ce sont les personnes de droit public ou privé qui sont dans le cadre d'une mission temporaire<br/>
+                <br/>
+                * Colonne 1.3.2(1) : présents à la date du 31 décembre {{AnneeCamp}}<br/>
+                * Colonne 1.3.2(2) : présents au moins un jours dans l'année.<br/>
+                Remarque : si une personne a exercé sur de plusieurs périodes distinctes au cours de l'année, ne la compter qu'une fois.<br/>
+                <br/>
+                Les agents qui étaient présents au 31/12/{{AnneeCamp}} doivent donc être recensés dans les deux colonnes.<br/>
+                Comment sont-ils recensés ?<br/>
+                * par nature d'emploi « non permanent » (en ligne)<br/>
+                * Personnes employées comme personnels remplaçants mis à disposition par le centre de gestion.<br/>
+                * Personnes employées dans le cadre du recours au service des entreprises mentionnées à l'article L. 1251-1 du code du travail (intérim) en référence à l'article 3-2 de la loi n° 84-53 du 26 janvier 1984<br/>
+            </p>
+        </div>
+
+
+        <!--  Modale Fiche 1.4.0 -->
+        <div id="dialog-fiche-140" title="Fiche 1.4" class="displayNone" style="overflow:hidden;">
+            <p style="overflow-y: scroll; height: 400px;">
+                1.4.1 - 1.4.4 Agents selon les positions statutaires particulières<br/>
+                <br/>
+                L'indicateur 1.4 recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                <br/>
+                Quels sont les agents à recenser ?<br/>
+                <br/>
+                * les fonctionnaires et les agents contractuels<br/>
+                Certaines rubriques ne concernent pas les contractuels :<br/>
+                - congé parental ;<br/>
+                - position hors cadres ;<br/>
+                - détachement ;<br/>
+                - congé spécial ;<br/>
+                - prise en charge par le CNFPT ou un Centre de Gestion.<br/>
+                <br/>
+                * placés dans une position particulière au 31/12/{{AnneeCamp}} :<br/>
+                - les fonctionnaires et agents qui se trouvent dans une position autre que celle de l'activité ;<br/>
+                - les fonctionnaires recrutés dans votre collectivité par la voie d'un détachement non suivi d'intégration.<br/>
+                <br/>
+                Comment sont-ils recensés ?<br/>
+                <br/>
+                * selon leur origine et par type de situation<br/>
+                <br/>
+                - en 1.4.1 : agents originaires de votre collectivité<br/>
+                - en 1.4.2 et 1.4.3 : agents originaires d’une autre structure<br/>
+                - en 1.4.4 : agents pris en charge par le CNFPT ou un Centre de Gestion<br/>
+            </p>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {% set NumForm = '1' %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        // Attention à vérifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var numForm = '1';
+        var nomForm = 'effectif';
+        var nbInd = {{ nombreQuestion.nmquestion.effectifs }};
+
+        function initTab() {
+            if (currentTab != "")
+                saveTab();
+            $('#content').html("");
+            $('#content').load('{{ path('bilan_conso_effectif_edit') }}', function () { });
+            currentTab = "0";
+        }
+
+        // Vide le cache notamment pour IE9
+        $.ajaxSetup({cache: false});
+        initTab();
+
+
+        var idToggleCurr = "";
+        var idDivCurr = "";
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            $('#HideShowIncoh').on('click', function() {
+                var incohHeight = $('#incoh').height();
+                $("#incoh_wrapper").css('height', incohHeight);
+                $("#incoh").affix({
+                    offset: {
+                      top: distance
+                    }
+                });
+            });
+
+            // TABLEAU 110X
+        {% if questionCollectiviteConsolide.q8 == true  %}
+
+                addToggle("toggle110", "ind110");
+                $("#open-fiche-110").on("click", function () {
+                    $("#dialog-fiche-110").removeClass("displayNone");
+                    dialogFiche110.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 111 => Totaux sont ajouté directement en html avec des données du form firstReferentiel et lastReferentiel init dans l'entity
+        {% if questionCollectiviteConsolide.q2 == true %}
+
+                addToggle("toggle111", "ind111");
+                $("#open-fiche-111").on("click", function () {
+                    $("#dialog-fiche-111").removeClass("displayNone");
+                    dialogFiche111.dialog("open");
+                });
+        {% endif %}
+
+
+                // TABLEAU 112 => Totaux sont ajouté directement en html avec des données du form firstReferentiel et lastReferentiel init dans l'entity
+        {% if questionCollectiviteConsolide.q2 == true   %}
+
+                addToggle("toggle112", "ind112");
+                $("#open-fiche-112").on("click", function () {
+                    $("#dialog-fiche-112").removeClass("displayNone");
+                    dialogFiche112.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 113 : Utilisation de jquery pour ajout des totaux => Obsolete
+        {% if questionCollectiviteConsolide.q2 == true   %}
+
+                addToggle("toggle113", "ind113");
+                $("#open-fiche-113").on("click", function () {
+                    $("#dialog-fiche-113").removeClass("displayNone");
+                    dialogFiche113.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 114
+        {% if questionCollectiviteConsolide.q1 == true    %}
+
+                addToggle("toggle114", "ind114");
+                $("#open-fiche-114").on("click", function () {
+                    $("#dialog-fiche-114").removeClass("displayNone");
+                    dialogFiche114.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 121
+        {% if questionCollectiviteConsolide.q4 == true   %}
+
+                addToggle("toggle121", "ind121");
+                $("#open-fiche-121").on("click", function () {
+                    $("#dialog-fiche-121").removeClass("displayNone");
+                    dialogFiche121.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 122
+        {% if questionCollectiviteConsolide.q4 == true  %}
+
+                addToggle("toggle122", "ind122");
+                $("#open-fiche-122").on("click", function () {
+                    $("#dialog-fiche-122").removeClass("displayNone");
+                    dialogFiche122.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 123 : Utilisation de jquery pour ajout des totaux => Obsolete
+        {% if questionCollectiviteConsolide.q4 == true   %}
+
+                addToggle("toggle123", "ind123");
+                $("#open-fiche-123").on("click", function () {
+                    $("#dialog-fiche-123").removeClass("displayNone");
+                    dialogFiche123.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 124
+        {% if questionCollectiviteConsolide.q3 == true  %}
+
+                addToggle("toggle124", "ind124");
+                $("#open-fiche-124").on("click", function () {
+                    $("#dialog-fiche-124").removeClass("displayNone");
+                    dialogFiche124.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 131 1 et 2
+        {% if (questionCollectiviteConsolide.q5 == true or questionCollectiviteConsolide.q6 == true) %}
+                addToggle("toggle131", "ind131");
+                $("#open-fiche-131").on("click", function () {
+                    $("#dialog-fiche-131").removeClass("displayNone");
+                    dialogFiche131.dialog("open");
+                });
+        {% endif %}
+
+                // TABLEAU 132
+
+
+                addToggle("toggle132", "ind132");
+                $("#open-fiche-132").on("click", function () {
+                    $("#dialog-fiche-132").removeClass("displayNone");
+                    dialogFiche132.dialog("open");
+                });
+
+
+                // TABLEAU 140
+                addToggle("toggle140", "ind140");
+                $("#open-fiche-140").on("click", function () {
+                    $("#dialog-fiche-140").removeClass("displayNone");
+                    dialogFiche140.dialog("open");
+                });
+                initCount(numForm);
+            });
+
+            /*
+             * METHODES GENERALES
+             */
+            function initDiv(idDiv) {
+                if (idDiv == undefined || idDiv == "null" || idDiv == "") {
+                    initCount(numForm);
+                } else {
+                    if (idDiv == "ind110") {
+                        $('#ind110').load('{{ path('bilan_conso_effectif_ind110_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind111") {
+                        $('#ind111').load('{{ path('bilan_conso_effectif_ind111_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind112") {
+                        $('#ind112').load('{{ path('bilan_conso_effectif_ind112_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind113") {
+                        $('#ind113').load('{{ path('bilan_conso_effectif_ind113_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind114") {
+                        $('#ind114').load('{{ path('bilan_conso_effectif_ind114_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind121") {
+                        $('#ind121').load('{{ path('bilan_conso_effectif_ind121_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind122") {
+                        $('#ind122').load('{{ path('bilan_conso_effectif_ind122_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind123") {
+                        $('#ind123').load('{{ path('bilan_conso_effectif_ind123_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind124") {
+                        $('#ind124').load('{{ path('bilan_conso_effectif_ind124_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind131") {
+                        $('#ind131').load('{{ path('bilan_conso_effectif_ind131_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind132") {
+                        $('#ind132').load('{{ path('bilan_conso_effectif_ind132_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    } else if (idDiv == "ind140") {
+                        $('#ind140').load('{{ path('bilan_conso_effectif_ind140_edit') }}', function () {
+                            // run the effect
+                            $('#' + idDiv).toggle("blind", 500);
+                            initLight(numForm);
+                            disabled();
+                        });
+                    }
+                }
+            }
+
+            $('#HideShowIncoh').click(function () {
+                HideShowIncoh();
+            });
+
+            function setIncoherenceTable(responsejson) {
+                incoherenceList = responsejson.list.effectif;
+                /*console.log(incoherenceList);*/
+                var table = document.getElementById('incoherenceTable');
+
+                var tbody = $(table).find('tbody');
+
+                var html_table_incoh = '';
+                $.each(incoherenceList, function() {
+                    // console.log(this);
+                    html_table_incoh += '<tr>';
+                    html_table_incoh += '<td>'+"<a href=\"#\" onclick=\"openError('" + this.idToggle1 + "', '" + this.idToggle2 + "', '" + this.field + "')\">" + this.tableNum + "</a></td>";
+                    html_table_incoh += '<td>'+ this.message +'</td>';
+                    html_table_incoh += '</tr>';
+                });
+                $(tbody).html(html_table_incoh);
+
+                setIncoherenceLight(numForm);
+
+                $.each(responsejson.effectif.pgInd, function() {
+                    setPgInd(this.ind, this.blinco, this.moyenne, nomForm);
+                });
+
+                getMoyenneEff(responsejson);
+                setPgMenu('Eff','effectif', responsejson);
+            }
+
+            var getMoyenneEff = function (response)
+            {
+                var total = Math.ceil(Math.ceil(response.pc.pcEffectif) / nbInd);
+
+                $('#ValEff').html(total + "%");
+                $('#pbEff').css('width', total + "%");
+            }
+
+        {% if questionCollectiviteConsolide.q8 == true  %}
+            var dialogFiche110 = $("#dialog-fiche-110").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche110.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q2 == true %}
+            var dialogFiche111 = $("#dialog-fiche-111").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche111.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q2 == true %}
+            var dialogFiche112 = $("#dialog-fiche-112").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche112.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+
+        {% if questionCollectiviteConsolide.q2 == true %}
+            var dialogFiche113 = $("#dialog-fiche-113").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche113.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+
+        {% if questionCollectiviteConsolide.q1 == true %}
+            var dialogFiche114 = $("#dialog-fiche-114").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche114.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q4 == true %}
+            var dialogFiche121 = $("#dialog-fiche-121").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche121.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+
+        {% if questionCollectiviteConsolide.q4 == true %}
+            var dialogFiche122 = $("#dialog-fiche-122").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche122.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+
+        {% if questionCollectiviteConsolide.q4 == true %}
+            var dialogFiche123 = $("#dialog-fiche-123").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche123.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q3 == true %}
+            var dialogFiche124 = $("#dialog-fiche-124").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche124.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q5 == true or questionCollectiviteConsolide.q6 == true  %}
+            var dialogFiche131 = $("#dialog-fiche-131").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche131.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+
+
+
+            var dialogFiche132 = $("#dialog-fiche-132").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche132.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+
+
+            var dialogFiche140 = $("#dialog-fiche-140").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche140.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+
+
+    </script>
+
+{% endblock %}

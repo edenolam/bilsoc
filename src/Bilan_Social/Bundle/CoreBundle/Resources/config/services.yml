@@ -1,0 +1,17 @@
+services:
+    maintenance_listener:
+        class: Bilan_Social\Bundle\CoreBundle\EventListener\MaintenanceListener
+        arguments:
+            - "%isLocked%"
+            - "@twig"
+        tags: 
+            - {name: kernel.event_listener, event: kernel.request, method: onKernelRequest}
+    config_finder:
+        class: Bilan_Social\Bundle\CoreBundle\Services\BaseConfigFinder
+        public: true
+
+    core_config_finder:
+        class: 'Bilan_Social\Bundle\CoreBundle\Services\CoreConfigFinder'
+        public: true
+        autowire: true
+    

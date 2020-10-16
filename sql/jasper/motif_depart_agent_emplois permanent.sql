@@ -1,0 +1,24 @@
+SELECT  
+COALESCE(SUM(COALESCE(ind_150_1.R_15011,0) + COALESCE(ind_150_1.R_15012,0) + COALESCE(ind_150_1.R_15013,0) + COALESCE(ind_150_1.R_15014,0) + COALESCE(ind_150_1.R_15015,0) + COALESCE(ind_150_1.R_15016,0) + COALESCE(ind_150_1.R_15017,0) + COALESCE(ind_150_1.R_15018,0)),0) NB_DEPA
+#, r_m_d.LB_MOTIDEPA, "Fonctionnaire" LB_TYPE
+FROM ind_150_1
+JOIN ref_motif_depart r_m_d ON r_m_d.ID_MOTIDEPA = ind_150_1.ID_MOTIDEPA
+JOIN statut_Motif_Depart s_m_d ON s_m_d.motif_depart_id = r_m_d.ID_MOTIDEPA
+JOIN ref_statut r_s ON r_s.ID_STAT = s_m_d.Status_id
+WHERE ind_150_1.ID_BILASOCICONS = 18
+AND r_m_d.BL_DEPADEFI = 1
+AND r_s.CD_STAT IN ('TITU','STAG')
+GROUP BY r_m_d.ID_MOTIDEPA
+/*UNION
+SELECT 
+COALESCE(SUM(COALESCE(R_15021,0) + COALESCE(R_15022,0) + COALESCE(R_15023,0) + COALESCE(R_15024,0) + COALESCE(R_15025,0) + COALESCE(R_15026,0) + COALESCE(R_15027,0) + COALESCE(R_15028,0)),0) NB_DEPA
+, r_m_d.LB_MOTIDEPA, "contractuel" LB_TYPE
+FROM ind_150_2
+JOIN ref_motif_depart r_m_d ON r_m_d.ID_MOTIDEPA = ind_150_2.ID_MOTIDEPA
+JOIN statut_Motif_Depart s_m_d ON s_m_d.motif_depart_id = r_m_d.ID_MOTIDEPA
+JOIN ref_statut r_s ON r_s.ID_STAT = s_m_d.Status_id
+WHERE ind_150_2.ID_BILASOCICONS = 18
+AND r_m_d.BL_DEPADEFI = 1
+AND r_s.CD_STAT IN ('CONTPERM')
+GROUP BY r_m_d.ID_MOTIDEPA*/
+

@@ -1,0 +1,318 @@
+{
+	"data":[
+		{
+			"code":-1,
+			"lbl":"Non communiqué",
+			"cd_type_contrat":null,
+			"cd_type_cdd":null	
+		},
+		{
+			"code":1,
+			"lbl":"Titulaire",
+			"cd_type_contrat":"TITU",
+			"cd_type_cdd":"Titulaire"		
+		},
+		{
+			"code":10,
+			"lbl":"Sur poste vacant (Art.3 - alinéa 1)",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD002",
+			"lbl_type_cdd":"Article 3-2",
+			"desc_type_cdd":"Affectés sur un poste vacant"
+		},
+		{
+			"code":11,
+			"lbl":"Emplois de direction (Art.47)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":null		
+		},
+		{
+			"code":12,
+			"lbl":"Contractuel antérieur 84 (Art.136)",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD008",
+			"lbl_type_cdd":"Autres contractuels (articles 38, 38bis, 47,136...)"
+		},
+		{
+			"code":13,
+			"lbl":"Contractuel handicapé (Art.38)",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD008",
+			"lbl_type_cdd":"Autres contractuels (articles 38, 38bis, 47,136...)"
+		},
+		{
+			"code":14,
+			"lbl":"Pacte (Art. 38 bis)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF012",
+			"lbl_type_cdd":"Autres (agents non classables dans les catégories précédentes)"
+		},
+		{
+			"code":15,
+			"lbl":"Non-titulaire - Autres",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD008",
+			"lbl_type_cdd":"Autres contractuels (articles 38, 38bis, 47,136...)"
+		},
+		{
+			"code":16,
+			"lbl":"Saisonniers et occasionnels (Art. 3 - alinéa 2)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF012",
+			"lbl_type_cdd":"Autres (agents non classables dans les catégories précédentes)"
+		},
+		{
+			"code":17,
+			"lbl":"Assistante maternelle",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF002",
+			"lbl_type_cdd":"Assistants maternels"
+		},
+		{
+			"code":18,
+			"lbl":"Coll. groupes d'élus",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF012",
+			"lbl_type_cdd":"Autres (agents non classables dans les catégories précédentes)"
+		},
+		{
+			"code":19,
+			"lbl":"Collaborateur de cabinet",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF001",
+			"lbl_type_cdd":"Collaborateurs de cabinet (article 110 de la loi du 26 janvier 1984)"
+		},
+		{
+			"code":-2,
+			"lbl":"Non connu",
+			"cd_type_contrat":null,
+			"cd_type_cdd":null
+		},
+		{
+			"code":2,
+			"lbl":"Stagiaire",
+			"cd_type_contrat":"STAG",
+			"cd_type_cdd":"Stagiaire"	
+		},
+		{
+			"code":20,
+			"lbl":"Mise à disposition CDG (Art. 25)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"//!\\ attention ne pas prendre ?"	
+		},
+		{
+			"code":21,
+			"lbl":"(Supprimé) Contrat emploi solidarité (CES)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF008",
+			"lbl_type_cdd":"Autre emploi aidé"
+		},
+		{
+			"code":22,
+			"lbl":"(Supprimé) Contrat emploi consolidé (CEC)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF008",
+			"lbl_type_cdd":"Autre emploi aidé"
+		},
+		{
+			"code":23,
+			"lbl":"(Supprimé) Contrat emploi jeune (CEJ)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF008",
+			"lbl_type_cdd":"Autre emploi aidé"
+		},
+		{
+			"code":24,
+			"lbl":"Contrat d'avenir",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF008",
+			"lbl_type_cdd":"Autre emploi aidé"
+		},
+		{
+			"code":25,
+			"lbl":"Contrat d'accompagnement dans l'emploi",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF008",
+			"lbl_type_cdd":"Autre emploi aidé"
+		},
+		{
+			"code":26,
+			"lbl":"(Supprimé) CI-RMA",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF008",
+			"lbl_type_cdd":"Autre emploi aidé"
+		},
+		{
+			"code":27,
+			"lbl":"Apprenti",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF010",
+			"lbl_type_cdd":"Apprentis"
+		},
+		{
+			"code":28,
+			"lbl":"Activité accessoire",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF011",
+			"lbl_type_cdd":"Personnes bénéficiant d'une rémunération accessoire autorisée par la réglementation sur le cumul des emplois"
+		},
+		{
+			"code":29,
+			"lbl":"Autres (vacataires, contrats de droit privé)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF012",
+			"lbl_type_cdd":"Autres (agents non classables dans les catégories précédentes)"
+		},
+		{
+			"code":3,
+			"lbl":"CDD, Art.3 alinéa 4",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD006",
+			"lbl_type_cdd":"Article 3-3, 4°",
+			"desc_type_cdd":"Temps non complet des communes et groupements de communes de moins de 1000 hab., lorsque la quotité de temps de travail est inférieure à 50 %"
+		},
+		{
+			"code":30,
+			"lbl":"Autre emploi aidé",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF008",
+			"lbl_type_cdd":"Autre emploi aidé"
+		},
+		{
+			"code":31,
+			"lbl":"Assistant familial",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF003",
+			"lbl_type_cdd":"Assistants familiaux"
+		},
+		{
+			"code":32,
+			"lbl":"Assistants familiaux",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF003",
+			"lbl_type_cdd":"Assistants familiaux"
+		},
+		{
+			"code":33,
+			"lbl":"Contrat unique d'insertion (CUI)",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF006",
+			"lbl_type_cdd":"Contrat unique d'insertion (CUI-CAE)"
+		},
+		{
+			"code":34,
+			"lbl":"Employé par recours à l'intérim",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF012",
+			"lbl_type_cdd":"Autres (agents non classables dans les catégories précédentes)"
+		},
+		{
+			"code":35,
+			"lbl":"Emploi d'avenir",
+			"cd_type_contrat":"CONTNONPERM",
+			"lbl_type_contrat":"Contractuel sur emploi non permanent",
+			"cd_type_cdd":"EF007",
+			"lbl_type_cdd":"Emploi d'avenir"
+		},
+		{
+			"code":36,
+			"lbl":"Pas de cadre d'emploi existant (Alinéa 4)",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD003",
+			"lbl_type_cdd":"Article 3-3, 1°",
+			"desc_type_cdd":"Pas de cadre d'emplois existant"
+		},
+		{
+			"code":37,
+			"lbl":"Catégorie A (Alinéa 5)",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD004",
+			"lbl_type_cdd":"Article 3-3, 2°",
+			"desc_type_cdd":"Catégorie A selon les fonctions ou pour des besoins de service"
+		},
+		{
+			"code":38,
+			"lbl":"Communes moins de 1.000 et assimilés (Alinéa 6)",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD006",
+			"lbl_type_cdd":"Article 3-3, 4°",
+			"desc_type_cdd":"Temps non complet des communes et groupements de communes de moins de 1000 hab., lorsque la quotité de temps de travail est inférieure à 50 %"
+		},
+		{
+			"code":4,
+			"lbl":"CDD, Art.3 alinéa 5",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD007",
+			"lbl_type_cdd":"Article 3-3, 5°",
+			"desc_type_cdd":"Communes de moins de 2000 hab. et groupements de communes de moins de 10 000 hab. dont la création ou la suppression dépend de la décision d'une autorité qui s'impose à la collectivité"
+		},
+		{
+			"code":5,
+			"lbl":"CDD, Art.3 alinéa 6",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"EF005",
+			"lbl_type_cdd":"Agents contractuels recrutés pour faire face à un accroissement temporaire d'activité ou un accroissement saisonnier d'activité (article 3 de la loi du 26 janvier 1984)"
+		},
+		{
+			"code":6,
+			"lbl":"CDI, Art.3 alinéa 4",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"oui"
+		},
+		{
+			"code":7,
+			"lbl":"CDI, Art.3 alinéa 5",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"oui"
+		},
+		{
+			"code":8,
+			"lbl":"CDI, Art.3 alinéa 6",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"oui"
+		},
+		{
+			"code":9,
+			"lbl":"Remplaçant (Art.3 - alinéa 1)",
+			"cd_type_contrat":"CONTPERM",
+			"lbl_type_contrat":"Contractuel sur emploi permanent",
+			"cd_type_cdd":"CDD001",
+			"lbl_type_cdd":"Article 3-1",
+			"desc_type_cdd":"Remplaçants"
+		}
+	]
+}

@@ -1,0 +1,93 @@
+#ec_admin_homepage:
+#    path:     /admin
+#    defaults: { _controller: ECAdminBundle:Default:index }
+
+bs_admin_account:
+    resource: "@CoreBundle/Resources/config/routing/account.yml"
+    prefix:   /Account
+
+collectivity:
+    resource: "@CoreBundle/Resources/config/routing/collectivity.yml"
+    prefix: /collectivity
+
+social:
+    resource: "@CoreBundle/Resources/config/routing/social.yml"
+    prefix: /social
+    
+dashboard:
+    resource: "@CoreBundle/Resources/config/routing/dashboard.yml"
+    prefix: /dashboard
+    
+csv_export:
+    path:     /csv/exportcsv/
+    defaults: { _controller: CoreBundle:AbstractBS:generateCsv }
+    options:
+        expose: true
+
+export_historique_echange:
+    path:     /csv/export_historique_echange/
+    defaults: { _controller: CoreBundle:AbstractBS:exportHistoriqueEchange }
+    options:
+        expose: true
+        
+csv_prepar:
+    path:     /csv_prepar
+    defaults: { _controller: CoreBundle:AbstractBS:csvPrepar }
+    options:
+        expose: true
+        
+download_DGCL:
+    path:     /download_dgcl
+    defaults: { _controller: CoreBundle:AbstractBS:downloadDGCL }
+    options:
+        expose: true
+        
+bsvidemass:
+    path:     /bsvideenmasse
+    defaults: { _controller: CoreBundle:AbstractBS:bsVideCollectiviteMasse }
+    options:
+        expose: true
+        
+get_file_content:
+    path:     /fileContent/{fileKey}
+    defaults: { _controller: CoreBundle:AbstractBS:getFileContent }
+
+get_departement_exclude:
+    path:     /getDepartementExclude
+    defaults: { _controller: CoreBundle:AbstractBS:getDepartementExclude }
+    options:
+        expose: true
+historisation_import_admin:
+    path:     /importFileSiret
+    defaults: { _controller: CoreBundle:AbstractBS:importFileHistorisationSiret }
+
+historisation_traitement_automatique_fusion:
+    path:     /traitement_automatique_fusion
+    defaults: { _controller: CoreBundle:AbstractBS:historisationTraitementAutomatiqueFusion }
+    options:
+        expose: true
+historisation_traitement_automatique_ca:
+    path:     /traitement_automatique_changement_adresse
+    defaults: { _controller: CoreBundle:AbstractBS:historisationTraitementAutomatiqueCA }
+    options:
+        expose: true
+historisation_traitement_automatique_ac:
+    path:     /traitement_automatique_aucun_changement
+    defaults: { _controller: CoreBundle:AbstractBS:historisationTraitementAutomatiqueAC }
+    options:
+        expose: true
+historisation_traitement_automatique_creation:
+    path:     /traitement_automatique_creation
+    defaults: { _controller: CoreBundle:AbstractBS:historisationTraitementAutomatiqueCreation }
+    options:
+        expose: true
+
+historisation_traitement_automatique_manuelle:
+    path:     /traitement_automatique_manuelle
+    defaults: { _controller: CoreBundle:AbstractBS:historisationTraitementAutomatiqueManuelle }
+    options:
+        expose: true
+
+gpeec_entry_point:
+    path:     /gpeec_entry_point/{targetRoute}
+    defaults: { _controller: CoreBundle:GpeecEntryPoint:index, targetRoute: null}

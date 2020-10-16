@@ -1,0 +1,33 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div id="wrapper">
+        <div id="container">
+            <div class='row bodyBilanSocial'>
+                <div class='col-lg-10 col-lg-offset-1'>
+                    {% if app.session.flashBag.has('notice') %}
+                        <div class="alert alert-success fade in" role="alert">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {% for msg in app.session.flashBag.get('notice') %}
+                                {{ msg }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <h1>{{ action }} une campagne</h1>
+                    <div class="row affix-row">
+                        <div class="col-lg-12 fond">
+                            {{ form_start(form) }}
+                            {{ form_row(form.lbCamp) }}
+                            {{ form_row(form.nmAnne) }}
+                            {{ form_row(form.dtDebu) }}
+                            {{ form_row(form.dtClot) }}
+                            <button type='submit' class='btn btn-primary pull-right'>{{ action }}</button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+imports:
+    - { resource: config.yml }
+    - { resource: security_prod.yml }
+
+framework:
+    session:
+        cookie_secure: true
+    #profiler:
+    #    only_exceptions: false
+#framework:
+#    validation:
+#        cache: validator.mapping.cache.doctrine.apc
+#    serializer:
+#        cache: serializer.mapping.cache.apc
+
+doctrine:
+    orm:
+        # cache doctrine
+        metadata_cache_driver: apcu
+        query_cache_driver: apcu
+        result_cache_driver: apcu
+        second_level_cache:
+            region_cache_driver:
+                type: apcu
+                #id: snc_second_level_cache
+            enabled: true
+            log_enabled: true
+            regions:
+                referentiel_entities:
+                    cache_driver:
+                        type: apcu
+                    lifetime: 86400 # 1 day
+#web_profiler:
+#    toolbar: true
+
+monolog:
+    handlers:
+        main:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+        nested:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: warning
+        console:
+            type: console
+            level: warning

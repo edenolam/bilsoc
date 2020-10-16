@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" repository-class="Bilan_Social\Bundle\ApaBundle\Repository\BilanSocialAgentRepository"
+            table="bilan_social_agent">
+        <id name="idBilasociagen" type="integer" column="ID_BILASOCIAGEN">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="enquete" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+            <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" nullable="true"/>
+        </many-to-one>
+
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" nullable="true"/>
+        </many-to-one>
+
+        <field name="idInfogene" type="integer" column="ID_INFOGENE" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="idInfocollagen" type="integer" column="ID_INFOCOLLAGEN" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="lbNom" type="string" column="LB_NOM" length="100" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">Q0</option>
+            </options>
+        </field>
+        <field name="lbPren" type="string" column="LB_PREN" length="100" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">Q0</option>
+            </options>
+        </field>
+        <field name="commAgent" type="string" column="COMM_AGENT" length="255" nullable="true">
+        </field>
+        <field name="lbMotiN4ds" type="string" column="LB_MOTIN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbMotiArriN4ds" type="string" column="LB_MOTIARRIN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbModaN4ds" type="string" column="LB_MODAN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbStatJuriN4ds" type="string" column="LB_STATJURIN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbAlerteNonPermanentN4ds" type="string" column="LB_ALERTE_NONPERM_N4DS" length="255" nullable="true">
+        </field>
+        <field name="lbIntiContTravN4ds" type="string" column="LB_INTICONTTRAVN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbPosiStatN4ds" type="string" column="LB_POSISTATN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbPosiStatNonRemuN4ds" type="string" column="LB_POSISTATNONREMUN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbGradeN4ds" type="string" column="LB_GRADEN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbGradeOrigN4ds" type="string" column="LB_GRADEORIGN4DS" length="255" nullable="true">
+        </field>
+        <field name="lbNatureEmploiN4ds" type="string" column="LB_NATUREEMPLOIN4DS" length="255" nullable="true">
+        </field>
+        <field name="cdProfessionCategSocio" type="string" column="CD_PROFESSIONCATEGSOCIO" length="255" nullable="true">
+        </field>
+        <field name="lbDatenais" type="string" column="LB_DATENAIS" length="7" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">Q0 - Mois et année de naissance</option>
+            </options>
+        </field>
+        <field name="cdSexe" type="string" column="CD_SEXE" length="1" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">Q1</option>
+            </options>
+        </field>
+        <field name="blBoeth" type="boolean" column="BL_BOETH" nullable="true">
+            <options>
+                <option name="comment">Q19</option>
+            </options>
+        </field>
+        <field name="blAgenremu3112" type="boolean" column="BL_AGENREMU3112" nullable="true">
+            <options>
+                <option name="comment">Q4.1</option>
+            </options>
+        </field>
+        <field name="blAgenremuanne" type="boolean" column="BL_AGENREMUANNE" nullable="true">
+            <options>
+                <option name="comment">Q4.2</option>
+            </options>
+        </field>
+        <many-to-one field="refPositionStatutaire" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefPositionStatutaire"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_POSISTAT" referenced-column-name="ID_POSISTAT"/>
+        </many-to-one>
+        <many-to-one field="refPositionStatutairenonremu" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefPositionStatutaire"
+                     inversed-by="bilanSocialAgentsNonRemu">
+            <join-column name="ID_POSISTATNONREMU" referenced-column-name="ID_POSISTAT"/>
+        </many-to-one>
+
+
+        <many-to-one field="refStatut" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStatut" inversed-by="bilanSocialAgents">
+            <join-column name="ID_STAT" referenced-column-name="ID_STAT"/>
+        </many-to-one>
+
+        <field name="blAgenarriannecoll" type="boolean" column="BL_AGENARRIANNECOLL" nullable="true">
+            <options>
+                <option name="comment">Q5.1</option>
+            </options>
+        </field>
+        <field name="blEmplfonc" type="boolean" column="BL_EMPLFONC" nullable="true">
+            <options>
+                <option name="comment">Q8.1</option>
+            </options>
+        </field>
+        <many-to-one field="refGradeDeta" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefGrade" inversed-by="bilanSocialAgents_deta">
+            <join-column name="ID_GRADDETA" referenced-column-name="ID_GRAD"/>
+        </many-to-one>
+        <many-to-one field="RefCadreEmploiDeta" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCadreEmploi"
+                     inversed-by="bilanSocialAgents_deta">
+            <join-column name="ID_CADREMPLDETA" referenced-column-name="ID_CADREMPL"/>
+        </many-to-one>
+        <!--        <field name="" type="integer" column="" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">R8.1.A</option>
+            </options>
+        </field>-->
+
+        <many-to-one field="refFonctionPublique" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFonctionPublique"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_FONCPUBL" referenced-column-name="ID_FONCPUBL"/>
+        </many-to-one>
+
+        <many-to-one field="refEmploiFonctionnel" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiFonctionnel"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_EMPLFONC" referenced-column-name="ID_EMPLFONC"/>
+        </many-to-one>
+
+        <field name="dtDetaemplfonc" type="datetime" column="DT_DETAEMPLFONC" nullable="true">
+            <options>
+                <option name="comment">Q8.4</option>
+            </options>
+        </field>
+        <field name="dtArriStat" type="datetime" column="DT_ARRISTAT" nullable="true">
+            <options>
+                <option name="comment">Q8.4</option>
+            </options>
+        </field>
+        <field name="blStruorigposistat" type="boolean" column="BL_STRUORIGPOSISTAT" nullable="true">
+            <options>
+                <option name="comment">Si sélectionne d'une position particulière alors choix Agent originaire de la collectivité ou Agent originaire d'une
+                    autre structure&#13;
+                    R2.7.B.B
+                </option>
+            </options>
+        </field>
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie" inversed-by="bilanSocialAgents">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE"/>
+        </many-to-one>
+        <many-to-one field="FiliereEmpFonc" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere" inversed-by="bilanSocialAgents_FiliEmpFonc">
+            <join-column name="ID_FILIEMPLFONC" referenced-column-name="ID_FILI"/>
+        </many-to-one>
+        <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere" inversed-by="bilanSocialAgents">
+            <join-column name="ID_FILI" referenced-column-name="ID_FILI"/>
+        </many-to-one>
+        <many-to-one field="FiliereInaptitude" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere" inversed-by="bilanSocialAgents_inapFili">
+            <join-column name="ID_FILIINAP" referenced-column-name="ID_FILI"/>
+        </many-to-one>
+        <many-to-one field="refCadreEmploi" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCadreEmploi" inversed-by="bilanSocialAgents">
+            <join-column name="ID_CADREMPL" referenced-column-name="ID_CADREMPL"/>
+        </many-to-one>
+        <many-to-one field="refCadreEmploiOrigin" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCadreEmploi"
+                     inversed-by="bilanSocialAgentCadreEmploiOrigin">
+            <join-column name="ID_CADREEMPORIG" referenced-column-name="ID_CADREMPL"/>
+        </many-to-one>
+        <many-to-one field="refGrade" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefGrade" inversed-by="bilanSocialAgents">
+            <join-column name="ID_GRAD" referenced-column-name="ID_GRAD"/>
+        </many-to-one>
+
+        <many-to-one field="refMotifArrivee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifArrivee" inversed-by="bilanSocialAgents">
+            <join-column name="ID_MOTIARRI" referenced-column-name="ID_MOTIARRI"/>
+        </many-to-one>
+
+        <field name="blAcqustatanne" type="boolean" column="BL_ACQUSTATANNE" nullable="true">
+            <options>
+                <option name="comment">Q2.0</option>
+            </options>
+        </field>
+        <field name="blAgentitustaganne" type="boolean" column="BL_AGENTITUSTAGANNE" nullable="true">
+            <options>
+                <option name="comment">Q17</option>
+            </options>
+        </field>
+        <many-to-one field="refStageTitularisation" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStageTitularisation"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_STAGTITU" referenced-column-name="ID_STAGTITU"/>
+        </many-to-one>
+        <field name="blTituloisauvaanne" type="boolean" column="BL_TITULOISAUVAANNE" nullable="true">
+            <options>
+                <option name="comment">Q2.0.1 - Question affiché si le motif de titulatisation ou de mise en stage est Loi Sauvadet</option>
+            </options>
+        </field>
+        <field name="blRecrsansconcseleprof" type="boolean" column="BL_RECRSANSCONCSELEPROF" nullable="true">
+            <options>
+                <option name="comment">Q2.0.2 - Dépend de la question Q2.0.1 - Réservé sans concours ou sélection professionelle</option>
+            </options>
+        </field>
+        <field name="lbDatedepacoll" type="datetime" column="LB_DATEDEPACOLL" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">Q5.2 - Mois et année de départ de la collectivité - Si non à la question 4.1</option>
+            </options>
+        </field>
+        <many-to-one field="refMotifDepart" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifDepart" inversed-by="bilanSocialAgents">
+            <join-column name="ID_MOTIDEPA" referenced-column-name="ID_MOTIDEPA"/>
+        </many-to-one>
+
+        <field name="cdMotidece" type="string" column="CD_MOTIDECE" length="1" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">Q16.1 - Si motif de départ = décès. Choisir si le décès est consécutif à un accident de trajet, deservice ou autre
+                </option>
+            </options>
+        </field>
+        <many-to-one field="RefMouvinteanne" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMouvinteanne" inversed-by="bilanSocialAgents">
+            <join-column name="ID_MOUVINTEANNE" referenced-column-name="ID_MOUVINTEANNE"/>
+        </many-to-one>
+        <field name="blPromavanstaganne" type="boolean" column="BL_PROMAVANSTAGANNE" nullable="true">
+            <options>
+                <option name="comment">Q18</option>
+            </options>
+        </field>
+        <field name="blHeureSuppComp" type="boolean" column="BL_HEURESUPPCOMP" nullable="true">
+            <options>
+                <option name="comment">Cet agent est-il concerné par les heures supplémentaires ou complémentaires ?</option>
+            </options>
+        </field>
+        <many-to-many field="refAvancementPromotionConcours" inversed-by="bilanSocialAgents"
+              target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefAvancementPromotionConcours">
+            <join-table name="Agent_AvancementPromotionsConcours">
+                <join-columns>
+                    <join-column name="agent_id" referenced-column-name="ID_BILASOCIAGEN"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="id_avancement_promotion_concours" referenced-column-name="ID_AVANPROMCONC"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <field name="blTempcomp" type="boolean" column="BL_TEMPCOMP" nullable="true">
+            <options>
+                <option name="comment">Q11.1</option>
+            </options>
+        </field>
+        <many-to-one field="refTempsNonComplet" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTempsNonComplet" inversed-by="bilanSocialAgents">
+            <join-column name="ID_TEMPNONCOMP" referenced-column-name="ID_TEMPNONCOMP"/>
+        </many-to-one>
+
+        <many-to-many field="refContrainteTravail" inversed-by="bilanSocialAgents"
+                      target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefContrainteTravail">
+            <join-table name="Agent_ContraintesTravail">
+                <join-columns>
+                    <join-column name="agent_id" referenced-column-name="ID_BILASOCIAGEN"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="contrainte_travail_id" referenced-column-name="ID_CONTTRAV"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <one-to-many field="AbsenceArretAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\AbsenceArretAgent" mapped-by="BilanSocialAgent">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="FormationAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\FormationAgent" mapped-by="BilanSocialAgent">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-one field="Handitorials" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Handitorial" mapped-by="BilanSocialAgent">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+        <one-to-one field="Gpeec" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Gpeec" mapped-by="BilanSocialAgent">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+        <one-to-one field="GpeecPlus" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\GpeecPlus" mapped-by="BilanSocialAgent">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+        <one-to-one field="Dgcl" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Dgcl" mapped-by="BilanSocialAgent">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+        <one-to-many field="EtprAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\EtprAgent" mapped-by="BilanSocialAgent">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="BilanQ30Alerte" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanQ30Alerte" mapped-by="BilanSocialAgent">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="RemunerationGlobaleAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\RemunerationGlobaleAgent"
+                     mapped-by="BilanSocialAgent">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="RemunerationAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\RemunerationAgent"
+                     mapped-by="BilanSocialAgent">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="HeuSuppReaRemAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\HeuSuppReaRemAgent" mapped-by="BilanSocialAgent">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="HeuCompReaRemAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\HeuCompReaRemAgent" mapped-by="BilanSocialAgent">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <field name="blTempplein" type="boolean" column="BL_TEMPPLEIN" nullable="true">
+            <options>
+                <option name="comment">Q12.1</option>
+            </options>
+        </field>
+
+        <many-to-one field="refTempsPartiel" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTempsPartiel" inversed-by="bilanSocialAgents">
+            <join-column name="ID_TEMPPART" referenced-column-name="ID_TEMPPART"/>
+        </many-to-one>
+
+
+        <many-to-one field="refPourcentageTempaPartiel" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefPourcentageTempaPartiel"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_POURTEMPPART" referenced-column-name="ID_POURTEMPPART"/>
+        </many-to-one>
+
+        <field name="blDemapart" type="integer" column="BL_DEMAPART" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q28</option>
+            </options>
+        </field>
+        <field name="nbDemapart" type="integer" column="NB_DEMAPART" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q28.1</option>
+            </options>
+        </field>
+        <field name="nbDemapartacce" type="integer" column="NB_DEMAPARTACCE" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q28.2</option>
+            </options>
+        </field>
+        <field name="nbPremdemasati" type="integer" column="NB_PREMDEMASATI" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q28.3</option>
+            </options>
+        </field>
+        <field name="nbModiemplpermtempcomp" type="integer" column="NB_MODIEMPLPERMTEMPCOMP" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q28.4</option>
+            </options>
+        </field>
+        <field name="nbAgenempltempcompnonrenou" type="integer" column="NB_AGENEMPLTEMPCOMPNONRENOU" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q28.5</option>
+            </options>
+        </field>
+        <many-to-one field="refCycleTravail" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCycleTravail" inversed-by="bilanSocialAgents">
+            <join-column name="ID_CYCLTRAV" referenced-column-name="ID_CYCLTRAV"/>
+        </many-to-one>
+        <!--        <field name="nmHeurremuanne" type="float" column="NM_HEURREMUANNE" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="comment">Q13</option>
+            </options>
+        </field>-->
+        <field name="mtRemuannubrut" type="decimal" column="MT_REMUANNUBRUT" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="comment">Q29.1 - Affiché si QIC1 est à oui</option>
+            </options>
+        </field>
+        <field name="mtTotaremuprimindem" type="decimal" column="MT_TOTAREMUPRIMINDEM" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="comment">Q29.2 - Affiché si QIC1 est à oui</option>
+            </options>
+        </field>
+        <field name="mtTotaremubrutnbi" type="decimal" column="MT_TOTAREMUBRUTNBI" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="comment">Q29.3 - Affiché si QIC1 est à oui</option>
+            </options>
+        </field>
+        <field name="mtTotaremubrutheursupp" type="decimal" column="MT_TOTAREMUBRUTHEURSUPP" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="comment">Q29.4 - Affiché si QIC1 est à oui</option>
+            </options>
+        </field>
+        <field name="nbHeursupp" type="float" column="NB_HEURSUPP" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="comment">Q30.1</option>
+            </options>
+        </field>
+        <field name="nbHeurcomprealremu" type="float" column="NB_HEURCOMPREALREMU" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="comment">Q30.2</option>
+            </options>
+        </field>
+        <field name="blAgenabse" type="boolean" column="BL_AGENABSE" nullable="true">
+            <options>
+                <option name="comment">Q20.1</option>
+            </options>
+        </field>
+        <field name="nbAllotempinvtrav" type="integer" column="NB_ALLOTEMPINVTRAV" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q20.3</option>
+            </options>
+        </field>
+        <field name="nbAllotempinvapro" type="integer" column="NB_ALLOTEMPINVAPRO" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q20.4</option>
+            </options>
+        </field>
+        <field name="nbAllotempinvaautrecas" type="integer" column="NB_ALLOTEMPINVAAUTRECAS" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q20.5</option>
+            </options>
+        </field>
+        <field name="blCongpateaccuenfa" type="boolean" column="BL_CONGPATEACCUENFA" nullable="true">
+            <options>
+                <option name="comment">Q21</option>
+            </options>
+        </field>
+        <field name="nbJourcongpateaccuenfa" type="integer" column="NB_JOURCONGPATEACCUENFA" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q21.1 - Affiché si oui à Q21</option>
+            </options>
+        </field>
+        <field name="blEntrdepacong" type="boolean" column="BL_ENTRDEPACONG" nullable="true">
+            <options>
+                <option name="comment">Q22</option>
+            </options>
+        </field>
+        <many-to-one field="refMotifEntretienDepart" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifEntretien"
+                     inversed-by="bilanSocialAgentsDepart">
+            <join-column name="ID_MOTIENTRDEP" referenced-column-name="ID_MOTIENTR"/>
+        </many-to-one>
+        <field name="blEntrretocong" type="boolean" column="BL_ENTRRETOCONG" nullable="true">
+            <options>
+                <option name="comment">Q23</option>
+            </options>
+        </field>
+        <many-to-one field="refMotifEntretienRetour" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifEntretien"
+                     inversed-by="bilanSocialAgentsRetour">
+            <join-column name="ID_MOTIENTRRET" referenced-column-name="ID_MOTIENTR"/>
+        </many-to-one>
+        <!--        <field name="idMotientrretocong" type="integer" column="ID_MOTIENTRRETOCONG" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q23.1 - Affiché si oui à Q23</option>
+            </options>
+        </field>-->
+        <field name="blCet" type="boolean" column="BL_CET" nullable="true">
+            <options>
+                <option name="comment">Q26 - Affiché si oui à QIC 6</option>
+            </options>
+        </field>
+        <field name="blCetOuvert" type="boolean" column="BL_CETOUVERT" nullable="true">
+            <options>
+                <option name="comment">Q26.1 - Affiché si oui à Q26</option>
+            </options>
+        </field>
+        <field name="nbJourcumu3112" type="decimal" precision="10" scale="2"  column="NB_JOURCUMU3112" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q26.2 - Affiché si oui à Q26</option>
+            </options>
+        </field>
+        <field name="nbJourvers3112" type="decimal" precision="10" scale="2" column="NB_JOURVERS3112" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q26.3 - Affiché si oui à Q26</option>
+            </options>
+        </field>
+        <field name="nbJourdepe3112" type="decimal" precision="10" scale="2" column="NB_JOURDEPE3112" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q26.4 - Affiché si oui à Q26</option>
+            </options>
+        </field>
+        <field name="nbJourinde3112" type="decimal" precision="10" scale="2" column="NB_JOURINDE3112" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q26.5 - Affiché si oui à Q26</option>
+            </options>
+        </field>
+        <field name="nbJourprisrafp3112" type="decimal" precision="10" scale="2" column="NB_JOURPRISRAFP3112" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q26.6 - Affiché si oui à Q26</option>
+            </options>
+        </field>
+        <field name="nbJourdonneBenef" type="decimal" precision="10" scale="2" column="NB_JOURDONNEBENEF" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q26.7 - Affiché si oui à Q26</option>
+            </options>
+        </field>
+        <field name="blTeletrav" type="boolean" column="BL_TELETRAV" nullable="true">
+            <options>
+                <option name="comment">Q27 - Affiché si oui à QIC7</option>
+            </options>
+        </field>
+        <field name="blTeletravBenef" type="boolean" column="BL_TELETRAVBENEF" nullable="true">
+            <options>
+                <option name="comment">Q27.1</option>
+            </options>
+        </field>
+        <field name="blAgenprev" type="boolean" column="BL_AGENPREV" nullable="true">
+            <options>
+                <option name="comment">Q31.1</option>
+            </options>
+        </field>
+
+        <many-to-one field="refTypeMissionPrevention" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTypeMissionPrevention"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_TYPEMISSPREV" referenced-column-name="ID_TYPEMISSPREV"/>
+        </many-to-one>
+
+        <many-to-one field="refActionPrevention" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefActionPrevention"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_ACTIONPREV" referenced-column-name="ID_ACTIONPREV"/>
+        </many-to-one>
+
+        <field name="blDemainap" type="boolean" column="BL_DEMAINAP" nullable="true">
+            <options>
+                <option name="comment">Q32.1</option>
+            </options>
+        </field>
+        <field name="idInapdema" type="integer" column="ID_INAPDEMA" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">R31.1 - Affiché si oui à Q31.1</option>
+            </options>
+        </field>
+        <field name="blDeciinap" type="boolean" column="BL_DECIINAP" nullable="true">
+            <options>
+                <option name="comment">Q32.2</option>
+            </options>
+        </field>
+        <many-to-one field="refInapDema" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefInaptitude" inversed-by="bilanSocialAgents_dema">
+            <join-column name="ID_INAPDEMA" referenced-column-name="ID_INAP"/>
+        </many-to-one>
+        <many-to-one field="refInapDeci" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefInaptitude" inversed-by="bilanSocialAgents_deci">
+            <join-column name="ID_INAPDECI" referenced-column-name="ID_INAP"/>
+        </many-to-one>
+        <!--        <field name="idInapdeci" type="integer" column="ID_INAPDECI" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">R32.2 - Affiché si oui à Q32.2</option>
+            </options>
+        </field>-->
+        <field name="blFormsuiv" type="boolean" column="BL_FORMSUIV" nullable="true">
+            <options>
+                <option name="comment">Q33</option>
+            </options>
+        </field>
+        <field name="blVae" type="boolean" column="BL_VAE" nullable="true">
+            <options>
+                <option name="comment">Q34.1</option>
+            </options>
+        </field>
+        <field name="idEbcf" type="integer" column="ID_EBCF" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q34.2 - Affiché si oui à Q34.1</option>
+            </options>
+        </field>
+        <field name="blBilacomp" type="boolean" column="BL_BILACOMP" nullable="true">
+            <options>
+                <option name="comment">Q35.1</option>
+            </options>
+        </field>
+        <field name="nbBilacomp" type="integer" column="NB_BILACOMP" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">Q35.2 - Affiché si oui à Q35.1</option>
+            </options>
+        </field>
+        <field name="blCongform" type="boolean" column="BL_CONGFORM" nullable="true">
+            <options>
+                <option name="comment">Q36.1</option>
+            </options>
+        </field>
+
+        <many-to-one field="refEmploiNonPermanent" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiNonPermanent"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_EMPLNONPERM" referenced-column-name="ID_EMPLNONPERM"/>
+        </many-to-one>
+
+        <many-to-one field="refStructureOrigine" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStructureOrigine"
+                     inversed-by="bilanSocialAgents">
+            <join-column name="ID_STRUORIG" referenced-column-name="ID_STRUORIG"/>
+        </many-to-one>
+
+        <many-to-one field="refTypeCdd" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTypeCdd" inversed-by="bilanSocialAgents">
+            <join-column name="ID_TYPECDD" referenced-column-name="ID_TYPECDD"/>
+        </many-to-one>
+        <field name="blCdi" type="boolean" column="BL_CDI" nullable="true">
+            <options>
+                <option name="comment">Q2.1</option>
+            </options>
+        </field>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtChanstat" type="datetime" column="DT_CHANSTAT" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">Q17.3 - Date de changement de statut de l'agent - Si oui à la question 17.1</option>
+            </options>
+        </field>
+        <field name="blPosiacti" type="boolean" column="BL_POSIACTI" nullable="true">
+            <options>
+                <option name="comment">Q2.7.0- Quelle est sa position statutaire au plus tard au 31/12 (Activité ou particulière)</option>
+            </options>
+        </field>
+        <field name="blPosiactinonremu" type="boolean" column="BL_POSIACTINONREMU" nullable="true">
+            <options>
+                <option name="comment">Q2.7.0- Quelle est sa position statutaire au plus tard au 31/12 (Activité ou particulière) si Agent non rémunéré au moins une fois
+                    dans l'année
+                </option>
+            </options>
+        </field>
+
+        <!-- DEBUT: Indicateurs de remplissage des differents blocs - mis à jour automatiquement par un trigger -->
+        <field name="pcFillGroupStatut" type="integer" column="PC_FILLGROUP_STATUT" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage du groupe Statut</option>
+            </options>
+        </field>
+        <field name="pcFillGroupRemuneration" type="integer" column="PC_FILLGROUP_REMUNERATION" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage du groupe Rémunération</option>
+            </options>
+        </field>
+        <field name="pcFillGroupAbsence" type="integer" column="PC_FILLGROUP_ABSENCE" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage du groupe Absence</option>
+            </options>
+        </field>
+        <field name="pcFillGroupFormation" type="integer" column="PC_FILLGROUP_FORMATION" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage du groupe Formation</option>
+            </options>
+        </field>
+        <field name="pcFillGroupAutre" type="integer" column="PC_FILLGROUP_AUTRE" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage du groupe Autre</option>
+            </options>
+        </field>
+        <field name="pcFillGroupRASSCT" type="integer" column="PC_FILLGROUP_RASSCT" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage du groupe RASSCT</option>
+            </options>
+        </field>
+        <field name="pcFillGroupHanditorial" type="integer" column="PC_FILLGROUP_HANDITORIAL" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage du groupe Handitorial</option>
+            </options>
+        </field>
+        <field name="pcFillGroupGPEEC" type="integer" column="PC_FILLGROUP_GPEEC" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage du groupe GPEEC</option>
+            </options>
+        </field>
+        <field name="pcFillAgent" type="integer" column="PC_FILL_AGENT" length="3">
+            <options>
+                <option name="unsigned" />
+                <option name="default">0</option>
+                <option name="comment">Pourcentage de remplissage de l'agent</option>
+            </options>
+        </field>
+
+        <!-- FIN: Indicateurs de remplissage des differents blocs -->
+
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="blCyclTrav" type="boolean" column="BL_CYCLTRAV" nullable="true">
+            <options>
+                <option name="comment">Q24.1</option>
+            </options>
+        </field>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue"/>
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue"/>
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

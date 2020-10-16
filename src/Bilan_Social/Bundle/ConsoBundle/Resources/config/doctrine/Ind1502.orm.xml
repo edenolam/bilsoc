@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1502" table="ind_150_2">
+        <indexes>
+            <index name="FK_1502_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_1502_MOTIFDEPART" columns="ID_MOTIDEPA"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_MOTIDEPA" name="IDXU1_IND_1502"/>
+		</unique-constraints>
+        <id name="id1502" type="integer" column="ID_1502">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind1502s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refMotifDepart" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifDepart">
+            <join-column name="ID_MOTIDEPA" referenced-column-name="ID_MOTIDEPA" nullable="false"/>
+        </many-to-one>
+
+        <field name="r15021" type="integer" column="R_15021" nullable="true" />
+        <field name="r15022" type="integer" column="R_15022" nullable="true" />
+        <field name="r15023" type="integer" column="R_15023" nullable="true" />
+        <field name="r15024" type="integer" column="R_15024" nullable="true" />
+        <field name="r15025" type="integer" column="R_15025" nullable="true" />
+        <field name="r15026" type="integer" column="R_15026" nullable="true" />
+        <field name="r15027" type="integer" column="R_15027" nullable="true" />
+        <field name="r15028" type="integer" column="R_15028" nullable="true" />
+
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>
+

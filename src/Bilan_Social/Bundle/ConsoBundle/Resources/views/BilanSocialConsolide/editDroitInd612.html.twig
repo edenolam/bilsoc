@@ -1,0 +1,173 @@
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+{% if formDroit612 is defined %}
+    {% if collectivite.refTypeCollectivite.cdTypecoll == 'CDG' or (collectivite.blAffiColl is null or collectivite.blAffiColl == false) %}
+
+        {{ form_start(formDroit612) }}
+
+        Champ : cette rubrique concerne les agents titulaires, stagiaires et contractuels.
+
+        <h3>
+            A renseigner par les CDG et les collectivités non affiliées.
+        </h3>
+
+        <table width="100%" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center"></th>
+                    <th style="text-align: center">Nombre de jours dans l'année {{AnneeCamp}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="idTr1">
+                    <td style="min-width: 500px">Journées d'autorisations spéciales d'absence accordées en application de l'article 16 du décret du 3 avril 1985</td>
+                    <td>{{ form_widget(formDroit612.r6121) }}</td>
+                </tr>
+                <tr id="idTr2">
+                    <td style="min-width: 500px">Journées d'absence pour formation syndicale accordées aux fonctionnaires</td>
+                    <td>{{ form_widget(formDroit612.r6122) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <table width="100%" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center"></th>
+                    <th style="text-align: center">Nombre d'heures dans l'année {{AnneeCamp}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="min-width: 500px">Volume du contingent global d'heures d'autorisations spéciales d'absence calculé en application de l'article 14 du décret du 3 avril 1985</td>
+                    <td>{{ form_widget(formDroit612.r6123) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Heures de décharges d'activité de service : </b></td>
+                </tr>
+                <tr>
+                    <td style="min-width: 500px">- auxquelles ont droit les organisations syndicales</td>
+                    <td>{{ form_widget(formDroit612.r6124) }}</td>
+                </tr>
+                <tr>
+                    <td style="min-width: 500px">- effectivement utilisées</td>
+                    <td>{{ form_widget(formDroit612.r6125) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <br/>
+
+        <table width="100%" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center"></th>
+                    <th style="text-align: center">Nombre de protocoles dans l'année {{AnneeCamp}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="min-width: 500px">Nombre de protocoles d'accords (avec seuil complémentaire)</td>
+                    <td>{{ form_widget(formDroit612.r6126) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formDroit612) }}
+
+        <script type="text/javascript">
+
+                $(document).ready(function ()
+                {
+                    changeDetect = false;
+                    $(document).change();
+
+                });
+
+                /*
+                 * METHODE AJAX SUBMIT
+                 */
+                $(function () {
+                    // Enregistrement en ajax
+                    $('form').on('submit', function (e) {
+                        var $this = $(this).closest('div');
+                        var btn = $(this).find("input[type=submit]:focus");
+                        var value_valide = $(btn).data('valide');
+                        $('#bscForm612_valide').val(value_valide);
+                        // Submit en ajax pour le fonctionnement d'appel par onglet
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ path('bilan_conso_droit_ind612_edit') }}',
+                            data: $('form').serialize(),
+                            success: function (responsejson) {
+
+                                if (responsejson.data == 1) {
+                                    if (recordAuto) {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement automatique réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+                                    } else {
+                                        $('#ind612').load('{{ path('bilan_conso_droit_ind612_edit') }}', function () {
+                                            $('#progImg').hide();
+                                            $('#messageJS').html("Enregistrement réussi");
+                                            messageJS.dialog("open");
+                                            setIncoherenceTable(responsejson);
+
+                                            var next = $($this).next('.panel-heading');
+                                            if(next.length == 0) {
+                                                if(blRassct == true) {
+                                                    window.location.href = '{{ path('bilan_conso_rassct_edit') }}';
+                                                } else if (blHand == true) {
+                                                    window.location.href = '{{ path('bilan_conso_handitorial_edit') }}';
+                                                } else if (blGpeec == true) {
+                                                    window.location.href = '{{ path('bilan_conso_gpeec_edit') }}';
+                                                }
+                                            }
+                                        });
+
+                                    }
+                                } else if (responsejson.data == "-3") {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                    messageJS.dialog("open");
+                                } else {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                    messageJS.dialog("open");
+                                }
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(xhr);
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                                messageJS.dialog("open");
+                            }
+
+                        });
+
+                    });
+
+                });
+
+        </script>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,61 @@
+{#
+	vue de la baie des export d'échantillon
+#}
+<section id='export-pool-bay-wrapper'  class='infocentre-section-bloc'>
+	<form class="form-horizontal" id='export_pool_form' target='_blank' action='{{ path("info_centre_pool_export") }}'>
+		<div class="form-group" style="margin: 20px">
+			<label class="col-sm-2 control-label" style="font-size: 15px">
+				Échantillon à exporter :
+			</label>
+			<div class="col-sm-5">
+				<select id="export_pool_id_select" name="export_pool_id" class="form-control">
+                    {% for pool in pools if pool.blAct == 1 %}
+						<option value="{{ pool.id }}" {{ current_pool is defined and current_pool is not null and current_pool.id == pool.id ? "selected" : "" }}>{{ pool.nom }}</option>
+                    {% endfor %}
+				</select>
+			</div>
+
+
+		</div>
+		<div id="export_pool_error_container"></div>
+		<div id="pool_export_bouttons_receiver" class="little_push_down">
+		{# {% for export_key, export in export_available %}
+			{% set long_task = export.long_task is defined and export.long_task == true %}
+			{% set form_target = "_blank" %}
+			{% set html_attr_str = "" %}
+			{% set label_logo_str = "" %}
+			{% if export.label_logo is defined and export.label_logo is not empty %}
+				{% set logo_attr_str = "" %}
+				{% for attr_name, attr_value in export.label_logo.attr %}
+					{% set logo_attr_str = logo_attr_str ~ attr_name ~ '="' ~ attr_value ~ '"' %}
+				{% endfor %}
+				{% set label_logo_str = '<span class="export_logo_wrapper">' %}
+				{% if export.label_logo.src is defined %}
+					{% set label_logo_str = label_logo_str ~ '<img class="img-responsive" src="' ~ export.label_logo.src ~ '" ' ~ logo_attr_str ~ ' />' %}
+				{% elseif export.label_logo.raw is defined %}
+					{% if logo_attr_str is not empty %}
+						{% set label_logo_str = label_logo_str ~ '<span  ' ~ logo_attr_str ~ '>' %}
+					{% endif %}
+					{% set label_logo_str = label_logo_str ~ export.label_logo.raw %}
+					{% if logo_attr_str is not empty %}
+						{% set label_logo_str = label_logo_str ~ '</span>' %}
+					{% endif %}
+				{% endif %}
+				{% set label_logo_str = label_logo_str ~ '</span>' %}
+			{% endif %}
+			{% if export.html_attr is defined %}
+				{% for attr_name, attr_value in export.html_attr %}
+					{% set html_attr_str = html_attr_str ~ attr_name ~ '="' ~ attr_value ~ '"' %}
+				{% endfor %}
+			{% endif %}
+			{% if long_task %}
+				{% set form_target = "_self" %}
+				{# {% set title = "Cet export peut durer plusieurs jours selon l'échantillon sélectionné" %} #}{#}
+			{% endif %}
+			<button type="submit" class='btn btn-primary export_pool_btn' value='{{ export_key }}' name='export_action' formtarget="{{ form_target }}" data-export-name="{{ export.name }}" data-ajax-submit="{{ long_task }}" {{ html_attr_str|raw }}>
+				{{ export.name }} {{ label_logo_str|raw }}
+			</button>
+		{% endfor %} #}
+		</div>
+	</form> 
+</section>

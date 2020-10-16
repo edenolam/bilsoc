@@ -1,0 +1,59 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/page.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li class="active"><a href="{{ path('modelmailinterneappli_index') }}">Gestion des modèles de mail internes à l'application</a></li>
+            </ol>
+        </div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h3>Liste des modèles de mail internes à l'application</h3>
+        <hr>
+        <table class="table table-hover" id="table-page">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Objet</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for modelmailinterneappli in modelmailinterneapplis %}
+                    <tr>
+                        <td><a href="{{ path('modelmailinterneappli_show', { 'id': modelmailinterneappli.id }) }}">{{ modelmailinterneappli.codeApp }}</a></td>
+                        <td>{{ modelmailinterneappli.objet }}</td>
+                        <td>
+                            <a href="{{ path('modelmailinterneappli_show', { 'id': modelmailinterneappli.id }) }}"><button class="btn button-tableau btn-outline btn-sm">Afficher</button></a>
+                        </td>
+                        <td>
+                            <a href="{{ path('modelmailinterneappli_edit', { 'id': modelmailinterneappli.id }) }}"><button class="btn button-tableau btn-outline btn-sm">Modifier</button></a>
+
+
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

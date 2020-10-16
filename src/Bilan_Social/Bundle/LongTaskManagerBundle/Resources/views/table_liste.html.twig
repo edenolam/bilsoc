@@ -1,0 +1,11 @@
+{#
+	liste des longTask en tableau
+#}
+{% set ajax_mode = ajax_mode is defined ? ajax_mode : false %}
+<table id="table_task" class="table stripe dataTable no-footer" role="grid" aria-describedby="table_pool_manager_info" style="width: 100%">
+	{% if tasks|length > 0 and not ajax_mode%}
+		{% for k,task in tasks %}
+			{% include '@LongTaskManager/row_fiche.html.twig' %}
+		{% endfor %}
+	{% endif %}
+</table>

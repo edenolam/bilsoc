@@ -1,0 +1,376 @@
+{% extends '@Apa/layout.html.twig' %}
+
+{% block body %}
+    <h1>Bilansocialagent</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>id collectivité</th>
+                <td>{{ bilanSocialAgent.idColl }}</td>
+            </tr>
+            <tr>
+                <th>Lbnom</th>
+                <td>{{ bilanSocialAgent.lbNom }}</td>
+            </tr>
+            <tr>
+                <th>Lbpren</th>
+                <td>{{ bilanSocialAgent.lbPren }}</td>
+            </tr>
+            <tr>
+                <th>Lbdatenais</th>
+                <td>{{ bilanSocialAgent.lbDatenais }}</td>
+            </tr>
+            <tr>
+                <th>Cdsexe</th>
+                <td>{{ bilanSocialAgent.cdSexe }}</td>
+            </tr>
+            <tr>
+                <th>Blboeth</th>
+                <td>{% if bilanSocialAgent.blBoeth %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blagenremu3112</th>
+                <td>{% if bilanSocialAgent.blAgenremu3112 %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blagenremuanne</th>
+                <td>{% if bilanSocialAgent.blAgenremuanne %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idposistat</th>
+                <td>{{ bilanSocialAgent.idPosistat }}</td>
+            </tr>
+            <tr>
+                <th>Idstat</th>
+                <td>{{ bilanSocialAgent.idStat }}</td>
+            </tr>
+            <tr>
+                <th>Blagenarriannecoll</th>
+                <td>{% if bilanSocialAgent.blAgenarriannecoll %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blemplfonc</th>
+                <td>{% if bilanSocialAgent.blEmplfonc %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idgraddeta</th>
+                <td>{{ bilanSocialAgent.idGraddeta }}</td>
+            </tr>
+            <tr>
+                <th>Idfoncpubl</th>
+                <td>{{ bilanSocialAgent.idFoncpubl }}</td>
+            </tr>
+            <tr>
+                <th>Idcadrempldeta</th>
+                <td>{{ bilanSocialAgent.idCadrempldeta }}</td>
+            </tr>
+            <tr>
+                <th>Idemplfonc</th>
+                <td>{{ bilanSocialAgent.idEmplfonc }}</td>
+            </tr>
+            <tr>
+                <th>Dtdetaemplfonc</th>
+                <td>{% if bilanSocialAgent.dtDetaemplfonc %}{{ bilanSocialAgent.dtDetaemplfonc|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idstruorigposistat</th>
+                <td>{{ bilanSocialAgent.idStruorigposistat }}</td>
+            </tr>
+            <tr>
+                <th>Idcate</th>
+                <td>{{ bilanSocialAgent.idCate }}</td>
+            </tr>
+            <tr>
+                <th>Idfili</th>
+                <td>{{ bilanSocialAgent.idFili }}</td>
+            </tr>
+            <tr>
+                <th>Idcadrempl</th>
+                <td>{{ bilanSocialAgent.idCadrempl }}</td>
+            </tr>
+            <tr>
+                <th>Idgrad</th>
+                <td>{{ bilanSocialAgent.idGrad }}</td>
+            </tr>
+            <tr>
+                <th>Idmotiarri</th>
+                <td>{{ bilanSocialAgent.idMotiarri }}</td>
+            </tr>
+            <tr>
+                <th>Blacqustatanne</th>
+                <td>{% if bilanSocialAgent.blAcqustatanne %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blagentitustaganne</th>
+                <td>{% if bilanSocialAgent.blAgentitustaganne %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idstagtitu</th>
+                <td>{{ bilanSocialAgent.idStagtitu }}</td>
+            </tr>
+            <tr>
+                <th>Bltituloisauvaanne</th>
+                <td>{% if bilanSocialAgent.blTituloisauvaanne %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blrecrsansconcseleprof</th>
+                <td>{% if bilanSocialAgent.blRecrsansconcseleprof %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lbdatedepacoll</th>
+                <td>{{ bilanSocialAgent.lbDatedepacoll }}</td>
+            </tr>
+            <tr>
+                <th>Idmotidepa</th>
+                <td>{{ bilanSocialAgent.idMotidepa }}</td>
+            </tr>
+            <tr>
+                <th>Cdmotidece</th>
+                <td>{{ bilanSocialAgent.cdMotidece }}</td>
+            </tr>
+            <tr>
+                <th>Blmouvinteanne</th>
+                <td>{% if bilanSocialAgent.blMouvinteanne %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blpromavanstaganne</th>
+                <td>{% if bilanSocialAgent.blPromavanstaganne %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idavanpromconc</th>
+                <td>{{ bilanSocialAgent.idAvanpromconc }}</td>
+            </tr>
+            <tr>
+                <th>Bltempcomp</th>
+                <td>{% if bilanSocialAgent.blTempcomp %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idtempnoncomp</th>
+                <td>{{ bilanSocialAgent.idTempnoncomp }}</td>
+            </tr>
+            <tr>
+                <th>Idconttrav</th>
+                <td>{{ bilanSocialAgent.idConttrav }}</td>
+            </tr>
+            <tr>
+                <th>Bltempplein</th>
+                <td>{% if bilanSocialAgent.blTempplein %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idtemppart</th>
+                <td>{{ bilanSocialAgent.idTemppart }}</td>
+            </tr>
+            <tr>
+                <th>Idpourtemppart</th>
+                <td>{{ bilanSocialAgent.idPourtemppart }}</td>
+            </tr>
+            <tr>
+                <th>Nbdemapart</th>
+                <td>{{ bilanSocialAgent.nbDemapart }}</td>
+            </tr>
+            <tr>
+                <th>Nbdemapartacce</th>
+                <td>{{ bilanSocialAgent.nbDemapartacce }}</td>
+            </tr>
+            <tr>
+                <th>Nbpremdemasati</th>
+                <td>{{ bilanSocialAgent.nbPremdemasati }}</td>
+            </tr>
+            <tr>
+                <th>Nbmodiemplpermtempcomp</th>
+                <td>{{ bilanSocialAgent.nbModiemplpermtempcomp }}</td>
+            </tr>
+            <tr>
+                <th>Nbagenempltempcompnonrenou</th>
+                <td>{{ bilanSocialAgent.nbAgenempltempcompnonrenou }}</td>
+            </tr>
+            <tr>
+                <th>Idcycltrav</th>
+                <td>{{ bilanSocialAgent.idCycltrav }}</td>
+            </tr>
+            <tr>
+                <th>Nmheurremuanne</th>
+                <td>{{ bilanSocialAgent.nmHeurremuanne }}</td>
+            </tr>
+            <tr>
+                <th>Mtremuannubrut</th>
+                <td>{{ bilanSocialAgent.mtRemuannubrut }}</td>
+            </tr>
+            <tr>
+                <th>Mttotaremuprimindem</th>
+                <td>{{ bilanSocialAgent.mtTotaremuprimindem }}</td>
+            </tr>
+            <tr>
+                <th>Mttotaremubrutnbi</th>
+                <td>{{ bilanSocialAgent.mtTotaremubrutnbi }}</td>
+            </tr>
+            <tr>
+                <th>Mttotaremubrutheursupp</th>
+                <td>{{ bilanSocialAgent.mtTotaremubrutheursupp }}</td>
+            </tr>
+            <tr>
+                <th>Nbheursupp</th>
+                <td>{{ bilanSocialAgent.nbHeursupp }}</td>
+            </tr>
+            <tr>
+                <th>Nbheurcomprealremu</th>
+                <td>{{ bilanSocialAgent.nbHeurcomprealremu }}</td>
+            </tr>
+            <tr>
+                <th>Blagenabse</th>
+                <td>{% if bilanSocialAgent.blAgenabse %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nballotempinac</th>
+                <td>{{ bilanSocialAgent.nbAllotempinac }}</td>
+            </tr>
+            <tr>
+                <th>Nballotempinva</th>
+                <td>{{ bilanSocialAgent.nbAllotempinva }}</td>
+            </tr>
+            <tr>
+                <th>Blcongpateaccuenfa</th>
+                <td>{% if bilanSocialAgent.blCongpateaccuenfa %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nbjourcongpateaccuenfa</th>
+                <td>{{ bilanSocialAgent.nbJourcongpateaccuenfa }}</td>
+            </tr>
+            <tr>
+                <th>Blentrdepacong</th>
+                <td>{% if bilanSocialAgent.blEntrdepacong %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idmotientrdepacong</th>
+                <td>{{ bilanSocialAgent.idMotientrdepacong }}</td>
+            </tr>
+            <tr>
+                <th>Blentrretocong</th>
+                <td>{% if bilanSocialAgent.blEntrretocong %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idmotientrretocong</th>
+                <td>{{ bilanSocialAgent.idMotientrretocong }}</td>
+            </tr>
+            <tr>
+                <th>Blcet</th>
+                <td>{% if bilanSocialAgent.blCet %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nbjourcumu3112</th>
+                <td>{{ bilanSocialAgent.nbJourcumu3112 }}</td>
+            </tr>
+            <tr>
+                <th>Nbjourvers3112</th>
+                <td>{{ bilanSocialAgent.nbJourvers3112 }}</td>
+            </tr>
+            <tr>
+                <th>Nbjourdepe3112</th>
+                <td>{{ bilanSocialAgent.nbJourdepe3112 }}</td>
+            </tr>
+            <tr>
+                <th>Nbjourinde3112</th>
+                <td>{{ bilanSocialAgent.nbJourinde3112 }}</td>
+            </tr>
+            <tr>
+                <th>Nbjourprisrafp3112</th>
+                <td>{{ bilanSocialAgent.nbJourprisrafp3112 }}</td>
+            </tr>
+            <tr>
+                <th>Blteletrav</th>
+                <td>{% if bilanSocialAgent.blTeletrav %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blagenprev</th>
+                <td>{% if bilanSocialAgent.blAgenprev %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idtypemissprev</th>
+                <td>{{ bilanSocialAgent.idTypemissprev }}</td>
+            </tr>
+            <tr>
+                <th>Bldemainap</th>
+                <td>{% if bilanSocialAgent.blDemainap %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idinapdema</th>
+                <td>{{ bilanSocialAgent.idInapdema }}</td>
+            </tr>
+            <tr>
+                <th>Bldeciinap</th>
+                <td>{% if bilanSocialAgent.blDeciinap %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idinapdeci</th>
+                <td>{{ bilanSocialAgent.idInapdeci }}</td>
+            </tr>
+            <tr>
+                <th>Blformsuiv</th>
+                <td>{% if bilanSocialAgent.blFormsuiv %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blvae</th>
+                <td>{% if bilanSocialAgent.blVae %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idebcf</th>
+                <td>{{ bilanSocialAgent.idEbcf }}</td>
+            </tr>
+            <tr>
+                <th>Blbilacomp</th>
+                <td>{% if bilanSocialAgent.blBilacomp %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nbbilacomp</th>
+                <td>{{ bilanSocialAgent.nbBilacomp }}</td>
+            </tr>
+            <tr>
+                <th>Blcongform</th>
+                <td>{% if bilanSocialAgent.blCongform %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idemplnonperm</th>
+                <td>{{ bilanSocialAgent.idEmplnonperm }}</td>
+            </tr>
+            <tr>
+                <th>Idstruorig</th>
+                <td>{{ bilanSocialAgent.idStruorig }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if bilanSocialAgent.createdAt %}{{ bilanSocialAgent.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cdutilcrea</th>
+                <td>{{ bilanSocialAgent.cdUtilcrea }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if bilanSocialAgent.updatedAt %}{{ bilanSocialAgent.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cdutilmodi</th>
+                <td>{{ bilanSocialAgent.cdUtilmodi }}</td>
+            </tr>
+            <tr>
+                <th>Idbilasociagen</th>
+                <td>{{ bilanSocialAgent.idBilasociagen }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('bilansocialagent_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('bilansocialagent_edit', { 'idBilasociagen': bilanSocialAgent.idBilasociagen }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

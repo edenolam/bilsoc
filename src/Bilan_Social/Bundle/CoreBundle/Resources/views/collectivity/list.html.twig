@@ -1,0 +1,29 @@
+{% extends '@Core/layout.html.twig' %}
+
+
+{% block body %}
+    <h1>Gestion des collectivités</h1>
+
+    <table>
+        <tr>
+            <th>Collectivités</th>
+            <th>Voir le bilan</th>
+            <th>Editer le bilan</th>
+            <th>Lien vers le bilan de la collectivité</th>
+        </tr>
+
+        {% for collectivity in collectivities %}
+
+            <tr>
+                <td>{{ collectivity.username }}</td>
+                <td>{% if is_granted(constant('Bilan_Social\\Bundle\\UserBundle\\Security\\SocialVoter::VIEW'), collectivity) %} X {% endif %}</td>
+                <td>{% if is_granted(constant('Bilan_Social\\Bundle\\UserBundle\\Security\\SocialVoter::EDIT'), collectivity) %} X {% endif %}</td>
+                <td>{% if is_granted(constant('Bilan_Social\\Bundle\\UserBundle\\Security\\SocialVoter::VIEW'), collectivity) %}
+                    <a href="{{ path('collectivity_show', {'userId':  collectivity.idUtil  }) }}">Accèder au Bilan</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

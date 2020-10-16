@@ -1,0 +1,268 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Informationcolectiviteagent</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Idcoll</th>
+                <td>{{ informationColectiviteAgent.idColl }}</td>
+            </tr>
+            <tr>
+                <th>Idenqu</th>
+                <td>{{ informationColectiviteAgent.idEnqu }}</td>
+            </tr>
+            <tr>
+                <th>Blchartemp</th>
+                <td>{% if informationColectiviteAgent.blChartemp %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blautoassusansconvtitu</th>
+                <td>{% if informationColectiviteAgent.blAutoassusansconvtitu %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blautoassuavecconvtitu</th>
+                <td>{% if informationColectiviteAgent.blAutoassuavecconvtitu %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blautoassuavecconvcont</th>
+                <td>{% if informationColectiviteAgent.blAutoassuavecconvcont %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blregiassuchom</th>
+                <td>{% if informationColectiviteAgent.blRegiassuchom %}Yes{% else %}No{% endif %}</td>
+            </tr>
+{#            <tr>#}
+{#                <th>Blheursupp</th>#}
+{#                <td>{% if informationColectiviteAgent.blHeursupp %}Yes{% else %}No{% endif %}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Blheurcomp</th>#}
+{#                <td>{% if informationColectiviteAgent.blHeurcomp %}Yes{% else %}No{% endif %}</td>#}
+{#            </tr>#}
+            <tr>
+                <th>Mtdepefonccoll</th>
+                <td>{{ informationColectiviteAgent.mtDepefonccoll }}</td>
+            </tr>
+            <tr>
+                <th>Mtcharpers</th>
+                <td>{{ informationColectiviteAgent.mtCharpers }}</td>
+            </tr>
+            <tr>
+                <th>Lbrati</th>
+                <td>{{ informationColectiviteAgent.lbRati }}</td>
+            </tr>
+            <tr>
+                <th>Blagenaffeprev</th>
+                <td>{% if informationColectiviteAgent.blAgenaffeprev %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nbvisimedisponprev</th>
+                <td>{{ informationColectiviteAgent.nbVisimedisponprev }}</td>
+            </tr>
+            <tr>
+                <th>Bldocurisqpro</th>
+                <td>{% if informationColectiviteAgent.blDocurisqpro %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nmannecrea</th>
+                <td>{{ informationColectiviteAgent.nmAnnecrea }}</td>
+            </tr>
+            <tr>
+                <th>Nmannedernmaj</th>
+                <td>{{ informationColectiviteAgent.nmAnnedernmaj }}</td>
+            </tr>
+            <tr>
+                <th>Blplanprevrisqpsysoci</th>
+                <td>{% if informationColectiviteAgent.blPlanprevrisqpsysoci %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Bldemaprevtroumuscu</th>
+                <td>{% if informationColectiviteAgent.blDemaprevtroumuscu %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Bldemaprevrisqcanc</th>
+                <td>{% if informationColectiviteAgent.blDemaprevrisqcanc %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blautrdemaprev</th>
+                <td>{% if informationColectiviteAgent.blAutrdemaprev %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blregisantsecutrav</th>
+                <td>{% if informationColectiviteAgent.blRegisantsecutrav %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blacteviolphys</th>
+                <td>{% if informationColectiviteAgent.blActeviolphys %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Mtcnfptcotiobl</th>
+                <td>{{ informationColectiviteAgent.mtCnfptcotiobl }}</td>
+            </tr>
+            <tr>
+                <th>Mtcnfptsupcotiobl</th>
+                <td>{{ informationColectiviteAgent.mtCnfptsupcotiobl }}</td>
+            </tr>
+            <tr>
+                <th>Mtautrorga</th>
+                <td>{{ informationColectiviteAgent.mtAutrorga }}</td>
+            </tr>
+            <tr>
+                <th>Mtfraidepla</th>
+                <td>{{ informationColectiviteAgent.mtFraidepla }}</td>
+            </tr>
+            <tr>
+                <th>Nbreunct</th>
+                <td>{{ informationColectiviteAgent.nbReunct }}</td>
+            </tr>
+            <tr>
+                <th>Nbreuncommiadmi</th>
+                <td>{{ informationColectiviteAgent.nbReuncommiadmi }}</td>
+            </tr>
+            <tr>
+                <th>Nbreuncommiconsu</th>
+                <td>{{ informationColectiviteAgent.nbReuncommiconsu }}</td>
+            </tr>
+            <tr>
+                <th>Nbreunchsct</th>
+                <td>{{ informationColectiviteAgent.nbReunchsct }}</td>
+            </tr>
+            <tr>
+                <th>Blctsiegmissdevo</th>
+                <td>{% if informationColectiviteAgent.blCtsiegmissdevo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nbreunctmissdevo</th>
+                <td>{{ informationColectiviteAgent.nbReunctmissdevo }}</td>
+            </tr>
+            <tr>
+                <th>Nbjouractrep</th>
+                <td>{{ informationColectiviteAgent.nbJourActRep }}</td>
+            </tr>
+            <tr>
+                <th>Nbjouractsec</th>
+                <td>{{ informationColectiviteAgent.nbJourActSec }}</td>
+            </tr>
+            <tr>
+                <th>Nbjourautospeacco</th>
+                <td>{{ informationColectiviteAgent.nbJourautospeacco }}</td>
+            </tr>
+            <tr>
+                <th>Nbjourabse</th>
+                <td>{{ informationColectiviteAgent.nbJourabse }}</td>
+            </tr>
+            <tr>
+                <th>Nbheurglob</th>
+                <td>{{ informationColectiviteAgent.nbHeurglob }}</td>
+            </tr>
+            <tr>
+                <th>Nbheurdroisynd</th>
+                <td>{{ informationColectiviteAgent.nbHeurdroisynd }}</td>
+            </tr>
+            <tr>
+                <th>Nbheurutil</th>
+                <td>{{ informationColectiviteAgent.nbHeurutil }}</td>
+            </tr>
+            <tr>
+                <th>Nbprotacco</th>
+                <td>{{ informationColectiviteAgent.nbProtacco }}</td>
+            </tr>
+            <tr>
+                <th>Blgrev</th>
+                <td>{% if informationColectiviteAgent.blGrev %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blsubvverscomi</th>
+                <td>{% if informationColectiviteAgent.blSubvverscomi %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blcotisubvcomiinter</th>
+                <td>{% if informationColectiviteAgent.blCotisubvcomiinter %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blpresservcoll</th>
+                <td>{% if informationColectiviteAgent.blPresservcoll %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blplacresecrec</th>
+                <td>{% if informationColectiviteAgent.blPlacresecrec %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blaidefinagardenfa</th>
+                <td>{% if informationColectiviteAgent.blAidefinagardenfa %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blautrgardenfa</th>
+                <td>{% if informationColectiviteAgent.blAutrgardenfa %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>BlautrgardenfaDescription</th>
+                <td>{% if informationColectiviteAgent.blAutrgardenfaDescription %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blsantconvparti</th>
+                <td>{% if informationColectiviteAgent.blSantconvparti %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blsantcontregl</th>
+                <td>{% if informationColectiviteAgent.blSantcontregl %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blprevoconvparti</th>
+                <td>{% if informationColectiviteAgent.blPrevoconvparti %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blprevocontregl</th>
+                <td>{% if informationColectiviteAgent.blPrevocontregl %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Mtdepetota</th>
+                <td>{{ informationColectiviteAgent.mtDepetota }}</td>
+            </tr>
+            <tr>
+                <th>Mtdepeinsepershand</th>
+                <td>{{ informationColectiviteAgent.mtDepeinsepershand }}</td>
+            </tr>
+            <tr>
+                <th>Mtrealemplpershand</th>
+                <td>{{ informationColectiviteAgent.mtRealemplpershand }}</td>
+            </tr>
+            <tr>
+                <th>Mtdepeamentrav</th>
+                <td>{{ informationColectiviteAgent.mtDepeamentrav }}</td>
+            </tr>
+            <tr>
+                <th>Nbtravhandemplperm</th>
+                <td>{{ informationColectiviteAgent.nbTravhandemplperm }}</td>
+            </tr>
+            <tr>
+                <th>Txempldiretravhand</th>
+                <td>{{ informationColectiviteAgent.txEmpldiretravhand }}</td>
+            </tr>
+            <tr>
+                <th>Txempllegatravhand</th>
+                <td>{{ informationColectiviteAgent.txEmpllegatravhand }}</td>
+            </tr>
+            <tr>
+                <th>Idinfocollagen</th>
+                <td>{{ informationColectiviteAgent.idInfocollagen }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('informationcolectiviteagent_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('informationcolectiviteagent_edit', { 'idInfocollagen': informationColectiviteAgent.idInfocollagen }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

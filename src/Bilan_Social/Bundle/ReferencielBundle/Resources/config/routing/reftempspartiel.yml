@@ -1,0 +1,28 @@
+reftempspartiel_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefTempsPartiel:index" }
+    methods:  GET
+
+reftempspartiel_show:
+    path:     /{idTemppart}/show
+    defaults: { _controller: "ReferencielBundle:RefTempsPartiel:show" }
+    methods:  GET
+
+reftempspartiel_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefTempsPartiel:new" }
+    methods:  [GET, POST]
+
+reftempspartiel_edit:
+    path:     /{idTemppart}/edit
+    defaults: { _controller: "ReferencielBundle:RefTempsPartiel:edit" }
+    methods:  [GET, POST]
+
+reftempspartiel_delete:
+    path:     /{idTemppart}/delete
+    defaults: { _controller: "ReferencielBundle:RefTempsPartiel:delete" }
+    methods:  DELETE
+
+csv_export_reftempspartiel:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefTempsPartiel:generateCsv" }

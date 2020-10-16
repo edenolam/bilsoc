@@ -1,0 +1,55 @@
+
+analyse_homepage:
+    path:     /
+    defaults: { _controller: AnalyseBundle:Default:index }
+    
+analyse_demande:
+    path:     /demande-analyse/{anneeCampagne}
+    defaults: { _controller: AnalyseBundle:Default:demandeAnalyse,  anneeCampagne:null   }
+    options:
+        expose: true
+
+analyse_demande_switch:
+    path:     /analyse-switch/{id}
+    defaults: { _controller: AnalyseBundle:Default:show,  id:null }
+    options:
+        expose: true
+
+switch_to_cdg:
+    path:     /switch-to-cdg
+    defaults: { _controller: AnalyseBundle:Default:switchColToCdg}
+    options:
+        expose: true
+
+analyse_demande_delete:
+    path:     /delete-demande-analyse/{id}
+    defaults: { _controller: AnalyseBundle:Default:deleteDemandeAnalyse,  anneeCampagne:null   }
+    methods:  DELETE
+    options:
+        expose: true
+
+fiche_demande_analyse:
+    path:     /fiche-demande-analyse/{id}
+    defaults: { _controller: AnalyseBundle:Default:ficheDemandeAnalyse }
+    options:
+        expose: true
+    
+remove_analyse_partagee:
+    path:     /remove-analyse-partagee/{fileKey}
+    defaults: { _controller: AnalyseBundle:Default:removeFile }
+    options:
+        expose: true
+    
+download_analyse:
+    path:     /telecharger-analyse/{key}
+    defaults: { _controller: AnalyseBundle:Default:downloadAnalyse }
+
+ajax_get_demande_analyse:
+    path: /get-demande-analyse
+    defaults: {_controller: AnalyseBundle:Default:getDemandeAnalyse}
+    options:
+        expose: true
+
+call_script_export_hrg:
+    path: /callScriptExport
+    defaults: { _controller: AnalyseBundle:Default:callScriptExport }

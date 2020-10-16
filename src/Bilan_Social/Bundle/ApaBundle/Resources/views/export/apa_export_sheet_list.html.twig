@@ -1,0 +1,12 @@
+{% set sheet_name = sheet.name %}
+{% xlssheet sheet_name {
+        columnDimension: {
+            'default': {
+                width: '50'
+            }
+        }
+        } %}
+	{% set data_key = sheet.data_key %}
+    {% set sheet_data = data[data_key] %}
+	{% include  '@Apa/export/apa_export_list_for_sheet.html.twig' with {'sheet':sheet,'rows':sheet_data, 'data':data} %}    
+{% endxlssheet %}

@@ -1,0 +1,77 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refpositionstatutaire_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refPositionStatutaire.cdPosistat }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refPositionStatutaire.lbPosistat }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé Complémentaire</th>
+                    <td>{{ refPositionStatutaire.lbCompl }}</td>
+                </tr>
+
+                <tr>
+                    <th>Commentaire</th>
+                    <td>{{ refPositionStatutaire.lbComm }}</td>
+                </tr>
+                <tr>
+                    <th>Groupe</th>
+                    <td>{% if refPositionStatutaire.RefGroupePositionStatutaire != null %}{{ refPositionStatutaire.refGroupePositionStatutaire.lbGrouPosistat }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        {% for statut in refPositionStatutaire.statutPositionStatutaires %}
+                            - {{ statut.lbStat }}
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Réservé CDG</th>
+                    <td>{% if refPositionStatutaire.blCdg %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Indicateur 1.4.2</th>
+                    <td>{% if refPositionStatutaire.blInd142 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Indicateur 1.4.3</th>
+                    <td>{% if refPositionStatutaire.blInd143 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Indicateur 1.4.4</th>
+                    <td>{% if refPositionStatutaire.blInd144 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Code N4DS</th>
+                    <td>{{ refPositionStatutaire.cdMotiN4ds }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refPositionStatutaire.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refPositionStatutaire} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refpositionstatutaire_edit', { 'idPosistat': refPositionStatutaire.idPosistat }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+        </ul>
+    {% endblock %}

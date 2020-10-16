@@ -1,0 +1,83 @@
+imports:
+    - { resource: config.yml }
+    - { resource: security_dev.yml }
+
+framework:
+    router:
+        resource: '%kernel.root_dir%/config/routing_dev.yml'
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+    ide: phpstorm
+
+web_profiler:
+    toolbar: true
+
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
+            channels: ['!event']
+        dev:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%/custom_iorga.log'
+            level: debug
+            channels: ['!event', '!doctrine']
+        console:
+            type: console
+            channels: ['!event', '!doctrine']
+        # uncomment to get logging in your browser
+        # you may have to allow bigger header sizes in your Web server configuration
+        #firephp:
+        #    type: firephp
+        #    level: info
+        #chromephp:
+        #    type: chromephp
+        #    level: info
+
+swiftmailer:
+    transport: '%mailer_transport%'
+    host:      '%mailer_host%'
+    username:  '%mailer_user%'
+    password:  '%mailer_password%'
+    port:      '%mailer_port%'
+
+doctrine:
+    orm:
+        # cache doctrine
+        # metadata_cache_driver: apcu
+        # query_cache_driver: apcu
+        # result_cache_driver: apcu
+        # second_level_cache:
+        #     region_cache_driver:
+        #         type: apcu
+        #         #id: snc_second_level_cache
+        #     enabled: true
+        #     log_enabled: true
+        #     regions:
+        #         referentiel_entities:
+        #             cache_driver:
+        #                 type: apcu
+        #             lifetime: 86400 # 1 day
+# Parameters
+parameters:
+
+    # Fixtures order
+    fixture.order.Utilisateur: 1
+    fixture.order.RefActeViolencePhysique: 2
+    fixture.order.RefAvancementPromotionConcours: 3
+    fixture.order.RefFiliere: 4
+    fixture.order.RefCategorie: 5
+    fixture.order.RefCadreEmploi: 6
+    fixture.order.RefGrade: 7
+    fixture.order.RefEmploiFonctionnel: 8
+    fixture.order.RefContrainteTravail: 9
+    fixture.order.RefStatut: 10
+    fixture.order.RefPositionStatutaire: 11
+    fixture.order.RefFonctionPublique: 12
+    fixture.order.RefStageTitularisation: 13
+    fixture.order.RefMotifDepart: 14
+    fixture.order.RefEmploiNonPermanent: 15
+    fixture.order.reftypecdd: 16
+    fixture.order.RefMotifGreve: 17

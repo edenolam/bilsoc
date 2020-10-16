@@ -1,0 +1,197 @@
+
+    {% if formConditions424 is defined %}
+        {% set bilan_social_consolide = formConditions424.vars.data %}
+
+        {{ form_start(formConditions424) }}
+
+        <div id="ind424">
+            <h5>
+
+            </h5>
+
+            <table width="100%" id="ind424Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="1" rowspan="2"></th>
+                        <th colspan="3" style="text-align: center">Pour accidents du travail</th>
+                        <th colspan="3" style="text-align: center">Pour maladie professionnelle ou à caractère professionnel ou contractée pendant le service</th>
+                        <th colspan="3" style="text-align: center">Autre cas</th>
+                        <th rowspan="2" class="filiTable" style="text-align: center">Total</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formConditions424.ind424s %}
+                    {% set row_data = tag.vars.value %}
+                    {% set total_hf1= row_data.rTS4241 + row_data.rTS4242 %}
+                    {% set total_hf2= row_data.rTS4243 + row_data.rTS4244 %}
+                    {% set total_hf3= row_data.rTS4245 + row_data.rTS4246 %}
+                    {% set total_hf= total_hf1 + total_hf2 + total_hf3 %}
+                    <tr idTrCate="1" id="424idTr_1">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            Titulaires et stagiaires
+                        </td>
+                        <td id="rTS4241" data-col-group="total_hf1">{{ form_widget(tag.rTS4241) }}</td>
+                        <td id="rTS4242" data-col-group="total_hf1">{{ form_widget(tag.rTS4242) }}</td>
+                        <th class="filiTable" data-col-id="total_hf1" data-col-group="total_hf" style="text-align: center">{{total_hf1}}</th>
+                        <td id="rTS4243" data-col-group="total_hf2">{{ form_widget(tag.rTS4243) }}</td>
+                        <td id="rTS4244" data-col-group="total_hf2">{{ form_widget(tag.rTS4244) }}</td>
+                        <th class="filiTable" data-col-id="total_hf2" data-col-group="total_hf" style="text-align: center">{{total_hf2}}</th>
+                        <td id="rTS4245" data-col-group="total_hf3">{{ form_widget(tag.rTS4245) }}</td>
+                        <td id="TSr4246" data-col-group="total_hf3">{{ form_widget(tag.rTS4246) }}</td>
+                        <th class="filiTable" data-col-id="total_hf3" data-col-group="total_hf" style="text-align: center">{{total_hf3}}</th>
+                        <th class="filiTable" data-col-id="total_hf" style="text-align: center">{{total_hf}}</th>
+                    </tr>
+
+                    {% set total_hf1_EM= row_data.rEMP4241 + row_data.rEMP4242 %}
+                    {% set total_hf2_EM= row_data.rEMP4243 + row_data.rEMP4244 %}
+                    {% set total_hf3_EM= row_data.rEMP4245 + row_data.rEMP4246 %}
+                    {% set total_hf_EM= total_hf1 + total_hf2 + total_hf3 %}
+                    <tr idTrCate="2" id="424idTr_2">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            Contractuels sur emploi permanent
+                        </td>
+                        <td id="rEMP4241" data-col-group="total_hf1_EM">{{ form_widget(tag.rEMP4241) }}</td>
+                        <td id="rEMP4242" data-col-group="total_hf1_EM">{{ form_widget(tag.rEMP4242) }}</td>
+                        <th class="filiTable" data-col-id="total_hf1_EM" data-col-group="total_hf_EM" style="text-align: center">{{total_hf1_EM}}</th>
+                        <td id="rEMP4243" data-col-group="total_hf2_EM">{{ form_widget(tag.rEMP4243) }}</td>
+                        <td id="rEMP4244" data-col-group="total_hf2_EM">{{ form_widget(tag.rEMP4244) }}</td>
+                        <th class="filiTable" data-col-id="total_hf2_EM" data-col-group="total_hf_EM" style="text-align: center">{{total_hf2_EM}}</th>
+                        <td id="rEMP4245" data-col-group="total_hf3_EM">{{ form_widget(tag.rEMP4245) }}</td>
+                        <td id="TEMP4246" data-col-group="total_hf3_EM">{{ form_widget(tag.rEMP4246) }}</td>
+                        <th class="filiTable" data-col-id="total_hf3_EM" data-col-group="total_hf_EM" style="text-align: center">{{total_hf3_EM}}</th>
+                        <th class="filiTable" data-col-id="total_hf_EM" style="text-align: center">{{total_hf_EM}}</th>
+                    </tr>
+                {% endfor %}
+                {% set total_ind = bilan_social_consolide.getIndPileForBy('ind424s') %}
+                {% set total_hf1_EM= total_ind.rEMP4241 + total_ind.rEMP4242 %}
+                {% set total_hf2_EM= total_ind.rEMP4243 + total_ind.rEMP4244 %}
+                {% set total_hf3_EM= total_ind.rEMP4245 + total_ind.rEMP4246 %}
+                {% set total_hf_EM= total_hf1_EM + total_hf2_EM + total_hf3_EM %}
+                <tr class="filiTable row_totaux" idTrCate="2" id="424idTr_2">
+                    <td><b>Total</b></td>
+                    <td id="rEMP4241" data-col-group="total_hf1_EM">{{ total_ind.rEMP4241 }}</td>
+                    <td id="rEMP4242" data-col-group="total_hf1_EM">{{ total_ind.rEMP4242 }}</td>
+                    <th class="filiTable" data-col-id="total_hf1_EM" data-col-group="total_hf_EM" style="text-align: center">{{total_hf1_EM}}</th>
+                    <td id="rEMP4243" data-col-group="total_hf2_EM">{{ total_ind.rEMP4243 }}</td>
+                    <td id="rEMP4244" data-col-group="total_hf2_EM">{{ total_ind.rEMP4244 }}</td>
+                    <th class="filiTable" data-col-id="total_hf2_EM" data-col-group="total_hf_EM" style="text-align: center">{{total_hf2_EM}}</th>
+                    <td id="rEMP4245" data-col-group="total_hf3_EM">{{ total_ind.rEMP4245 }}</td>
+                    <td id="TEMP4246" data-col-group="total_hf3_EM">{{ total_ind.rEMP4246 }}</td>
+                    <th class="filiTable" data-col-id="total_hf3_EM" data-col-group="total_hf_EM" style="text-align: center">{{total_hf3_EM}}</th>
+                    <th class="filiTable" data-col-id="total_hf_EM" style="text-align: center">{{total_hf_EM}}</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+
+        <i>
+            * y compris pensions d'invalidité au régime général.
+        </i>
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formConditions424) }}
+
+        <script type="text/javascript">
+
+        {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true %}
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            $(document).change();
+
+            var table424 = document.getElementById('ind424Table');
+
+        });
+        {% endif %}
+
+        {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 %}
+        function changedR424(obj) {
+
+        }
+        {% endif %}
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm424_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_conditions_ind424_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind424').load('{{ path('bilan_conso_conditions_ind424_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_formation_edit') }}';
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+
+        </script>
+    {% endif %}

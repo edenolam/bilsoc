@@ -1,0 +1,50 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/modelvues.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li class="active"><a href="{{ path('model_vues_homepage') }}">Gestion des modèles de vue</a></li>
+            </ol>
+        </div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h3 class='title'>Paramétrage des modèles de vues</h3>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="noMargin">Liste des écrans paramétrables</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li><a href="{{ path('model_vues_enquete') }}">Suivi d'une enquête</a></li>
+                    <hr>
+                    <li><a href="{{ path('model_vues_collectivite') }}">Gestion des collectivités</a></li>
+                    <hr>
+                    <li><a href="{{ path('model_vues_recherche') }}">Recherche personnalisée</a></li>
+                    <hr>
+                    <li><a href="{{ path('model_vues_analyse') }}">Gestion des analyses</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

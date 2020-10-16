@@ -1,0 +1,110 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="col-md-9 questionConsolide">
+
+
+        {% if form is defined %}
+            <div class="panel panel-default">
+
+
+                <div class="panel-heading">
+                    <div class="col-xs-12" style="text-align: center;">
+
+                        <p> Questions Collectivités consolidé </p>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <div class="panel-body">
+
+                    {{ form_start(form) }}
+
+                    <span id="labelq1"><b>Avez-vous eu au moins un agent titulaire ou stagiaire dans l'année ?</b></span>
+                    {{ form_row(form.q1) }}
+
+                    <span id="labelq2"><b>Un de ces agents a t'il été rémunéré au 31/12 ?</b></span>
+                    {{ form_row(form.q2) }}
+
+                    <span id="labelq3"><b>Avez-vous eu au moins un agent contractuel sur emploi permanent dans l'année ?</b></span>
+                    {{ form_row(form.q3) }}
+
+                    <span id="labelq4"><b>Un de ces agents a t'il été rémunéré au 31/12 ?</b></span>
+                    {{ form_row(form.q4) }}
+
+                    <span id="labelq5"><b>Avez-vous eu au moins un agent contractuel sur emploi non permanent dans l'année ?</b></span>
+                    {{ form_row(form.q5) }}
+
+                    <span id="labelq6"><b>Un de ces agents a t'il été rémunéré au 31/12 ?</b></span>
+                    {{ form_row(form.q6) }}
+
+                    <span id="labelq7"><b>Avez-vous eu au moins un agent détaché sur l'emploi fonctionnel dans l'année ?</b></span>
+                    {{ form_row(form.q7) }}
+
+                    <span id="labelq8"><b>Un de ces agents a t'il été rémunéré au 31/12 ?</b></span>
+                    {{ form_row(form.q8) }}
+
+                    <span id="labelq9"><b>Avez-vous eu des départs d'agents titulaires au cours de l'année {{AnneeCamp}} ?</b></span>
+                    {{ form_row(form.q9) }}
+
+                    <span id="labelq10"><b>Avez-vous eu des départs d'agents contractuels sur emploi permanent au cours de l'année {{AnneeCamp}} ?</b></span>
+                    {{ form_row(form.q10) }}
+
+                    <span id="labelq11"><b>Avez-vous eu des départs d'agents contractuels sur emploi non permanent au cours de l'année {{AnneeCamp}} ?</b></span>
+                    {{ form_row(form.q11) }}
+
+                    <span id="labelq12"><b>Avez-vous eu des arrivées d'agents titulaires au cours de l'année {{AnneeCamp}} ?</b></span>
+                    {{ form_row(form.q12) }}
+
+                    <span id="labelq13"><b>Avez-vous eu des arrivées d'agents contractuels sur emploi permanent au cours de l'année {{AnneeCamp}} ?</b></span>
+                    {{ form_row(form.q13) }}
+
+                    <span id="labelq14"><b>Avez-vous eu des arrivées d'agents contractuels sur emploi non permanent au cours de l'année {{AnneeCamp}} ?</b></span>
+                    {{ form_row(form.q14) }}
+
+
+                    <div class="pull-right">
+                        <input type="submit" value="Enregistrer" class="btn button save"/>
+                    </div>
+                    
+                    <div id="isNull" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Attention !</h4>
+                            </div>
+                            <div class="modal-body">
+                              Êtes-vous sûr de vouloir transmettre votre Bilan Social à vide ?
+                            </div>
+                            <div class="modal-footer">
+                              <input type="submit" value="Confirmer" class="btn button"/>
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            </div>
+                          </div>
+
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+
+            {% endif %}
+        </div>
+
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+        $(document).ready(function (){
+            disabled();
+        });
+    </script>
+        <script type="text/javascript" src="{{ asset('js/ConsoBundle/questionCollectiviteConsolideEdit.js') }}"></script>
+    {% endblock %}

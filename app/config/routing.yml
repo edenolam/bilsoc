@@ -1,0 +1,89 @@
+analyse:
+    resource: "@AnalyseBundle/Resources/config/routing.yml"
+    prefix:   /
+
+import_carriere:
+    resource: "@ImportCarriereBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jasper_server:
+    resource: "@JasperServerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+model_vues:
+    resource: "@ModelVuesBundle/Resources/config/routing.yml"
+    prefix:   /
+
+modelmail:
+    resource: "@ModelMailBundle/Resources/config/routing.yml"
+    prefix:   /
+
+contact:
+    resource: "@ContactBundle/Resources/config/routing.yml"
+    prefix:   /
+
+faq:
+    resource: "@FaqBundle/Resources/config/routing.yml"
+    prefix:   /
+
+actualite:
+    resource: "@ActualiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+bilan_social:
+    resource: "@BilanSocialBundle/Resources/config/routing.yml"
+    prefix:   /
+
+collectivite:
+    resource: "@CollectiviteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+enquete:
+    resource: "@EnqueteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+campagne:
+    resource: "@CampagneBundle/Resources/config/routing.yml"
+    prefix:   /
+
+referenciel:
+    resource: "@ReferencielBundle/Resources/config/routing.yml"
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+import:
+    resource: "@ImportBundle/Resources/config/routing.yml"
+    prefix:   /
+
+Core:
+    resource: "@CoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+Conso:
+    resource: "@ConsoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+Apa:
+    resource: "@ApaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+    
+logout:
+    path:     /logout
+    defaults: { _controller: L3CasBundle:Logout:logout }
+
+info_centre:
+    prefix:     /info_centre
+    resource: "@InfoCentreBundle/Resources/config/routing.yaml"
+
+long_task_manager:
+    prefix:     /long_task_manager
+    resource: "@LongTaskManagerBundle/Resources/config/routing.yaml"

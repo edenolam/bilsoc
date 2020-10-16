@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="Bilan_Social\Bundle\UserBundle\Repository\ProfilRepository" name="Bilan_Social\Bundle\UserBundle\Entity\Profil">
+    <id name="idProfil" type="integer" column="ID_PROFIL">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="nomProfil" type="string" column="nom_profil" length="255"/>
+
+    <one-to-many field="utilisateurs" mapped-by="profils" target-entity="Bilan_Social\Bundle\UserBundle\Entity\User"/>
+
+    <many-to-many field="exportsAdmin" inversed-by="profils" target-entity="Bilan_Social\Bundle\CoreBundle\Entity\exportAdmin">
+        <join-table name="profil_export_admin">
+            <join-columns>
+                <join-column name="ID_PROFIL" referenced-column-name="ID_PROFIL" />
+            </join-columns>
+            <inverse-join-columns>
+                <join-column name="ID_EXPORT_ADMIN" referenced-column-name="id" />
+            </inverse-join-columns>
+        </join-table>
+    </many-to-many>
+
+  </entity>
+</doctrine-mapping>

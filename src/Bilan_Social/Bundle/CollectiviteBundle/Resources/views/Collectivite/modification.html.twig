@@ -1,0 +1,101 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('collectivite_homepage') }}">Collectivités</a></li>
+                <li class="active">Valider les modifications</li>
+            </ol>
+        </div>
+        <h1>Valider les modifications</h1>
+        {% if droitsCdg is null %}
+            <div class="alert alert-danger fade in" style='margin-top: 20px;'>
+                <p>{#Cette collectivité n'existe pas.#}</p>
+                <p>Vous n'avez pas le droit d'accéder à cette collectivité.</p>
+            </div>
+        {% else %}
+            {% if droitsCdg != 'write' %}
+                <div class="alert alert-danger fade in" style='margin-top: 20px;'>
+                    <p>Vous n'avez pas les droits pour valider ou refuser les modifications de cette collectivité.</p>
+                </div>
+            {% endif %}
+            <div id="table-modif-coll-wrapper">
+                <table class="table table-hover align-center" id="table-modif-coll">
+                    <thead>
+                        <tr>
+                            <th>Champ</th>
+                            <th>Ancien</th>
+                            <th>Modification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if draft != null %}
+                            {% if change.nmSire is defined %}
+                            <tr>
+                                <td>Numéro de SIRET</td>
+                                <td>{% if change.nmSire.old != null %}{{ change.nmSire.old }}{% endif %}</td>
+                                <td>{% if change.nmSire.new != null %}{{ change.nmSire.new }}{% endif %}</td>
+                            </tr>
+                            {% endif %}
+                            {% if change.lbColl is defined %}
+                            <tr>
+                                <td>Nom de la collectivité</td>
+                                <td>{% if change.lbColl.old != null %}{{ change.lbColl.old }}{% endif %}</td>
+                                <td>{% if change.lbColl.new != null %}{{ change.lbColl.new }}{% endif %}</td>
+                            </tr>
+                            {% endif %}
+                            {% if change.refTypeCollectivite is defined %}
+                            <tr>
+                                <td>Type de collectivité</td>
+                                <td>{% if change.refTypeCollectivite.old != null %}{{ change.refTypeCollectivite.old.lbTypeColl }}{% endif %}</td>
+                                <td>{% if change.refTypeCollectivite.new != null %}{{ change.refTypeCollectivite.new.lbTypeColl }}{% endif %}</td>
+                            </tr>
+                            {% endif %}
+                            {% if change.cdPost is defined %}
+                            <tr>
+                                <td>Code postal</td>
+                                <td>{% if change.cdPost.old != null %}{{ change.cdPost.old }}{% endif %}</td>
+                                <td>{% if change.cdPost.new != null %}{{ change.cdPost.new }}{% endif %}</td>
+                            </tr>
+                            {% endif %}
+                            {% if change.lbVill is defined %}
+                            <tr>
+                                <td>Ville</td>
+                                <td>{% if change.lbVill.old != null %}{{ change.lbVill.old }}{% endif %}</td>
+                                <td>{% if change.lbVill.new != null %}{{ change.lbVill.new }}{% endif %}</td>
+                            </tr>
+                            {% endif %}
+                            {% if change.departement is defined %}
+                            <tr>
+                                <td>Département</td>
+                                <td>{% if change.departement.old != null %}{{ change.departement.old.lbDepa }}{% endif %}</td>
+                                <td>{% if change.departement.new != null %}{{ change.departement.new.lbDepa }}{% endif %}</td>
+                            </tr>
+                            {% endif %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3">Aucune modification n'est enregistrée pour cette collectivite</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            {% if collectivite is defined and droitsCdg == 'write' %}
+                <input type="hidden" id="idColl" value="{{ collectivite.idColl }}">
+                <div>
+                    <button id="valider" class="btn btn-primary pull-right reponse-modif">Valider</button>
+                    <button id="refuser" class="btn button-tableau pull-right reponse-modif">Refuser</button>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

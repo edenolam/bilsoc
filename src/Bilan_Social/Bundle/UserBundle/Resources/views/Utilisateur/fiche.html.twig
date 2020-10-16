@@ -1,0 +1,154 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/utilisateurs.css') }}">
+    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/UserBundle/utilisateur.js') }}"></script>
+    <script src="{{ asset('node_modules/bootstrap-slider/dist/bootstrap-slider.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            var droits = {{ postDroits|json_encode|raw }};
+            var action = $('#action-utilisateur').val();
+            var idUtil = $('#id-utilisateur').val();
+            if(($('#bilan_social_user_cdgs').val() != '' || $('#nmCdg').val() != '') && (action == 'ajouter' || action == 'modifier')){
+                if($('#nmCdg').val() != ''){
+                    $('#bilan_social_user_cdgs').val($('#nmCdg').val());
+                }
+                id = null;
+                if(action == 'modifier'){
+                    id = idUtil;
+                }
+                getLbCdg(id,droits);
+            }
+            $('.toggle-bs').bootstrapToggle({
+                on: 'Oui',
+                off: 'Non'
+            });
+        });
+        
+        
+    </script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Comptes utilisateur</a></li>
+                <li class="active">Fiche utilisateur</li>
+            </ol>
+        </div>
+        <h1>Fiche utilisateur</h1>
+        <input type="hidden" id="action-utilisateur" value="{% if app.request.get('id') == null %}ajouter{% else %}modifier{% endif %}">
+        <input type="hidden" id="id-utilisateur" value="{% if app.request.get('id') != null %}{{ app.request.get('id') }}{% endif %}">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% if form is defined %}
+            {{ form_start(form) }}
+            {{ form_row(form.profil) }}
+            <div id='cdg-wrapper' class='form-cdg'>
+                <input type="hidden" value="{% if utilCdg is defined and utilCdg is not null %}{{ utilCdg.cdg.nmCdg }}{% endif %}" name="nmCdg" id="nmCdg">
+                {{ form_row(form.cdgs) }}
+                <div class='form-group' id='lb-cdg-wrapper'>
+                    <label>Nom officiel du centre de gestion</label>
+                    <select id="lbCdg" name="lbCdg" class="form-control" readonly disabled></select>
+                </div>
+            </div>
+            <div id='infocentre-wrapper' class='form-infocentre infocentre'>
+                {{ form_row(form.profils) }}
+            </div>
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
+            <div id="errorPsw" class="alert alert-danger fade in">
+                <p>Votre mot de passe doit contenir : </p>
+                <ul>
+                    <li>au minimum 8 caractères</li>
+                    <li>différents types de caractères (Majuscules, minuscules, chiffres et caractères spéciaux)</li>
+                </ul>
+            </div>
+            {{ form_row(form.password) }}
+            <div class="form-group">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-danger" id="password-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0">
+                        <span class="sr-only">0% Complete (danger)</span>
+                        <span id="progress-bar-text" style="color:#000;"></span>
+                    </div>
+                </div>
+            </div>
+            <div class='row form-cdg'>
+                <div class='col-sm-5' style="padding-top: 15px;">
+                    <label>Autoriser le CDG à accéder aux modèles de mail ?</label>
+                </div>
+                <div class='col-sm-7'>
+                    {{ form_row(form.droitMails) }}
+                </div>
+            </div>
+             
+            <div class='row form-cdg'>
+                <div class='col-sm-5' style="padding-top: 15px;">
+                    <label>Module GPEEC</label>
+                </div>
+                <div class='col-sm-7'>
+                    {{ form_row(form.blGpeec) }}
+                </div>
+            </div> 
+            {% if app.request.get('id') != null %}
+                <div class='form-cdg'>
+                    <div class='form-group'>
+                        <label>Type d'utilisateur</label>
+                        <input type="text" class="form-control" id="typeUtil" name="typeUtil" readonly value='{% if typeUtil is defined and typeUtil is not null %}{{ typeUtil }}{% endif %}'>
+                    </div>
+                    <div class='form-group' id='liste-ref-wrapper'>
+                        <label>Référent(s)</label>
+                        {% if referents is defined and referents is not empty %}
+                            <ul id='liste-ref'>
+                                {% for ref in referents %}
+                                    <li>{{ ref.lbCdg }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% elseif referents is defined and referents is empty %}
+                            <p>Aucun référent n'a été renseigné.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <div id='table-droits-wrapper' class='cdg'>
+                {% include '@User/Utilisateur/droits.html.twig' %}
+            </div>
+            <div class='infocentre'>
+                <div id='user_departments_workflow_wrapper' class='infocentre'>
+                    <div id='filter_departements_form_receiver'>
+                        <label class='select_all_label box_border_tinyround box_border_slim'>
+                            <input type="checkbox" class='select_all_fellow_checkbox_departement'/>
+                            Tout cocher
+                        </label>
+                       {{ form_widget(form.departements) }} 
+                    </div>
+                </div>
+
+                {{ form_row(form.campagnes) }}
+            </div> 
+
+            <button type="submit" class="btn button-tableau" id="submit-fiche" disabled>{% if app.request.get('id') == null %}Ajouter{% else %}Modifier{% endif %}</button>
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
+{% endblock %}

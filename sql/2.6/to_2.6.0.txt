@@ -1,0 +1,9 @@
+/*-------------------------------------------
+*	scripts sql à executer pour la 2.6.0
+*/-------------------------------------------
+
+/*
+* procédure apa2cons
+*/
+- apa2cons/V2_2__RASSCT-3-maladie-pro-reconnue.sql
+- apa2cons/V2_2__RASSCT-2-maladie-pro.sql

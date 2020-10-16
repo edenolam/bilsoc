@@ -1,0 +1,28 @@
+refdomainediplome_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefDomaineDiplome:index" }
+    methods:  GET
+
+refdomainediplome_show:
+    path:     /{idDomaineDiplome}/show
+    defaults: { _controller: "ReferencielBundle:RefDomaineDiplome:show" }
+    methods:  GET
+
+refdomainediplome_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefDomaineDiplome:new" }
+    methods:  [GET, POST]
+
+refdomainediplome_edit:
+    path:     /{idDomaineDiplome}/edit
+    defaults: { _controller: "ReferencielBundle:RefDomaineDiplome:edit" }
+    methods:  [GET, POST]
+
+refdomainediplome_delete:
+    path:     /{idDomaineDiplome}/delete
+    defaults: { _controller: "ReferencielBundle:RefDomaineDiplome:delete" }
+    methods:  DELETE
+    
+csv_export_refdomainediplome:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefDomaineDiplome:generateCsv" }

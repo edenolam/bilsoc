@@ -1,0 +1,28 @@
+refmaladieprofessionnelle_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMaladieProfessionnelle:index" }
+    methods:  GET
+
+refmaladieprofessionnelle_show:
+    path:     /{idMaladiepro}/show
+    defaults: { _controller: "ReferencielBundle:RefMaladieProfessionnelle:show" }
+    methods:  GET
+
+refmaladieprofessionnelle_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMaladieProfessionnelle:new" }
+    methods:  [GET, POST]
+
+refmaladieprofessionnelle_edit:
+    path:     /{idMaladiepro}/edit
+    defaults: { _controller: "ReferencielBundle:RefMaladieProfessionnelle:edit" }
+    methods:  [GET, POST]
+
+refmaladieprofessionnelle_delete:
+    path:     /{idMaladiepro}/delete
+    defaults: { _controller: "ReferencielBundle:RefMaladieProfessionnelle:delete" }
+    methods:  DELETE
+
+csv_export_refmaladieprofessionnelle:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMaladieProfessionnelle:generateCsv" }

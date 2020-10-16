@@ -1,0 +1,46 @@
+modelmailinterneappli_index:
+    path:     /
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:index" }
+    methods:  GET
+
+modelmailinterneappli_show:
+    path:     /{id}/show
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:show" }
+    methods:  GET
+
+modelmailinterneappli_new:
+    path:     /new
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:new" }
+    methods:  [GET, POST]
+
+modelmailinterneappli_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:edit" }
+    methods:  [GET, POST]
+
+modelmailinterneappli_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:delete" }
+    methods:  DELETE
+
+modelmailinterneappli_showmodal:
+    path:     /{id}/modal
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:showModal" }
+    methods:  POST
+    options:
+        expose: true
+        
+modelmailinterneappli_edit_cdg:
+    path:     /{id}/edit_cdg
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:editcdg" }
+    methods:  [GET, POST]
+
+dupliquer_edit_cdg:
+    path:     /{id}/dupliquer
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:duplicate" }
+    methods:  [GET, POST]
+    
+modelmailinterneappli_delete_cdg:
+    path:     /{id}/delete_cdg
+    defaults: { _controller: "ModelMailBundle:ModelMailInterneAppli:deletecdg" }
+    methods:  DELETE

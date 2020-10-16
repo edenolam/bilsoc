@@ -1,0 +1,29 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    <style media="screen" type="text/css">
+        .ind110 {
+            width: 50px;
+        }
+    </style>
+
+    {% if app.session.flashBag.has('notice') %}
+    <div class="alert alert-success fade in" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {% for msg in app.session.flashBag.get('notice') %}
+            {{ msg }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div id="messageJS" class="alert alert-success fade in" style="display:none"></div>
+
+    
+
+{% endblock %}
+
+{% block javascripts %}
+   {{ parent() }}
+
+
+{% endblock %}

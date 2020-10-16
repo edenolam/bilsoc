@@ -1,0 +1,75 @@
+{% extends '@ModelMail/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li class="active"><a href="{{ path('modelmailinterneappli_index') }}">Gestion des modèles de mail internes à l'application</a></li>
+            </ol>
+        </div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <hr>
+        <table class="table table-hover" id="table-modelmail">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Objet</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for modelmail in modelmails %}
+                    <tr>
+                        <td>{{ modelmail.codeApp }}</td>
+                        <td>{{ modelmail.objet }}</td>
+                        <td>
+                            <a href="{{ path('modelmailinterneappli_show', { 'id': modelmail.id }) }}"><button class="btn button-tableau btn-outline btn-sm">Afficher</button></a>
+
+                            <a href="{{ path('dupliquer_edit_cdg', { 'id': modelmail.id }) }}"><button class="btn button-tableau btn-outline btn-sm">Dupliquer</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Liste des modèles de mails personnel</h3>
+        <table class="table table-hover" id="table-modelmailperso">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Objet</th>
+                    <th>Actions</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for modelmail in modelmailsperso %}
+                    <tr>
+                        <td>{{ modelmail.codeApp }}</td>
+                        <td>{{ modelmail.objet }}</td>
+                        <td>
+                            <button class="btn button-tableau btn-outline btn-sm afficherModelInterne" data-id="{{ modelmail.id }}">Afficher</button>
+
+                            <a href="{{ path('modelmailinterneappli_edit_cdg', { 'id': modelmail.id }) }}"><button class="btn button-tableau btn-outline btn-sm">Modifier</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

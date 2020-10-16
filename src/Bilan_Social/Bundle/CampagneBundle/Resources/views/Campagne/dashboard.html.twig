@@ -1,0 +1,54 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/ajoutCampagne.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CampagneBundle/relanceCdg.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-xs-9">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h3>Tableau de bord des campagnes</h3>
+        <table class="table table-hover align-center" id="table-dept">
+            <thead>
+                <tr>
+                    <th>Département</th>
+                    <th>Nombre de bilans sociaux validés</th>
+                    <th>Nombre des effectifs saisis</th>
+                    <th>Pourcentage des bilans sociaux validés</th>
+                    <th>Pourcentage de retour des effectifs saisis par rapport à l’effectif total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dpt in departements %}
+                    {% set nbBs = attribute(infosDepts,dpt.cdDepa).nbBsValide %}
+                    {% set nbColl = attribute(infosDepts,dpt.cdDepa).nbColl %}
+                    {% if nbBs != 0 and nbColl != 0 %}
+                        {% set pourcentageBs = nbBs / nbColl * 100 %}
+                    {% endif %}
+                    <tr>
+                        <td>{{ dpt.cdDepa }} - {{ dpt.lbDepa }}</td>
+                        <td>{% if nbBs is defined and nbBs != 0 %}{{ nbBs }}{% endif %}</td>
+                        <td></td>
+                        <td>{% if pourcentageBs is defined %}{{ pourcentageBs|round }} %{% endif %}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

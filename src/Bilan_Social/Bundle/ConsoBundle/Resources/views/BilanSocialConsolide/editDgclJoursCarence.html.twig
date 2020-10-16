@@ -1,0 +1,309 @@
+    
+{%
+    set manualRef = [
+        {
+            'label':'Nombre de jours de carence prélevés',
+            'valKey':['nbJoursCarencePrelevesH','nbJoursCarencePrelevesF'],
+        },
+        {
+            'label':'Montant de sommes retenues pour délai de carence (en €)',
+            'valKey':['nbSommeDelaiCarenceH','nbSommeDelaiCarenceF'],
+        },
+        {
+            'label':'Nombre total d\'agents rémunérés',
+            'valKey':['nbTotalAgentRemuneresH','nbTotalAgentRemuneresF'],
+        },
+        {
+            'label':'Nombre total d\'agents auxquels a été appliqué au moins un jour de carence',
+            'valKey':['nbTotalAgentJoursCarenceH','nbTotalAgentJoursCarenceF'],
+        },
+        {
+            'label':'nombre d\'arrêts maladie (hors prolongation)',
+            'valKey':['nbArretMaladiesH','nbArretMaladiesF'],
+        }
+    ]
+%}
+        
+{%
+    set formsValuesKeys = [
+        "bscDgclJoursCarenceTitulaires",
+        "bscDgclJoursCarenceContractuels"
+    ]
+%}
+{% set formsSortedInputsRows = [] %}
+{% for formValuesKeyIter, formValuesKey in formsValuesKeys %}
+    {% set tempSortedInd = [] %}
+    {% for key, refRow in manualRef %}
+        {% set temp = {('_' ~ key):[]} %}
+        {% set tempSortedInd = tempSortedInd|merge(temp)  %}
+    {% endfor %}
+    {# {% for tag in formDgclJoursCarence.indDgclJoursCarence1sTemp %} #}
+    {% for key, refRow in manualRef %}
+        {% set valKeys = refRow.valKey is iterable ? refRow.valKey : [refRow.valKey] %}
+        {% set rowFormWidgets = [] %}
+        {% set rowFormWidgetsTempHOlder = [] %}
+        {% for k, valKey  in valKeys %}
+            {% set rowFormWidgetsTempHOlder = rowFormWidgetsTempHOlder|merge({('_' ~ k):[]}) %}
+        {% endfor %}
+        {% for tag in forms[formValuesKey] %}
+            {% for k, valKey in valKeys %}
+                {# {% set rowFormWidgetsTempHOlder[k] = rowFormWidgetsTempHOlder[k]|merge([form_widget(indDgclJoursCarence1sTemp[valKey])]) %} #}
+                {% set currentRowPart = rowFormWidgetsTempHOlder['_' ~ k] %}
+                {% set currentRowPart = currentRowPart|merge([form_widget(tag[valKey])]) %}
+                {% set rowFormWidgetsTempHOlder = rowFormWidgetsTempHOlder|merge({('_' ~ k):currentRowPart}) %}
+            {% endfor %}
+        {% endfor %}
+        {% for row in rowFormWidgetsTempHOlder %}
+            {% set rowFormWidgets = rowFormWidgets|merge(row) %}
+        {% endfor %}
+        {% set tempSortedInd = tempSortedInd|merge({('_' ~ key):rowFormWidgets})  %}
+    {% endfor %} 
+    {% set formsSortedInputsRows = formsSortedInputsRows|merge({(formValuesKeyIter):tempSortedInd}) %}
+{% endfor %} 
+
+{{ form_start(forms) }}
+    <h5>
+        Agents titulaires 
+    </h5>
+    <table width="100%" id="indDgclJoursCarenceTitulaireTable" class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th class="th-tableau-ind" rowspan="3"></th>
+                <th colspan="8" style="text-align: center"></th>
+                <th class='filiTable' rowspan="3" style="text-align: center">Total</th>
+            </tr>
+            <tr>
+                <th colspan="4">Hommes</th>
+                <th colspan="4">Femmes</th>
+            </tr>
+            <tr>
+                <th colspan="1">Cat A</th>
+                <th colspan="1">Cat B</th>
+                <th colspan="1">Cat C</th>
+                <th colspan="1">AOTM</th>
+                <th colspan="1">Cat A</th>
+                <th colspan="1">Cat B</th>
+                <th colspan="1">Cat C</th>
+                <th colspan="1">AOTM</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k, row in formsSortedInputsRows[0] %}
+                {# {% set ref_exclude = (tag.refEmploiFonctionnel.vars.data.blExclutotal == true) %} #}
+                <tr>
+                    <td>{{ manualRef[k|replace({'_':''})].label }}</td>
+                    {% for cell in row %}
+                        <td style="text-align: center">{{ cell|raw }}</td>
+                    {% endfor %}
+                    <td class='lineTot filiTable'></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<h5>
+    Agents contractuels (permanents ou non permanents)
+</h5>
+
+<table width="100%"  id="indDgclJoursCarenceContractuelTable" class="table table-striped table-hover table-bordered">
+     <thead>
+            <tr>
+                <th class="th-tableau-ind" rowspan="3"></th>
+                <th colspan="8" style="text-align: center"></th>
+                <th class='filiTable' rowspan="3" style="text-align: center">Total</th>
+            </tr>
+            <tr>
+                <th colspan="4">Hommes</th>
+                <th colspan="4">Femmes</th>
+            </tr>
+            <tr>
+                <th colspan="1">Cat A</th>
+                <th colspan="1">Cat B</th>
+                <th colspan="1">Cat C</th>
+                <th colspan="1">AOTM</th>
+                <th colspan="1">Cat A</th>
+                <th colspan="1">Cat B</th>
+                <th colspan="1">Cat C</th>
+                <th colspan="1">AOTM</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k, row in formsSortedInputsRows[1] %}
+                {# {% set ref_exclude = (tag.refEmploiFonctionnel.vars.data.blExclutotal == true) %} #}
+                <tr>
+                    <td>{{ manualRef[k|replace({'_':''})].label }}</td>
+                    {% for cell in row %}
+                        <td style="text-align: center">{{ cell|raw }}</td>
+                    {% endfor %}
+                    <td class='lineTot filiTable'></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br/>
+
+
+    <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+            $('#progImg').show();" data-valide="1" />
+
+    <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+{{ form_end(forms) }}
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function ()
+    {
+        changeDetect = false;
+        $('#indDgclJoursCarenceTitulaireTable input.toTotal').on('change',changedJoursCarenceTitulaire);
+        $('#indDgclJoursCarenceContractuelTable input.toTotal').on('change',changedJoursCarenceContractuel);
+        
+        $(document).change();
+        /*console.log('1');*/
+        updateJoursCarenceTitulaire(true);
+        updateJoursCarenceContractuel(true);
+    });
+
+
+        /*
+         * METHODES Tableau Dgcl Jours Carence Titulaire et Contractuel
+         */
+    function changedJoursCarenceTitulaire(obj) {
+                // console.log('2');
+        updateJoursCarenceTitulaire(false);
+    }
+    function changedJoursCarenceContractuel(obj) {
+        updateJoursCarenceContractuel(false);
+    }
+
+    function updateJoursCarenceTitulaire(onInit) {
+        uptadeTableTotaux('indDgclJoursCarenceTitulaireTable', onInit);
+    }
+    function updateJoursCarenceContractuel(onInit) {
+        uptadeTableTotaux('indDgclJoursCarenceContractuelTable', onInit);
+    }
+
+    function uptadeTableTotaux(tableId, onInit){
+        var tableInd = document.getElementById(tableId);
+        var rowLengthTableInd = tableInd.rows.length;
+        var idxRowInput = 0;
+        var totalByLines = [];
+        var totalByCols = [];
+        var lineCpt = 0;
+        for (var i = 3; i < rowLengthTableInd; i += 1) {
+            totalByLines[lineCpt]=0;
+            var row = tableInd.rows[i];
+            var row_exclude_from_total = ($(row).attr('data-exclude-from-total')=='true');
+            var cellLength = row.cells.length;
+            var lineTotalEmp = false;
+
+            if ($(row).hasClass("colTot")) {
+                lineTotalEmp = true;
+                for (var y = 0; y < cellLength; y += 1) {
+                    var cell = row.cells[y];
+                    if(y==cellLength-1){
+                        cell.innerHTML = totalByLines[lineCpt];
+                    }else{
+                        var colTotal = totalByCols[y]
+                        cell.innerHTML = colTotal;
+                        totalByLines[lineCpt] += colTotal;
+                    }
+                }
+            }else{
+
+                var colCpt = 0
+                for (var y = 0; y < cellLength; y += 1) {
+                    totalByCols[colCpt] = isset(totalByCols[colCpt]) && !isEmpty(totalByCols[colCpt]) ? totalByCols[colCpt] : 0;
+                    var cell = row.cells[y];
+                    
+                    if ($(cell).hasClass("lineTot")) {
+                        lineTotTxt = row_exclude_from_total ? '('+totalByLines[lineCpt]+')' : totalByLines[lineCpt];
+                        cell.innerHTML = lineTotTxt;
+                    }else{
+                        var input = $(cell).find('input');
+                        var temp_cel_val = $(input).val() 
+                        if (isset(temp_cel_val) && !isEmpty(temp_cel_val)) {
+                            if(!row_exclude_from_total){
+                                totalByCols[colCpt] += parseInt($(input).val());
+                            }
+                            totalByLines[lineCpt] += parseInt($(input).val());
+                        }
+                    }
+                    colCpt++;
+                }
+            }
+            lineCpt++;
+            if (!lineTotalEmp)
+                idxRowInput++;
+        }// end for line
+
+        if (!onInit) {
+
+        }
+    }
+
+    /*
+     * METHODE AJAX SUBMIT
+     */
+    $(function () {
+        // Enregistrement en ajax
+        $('form').on('submit', function (e) {
+            var $this = $(this).closest('div');
+            var btn = $(this).find("input[type=submit]:focus");
+            var value_valide = $(btn).data('valide');
+            $('#bscForm110_valide').val(value_valide);
+
+            // Submit en ajax pour le fonctionnement d'appel par onglet // $('form').serialize(), 'valide': test
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: '{{ path('bilan_conso_dgcl_jours_carence_edit') }}',
+                data: $('form').serialize(),
+                success: function (responsejson) {
+
+                    if (responsejson.data == 1) {
+                        if (recordAuto) {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Enregistrement automatique réussi");
+                            messageJS.dialog("open");
+                            setIncoherenceTable(responsejson);
+
+                        } else {
+                            $('#jours_carence').load('{{ path('bilan_conso_dgcl_jours_carence_edit') }}', function () {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+
+                                var next = $($this).next('.panel-heading');
+                                if(next.length == 0) {
+                                    window.location.href = '{{ path('bilan_conso_mouv_edit') }}';
+                                }
+                            });
+                        }
+                    } else if (responsejson.data == "-3") {
+                        $('#progImg').hide();
+                        $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                        messageJS.dialog("open");
+                    } else {
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                        messageJS.dialog("open");
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    //alert(xhr);
+                    $('#progImg').hide();
+                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement : ");
+                    messageJS.dialog("open");
+                }
+
+            });
+        });
+    });
+
+</script>

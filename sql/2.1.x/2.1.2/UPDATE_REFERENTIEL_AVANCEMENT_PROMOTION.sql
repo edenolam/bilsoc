@@ -1,0 +1,1 @@
+UPDATE ref_avancement_promotion_concours SET BL_VALI = 0 WHERE CD_AVANPROMCONC  = 'APC001';

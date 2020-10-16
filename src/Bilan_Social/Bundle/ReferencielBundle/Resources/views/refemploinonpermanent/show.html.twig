@@ -1,0 +1,39 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refemploinonpermanent_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refEmploiNonPermanent.cdEmplnonperm }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refEmploiNonPermanent.lbEmplnonperm }}</td>
+                </tr>
+                <tr>
+                    <th>Code import N4ds</th>
+                    <td>{{ refEmploiNonPermanent.cdMotiN4ds }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refEmploiNonPermanent.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refEmploiNonPermanent} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refemploinonpermanent_edit', { 'idEmplnonperm': refEmploiNonPermanent.idEmplnonperm }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

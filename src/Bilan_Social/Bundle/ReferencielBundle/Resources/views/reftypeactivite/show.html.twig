@@ -1,0 +1,35 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('reftypeactivite_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refTypeActivite.cdTypeActi }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refTypeActivite.lbTypeActi }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refTypeActivite.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refTypeActivite} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('reftypeactivite_edit', { 'idTypeActi': refTypeActivite.idTypeActi }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

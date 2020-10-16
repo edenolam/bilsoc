@@ -1,0 +1,28 @@
+refcycletravail_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefCycleTravail:index" }
+    methods:  GET
+
+refcycletravail_show:
+    path:     /{idCycltrav}/show
+    defaults: { _controller: "ReferencielBundle:RefCycleTravail:show" }
+    methods:  GET
+
+refcycletravail_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefCycleTravail:new" }
+    methods:  [GET, POST]
+
+refcycletravail_edit:
+    path:     /{idCycltrav}/edit
+    defaults: { _controller: "ReferencielBundle:RefCycleTravail:edit" }
+    methods:  [GET, POST]
+
+refcycletravail_delete:
+    path:     /{idCycltrav}/delete
+    defaults: { _controller: "ReferencielBundle:RefCycleTravail:delete" }
+    methods:  DELETE
+
+csv_export_RefCycleTravail:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefCycleTravail:generateCsv" }

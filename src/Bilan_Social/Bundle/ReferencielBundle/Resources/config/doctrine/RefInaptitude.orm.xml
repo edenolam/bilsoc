@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefInaptitude" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefInaptitudeRepository" table="ref_inaptitude">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_INAP" name="cdInap"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idInap" type="integer" column="ID_INAP">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdInap" type="string" column="CD_INAP" length="50" nullable="true"/>
+        <field name="lbInap" type="string" column="LB_INAP" length="255" nullable="true"/>
+        <field name="blDema" type="boolean" column="BL_DEMA" nullable="true"/>
+        <field name="blDeci" type="boolean" column="BL_DECI" nullable="true"/>
+        <field name="blFili" type="boolean" column="BL_FILI" nullable="true"/>
+        <field name="blVisuagen" type="boolean" column="BL_VISUAGEN" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents_deci" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refInapDeci">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="bilanSocialAgents_dema" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refInapDema">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
+    </entity>
+</doctrine-mapping>

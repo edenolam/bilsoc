@@ -1,0 +1,86 @@
+#------------------------------------------#
+# Messages utilisés dans l'agent par agent
+#------------------------------------------#
+
+# Nom de l'agent
+agent.lbnom.not_blank: Le nom doit être renseigné
+# Prénom de l'agent
+agent.lbpren.not_blank: Le prénom doit être renseigné
+# Date de naissance de l'agent
+agent.lbdtnais.not_blank: La date de naissance doit être renseignée
+agent.datenais.bad_format: "Le format de la date saisie est incorrect (ex: 01/2017)"
+# Genre de l'agent
+agent.cdsexe.not_blank: Le genre doit être renseigné
+# Agent rémunéré au 31/12
+agent.blAgenremu3112.not_blank: Cette réponse est obligatoire
+# Statut de l'agent
+agent.status.not_blank: Le statut doit être renseigné
+
+#------------------------------------------#
+# Messages utilisés dans les actualités
+#------------------------------------------#
+
+# Date de fin de l'actualité
+actualite.dateFin.expression: La date de fin doit être supérieure à la date de début.
+# Format de l'image de l'actualité
+actualite.image.format:  fichier ({{ type }}) non valide, votre fichier doit avoir l'extension {{ types }}
+actualite.image.maxSize:  Fichier trop volumineux ({{ size }} {{ suffix }}). taille Max {{ limit }} {{ suffix }}.
+actualite.image.notfound: Fichier non trouvé.
+actualite.image.minWidth: La largeur de l'image est trop petite {{ width }}px. La largeur minimum attendue est de {{ min_width }}px.
+actualite.image.minHeight: La hauteur de l'image est trop petite {{ height }}px. La hauteur minimum attendue est de {{ max_height }}px.
+# Départements liés à l'actualité
+actualite.departement.minimum: Vous devez sélectionner au moins un départements.
+
+#------------------------------------------#
+# Messages utilisés dans les collectivités
+#------------------------------------------#
+
+# La collectivité est-elle rattachée au comité technique (CT) du CDG ?
+collectivite.blctcdg.not_blank: Le champ La collectivité est-elle rattachée au comité technique (CT) du CDG doit être renseigné.
+# Code postal de la collectivité
+collectivite.cdPost.not_blank: Le code postal doit être renseigné.
+collectivite.cdPost.minWidth: Le code postal doit être égal à 5.
+collectivite.cdPost.maxWidth: Le code postal doit être égal à 5.
+collectivite.cdPost.exactWidth: Le code postal doit être égal à 5.
+#numéro de siret
+collectivite.nmSire.not_blank: Le numéro de siret doit être renseigné.
+collectivite.nmSire.minWidth: Le numéro de siret doit être égal à 14.
+collectivite.nmSire.maxWidth: Le numéro de siret doit être égal à 14.
+collectivite.nmSire.exactWidth: Le numéro de siret doit être égal à 14.
+# nom de la collectivite
+collectivite.nom.not_blank: Le nom de la collectivité doit être renseigné.
+# adresse de la collectivité
+collectivite.adresse.not_blank: L'adresse de la collectivité doit être renseigné.
+# ville de la collectivité
+collectivite.ville.not_blank: La ville de la collectivité doit être renseigné.
+# CODE INSEE
+# Type de collectivité
+# Département de la collectivité
+collectivite.departement.not_blank: Le département de la collectivité doit être renseigné.
+# Centre de gestion de la collectivité
+collectivite.cdgDepartement.not_blank: Le centre de gestion de la collectivité doit être renseigné.
+# Population totale INSEE
+# Date de population totale INSEE
+# Sur-classement démographique
+# La collectivité est-elle affiliée au CDG
+collectivite.blAffiColl.not_blank: Cette réponse est obligatoire
+# La collectivité est-elle rattachée au comité technique ( CT ) du CDG ?
+# La collectivité fait-elle partie de l'échantillon de la DGCL ?
+collectivite.blCollDgcl.not_blank: Cette réponse est obligatoire
+# Zone d’emploi de la collectivité
+# SIRET de rattachement
+# Informations complémentaires
+
+#------------------------------------#
+# Messages utilisés dans les FAQs
+#------------------------------------#
+
+faq.sujet.not_blank: Le sujet est obligatoire
+faq.question.not_blank: La question est obligatoire
+faq.reponse.not_blank: La réponse est obligatoire
+
+#------------------------------------#
+# Messages utilisés dans les modeles de mails
+#------------------------------------#
+modelMail.objet.not_blank: L'objet du mail est obligatoire
+modelMail.body.not_blank: Le corp du mail est obligatoire

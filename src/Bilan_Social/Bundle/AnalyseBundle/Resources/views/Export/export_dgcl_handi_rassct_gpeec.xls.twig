@@ -1,0 +1,1418 @@
+{% xlsdocument %}
+    {% if isEmpty == true %}
+        {% xlssheet %} {% endxlssheet %}
+    {% else %}
+        {% set campagne = campagne_service.GetCurrentCampagne() %}
+        {% set AnneeCamp = '' %}
+        {% if campagne is not null %}
+            {% set AnneeCamp = nmAnnee is defined ? nmAnnee : campagne.nmAnne %}
+        {% endif %}
+
+        {% set subtitleStyle = {borders: {
+                                allBorders: {
+                                    borderStyle: 'thin',
+                                    color: {
+                                        rgb: '000000'
+                                    }
+                                }
+                            },
+                            alignment: {
+                                vertical: 'center',
+                                horizontal: 'center',
+                                wrapText: true
+                            },
+                            font: {
+                                bold: true
+                            } } %}
+                            
+        {% set subtitleLeftStyle = {borders: {
+                                allBorders: {
+                                    borderStyle: 'thin',
+                                    color: {
+                                        rgb: '000000'
+                                    }
+                                }
+                            },
+                            font: {
+                                bold: true
+                            },
+                            alignment: {
+                                vertical: 'center',
+                                wrapText: true,
+                            } } %}
+        
+        {% set borderStyle = {borders: {
+                                allBorders: {
+                                    borderStyle: 'thin',
+                                    color: {
+                                        rgb: '000000'
+                                    }
+                                }
+                            },
+                            alignment: {
+                                vertical: 'center',
+                                wrapText: true,
+                            } } %}
+                            
+        {% set labelStyle = {borders: {
+                                allBorders: {
+                                    borderStyle: 'thin',
+                                    color: {
+                                        rgb: '000000'
+                                    }
+                                }
+                            },
+                            alignment: {
+                                indent: 1,
+                                vertical: 'center',
+                                wrapText: true
+                            } } %}
+                            
+        {% set valueStyle = {borders: {
+                                allBorders: {
+                                    borderStyle: 'thin',
+                                    color: {
+                                        rgb: '000000'
+                                    }
+                                },
+                            },
+                            alignment: {
+                                indent: 1,
+                                vertical: 'center',
+                                wrapText: true
+                            },
+                            fill: {
+                                fillType: 'solid',
+                                startColor: {
+                                    rgb: 'D9D9D9'
+                                },
+                                endColor: {
+                                    rgb: 'D9D9D9'
+                                }
+                            } } %}
+                            
+        {% set valueBoolStyle = {borders: {
+                                allBorders: {
+                                    borderStyle: 'thin',
+                                    color: {
+                                        rgb: '000000'
+                                    }
+                                },
+                            },
+                            alignment: {
+                                vertical: 'center',
+                                horizontal: 'center',
+                                wrapText: true
+                            },
+                            fill: {
+                                fillType: 'solid',
+                                startColor: {
+                                    rgb: 'D9D9D9'
+                                },
+                                endColor: {
+                                    rgb: 'D9D9D9'
+                                }
+                            } } %}
+                            
+        {% set totalStyle = {borders: {
+                                allBorders: {
+                                    borderStyle: 'thin',
+                                    color: {
+                                        rgb: '000000'
+                                    }
+                                },
+                            },
+                            alignment: {
+                                indent: 1,
+                                vertical: 'center',
+                                wrapText: true
+                            },
+                            fill: {
+                                fillType: 'solid',
+                                startColor: {
+                                    rgb: 'BFBFBF'
+                                },
+                                endColor: {
+                                    rgb: 'BFBFBF'
+                                }
+                            } } %}
+        {% set blHand = false %}
+        {% set blRast = false %}
+        {% set blGepe = false %}
+
+        {% set blQ22 = false %}
+        {% set blQ23 = false %}
+
+
+        {% for qb22 in QHandiB22 if qb22 == true %}
+            {% set blQ22 = true %}
+        {% endfor %}
+
+        {% for qb23 in QHandiB23 if qb23 == true %}
+            {% set blQ23 = true %}
+        {% endfor %}
+
+
+
+
+        {% for enqueteColl in mesEnquetesCollectivites if enqueteColl.blHand %}
+            {% set blHand = true %}
+        {% endfor %}
+        {% for enqueteColl in mesEnquetesCollectivites if enqueteColl.blRast %}
+            {% set blRast = true %}
+        {% endfor %}
+
+        {% for enqueteColl in mesEnquetesCollectivites if enqueteColl.blGepe %}
+            {% set blGepe = true %}
+        {% endfor %}
+
+        {% if(blHand == true) %}
+            {% xlssheet 'Handitorial' {
+                tabColor: 'AD5362',
+                columnDimension: {
+                    'A': {
+                        width: '120'
+                    },
+                    'B': {
+                        width: '16'
+                    },
+                    'C': {
+                        width: '16'
+                    },
+                    'D': {
+                        width: '16'
+                    }
+                }
+                } %}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: {
+                            fill: {
+                                fillType: 'solid',
+                                startColor: {
+                                    rgb: 'AD5362'
+                                },
+                                endColor: {
+                                    rgb: 'AD5362'
+                                }
+                            },
+                            alignment: {
+                                horizontal: 'center',
+                                wrapText: true
+                            },
+                            font: {
+                                size: '18',
+                                color: {
+                                    rgb: 'FFFFFF'
+                                }
+                            }
+                        }
+                    } %}
+                        IND 9.1 - L'obligation d'emploi de travailleurs handicapés
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: borderStyle
+                    } %}  
+                        Informations générales
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+                <!-- Informations générales -->
+                {% xlsrow %}
+                    {% xlscell { style: subtitleStyle } %}Libellés{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Réponses{% endxlscell %}
+                {% endxlsrow %}
+                {% if (is_granted("ROLE_COLLECTIVITY")) %} 
+                    {% xlsrow %}
+                        {% xlscell { style: borderStyle } %} A1-7 Mail du correspondant Handicap {% endxlscell %}
+                        {% xlscell { style: valueStyle } %} 
+                                {% if (bscQA17 is not null) %} 
+                                    {{ bscQA17.qA17 is defined ? bscQA17.qA17 : "" }}
+                                {% endif %} 
+                        {% endxlscell %}      
+                    {% endxlsrow %}
+                {% endif %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A3 - Au 31/12 de l'année {{ AnneeCamp }}, la collectivité était-elle soumise à l'obligation d'emploi de travailleurs handicapés ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} 
+                        {% if (is_granted("ROLE_COLLECTIVITY")) %} 
+                            {% if (bscQA3 is not null and bscQA3.qA3 == true) %} 
+                                Oui
+                            {% else %} 
+                                Non 
+                            {% endif %} 
+                        {% endif %} 
+                        {% if (is_granted("ROLE_CDG") or (is_granted("ROLE_INFOCENTRE"))) %} 
+                            Oui 
+                        {% endif %} 
+                    {% endxlscell %}      
+                {% endxlsrow %}
+
+                <!-- Fin Informations générales -->
+
+                <!-- Inaptitude et reclassement -->
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: borderStyle
+                    } %}  
+                        IND 9.1.1 Inaptitude et reclassement
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleStyle} %} Libellés {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %} Réponses {% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-1-1 - Combien d'avis d'inaptitude temporaire ont été délivrés au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA511 is defined ? bscHandiInapEtRecla.qA511 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-1-2 - Combien d'avis d'inaptitude définitive à ses fonctions ont été délivrés au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA512 is defined ? bscHandiInapEtRecla.qA512 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-1-3 - Combien d'avis d'inaptitude définitive à toutes fonctions ont été délibrés au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA513 is defined ? bscHandiInapEtRecla.qA513 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-2-0 - Combien de reclassements ont été demandés au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.rA9 is defined ? bscHandiInapEtRecla.rA9 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-2-1 - Combien de reclassements (arrêtés) ont été prononcés au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA521 is defined ? bscHandiInapEtRecla.qA521 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-2-1-1 - Combien faisaient suite à une inaptitude liée à un accident du travail ou une maladie professionnelle {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.rA101 is defined ? bscHandiInapEtRecla.rA101 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-2-2 - Combien de retraites pour invalidité ont été prononcés au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA522 is defined ? bscHandiInapEtRecla.qA522 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-2-3 - Combien de licenciements pour inaptitude physique ont été prononcés au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA523 is defined ? bscHandiInapEtRecla.qA523 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A6-2 - Combien de mesures d'aménagement de poste ou des conditions de travail (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{ AnneeCamp }} au bénéfice de B.O.E.T.H ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA62 is defined ? bscHandiInapEtRecla.qA62 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A7-2 - Combien de mesures de changement d'affectation (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{ AnneeCamp }} au bénéfice de B.O.E.T.H ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA72 is defined ? bscHandiInapEtRecla.qA72 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A8 - Des mesures de disponibilités d'office (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{ AnneeCamp }} {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} 
+                        {% if (is_granted("ROLE_COLLECTIVITY")) %} 
+                            {% if (bscQA8 is not null and bscQA8.qA8 == true) %} 
+                                Oui
+                            {% else %} 
+                                Non 
+                            {% endif %} 
+                        {% endif %} 
+                        {% if (is_granted("ROLE_CDG") or (is_granted("ROLE_INFOCENTRE"))) %} 
+                            Oui 
+                        {% endif %} 
+                    {% endxlscell %}      
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A8-2 - Combien de mesures de disponibilité d'office (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{ AnneeCamp }} au bénéfice de B.O.E.T.H ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %} {{ bscHandiInapEtRecla.qA82 is defined ? bscHandiInapEtRecla.qA82 : 0 }} {% endxlscell %}      
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell %}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Oui / Non{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} A5-1  Des agents ont-ils bénéficiés d'un avis d'inaptitude au cours de l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %}
+
+                     {% if blQ22 == true %}
+                         Oui
+                        {% else %}
+                         Non
+                        {% endif %}
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% if bscRepo.isPropInAnnee('bscHanditorialAvisInaptitudes',nmAnnee) %}
+                    {% xlsrow %}
+                        {% xlscell { style: subtitleLeftStyle } %} Avis Inaptitude au cours de l'année {{ AnneeCamp }} {% endxlscell %}
+                        {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                        {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                    {% endxlsrow %}
+                    {% for value in bscHandiAvisInaps %}
+                        {% xlsrow %}
+                            {% xlscell { style: labelStyle } %} {{ value.lbInaptitudeBoeth|raw }} {% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.avisInaptitudeH }}{% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.avisInaptitudeF }}{% endxlscell %}
+                        {% endxlsrow %}
+                    {% endfor %}
+
+                    {% xlsrow %}{%endxlsrow%}
+                {% endif %}
+
+                {% if bscRepo.isPropInAnnee('bscHanditorialMesureInaptitudes',nmAnnee) %}
+                    {% xlsrow %}
+                        {% xlscell { style: subtitleLeftStyle } %} A5-2  Mesure suite à une inaptitude au cours de l'année {{ AnneeCamp }} {% endxlscell %}
+                        {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                        {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                    {% endxlsrow %}
+                    {% for value in bscHandiMesureInaps %}
+                        {% xlsrow %}
+                            {% xlscell { style: labelStyle } %} {{ value.lbMesureBoeth|raw }} {% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.mesureInaptitudeH }}{% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.mesureInaptitudeF }}{% endxlscell %}
+                        {% endxlsrow %}
+                    {% endfor %}
+
+                    {% xlsrow %}{%endxlsrow%}
+                {% endif %}
+
+                {% xlsrow %}
+                    {% xlscell %}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Oui / Non{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: borderStyle } %} Des agents ont-ils bénéficiés d'un avis d'inaptitude avant l'année {{ AnneeCamp }} ? {% endxlscell %}
+                    {% xlscell { style: valueBoolStyle } %}
+                        {% if  blQ23  == true %}
+                            Oui
+                        {% else %}
+                            Non
+                        {% endif %}
+                        {#{% if (bscHandiAvisInapsAvant is not empty) %}{% if bscHandiAvisInapsAvant == 1 %}Oui{% else %}Non{% endif %}{% else %} Non {% endif %}
+                        #}
+                        {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% if bscRepo.isPropInAnnee('bscHanditorialAvisInaptitudesAvant',nmAnnee) %}
+                    {% xlsrow %}
+                        {% xlscell { style: subtitleLeftStyle } %} Avis Inaptitude au cours de l'année {{ AnneeCamp-1 }} {% endxlscell %}
+                        {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                        {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                    {% endxlsrow %}
+                    {% for value in bscHandiAvisInapsAvant %}
+                        {% xlsrow %}
+                            {% xlscell { style: labelStyle } %} {{ value.lbInaptitudeAvant|raw }} {% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.avisInaptitudeAvantH }}{% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.avisInaptitudeAvantF }}{% endxlscell %}
+                        {% endxlsrow %}
+                    {% endfor %}
+
+                    {% xlsrow %}{%endxlsrow%}
+                {% endif %}
+
+                {% if bscRepo.isPropInAnnee('bscHanditorialMesureInaptitudesAvant',nmAnnee) %}
+                    {% xlsrow %}
+                        {% xlscell { style: subtitleLeftStyle } %} A5-2  Mesure suite à une inaptitude au cours de l'année {{ AnneeCamp-1 }} {% endxlscell %}
+                        {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                        {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                    {% endxlsrow %}
+                    {% for value in bscHandiMesureInapsAvant %}
+                        {% xlsrow %}
+                            {% xlscell { style: labelStyle } %} {{ value.lbMesureAvant|raw }} {% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.mesureInaptitudeAvantH }}{% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.mesureInaptitudeAvantF }}{% endxlscell %}
+                        {% endxlsrow %}
+                    {% endfor %}
+
+                    {% xlsrow %}{%endxlsrow%}
+                {% endif %}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        IND 9.1.2.4 Ancienneté des agents {{ AnneeCamp }}
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell %}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Moins de 1 an {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.moinsUnAnH is defined ? bscHandiAncienneteAgents.moinsUnAnH : 0 }} {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.moinsUnAnF is defined ? bscHandiAncienneteAgents.moinsUnAnF : 0 }} {% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Entre 1 et 3 ans {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.entreUnEtTroisH is defined ? bscHandiAncienneteAgents.entreUnEtTroisH : 0 }} {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.entreUnEtTroisF is defined ? bscHandiAncienneteAgents.entreUnEtTroisF : 0 }} {% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Entre 4 et 6 ans {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.entreQuatreEtSixH is defined ? bscHandiAncienneteAgents.entreQuatreEtSixH : 0 }} {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.entreQuatreEtSixF is defined ? bscHandiAncienneteAgents.entreQuatreEtSixF : 0 }} {% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Entre 7 et 12 ans {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.entreSeptEtDouzeH is defined ? bscHandiAncienneteAgents.entreSeptEtDouzeH : 0 }} {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.entreSeptEtDouzeF is defined ? bscHandiAncienneteAgents.entreSeptEtDouzeF : 0 }} {% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Plus de 12 ans {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.plusDouzeH is defined ? bscHandiAncienneteAgents.plusDouzeH : 0 }} {% endxlscell %}
+                    {% xlscell { style: valueStyle } %} {{ bscHandiAncienneteAgents.plusDouzeF is defined ? bscHandiAncienneteAgents.plusDouzeF : 0 }} {% endxlscell %}
+                {% endxlsrow %}
+
+                <!-- Fin Inaptitude et reclassement -->
+
+                
+                {% if bscRepo.isPropInAnnee('bscHanditorialInaptEtReclaCadreEmplois',nmAnnee) %}
+                    <!-- Répartition des agents inaptes ou reclassés selon le cadre d'emploi -->
+                    {% xlsrow %}
+                        {% xlscell {
+                            style: subtitleStyle
+                        } %}  
+                            Répartition des agents inaptes ou reclassés selon le cadre d'emplois en {{ AnneeCamp }}
+                        {% endxlscell %}
+                    {% endxlsrow %}
+
+                    {% set filiIncrement = '1' %}
+
+                    {% for value in bscHandiInapEtReclaCadreEmplois %}
+                        {% if(value.idFili == filiIncrement) %}
+                            {% xlsrow %}{%endxlsrow%}
+                            {% xlsrow %}
+                                {% xlscell { style: subtitleLeftStyle } %}{{ value.lbFili|upper|raw|raw }}{% endxlscell %}
+                                {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                                {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                            {% endxlsrow %}
+                            {% set filiIncrement = filiIncrement + 1 %}
+                        {% endif %}
+                        {% xlsrow %}
+                            {% xlscell { style: labelStyle }  %} {{ value.refCadreEmploi|raw }} {% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.cadreEmploiH }}{% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.cadreEmploiF }}{% endxlscell %}
+                        {% endxlsrow %}
+                    {% endfor %}
+
+                    <!-- Fin Répartition des agents inaptes ou reclassés selon le cadre d'emploi -->
+
+                    {% xlsrow %}{%endxlsrow%}
+                {% endif %}
+                
+
+                {% if bscRepo.isPropInAnnee('bscHanditorialInaptEtReclaMetiers',nmAnnee) %}
+                    <!-- Répartition des agents inaptes ou reclassés selon le métier -->
+                    {% xlsrow %}
+                        {% xlscell {
+                            style: subtitleStyle
+                        } %}  
+                            Répartition des agents inaptes ou reclassés selon le métier exercé en {{ AnneeCamp }}
+                        {% endxlscell %}
+                    {% endxlsrow %}
+
+                    {% set familleIncrement = '1' %}
+
+                    {% for value in bscHandiInapEtReclaMetiers %}
+                        {% if(value.idFamilleMetier == familleIncrement) %}
+                            {% xlsrow %}{%endxlsrow%}
+                            {% xlsrow %}
+                                {% xlscell { style: subtitleLeftStyle } %}{{ value.lbFamilleMetier|upper|raw|raw }}{% endxlscell %}
+                                {% xlscell { style: subtitleStyle } %}Code CNFPT{% endxlscell %}
+                                {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                                {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                            {% endxlsrow %}
+                            {% set familleIncrement = familleIncrement + 1 %}
+                        {% endif %}
+
+                        {% xlsrow %}
+                            {% xlscell { style: labelStyle }  %} {{ value.lbMetier|raw }} {% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.cdMetier }} {% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.metierH }}{% endxlscell %}
+                            {% xlscell { style: valueStyle } %}{{ value.metierF }}{% endxlscell %}
+                        {% endxlsrow %}
+                    {% endfor %}
+
+                    <!-- Fin Répartition des agents inaptes ou reclassés selon le métier -->
+
+                    {% xlsrow %}{%endxlsrow%}
+                {% endif %}
+
+                <!-- Répartition des agents inaptes selon le temps de travail -->
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Répartition des agents inaptes selon le temps de travail
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell %}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %}Temps Complet{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHanditorialInaptEtReclaTempsComplets.tempsCompletH is defined ? bscHanditorialInaptEtReclaTempsComplets.tempsCompletH : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHanditorialInaptEtReclaTempsComplets.tempsCompletF is defined ? bscHanditorialInaptEtReclaTempsComplets.tempsCompletF : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %}Temps Non Complet{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHanditorialInaptEtReclaTempsComplets.tempsNonCompletH is defined ? bscHanditorialInaptEtReclaTempsComplets.tempsNonCompletH : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHanditorialInaptEtReclaTempsComplets.tempsNonCompletF is defined ? bscHanditorialInaptEtReclaTempsComplets.tempsNonCompletF : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell %}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %}Temps Plein{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHanditorialTempsPleins.tempsPleinH is defined ? bscHanditorialTempsPleins.tempsPleinH : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHanditorialTempsPleins.tempsPleinF is defined ? bscHanditorialTempsPleins.tempsPleinF : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %}Temps Partiel{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHanditorialTempsPleins.tempsPartielH is defined ? bscHanditorialTempsPleins.tempsPartielH : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHanditorialTempsPleins.tempsPartielF is defined ? bscHanditorialTempsPleins.tempsPartielF : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+
+                <!-- Fin Répartition des agents inaptes selon le temps de travail -->
+
+                {% xlsrow %} {% endxlsrow %}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %} 
+                        IND 9.1.2 Questions B.O.E.T.H
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %}B2-1a Catégorie B.O.E.T.H de vos agents {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscHandiCategBoeths %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %} {{ value.lbCategorieboeth|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.categorieH }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.categorieF }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        IND 9.1.2.2 Nature du Handicap {{ AnneeCamp }}
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %}B2-1b Nature de leur(s) handicap(s) {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscHandiNatureHandis %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %} {{ value.lbNathandiboeth|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.natureHandicapH }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.natureHandicapF }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        IND 9.1.2.5 Modes d'entrées des agents BOETH
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Quels sont les modes d'entrées des agents B.O.E.T.H. ? {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscHandiModeEntrees %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %} {{ value.lbMotiarri|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.modeEntreeH }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.modeEntreeF }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        IND 9.1.2.6 Statut des BOETH
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Au 31/12 de l'année {{AnneeCamp}}, quels étaient les derniers statuts des agents ? {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscHandiStatuts %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %} {{ value.lbStat|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.statutAgentH }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.statutAgentF }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        IND 9.1.2.7 Diplôme des BOETH
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %}Derniers diplômes des agents{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscHandiDernierDiplomes %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle }  %} {{ value.lbDomaineDiplome|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.dernierDiplomeH }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.dernierDiplomeF }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        IND 9.1.2.8 Répartition des agents BOETH selon le cadre d’emplois en {{ AnneeCamp }}
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% set filiIncrement = '1' %}
+
+                {% for value in bscHandiCadreEmplois %}
+                    {% if(value.refCadreEmploi.refFiliere.idFili == filiIncrement) %}
+                        {% xlsrow %}{%endxlsrow%}
+                        {% xlsrow %}
+                            {% xlscell { style: subtitleLeftStyle } %}{{ value.refCadreEmploi.refFiliere.lbFili|upper|raw|raw }}{% endxlscell %}
+                            {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                            {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                        {% endxlsrow %}
+                        {% set filiIncrement = filiIncrement + 1 %}
+                    {% endif %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle }  %} {{ value.refCadreEmploi.lbCadrempl|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.cadreEmploiH }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.cadreEmploiF }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        IND 9.1.2.9 Répartition des agents BOETH selon le métier exercé en {{ AnneeCamp }}
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% set familleIncrement = '1' %}
+
+                {% for value in bscHandiMetiers %}
+                    {% if(value.refMetier.refFamilleMetier.idFamilleMetier == familleIncrement) %}
+                        {% xlsrow %}{%endxlsrow%}
+                        {% xlsrow %}
+                            {% xlscell { style: subtitleLeftStyle } %}{{ value.refMetier.refFamilleMetier.lbFamilleMetier|upper|raw }}{% endxlscell %}
+                            {% xlscell { style: subtitleStyle } %}Code CNFPT{% endxlscell %}
+                            {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                            {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                        {% endxlsrow %}
+                        {% set familleIncrement = familleIncrement + 1 %}
+                    {% endif %}
+
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle }  %} {{ value.refMetier.lbMetier|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.refMetier.cdMetier }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.metierH }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.metierF }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        IND 9.1.2.10 Répartition des agents BOETH selon le temps de travail
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell %}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %}Temps Complet{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHandiTempsComplet.tempsCompletH is defined ? bscHandiTempsComplet.tempsCompletH : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHandiTempsComplet.tempsCompletF is defined ? bscHandiTempsComplet.tempsCompletF : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %}Temps Non Complet{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHandiTempsComplet.tempsNonCompletH is defined ? bscHandiTempsComplet.tempsNonCompletH : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHandiTempsComplet.tempsNonCompletF is defined ? bscHandiTempsComplet.tempsNonCompletF : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell %}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %}Temps Plein{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHandiTempsPleins.tempsPleinH is defined ? bscHandiTempsPleins.tempsPleinH : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHandiTempsPleins.tempsPleinF is defined ? bscHandiTempsPleins.tempsPleinF : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %}Temps Partiel{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHandiTempsPleins.tempsPartielH is defined ? bscHandiTempsPleins.tempsPartielH : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscHandiTempsPleins.tempsPartielF is defined ? bscHandiTempsPleins.tempsPartielF : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+
+            {% endxlssheet %}
+        {% endif %}
+        
+        {% if(blRast == true) %}
+            {% xlssheet 'RASSCT' {
+                tabColor: '318687',
+                columnDimension: {
+                    'A': {
+                        width: '80'
+                    },
+                    'B': {
+                        width: '60'
+                    },
+                    'C': {
+                        width: '30'
+                    },
+                    'D': {
+                        width: '30'
+                    }
+                }
+                } %}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: {
+                            fill: {
+                                fillType: 'solid',
+                                startColor: {
+                                    rgb: '318687'
+                                },
+                                endColor: {
+                                    rgb: '318687'
+                                }
+                            },
+                            alignment: {
+                                horizontal: 'center',
+                                wrapText: true
+                            },
+                            font: {
+                                size: '18',
+                                color: {
+                                    rgb: 'FFFFFF'
+                                }
+                            }
+                        }
+                    } %}
+                        RASSCT : Rapport Annuel sur la Sécurité, la Santé et les Conditions de Travail
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{% endxlsrow %}
+
+                {% xlsrow %}
+                    {% xlscell %}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}{{ AnneeCamp-1 }}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}{{ AnneeCamp }}{% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleStyle } %}Accident du travail / de service{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre{% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %} Nombre d'accidents sans arrêt {% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.sansArret is defined ? bscRassctAcciTravs.sansArret.N_1 : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.sansArret is defined ? bscRassctAcciTravs.sansArret.N : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %} Nombre d'accidents avec arrêt entre 1 et 3 jours {% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.entre1et3 is defined ? bscRassctAcciTravs.entre1et3.N_1 : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.entre1et3 is defined ? bscRassctAcciTravs.entre1et3.N : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %} Nombre d'accidents avec arrêt entre 4 et 21 jours {% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.entre4et21 is defined ? bscRassctAcciTravs.entre4et21.N_1 : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.entre4et21 is defined ? bscRassctAcciTravs.entre4et21.N : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %} Nombre d'accidents avec arrêt entre 22 et 89 jours {% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.entre22et89 is defined ? bscRassctAcciTravs.entre22et89.N_1 : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.entre22et89 is defined ? bscRassctAcciTravs.entre22et89.N : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+                {% xlsrow %}
+                    {% xlscell { style: labelStyle } %} Nombre d'accidents avec arrêt de 90 jours ou plus {% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.plusDe90 is defined ? bscRassctAcciTravs.plusDe90.N_1 : 0 }}{% endxlscell %}
+                    {% xlscell { style: valueStyle } %}{{ bscRassctAcciTravs.plusDe90 is defined ? bscRassctAcciTravs.plusDe90.N : 0 }}{% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Actions réalisées de formation, de sensibilisation à la santé et à la sécurité du travail
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Thème de l'action {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre de personnes formées{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Organisme de formation{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctReaFormationSanteTravails %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.themeAction|raw }}{% endxlscell %}
+                        {% xlscell { style: labelStyle } %}{{ value.nbPersForm }}{% endxlscell %}
+                        {% xlscell { style: labelStyle } %}{{ value.orgaForm|raw }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Actions prévues de formation, de sensibilisation à la santé et à la sécurité du travail
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Thème de l'action {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre de personnes formées{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Organisme de formation{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctPrevFormationSanteTravails %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.themeAction|raw }}{% endxlscell %}
+                        {% xlscell { style: labelStyle } %}{{ value.nbPersForm }}{% endxlscell %}
+                        {% xlscell { style: labelStyle } %}{{ value.orgaForm|raw }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Autres mesures mises en place : matériel, équipement, études, audit, conseil...
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Mesures techniques {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Mesures organisationnelles{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctAutresMesures %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.mesuresTechniques|raw }}{% endxlscell %}
+                        {% xlscell { style: labelStyle } %}{{ value.mesuresOrgani|raw }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Nombre de maladies professionnelles ou à caractère professionnel ou contractées en service
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Nombre de maladies professionnelles ou à caractère professionnel ou contractées en service {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Homme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femme{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctMaladiePros %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.lbMaladiepro|raw }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rMp1 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rMp2 }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Prédictions - Autres mesures mises en place : matériel, équipement, études, audit, conseil...
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Mesures techniques {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %} Mesures organisationnelles {% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctPrevAutresMesures %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.mesuresTechniques|raw }}{% endxlscell %}
+                        {% xlscell { style: labelStyle } %}{{ value.mesuresOrgani|raw }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Nombre de maladies professionnelles ou à caractère professionnel ou contractées en service reconnues dans l'année
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Type d'activités {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre de MP reconnues en {{ AnneeCamp }}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents en %{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre de jours d'arrêt en {{ AnneeCamp }} pour les MP reconnues dans l'année{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctNbMaladiePros %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.lbTypeActi|raw }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbMpReconnues }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{% if totalBscRassctNbMaladiePros != 0 %} {{ (value.rNbMpReconnues / totalBscRassctNbMaladiePros * 100)|number_format(2) }}% {% else %} 0% {% endif %}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbJourArret }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Nombre d'accidents du travail / de service et de jours d'arrêt selon les types d'activités
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Type d'activités {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents survenus en {{ AnneeCamp }}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents en %{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre de jours d'arrêt en {{ AnneeCamp }} pour les accidents survenus en {{ AnneeCamp }} et avant{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctNbAccidentTravails %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.lbTypeActi|raw }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbAccidentsSurvenus }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{% if totalBscRassctNbAccidentTravails != 0 %} {{ (value.rNbAccidentsSurvenus / totalBscRassctNbAccidentTravails * 100)|number_format(2) }}% {% else %} 0% {% endif %}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbJourArretAccidents }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Nombre d'accidents du travail / de service et de jours d'arrêt suivant la nature des lésions
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Nature des lésions {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents survenus en {{ AnneeCamp }} avec arrêt{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents survenus en {{ AnneeCamp }} sans arrêt{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre de jours d'arrêt en {{ AnneeCamp }} pour les accidents survenus en {{ AnneeCamp }} et avant{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctNatureLesions %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.lbNatureLesi|raw }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbAccidentAvecArret }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbAccidentSansArret }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbJourArret }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Nombre d'accidents du travail / de service et de jours d'arrêt suivant le siège des lésions
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Siège des lésions {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents survenus en {{ AnneeCamp }}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents en %{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre de jours d'arrêt en {{ AnneeCamp }} pour les accidents survenus en {{ AnneeCamp }} et avant{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctSiegeLesions %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.lbSiegeLesi|raw }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbAccident }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{% if totalBscRassctSiegeLesions != 0 %} {{ (value.rNbAccident / totalBscRassctSiegeLesions * 100)|number_format(2) }}% {% else %} 0% {% endif %}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbJourArret }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Nombre d'accidents du travail / de service et de jours d'arrêt en fonction des éléments matériels
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %} Éléments matériels {% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents survenus en {{ AnneeCamp }}{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre d'accidents en %{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Nombre de jours d'arrêt en {{ AnneeCamp }} pour les accidents survenus en {{ AnneeCamp }} et avant{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscRassctElementMateriels %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %}{{ value.lbElementMat|raw }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbAccident }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{% if totalBscRassctElementMateriels != 0 %} {{ (value.rNbAccident / totalBscRassctElementMateriels * 100)|number_format(2) }}% {% else %} 0% {% endif %}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNbJourArret }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+            {% endxlssheet %}
+        {% endif %}
+        
+        {% if(blGepe == true) %}
+            {% xlssheet 'GPEEC' {
+                tabColor: 'E5BB07',
+                columnDimension: {
+                    'A': {
+                        width: '90'
+                    },
+                    'B': {
+                        width: '15'
+                    },
+                    'C': {
+                        width: '15'
+                    },
+                    'D': {
+                        width: '15'
+                    },
+                    'E': {
+                        width: '15'
+                    },
+                    'F': {
+                        width: '15'
+                    },
+                    'G': {
+                        width: '15'
+                    },
+                    'H': {
+                        width: '15'
+                    },
+                    'I': {
+                        width: '15'
+                    },
+                    'J': {
+                        width: '15'
+                    },
+                    'K': {
+                        width: '15'
+                    },
+                    'L': {
+                        width: '15'
+                    }
+                },
+                } %}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: {
+                            fill: {
+                                fillType: 'solid',
+                                startColor: {
+                                    rgb: 'E5BB08'
+                                },
+                                endColor: {
+                                    rgb: 'E5BB08'
+                                }
+                            },
+                            alignment: {
+                                horizontal: 'center',
+                                wrapText: true
+                            },
+                            font: {
+                                size: '18',
+                                color: {
+                                    rgb: 'FFFFFF'
+                                }
+                            }
+                        }
+                    } %}
+                        GESTION PREVISIONNELLE DES EMPLOIS ET COMPETENCES
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: borderStyle
+                    } %}  
+                        Répartition par classe d'âge des agents présents au 31 déc. {{ AnneeCamp }} selon le répertoire des métiers du CNFPT
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleStyle } %}Fonction CNFPT{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}moins de 25 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}25 à 29 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}30 à 34 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}35 à 39 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}40 à 44 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}45 à 49 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}50 à 54 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}55 à 59 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}60 à 64 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}65 ans et plus{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Ensemble{% endxlscell %}
+                {% endxlsrow %}
+
+                {% set totalValue1 = 0 %} {% set totalValue2 = 0 %} {% set totalValue3 = 0 %} {% set totalValue4 = 0 %} {% set totalValue5 = 0 %} 
+                {% set totalValue6 = 0 %} {% set totalValue7 = 0 %} {% set totalValue8 = 0 %} {% set totalValue9 = 0 %} {% set totalValue10 = 0 %} 
+                {% for value in bscGpeecMetierParAges %}
+                    {% set totalValue1 = totalValue1 + value.rNb1 %} {% set totalValue2 = totalValue2 + value.rNb2 %} {% set totalValue3 = totalValue3 + value.rNb3 %} 
+                    {% set totalValue4 = totalValue4 + value.rNb4 %} {% set totalValue5 = totalValue5 + value.rNb5 %} {% set totalValue6 = totalValue6 + value.rNb6 %} 
+                    {% set totalValue7 = totalValue7 + value.rNb7 %} {% set totalValue8 = totalValue8 + value.rNb8 %} {% set totalValue9 = totalValue9 + value.rNb9 %}
+                    {% set totalValue10 = totalValue10 + value.rNb10 %} 
+                    {% xlsrow %}
+                        {% set totalRow = value.rNb1 + value.rNb2 + value.rNb3 + value.rNb4 + value.rNb5 + value.rNb6 + value.rNb7 + value.rNb8 + value.rNb9 + value.rNb10 %} 
+                        {% xlscell { style: labelStyle } %} {{ value.refMetier.lbMetier|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb1 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb2 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb3 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb4 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb5 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb6 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb7 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb8 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb9 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb10 }}{% endxlscell %}
+                        {% xlscell { style: totalStyle } %} {{ totalRow }} {% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+                {% set totalTable = totalValue1 + totalValue2 + totalValue3 + totalValue4 + totalValue5 + totalValue6 + totalValue7 + totalValue8 + totalValue9 + totalValue10 %}
+                {% xlsrow %}
+                    {% xlscell { style: totalStyle } %}Ensemble{% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue1 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue2 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue3 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue4 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue5 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue6 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue7 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue8 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue9 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue10 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalTable }} {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Répartition par genre des niveaux de diplôme
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleLeftStyle } %}Niveaux Diplôme{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Hommes{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Femmes{% endxlscell %}
+                {% endxlsrow %}
+                {% for value in bscGpeecDiplomes %}
+                    {% xlsrow %}
+                        {% xlscell { style: labelStyle } %} {{ value.lbDomaineDiplome|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.nbHommes }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.nbFemmes }}{% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell {
+                        style: subtitleStyle
+                    } %}  
+                        Répartition par classe d'âge des agents présents au 31 déc. {{ AnneeCamp }} selon les spécialités
+                    {% endxlscell %}
+                {% endxlsrow %}
+
+                {% xlsrow %}{%endxlsrow%}
+
+                {% xlsrow %}
+                    {% xlscell { style: subtitleStyle } %}Spécialité{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}moins de 25 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}25 à 29 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}30 à 34 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}35 à 39 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}40 à 44 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}45 à 49 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}50 à 54 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}55 à 59 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}60 à 64 ans{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}65 ans et plus{% endxlscell %}
+                    {% xlscell { style: subtitleStyle } %}Ensemble{% endxlscell %}
+                {% endxlsrow %}
+
+                {% set totalValue1 = 0 %} {% set totalValue2 = 0 %} {% set totalValue3 = 0 %} {% set totalValue4 = 0 %} {% set totalValue5 = 0 %} 
+                {% set totalValue6 = 0 %} {% set totalValue7 = 0 %} {% set totalValue8 = 0 %} {% set totalValue9 = 0 %} {% set totalValue10 = 0 %} 
+                {% for value in bscGpeecSpecParAges %}
+                    {% set totalValue1 = totalValue1 + value.rNb1 %} {% set totalValue2 = totalValue2 + value.rNb2 %} {% set totalValue3 = totalValue3 + value.rNb3 %} 
+                    {% set totalValue4 = totalValue4 + value.rNb4 %} {% set totalValue5 = totalValue5 + value.rNb5 %} {% set totalValue6 = totalValue6 + value.rNb6 %} 
+                    {% set totalValue7 = totalValue7 + value.rNb7 %} {% set totalValue8 = totalValue8 + value.rNb8 %} {% set totalValue9 = totalValue9 + value.rNb9 %}
+                    {% set totalValue10 = totalValue10 + value.rNb10 %} 
+                    {% xlsrow %}
+                        {% set totalRow = value.rNb1 + value.rNb2 + value.rNb3 + value.rNb4 + value.rNb5 + value.rNb6 + value.rNb7 + value.rNb8 + value.rNb9 + value.rNb10 %} 
+                        {% xlscell { style: labelStyle } %} {{ value.refSpecialite.lbSpecialite|raw }} {% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb1 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb2 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb3 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb4 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb5 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb6 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb7 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb8 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb9 }}{% endxlscell %}
+                        {% xlscell { style: valueStyle } %}{{ value.rNb10 }}{% endxlscell %}
+                        {% xlscell { style: totalStyle } %} {{ totalRow }} {% endxlscell %}
+                    {% endxlsrow %}
+                {% endfor %}
+                {% set totalTable = totalValue1 + totalValue2 + totalValue3 + totalValue4 + totalValue5 + totalValue6 + totalValue7 + totalValue8 + totalValue9 + totalValue10 %}
+                {% xlsrow %}
+                    {% xlscell { style: totalStyle } %}Ensemble{% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue1 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue2 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue3 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue4 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue5 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue6 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue7 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue8 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue9 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalValue10 }} {% endxlscell %}
+                    {% xlscell { style: totalStyle } %} {{ totalTable }} {% endxlscell %}
+                {% endxlsrow %}
+
+            {% endxlssheet %}
+        {% endif %}
+    {% endif %}
+{% endxlsdocument %}

@@ -1,0 +1,98 @@
+{% extends '@InfoCentre/layout.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/InfoCentreBundle/infoCentreDepartement.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+	    <div id='info_centre_workflow_wrapper'>
+			<div id='filter_form_receiver'>
+           {#     {{ dump(form) }}#}
+                {{ form_start(form,{'attr':{'id':'infocentre_filter_form'}}) }}
+                {{ form_label(form.depaColl) }}
+
+                <label class='select_all_label box_border_tinyround box_border_slim'>
+                    <input type="checkbox" class='select_all_fellow_checkbox_departement'/>
+                    Tout cocher
+                </label>
+                {{ form_widget(form.depaColl) }}
+
+				{#<div id='filter_form_footer' class='row'>
+					<input class='pull-right btn btn-primary' type='submit' value='Valider'/>
+				</div>#}
+                {{ form_end(form) }}
+			</div>
+		</div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Nom de l'export</th>
+                <th>Description</th>
+                <th>Thème</th>
+                <th>Date de création du job</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="pool_export_bouttons_table_receiver">
+            {% for line in export_admin %}
+                <tr>
+                    <td>{{ line.name }}</td>
+                    <td>{{ line.description }}</td>
+                    <td>{{ line.theme }}</td>
+                    <td>{{ line.date|date('d-m-Y') }}</td>
+                    {#<td>{{ line.fgstat }}</td>#}
+                    <td><button type="button" data-job="{{ line.action }}" class="runjob btn btn-info" data-ajax-export="true">Exporter</button></td>
+
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            <div id="export_pool_error_container"></div>
+        </table>
+
+
+       {# <button type="button" data-job="job2" class="runjob btn btn-info">CLICK 2 </button>
+        <button type="button" data-job="job3" class="runjob btn btn-info">CLICK 3 </button>
+        <button type="button" data-job="job4" class="runjob btn btn-info">CLICK 4 </button>
+        <button type="button" data-job="job5" class="runjob btn btn-info">CLICK 5 </button>#}
+        {% include '@InfoCentre/departement/export_tasks_departement_list.html.twig' %}
+        <div id='spinner_export'></div>
+        <div>
+            <h3>Liste des exports</h3>
+            <table id='infocentre_departement_list_export' class="table stripe">
+                <thead>
+                    <tr>
+                        <th>type d'export</th>
+                        <th>date de début</th>
+                        <th>date de fin</th>
+                        <th>nom de département</th>
+                        <th>État</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+		{#<div id='pool_export_bay_receiver'>
+			<div class="card">
+			    <div class="card-header" id="head_pool_export_bay">
+					<h3 id='pool_export_bay_collapse' data-toggle="collapse" data-target="#body_pool_export_bay" aria-controls="body_pool_export_bay">
+						{{ "infocentre.pool_export_bay.section.title"|trans }}#}{#III - Résultats des filtres#}{#
+						<i class="fa fa-chevron-down"></i>
+					</h3>
+				</div>
+				<div id="body_pool_export_bay" class="collapse" aria-labelledby="head_pool_export_bay">
+					<div class="card-body">
+					  #}{#  {% if pools|length > 0 %}
+					    	{% include '@InfoCentre/pool_export_bay.html.twig' %}
+					    {% endif %}#}{#
+
+					</div>
+				</div>
+			</div>
+		</div>#}
+    </div>
+
+{% endblock body %}

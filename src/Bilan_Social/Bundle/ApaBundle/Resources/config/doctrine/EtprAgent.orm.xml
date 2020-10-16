@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\EtprAgent" table="etpr_agent">
+        <indexes>
+            <index name="FK_ETPRAGENT_BILANSOCIALAGENT" columns="ID_BILASOCIAGEN"/>
+            <index name="FK_ETPRAGENT_STAT" columns="ID_STAT"/>
+            <index name="FK_ETPRAGENT_FILI" columns="ID_FILI"/>
+            <index name="FK_ETPRAGENT_CADREMPL" columns="ID_CADREMPL"/>
+        </indexes>
+        <id name="idEtprAgent" type="integer" column="ID_ETPRAGENT">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="BilanSocialAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" inversed-by="EtprAgent">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN" />
+        </many-to-one>
+
+        <many-to-one field="refStatut" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStatut" inversed-by="EtprAgent">
+            <join-column name="ID_STAT" referenced-column-name="ID_STAT" />
+        </many-to-one>
+        <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere" inversed-by="EtprAgent">
+            <join-column name="ID_FILI" referenced-column-name="ID_FILI" />
+        </many-to-one>
+        <many-to-one field="refEmploiNonPermanent" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiNonPermanent" inversed-by="EtprAgent">
+            <join-column name="ID_EMPLNONPERM" referenced-column-name="ID_EMPLNONPERM" />
+        </many-to-one>
+
+        <many-to-one field="refCadreEmploi" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCadreEmploi" nullable="true">
+            <join-column name="ID_CADREMPL" referenced-column-name="ID_CADREMPL" />
+        </many-to-one>
+
+        <field name="dateIn" type="string" column="DT_OUT" length="7" nullable="true"/>
+        <field name="dateOut" type="string" column="DT_IN" length="7" nullable="true"/>
+
+        <field name="nbHeure" type="decimal" column="NB_HEUR" nullable="true" precision="10" scale="2"/>
+        <field name="nbHeureEtpr" type="decimal" column="NB_HEUR_ETPR" nullable="true" precision="10" scale="2"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+
+    </entity>
+</doctrine-mapping>

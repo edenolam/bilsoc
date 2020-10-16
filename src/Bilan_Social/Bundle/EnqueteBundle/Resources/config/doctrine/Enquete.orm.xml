@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete" table="enquete" repository-class="Bilan_Social\Bundle\EnqueteBundle\Repository\EnqueteRepository" >
+    <indexes>
+      <!--<index name="FK_CDG_CAMPAGNE" columns="ID_CDG"/>-->
+      <index name="FK_ENQUETE_CAMPAGNE" columns="ID_CAMP"/>
+    </indexes>
+    <id name="idEnqu" type="integer" column="ID_ENQU">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="idCamp" type="integer" column="ID_CAMP" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="lbEnqu" type="string" column="LB_ENQU" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="cmDesc" type="text" column="CM_DESC" length="65535" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nmAnne" type="integer" column="NM_ANNE" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dtDebu" type="datetime" column="DT_DEBU" nullable="true"/>
+    <field name="dtClot" type="datetime" column="DT_CLOT" nullable="true"/>
+    <field name="blRela" type="boolean" column="BL_RELA" nullable="true"/>
+    <field name="dtRela" type="datetime" column="DT_RELA" nullable="true"/>
+    <field name="blBlCdgColl" type="boolean" column="BL_BL_CDG_COLL" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <!--<field name="marking" type="string" column="CD_STATE_GESTION" length="50" nullable="false" />-->
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="blIdTypeColl" type="boolean" column="BL_ID_TYPE_COLL" nullable="true"/>
+    <field name="blIdDepa" type="boolean" column="BL_ID_DEPA" nullable="true"/>
+    <field name="blLbColl" type="boolean" column="BL_LB_COLL" nullable="true"/>
+    <field name="blCdPost" type="boolean" column="BL_CD_POST" nullable="true"/>
+    <field name="blLbVill" type="boolean" column="BL_LB_VILL" nullable="true"/>
+    <field name="blCdInse" type="boolean" column="BL_CD_INSE" nullable="true"/>
+    <field name="blNmSire" type="boolean" column="BL_NM_SIRE" nullable="true"/>
+    <field name="blNmPopuInse" type="boolean" column="BL_NM_POPU_INSE" nullable="true"/>
+    <field name="blBlSurclasDemo" type="boolean" column="BL_BL_SURCLAS_DEMO" nullable="true"/>
+    <field name="blNmStratColl" type="boolean" column="BL_NM_STRAT_COLL" nullable="true"/>
+    <field name="blBlAffiColl" type="boolean" column="BL_BL_AFFI_COLL" nullable="true"/>
+    <field name="blBlCtCdg" type="boolean" column="BL_BL_CT_CDG" nullable="true"/>
+    <field name="blChsct" type="boolean" column="BL_CHSCT" nullable="true"/>
+    <field name="blBlCollDgcl" type="boolean" column="BL_BL_COLL_DGCL" nullable="true"/>
+    <field name="blReinitPassword" type="boolean" column="BL_REINIT_PASSWORD" nullable="true"/>
+    <field name="blCloture" type="boolean" column="BL_CLOTURE" nullable="false"/>
+
+<!--    <many-to-one field="cdg" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Cdg" inversed-by="enquetes">
+        <join-column name="ID_CDG" referenced-column-name="ID_CDG" nullable="false"/>
+    </many-to-one>-->
+    
+    <many-to-many field="cdgDepartements" mapped-by="enquetes" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\CdgDepartement"/>
+    <many-to-many field="departements" mapped-by="enquetes" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement"/>
+    <many-to-one field="campagne" target-entity="Bilan_Social\Bundle\CampagneBundle\Entity\Campagne" inversed-by="enquetes">
+      <join-column name="ID_CAMP" referenced-column-name="ID_CAMP" />
+    </many-to-one>
+
+  </entity>
+</doctrine-mapping>

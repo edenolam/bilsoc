@@ -1,0 +1,50 @@
+#
+# ficher de route de base du LongTaskManagerBundle
+#
+# prefix des routes : /long_task_manager
+#
+long_task_manager_get_user_task:
+  path:     /get_user_task
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:getUserTask }
+  options:
+    expose: true
+long_task_manager_get_status_task:
+  path:     /get_status_task
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:getStatusTask }
+  options:
+    expose: true
+long_task_manager_get_file_content_task:
+  path:     /get_file_content_task
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:getTaskFileContent }
+  options:
+    expose: true
+long_task_manager_get_file_task:
+  path:     /get_file_task
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:getTaskFile }
+  options:
+    expose: true
+long_task_manager_cancel_delete_task:
+  path:     /cancel_delete_task
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:cancelDeleteTask }
+  options:
+    expose: true
+long_task_manager_delete_failed_task:
+  path:     /delete_failed_task
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:deleteFailedTask }
+  options:
+    expose: true
+long_task_get_ratio_pb:
+  path:     /get_ratio_task
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:getTaskRatio }
+  options:
+    expose: true
+long_task_get_uri_file:
+  path:     /get_uri_file/taskKey
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:getUriFile }
+  options:
+    expose: true
+delete_export_hrg:
+  path:     /delete_export_hrg
+  defaults: { _controller: LongTaskManagerBundle:LongTaskManager:deleteExportHrg }
+  options:
+    expose: true

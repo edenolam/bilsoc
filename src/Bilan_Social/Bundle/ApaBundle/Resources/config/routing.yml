@@ -1,0 +1,11 @@
+agent_par_agent:
+    resource: "@ApaBundle/Resources/config/routing/bilansocialagent.yml"
+    prefix: /agent_par_agent
+
+informations_generales:
+    resource: "@ApaBundle/Resources/config/routing/informationgenerale.yml"
+    prefix: /informations_generales
+
+apa_informationcolectiviteagent:
+        resource: "@ApaBundle/Resources/config/routing/informationcolectiviteagent.yml"
+        prefix:   /informationcolectiviteagent

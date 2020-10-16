@@ -1,0 +1,12 @@
+faq_index_client:
+    path:     /foire_aux_questions
+    defaults: { _controller: "FaqBundle:faq:indexCDGorCollectivite" }
+    methods:  [GET, POST]
+faq_search_client:
+    path:   /recherche
+    defaults: { _controller: "FaqBundle:faq:search" }
+    options:
+        expose: true
+faq_contact_client:
+    path:   /contact
+    defaults: { _controller: "FaqBundle:Question:new" }

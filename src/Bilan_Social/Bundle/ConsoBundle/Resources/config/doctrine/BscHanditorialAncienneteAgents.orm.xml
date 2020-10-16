@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialAncienneteAgents" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscHanditorialAncienneteAgentsRepository" table="bsc_handitorial_anciennete_agents">
+        <indexes>
+            <index name="FK_BSC_HANDITORIAL_ANCIENNETE_AGENTS_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+        <id name="idBscHanditorialAncienneteAgents" type="integer" column="ID_BSC_HANDITORIAL_ANCIENNETE_AGENTS">
+            <generator strategy="IDENTITY"/>
+        </id>
+        
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscHanditorialAncienneteAgents">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        
+        <field name="moinsUnAnH" type="integer" column="MOINS_UN_AN_H" nullable="true"/>
+        <field name="moinsUnAnF" type="integer" column="MOINS_UN_AN_F" nullable="true"/>
+        <field name="entreUnEtTroisH" type="integer" column="ENTRE_UN_ET_TROIS_H" nullable="true"/>
+        <field name="entreUnEtTroisF" type="integer" column="ENTRE_UN_ET_TROIS_F" nullable="true"/>
+        <field name="entreQuatreEtSixH" type="integer" column="ENTRE_QUATRE_ET_SIX_H" nullable="true"/>
+        <field name="entreQuatreEtSixF" type="integer" column="ENTRE_QUATRE_ET_SIX_F" nullable="true"/>
+        <field name="entreSeptEtDouzeH" type="integer" column="ENTRE_SEPT_ET_DOUZE_H" nullable="true"/>
+        <field name="entreSeptEtDouzeF" type="integer" column="ENTRE_SEPT_ET_DOUZE_F" nullable="true"/>
+        <field name="plusDouzeH" type="integer" column="PLUS_DOUZE_H" nullable="true"/>
+        <field name="plusDouzeF" type="integer" column="PLUS_DOUZE_F" nullable="true"/>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

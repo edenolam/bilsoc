@@ -1,0 +1,28 @@
+refnaturemaj_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefNatureMAJ:index" }
+    methods:  GET
+
+refnaturemaj_show:
+    path:     /{idNatureMAJ}/show
+    defaults: { _controller: "ReferencielBundle:RefNatureMAJ:show" }
+    methods:  GET
+
+refnaturemaj_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefNatureMAJ:new" }
+    methods:  [GET, POST]
+
+refnaturemaj_edit:
+    path:     /{idNatureMAJ}/edit
+    defaults: { _controller: "ReferencielBundle:RefNatureMAJ:edit" }
+    methods:  [GET, POST]
+
+refnaturemaj_delete:
+    path:     /{idNatureMAJ}/delete
+    defaults: { _controller: "ReferencielBundle:RefNatureMAJ:delete" }
+    methods:  DELETE
+
+csv_export_refnaturemaj:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefNatureMAJ:generateCsv" }

@@ -1,0 +1,27 @@
+<script type="text/javascript">
+    $('.input-date').datepicker({
+        language: "fr",
+        endDate: "0d"
+    });
+</script>
+<div class="modal fade align-center" id='echange'>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            {% if formEchange is defined %}
+                {{ form_start(formEchange) }}
+                <div class="modal-body">
+                    {{ form_row(formEchange.lbIntiEcha) }}
+                    {{ form_row(formEchange.lbTypeEcha) }}
+                    {{ form_row(formEchange.cmEcha) }}
+                    {{ form_row(formEchange.dtEcha) }}
+                    {{ form_row(formEchange.idHistEcha) }}
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary pull-right" id="btn-form-echange" value="Enregistrer" />
+                    <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Annuler</button>
+                </div>
+                {{ form_end(formEchange) }}
+            {% endif %}
+        </div>
+    </div>
+</div>

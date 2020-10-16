@@ -1,0 +1,1576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BilanSocialConsolideRepository" table="bilan_social_consolide">
+        <id name="idBilasocicons" type="integer" column="ID_BILASOCICONS">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+		<unique-constraints>
+			<unique-constraint columns="ID_COLL,ID_ENQU" name="IDXU1_BILANSOCIALCONSOLIDE"/>
+		</unique-constraints>
+
+        <many-to-one field="enquete" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete" >
+            <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" nullable="true"/>
+        </many-to-one>
+
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" nullable="true"/>
+        </many-to-one>
+
+        <many-to-one field="questionCollectiviteConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\QuestionCollectiviteConsolide">
+            <join-column name="ID_QUESCOLLCONS" referenced-column-name="ID_QUESCOLLCONS" nullable="true"/>
+        </many-to-one>
+
+        <one-to-many field="ind1101s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1101" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind1102s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1102" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind1103s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1103" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind111s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind111" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refGrade" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind112s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind112" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind113s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind113" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+                <order-by-field name="fgGenr" direction="DESC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind114s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind114" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refFiliere" direction="ASC" />
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind121s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind121" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind122s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind122" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind123s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind123" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+                <order-by-field name="fgGenr" direction="DESC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind124s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind124" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refFiliere" direction="ASC" />
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind1311s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1311" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refEmploiNonPermanent" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind1312s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1312" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refEmploiNonPermanent" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind132s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind132" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refFiliere" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind132Biss" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind132Bis" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind141s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind141" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind142s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind142" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind143s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind143" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind144s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind144" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+
+        <one-to-many field="ind1501s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1501" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="id1501" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind1502s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1502" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="id1502" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind1511s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1511" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refEmploiFonctionnel" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind1512s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1512" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refEmploiFonctionnel" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind1513s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1513" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refEmploiFonctionnel" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind152s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind152" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+
+        <one-to-many field="ind1531s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1531" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refMotifArrivee" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind1532s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1532" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind154s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind154" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refStageTitularisation" direction="ASC" />
+            </order-by>
+        </one-to-many>
+        <one-to-many field="ind155s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind155" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refAvancementPromotionConcours" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+<!--        <one-to-many field="ind156s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind156" mapped-by="bilanSocialConsolide">-->
+<!--            <cascade>-->
+<!--                <cascade-persist/>-->
+<!--                <cascade-merge/>-->
+<!--                <cascade-remove/>-->
+<!--            </cascade>-->
+<!--            <order-by>-->
+<!--                <order-by-field name="refCategorie" direction="ASC" />-->
+<!--            </order-by>-->
+<!--        </one-to-many>-->
+
+        <one-to-many field="ind157s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind157" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind158s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind158" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refFiliere" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind161s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind161" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+        <one-to-many field="ind1612s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1612" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind171s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind171" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="fgGenr" direction="DESC" />
+                <order-by-field name="refTrancheAge" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind2111s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2111" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="id2111" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind2112s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2112" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="id2112" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind2113s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2113" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="id2113" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind221s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind221" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind222s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind222" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind2121s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2121" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind2122s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2122" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind2123s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2123" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind2131s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2131" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind2132s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2132" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind2133s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2133" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind214s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind214" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind215s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind215" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind216s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind216" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind2231s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2231" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind2232s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2232" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind2233s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2233" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind2261s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2261" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind2262s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2262" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind2263s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2263" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind224s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind224" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind231s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind231" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="order" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind411s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind411" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refTypeMissionPrevention" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind412s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind412" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refActionPrevention" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind421s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind421" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+             <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind422s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind422" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind423s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind423" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="id423" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind423sFili" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind423Fili" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="idInap" direction="ASC" />
+                <order-by-field name="refFiliere" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind424s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind424" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind431s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind431" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refActeViolencePhysique" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind311s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind311" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refFiliere" direction="ASC" />
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind321s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind321" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refFiliere" direction="ASC" />
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+        <one-to-many field="ind331s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind331" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refEmploiNonPermanent" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind344s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind344" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind5111s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind5111" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind5112s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind5112" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+                <order-by-field name="refFormation" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind5113s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind5113" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+                <order-by-field name="refFormation" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind5121s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind5121" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refEmploiNonPermanent" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind5122s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind5122" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refEmploiNonPermanent" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind513s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind513" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="type" direction="ASC" />
+                <order-by-field name="refValidationExperience" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind613s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind613" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refMotifGreve" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind7141s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind7141" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind7142s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind7142" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCategorie" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="bscRassctAccidentTravails" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctAccidentTravail" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-one field="bscRassctInformationCollectivite" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctInformationCollectivite" mapped-by="bilanSocialConsolide">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+
+        <one-to-many field="bscRassctRealisationFormationSanteTravails" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctRealisationFormationSanteTravail" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctPrevisionFormationSanteTravails" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctPrevisionFormationSanteTravail" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctAutresMesures" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctAutresMesures" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctPredictionsAutresMesures" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctPredictionsAutresMesures" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctNbMaladiePros" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctNbMaladiePro" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctNbAccidentTravails" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctNbAccidentTravail" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctNatureLesions" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctNatureLesion" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctSiegeLesions" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctSiegeLesion" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctElementMateriels" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctElementMateriel" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscRassctMaladieProCaracPros" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctMaladieProCaracPro" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscGpeecNbAgentsTituEmpPermaParFoncEtAges" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscGpeecNbAgentsTituEmpPermaParFoncEtAge" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="bscGpeecNiveauDiplomes" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscGpeecNiveauDiplome" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscGpeecPlusNbAgentsParSpeEtAges" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscGpeecPlusNbAgentsParSpeEtAge" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-one field="bscHanditorialQuestionsGenerales" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialQuestionsGenerales" mapped-by="bilanSocialConsolide">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+
+        <one-to-one field="bscHanditorialInaptitudeEtReclassement" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialInaptitudeEtReclassement" mapped-by="bilanSocialConsolide">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+
+        <one-to-many field="bscHanditorialQuestionsBoeths" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialQuestionsBoeths" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialNatureHandicaps" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialNatureHandicaps" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialAvisInaptitudes" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialAvisInaptitudes" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialMesureInaptitudes" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialMesureInaptitudes" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialAvisInaptitudesAvant" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialAvisInaptitudesAvant" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialMesureInaptitudesAvant" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialMesureInaptitudesAvant" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialAncienneteAgents" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialAncienneteAgents" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialModeEntrees" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialModeEntrees" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialStatutAgents" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialStatutAgents" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialArticles" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialArticles" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialModeSortiesTitulaire" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialModeSortiesTitulaire" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialModeSortiesNonTitulaire" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialModeSortiesNonTitulaire" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialDerniersDiplomes" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialDerniersDiplomes" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialCadreEmplois" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialCadreEmplois" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialInaptEtReclaCadreEmplois" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialInaptEtReclaCadreEmplois" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refCadreEmploi" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialMetiers" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialMetiers" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refMetier" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialInaptEtReclaMetiers" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialInaptEtReclaMetiers" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refMetier" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialTempsComplets" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialTempsComplets" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialInaptEtReclaTempsComplets" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialInaptEtReclaTempsComplets" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscHanditorialTempsPleins" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialTempsPleins" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <!-- Partie Dgcl -->
+
+        <one-to-many field="bscDgclJoursCarenceTitulaires" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscDgclJoursCarenceTitulaire" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="bscDgclJoursCarenceContractuels" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BscDgclJoursCarenceContractuel" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ind6141s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind6141" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="groupe" direction="ASC" />
+                <order-by-field name="refSanctionDisciplinaire" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind6143s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind6143" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="groupe" direction="ASC" />
+                <order-by-field name="refSanctionDisciplinaire" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="ind6144s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind6144" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="groupe" direction="ASC" />
+                <order-by-field name="refSanctionDisciplinaire" direction="ASC" />
+            </order-by>
+        </one-to-many>
+        <one-to-many field="ind6142s" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\Ind6142" mapped-by="bilanSocialConsolide">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="refMotifSanctionDisciplinaire" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="incoherenceLogs" target-entity="Bilan_Social\Bundle\CoreBundle\Entity\IncoherenceLog" mapped-by="bilanSocialConsolide" >
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <order-by>
+                <order-by-field name="id" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+
+
+        <field name="q132" type="integer" column="Q_132" nullable="true"/>
+        <field name="q161" type="integer" column="Q_161" nullable="true"/>
+        <field name="r16211" type="decimal" column="R_16211" precision="10" scale="2" nullable="true"/>
+        <field name="r16212" type="decimal" column="R_16212" precision="10" scale="2" nullable="true"/>
+        <field name="r16213" type="decimal" column="R_16213" precision="10" scale="2" nullable="true"/>
+        <field name="r16214" type="decimal" column="R_16214" precision="10" scale="2" nullable="true"/>
+        <field name="r16221" type="integer" column="R_16221" nullable="true"/>
+        <field name="r16222" type="decimal" column="R_16222" precision="10" scale="2" nullable="true"/>
+        <field name="r16223" type="decimal" column="R_16223" precision="10" scale="2" nullable="true"/>
+
+        <field name="r2101" type="decimal" column="R_2101" precision="10" scale="2" nullable="true"/>
+        <field name="r2102" type="decimal" column="R_2102" precision="10" scale="2" nullable="true"/>
+        <field name="r2103" type="integer" column="R_2103" nullable="true"/>
+        <field name="r2104" type="decimal" column="R_2104" precision="10" scale="2" nullable="true"/>
+
+
+        <field name="q215" type="integer" column="Q_215" nullable="true"/>
+        <field name="q216" type="integer" column="Q_216" nullable="true"/>
+        <field name="q221" type="integer" column="Q_221" nullable="true"/>
+        <field name="q224" type="boolean" column="Q_224" nullable="true"/>
+        <field name="q225" type="integer" column="Q_225" nullable="true"/>
+        <field name="q3411" type="integer" column="Q_3411" nullable="true"/>
+        <field name="q3412" type="integer" column="Q_3412" nullable="true"/>
+        <field name="r3411" type="integer" column="R_3411" nullable="true"/>
+        <field name="r3412" type="integer" column="R_3412" nullable="true"/>
+        <field name="q3421" type="integer" column="Q_3421" nullable="true"/>
+        <field name="q3422" type="integer" column="Q_3422" nullable="true"/>
+        <field name="q3423" type="integer" column="Q_3423" nullable="true"/>
+        <field name="r342" type="integer" column="R_342" nullable="true"/>
+        <field name="q343" type="boolean" column="Q_343" nullable="true"/>
+        <field name="q344" type="boolean" column="Q_344" nullable="true"/>
+        <field name="r3451" type="bigint" column="R_3451" nullable="true"/>
+        <field name="r3452" type="bigint" column="R_3452" nullable="true"/>
+        <field name="r3453" type="string" column="R_3453" length="10" nullable="true"/>
+        <field name="r4131" type="integer" column="R_4131" nullable="true"/>
+        <field name="r4132" type="integer" column="R_4132" nullable="true"/>
+        <field name="q414" type="integer" column="Q_414" nullable="true"/>
+        <field name="r4141" type="integer" column="R_4141" nullable="true"/>
+        <field name="r4142" type="integer" column="R_4142" nullable="true"/>
+        <field name="q415" type="integer" column="Q_415" nullable="true"/>
+        <field name="q4161" type="integer" column="Q_4161" nullable="true"/>
+        <field name="q4162" type="integer" column="Q_4162" nullable="true"/>
+        <field name="q4163" type="integer" column="Q_4163" nullable="true"/>
+        <field name="q417" type="integer" column="Q_417" nullable="true"/>
+        <field name="q421" type="integer" column="Q_421" nullable="true"/>
+        <field name="r421" type="decimal" column="R_421" precision="10" scale="2" nullable="true"/>
+
+
+        <field name="q422" type="integer" column="Q_422" nullable="true"/>
+        <field name="q425" type="integer" column="Q_425" nullable="true"/>
+
+        
+        <field name="q4311" type="integer" column="Q_4311" nullable="true"/>
+        <field name="q4312" type="integer" column="Q_4312" nullable="true"/>
+        <field name="q4313" type="integer" column="Q_4313" nullable="true"/>
+
+
+        <field name="r5141" type="decimal" column="R_5141" precision="10" scale="2" nullable="true"/>
+        <field name="r5142" type="decimal" column="R_5142" precision="10" scale="2" nullable="true"/>
+        <field name="r5143" type="decimal" column="R_5143" precision="10" scale="2" nullable="true"/>
+        <field name="r5144" type="decimal" column="R_5144" precision="10" scale="2" nullable="true"/>
+
+        <field name="r6111" type="integer" column="R_6111" nullable="true"/>
+        <field name="r6112" type="integer" column="R_6112" nullable="true"/>
+        <field name="r6117" type="integer" column="R_6117" nullable="true"/>
+        <field name="q6113" type="integer" column="Q_6113" nullable="true"/>
+        <field name="r6113" type="integer" column="R_6113" nullable="true"/>
+        <field name="q6114" type="integer" column="Q_6114" nullable="true"/>
+        <field name="r6114" type="integer" column="R_6114" nullable="true"/>
+        <field name="r6115" type="integer" column="R_6115" nullable="true"/>
+        <field name="r6116" type="integer" column="R_6116" nullable="true"/>
+
+        <field name="r6121" type="integer" column="R_6121" nullable="true"/>
+        <field name="r6122" type="integer" column="R_6122" nullable="true"/>
+        <field name="r6123" type="integer" column="R_6123" nullable="true"/>
+        <field name="r6124" type="integer" column="R_6124" nullable="true"/>
+        <field name="r6125" type="integer" column="R_6125" nullable="true"/>
+        <field name="r6126" type="integer" column="R_6126" nullable="true"/>
+
+
+        <field name="q613" type="integer" column="Q_613" nullable="true"/>
+
+
+        <field name="q7111" type="integer" column="Q_7111" nullable="true"/>
+        <field name="q7112" type="integer" column="Q_7112" nullable="true"/>
+        <!--<field name="q7121" type="integer" column="Q_7121" nullable="true"/>-->
+        <field name="q7122" type="integer" column="Q_7122" nullable="true"/>
+        <field name="q7131" type="integer" column="Q_7131" nullable="true"/>
+        <field name="q7132" type="integer" column="Q_7132" nullable="true"/>
+        <field name="q7133" type="integer" column="Q_7133" nullable="true"/>
+        <field name="qS7141" type="integer" column="Q_S7141" nullable="true"/>
+        <field name="qS7142" type="integer" column="Q_S7142" nullable="true"/>
+        <field name="qP7143" type="integer" column="Q_P7143" nullable="true"/>
+        <field name="qP7144" type="integer" column="Q_P7144" nullable="true"/>
+        <field name="r7133" type="string" column="R_7133" nullable="true"/>
+        <field name="r71411HC" type="integer" column="R_71411" nullable="true"/>
+        <field name="r71412HC" type="integer" column="R_71412" nullable="true"/>
+        <field name="r71421HC" type="integer" column="R_71421" nullable="true"/>
+        <field name="r71422HC" type="integer" column="R_71422" nullable="true"/>
+
+        <field name="qHandiB22" type="boolean" column="Q_HANDI_B22" nullable="true"/>
+        <field name="qHandiB23" type="boolean" column="Q_HANDI_B23" nullable="true"/>
+        <field name="qHandiB41A" type="boolean" column="Q_HANDI_B41A" nullable="true"/>
+        <field name="qHandiB41B" type="boolean" column="Q_HANDI_B41B" nullable="true"/>
+
+
+        <field name="q3110" type="integer" column="Q_3110" nullable="true" />
+        <field name="q3111" type="integer" column="Q_3111" nullable="true" />
+
+        <field name="rifseepContractuel" type="integer" column="RIFSEEP_CONTRACTUEL" nullable="true" />
+
+
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+        <field name="blVali" type="boolean" column="BL_VALI" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <one-to-one field="BilanSocialAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent">
+            <join-column name="BilanSocialAgent_id" referenced-column-name="ID_BILASOCIAGEN" />
+        </one-to-one>
+
+
+        <field name="blIncoEff" type="integer" column="BL_INCO_EFF" nullable="true"/>
+        <field name="blIncoInd110" type="integer" column="BL_INCO_IND110" nullable="true"/>
+        <field name="moyenneInd110" type="decimal" column="MOYENNE_IND110" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd111" type="integer" column="BL_INCO_IND111" nullable="true"/>
+        <field name="moyenneInd111" type="decimal" column="MOYENNE_IND111" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd112" type="integer" column="BL_INCO_IND112" nullable="true"/>
+        <field name="moyenneInd112" type="decimal" column="MOYENNE_IND112" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd113" type="integer" column="BL_INCO_IND113" nullable="true"/>
+        <field name="moyenneInd113" type="decimal" column="MOYENNE_IND113" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd114" type="integer" column="BL_INCO_IND114" nullable="true"/>
+        <field name="moyenneInd114" type="decimal" column="MOYENNE_IND114" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd121" type="integer" column="BL_INCO_IND121" nullable="true"/>
+        <field name="moyenneInd121" type="decimal" column="MOYENNE_IND121" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd122" type="integer" column="BL_INCO_IND122" nullable="true"/>
+        <field name="moyenneInd122" type="decimal" column="MOYENNE_IND122" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd123" type="integer" column="BL_INCO_IND123" nullable="true"/>
+        <field name="moyenneInd123" type="decimal" column="MOYENNE_IND123" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd124" type="integer" column="BL_INCO_IND124" nullable="true"/>
+        <field name="moyenneInd124" type="decimal" column="MOYENNE_IND124" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd131" type="integer" column="BL_INCO_IND131" nullable="true"/>
+        <field name="moyenneInd131" type="decimal" column="MOYENNE_IND131" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd132" type="integer" column="BL_INCO_IND132" nullable="true"/>
+        <field name="moyenneInd132" type="decimal" column="MOYENNE_IND132" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd140" type="integer" column="BL_INCO_IND140" nullable="true"/>
+        <field name="moyenneInd140" type="decimal" column="MOYENNE_IND140" precision="10" scale="1" nullable="true"/>
+
+
+        <field name="blIncoTpsTrav" type="integer" column="BL_INCO_TPSTRAV" nullable="true"/>
+        <field name="blIncoInd210" type="integer" column="BL_INCO_IND210" nullable="true"/>
+        <field name="moyenneInd210" type="decimal" column="MOYENNE_IND210" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd211" type="integer" column="BL_INCO_IND211" nullable="true"/>
+        <field name="moyenneInd211" type="decimal" column="MOYENNE_IND211" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd212" type="integer" column="BL_INCO_IND212" nullable="true"/>
+        <field name="moyenneInd212" type="decimal" column="MOYENNE_IND212" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd213" type="integer" column="BL_INCO_IND213" nullable="true"/>
+        <field name="moyenneInd213" type="decimal" column="MOYENNE_IND213" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd214" type="integer" column="BL_INCO_IND214" nullable="true"/>
+        <field name="moyenneInd214" type="decimal" column="MOYENNE_IND214" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd215" type="integer" column="BL_INCO_IND215" nullable="true"/>
+        <field name="moyenneInd215" type="decimal" column="MOYENNE_IND215" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd216" type="integer" column="BL_INCO_IND216" nullable="true"/>
+        <field name="moyenneInd216" type="decimal" column="MOYENNE_IND216" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd217" type="integer" column="BL_INCO_IND217" nullable="true"/>
+        <field name="moyenneInd217" type="decimal" column="MOYENNE_IND217" precision="10" scale="1" nullable="true"/>
+        <field name="moyenneInd221" type="decimal" column="MOYENNE_IND221" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd222" type="integer" column="BL_INCO_IND222" nullable="true"/>
+        <field name="moyenneInd222" type="decimal" column="MOYENNE_IND222" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd223" type="integer" column="BL_INCO_IND223" nullable="true"/>
+        <field name="moyenneInd223" type="decimal" column="MOYENNE_IND223" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd224" type="integer" column="BL_INCO_IND224" nullable="true"/>
+        <field name="moyenneInd224" type="decimal" column="MOYENNE_IND224" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd225" type="integer" column="BL_INCO_IND225" nullable="true"/>
+        <field name="moyenneInd225" type="decimal" column="MOYENNE_IND225" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd226" type="integer" column="BL_INCO_IND226" nullable="true"/>
+        <field name="moyenneInd226" type="decimal" column="MOYENNE_IND226" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd231" type="integer" column="BL_INCO_IND231" nullable="true"/>
+        <field name="moyenneInd231" type="decimal" column="MOYENNE_IND231" precision="10" scale="1" nullable="true"/>
+
+        <field name="r2171" type="integer" column="R_2171" nullable="true"/>
+        <field name="r2172" type="integer" column="R_2172" nullable="true"/>
+        <field name="r2173" type="integer" column="R_2173" nullable="true"/>
+        <field name="r2174" type="integer" column="R_2174" nullable="true"/>
+        <field name="r2175" type="integer" column="R_2175" nullable="true"/>
+        <field name="r2176" type="integer" column="R_2176" nullable="true"/>
+        <field name="r2177" type="integer" column="R_2177" nullable="true"/>
+        <field name="r2178" type="integer" column="R_2178" nullable="true"/>
+
+        <field name="blIncoInd227" type="integer" column="BL_INCO_IND227" nullable="true"/>
+        <field name="moyenneInd227" type="integer" column="MOYENNE_IND227" nullable="true"/>
+        <field name="r2271" type="integer" column="R_2271" nullable="true"/>
+        <field name="r2272" type="integer" column="R_2272" nullable="true"/>
+
+        <field name="ind2211Cycle" type="integer" column="Ind2211Cycle" nullable="true"/>
+        <field name="ind2212Cycle" type="integer" column="Ind2212Cycle" nullable="true"/>
+
+        <field name="blIncoMouv" type="integer" column="BL_INCO_MOUV" nullable="true"/>
+        <field name="blIncoInd150" type="integer" column="BL_INCO_IND150" nullable="true"/>
+        <field name="moyenneInd150" type="decimal" column="MOYENNE_IND150" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd151" type="integer" column="BL_INCO_IND151" nullable="true"/>
+        <field name="moyenneInd151" type="decimal" column="MOYENNE_IND151" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd152" type="integer" column="BL_INCO_IND152" nullable="true"/>
+        <field name="moyenneInd152" type="decimal" column="MOYENNE_IND152" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd1531" type="integer" column="BL_INCO_IND1531" nullable="true"/>
+        <field name="moyenneInd1531" type="decimal" column="MOYENNE_IND1531" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd1532" type="integer" column="BL_INCO_IND1532" nullable="true"/>
+        <field name="moyenneInd1532" type="decimal" column="MOYENNE_IND1532" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd154" type="integer" column="BL_INCO_IND154" nullable="true"/>
+        <field name="moyenneInd154" type="decimal" column="MOYENNE_IND154" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd155" type="integer" column="BL_INCO_IND155" nullable="true"/>
+        <field name="moyenneInd155" type="decimal" column="MOYENNE_IND155" precision="10" scale="1" nullable="true"/>
+<!--        <field name="blIncoInd156" type="integer" column="BL_INCO_IND156" nullable="true"/>-->
+<!--        <field name="moyenneInd156" type="decimal" column="MOYENNE_IND156" precision="10" scale="1" nullable="true"/>-->
+        <field name="blIncoInd158" type="integer" column="BL_INCO_IND158" nullable="true"/>
+        <field name="moyenneInd158" type="decimal" column="MOYENNE_IND158" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd161" type="integer" column="BL_INCO_IND161" nullable="true"/>
+        <field name="moyenneInd161" type="decimal" column="MOYENNE_IND161" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd162" type="integer" column="BL_INCO_IND162" nullable="true"/>
+        <field name="moyenneInd162" type="decimal" column="MOYENNE_IND162" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd171" type="integer" column="BL_INCO_IND171" nullable="true"/>
+        <field name="moyenneInd171" type="decimal" column="MOYENNE_IND171" precision="10" scale="1" nullable="true"/>
+
+        <field name="blIncoConditions" type="integer" column="BL_INCO_CONDITIONS" nullable="true"/>
+        <field name="blIncoInd411" type="integer" column="BL_INCO_IND411" nullable="true"/>
+        <field name="moyenneInd411" type="decimal" column="MOYENNE_IND411" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd413" type="integer" column="BL_INCO_IND413" nullable="true"/>
+        <field name="moyenneInd413" type="decimal" column="MOYENNE_IND413" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd414" type="integer" column="BL_INCO_IND414" nullable="true"/>
+        <field name="moyenneInd414" type="decimal" column="MOYENNE_IND414" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd421" type="integer" column="BL_INCO_IND421" nullable="true"/>
+        <field name="moyenneInd421" type="decimal" column="MOYENNE_IND421" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd422" type="integer" column="BL_INCO_IND422" nullable="true"/>
+        <field name="moyenneInd422" type="decimal" column="MOYENNE_IND422" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd423" type="integer" column="BL_INCO_IND423" nullable="true"/>
+        <field name="moyenneInd423" type="decimal" column="MOYENNE_IND423" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd424" type="integer" column="BL_INCO_IND424" nullable="true"/>
+        <field name="moyenneInd424" type="decimal" column="MOYENNE_IND424" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd425" type="integer" column="BL_INCO_IND425" nullable="true"/>
+        <field name="moyenneInd425" type="decimal" column="MOYENNE_IND425" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd431" type="integer" column="BL_INCO_IND431" nullable="true"/>
+        <field name="moyenneInd431" type="decimal" column="MOYENNE_IND431" precision="10" scale="1" nullable="true"/>
+
+
+        <field name="blIncoRemuneration" type="integer" column="BL_INCO_REMU" nullable="true"/>
+        <field name="blIncoInd311" type="integer" column="BL_INCO_IND311" nullable="true"/>
+        <field name="moyenneInd311" type="decimal" column="MOYENNE_IND311" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd321" type="integer" column="BL_INCO_IND321" nullable="true"/>
+        <field name="moyenneInd321" type="decimal" column="MOYENNE_IND321" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd331" type="integer" column="BL_INCO_IND331" nullable="true"/>
+        <field name="moyenneInd331" type="decimal" column="MOYENNE_IND331" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd341" type="integer" column="BL_INCO_IND341" nullable="true"/>
+        <field name="moyenneInd341" type="decimal" column="MOYENNE_IND341" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd342" type="integer" column="BL_INCO_IND342" nullable="true"/>
+        <field name="moyenneInd342" type="decimal" column="MOYENNE_IND342" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd343" type="integer" column="BL_INCO_IND343" nullable="true"/>
+        <field name="moyenneInd343" type="decimal" column="MOYENNE_IND343" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd344" type="integer" column="BL_INCO_IND344" nullable="true"/>
+        <field name="moyenneInd344" type="decimal" column="MOYENNE_IND344" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd345" type="integer" column="BL_INCO_IND345" nullable="true"/>
+        <field name="moyenneInd345" type="decimal" column="MOYENNE_IND345" precision="10" scale="1" nullable="true"/>
+
+
+        <field name="blIncoFormation" type="integer" column="BL_INCO_FORM" nullable="true"/>
+
+        <field name="blIncoInd5111" type="integer" column="BL_INCO_IND5111" nullable="true"/>
+        <field name="moyenneInd5111" type="decimal" column="MOYENNE_IND5111" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd5112" type="integer" column="BL_INCO_IND5112" nullable="true"/>
+        <field name="moyenneInd5112" type="decimal" column="MOYENNE_IND5112" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd5113" type="integer" column="BL_INCO_IND5113" nullable="true"/>
+        <field name="moyenneInd5113" type="decimal" column="MOYENNE_IND5113" precision="10" scale="1" nullable="true"/>
+
+        <field name="blIncoInd512" type="integer" column="BL_INCO_IND512" nullable="true"/>
+        <field name="moyenneInd512" type="decimal" column="MOYENNE_IND512" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd513" type="integer" column="BL_INCO_IND513" nullable="true"/>
+        <field name="moyenneInd513" type="decimal" column="MOYENNE_IND513" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd514" type="integer" column="BL_INCO_IND514" nullable="true"/>
+        <field name="moyenneInd514" type="decimal" column="MOYENNE_IND514" precision="10" scale="1" nullable="true"/>
+
+
+        <field name="blIncoDroit" type="integer" column="BL_INCO_DROIT" nullable="true"/>
+        <field name="blIncoInd611" type="integer" column="BL_INCO_IND611" nullable="true"/>
+        <field name="moyenneInd611" type="decimal" column="MOYENNE_IND611" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd612" type="integer" column="BL_INCO_IND612" nullable="true"/>
+        <field name="moyenneInd612" type="decimal" column="MOYENNE_IND612" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd613" type="integer" column="BL_INCO_IND613" nullable="true"/>
+        <field name="moyenneInd613" type="decimal" column="MOYENNE_IND613" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd614" type="integer" column="BL_INCO_IND614" nullable="true"/>
+        <field name="moyenneInd614" type="decimal" column="MOYENNE_IND614" precision="10" scale="1" nullable="true"/>
+
+        <field name="blIncoInd711" type="integer" column="BL_INCO_IND711" nullable="true"/>
+        <field name="moyenneInd711" type="decimal" column="MOYENNE_IND711" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd712" type="integer" column="BL_INCO_IND712" nullable="true"/>
+        <field name="moyenneInd712" type="decimal" column="MOYENNE_IND712" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd713" type="integer" column="BL_INCO_IND713" nullable="true"/>
+        <field name="moyenneInd713" type="decimal" column="MOYENNE_IND713" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoInd714" type="integer" column="BL_INCO_IND714" nullable="true"/>
+        <field name="moyenneInd714" type="decimal" column="MOYENNE_IND714" precision="10" scale="1" nullable="true"/>
+
+        <field name="blIncoRassct" type="integer" column="BL_INCO_RASSCT" nullable="true"/>
+        <field name="blIncoRassctAccidentTravail" type="integer" column="BL_INCO_RASSCT_ACCIDENT_TRAVAIL" nullable="true"/>
+        <field name="moyenneRassctAccidentTravail" type="decimal" column="MOYENNE_RASSCT_ACCIDENT_TRAVAIL" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctRealisationFormationSanteTravail" type="integer" column="BL_INCO_RASSCT_REALISATION_FORMATION_SANTE_TRAVAIL" nullable="true"/>
+        <field name="moyenneRassctRealisationFormationSanteTravail" type="decimal" column="MOYENNE_RASSCT_REALISATION_FORMATION_SANTE_TRAVAIL" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctAutresMesures" type="integer" column="BL_INCO_RASSCT_AUTRES_MESURES" nullable="true"/>
+        <field name="moyenneRassctAutresMesures" type="decimal" column="MOYENNE_RASSCT_AUTRES_MESURES" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctPrevisionFormationSanteTravail" type="integer" column="BL_INCO_RASSCT_PREVISION_FORMATION_SANTE_TRAVAIL" nullable="true"/>
+        <field name="moyenneRassctPrevisionFormationSanteTravail" type="decimal" column="MOYENNE_RASSCT_PREVISION_FORMATION_SANTE_TRAVAIL" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctPredictionsAutresMesures" type="integer" column="BL_INCO_RASSCT_PREDICTIONS_AUTRES_MESURES" nullable="true"/>
+        <field name="moyenneRassctPredictionsAutresMesures" type="decimal" column="MOYENNE_RASSCT_PREDICTIONS_AUTRES_MESURES" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctNbMaladiePro" type="integer" column="BL_INCO_RASSCT_NB_MALADIE_PRO" nullable="true"/>
+        <field name="moyenneRassctNbMaladiePro" type="decimal" column="MOYENNE_RASSCT_NB_MALADIE_PRO" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctNbAccidentTravail" type="integer" column="BL_INCO_RASSCT_NB_ACCIDENT_TRAVAIL" nullable="true"/>
+        <field name="moyenneRassctNbAccidentTravail" type="decimal" column="MOYENNE_RASSCT_NB_ACCIDENT_TRAVAIL" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctNatureLesion" type="integer" column="BL_INCO_RASSCT_NATURE_LESION" nullable="true"/>
+        <field name="moyenneRassctNatureLesion" type="decimal" column="MOYENNE_RASSCT_NATURE_LESION" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctSiegeLesion" type="integer" column="BL_INCO_RASSCT_SIEGE_LESION" nullable="true"/>
+        <field name="moyenneRassctSiegeLesion" type="decimal" column="MOYENNE_RASSCT_SIEGE_LESION" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctElementMateriel" type="integer" column="BL_INCO_RASSCT_ELEMENT_MATERIEL" nullable="true"/>
+        <field name="moyenneRassctElementMateriel" type="decimal" column="MOYENNE_RASSCT_ELEMENT_MATERIEL" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoRassctMaladieProCaracPro" type="integer" column="BL_INCO_RASSCT_MALADIE_PRO_CARAC_PRO" nullable="true"/>
+        <field name="moyenneRassctMaladieProCaracPro" type="decimal" column="MOYENNE_RASSCT_MALADIE_PRO_CARAC_PRO" precision="10" scale="1" nullable="true"/>
+
+        <field name="blIncoRassctInformationCollectivite" type="integer" column="BL_INCO_RASSCT_INFORMATION_COLLECTIVITE" nullable="true"/>
+        <field name="moyenneRassctInformationCollectivite" type="decimal" column="MOYENNE_RASSCT_INFORMATION_COLLECTIVITE" precision="10" scale="1" nullable="true"/>
+
+        <field name="blIncoGpeec" type="integer" column="BL_INCO_GPEEC" nullable="true"/>
+        <field name="blIncoGpeecNbAgentsTituEmpPermaParFoncEtAge" type="integer" column="BL_INCO_GPEEC_NB_AGENTS_TIU_EMP_PERMA_PAR_FONC_ET_AGE" nullable="true"/>
+        <field name="moyenneGpeecNbAgentsTituEmpPermaParFoncEtAge" type="decimal" column="MOYENNE_GPEEC_NB_AGENTS_TIU_EMP_PERMA_PAR_FONC_ET_AGE" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoGpeecPlusNbAgentsParSpeEtAge" type="integer" column="BL_INCO_GPEEC_PLUS_NB_AGENTS_PAR_SPE_ET_AGE" nullable="true"/>
+        <field name="moyenneGpeecPlusNbAgentsParSpeEtAge" type="decimal" column="MOYENNE_GPEEC_PLUS_NB_AGENTS_PAR_SPE_ET_AGE" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoGpeecNiveauDiplome" type="integer" column="BL_INCO_GPEEC_NIVEAU_DIPLOME" nullable="true"/>
+        <field name="moyenneGpeecNiveauDiplome" type="decimal" column="MOYENNE_GPEEC_NIVEAU_DIPLOME" precision="10" scale="1" nullable="true"/>
+
+        <field name="blIncoHanditorial" type="integer" column="BL_INCO_HANDITORIAL" nullable="true"/>
+        <field name="blIncoHanditorialQuestionsGenerales" type="integer" column="BL_INCO_HANDITORIAL_QUESTIONS_GENERALES" nullable="true"/>
+        <field name="moyenneHanditorialQuestionsGenerales" type="decimal" column="MOYENNE_HANDITORIAL_QUESTIONS_GENERALES" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialInaptitudeEtReclassement" type="integer" column="BL_INCO_HANDITORIAL_INAPTITUDE_ET_RECLASSEMENT" nullable="true"/>
+        <field name="moyenneHanditorialInaptitudeEtReclassement" type="decimal" column="MOYENNE_HANDITORIAL_INAPTITUDE_ET_RECLASSEMENT" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialQuestionsBoeths" type="integer" column="BL_INCO_HANDITORIAL_QUESTIONS_BOETHS" nullable="true"/>
+        <field name="moyenneHanditorialQuestionsBoeths" type="decimal" column="MOYENNE_HANDITORIAL_QUESTIONS_BOETHS" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialNatureHandicaps" type="integer" column="BL_INCO_HANDITORIAL_NATURE_HANDICAPS" nullable="true"/>
+        <field name="moyenneHanditorialNatureHandicaps" type="decimal" column="MOYENNE_HANDITORIAL_NATURE_HANDICAPS" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialAvisInaptitudes" type="integer" column="BL_INCO_HANDITORIAL_AVIS_INAPTITUDES" nullable="true"/>
+        <field name="moyenneHanditorialAvisInaptitudes" type="decimal" column="MOYENNE_HANDITORIAL_AVIS_INAPTITUDES" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialCadreEmplois" type="integer" column="BL_INCO_HANDITORIAL_CADRE_EMPLOIS" nullable="true"/>
+        <field name="moyenneHanditorialCadreEmplois" type="decimal" column="MOYENNE_HANDITORIAL_CADRE_EMPLOIS" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialInaptEtReclaCadreEmplois" type="integer" column="BL_INCO_HANDITORIAL_INAPT_ET_RECLA_CADRE_EMPLOIS" nullable="true"/>
+        <field name="moyenneHanditorialInaptEtReclaCadreEmplois" type="decimal" column="MOYENNE_HANDITORIAL_INAPT_ET_RECLA_CADRE_EMPLOIS" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialMetiers" type="integer" column="BL_INCO_HANDITORIAL_METIERS" nullable="true"/>
+        <field name="moyenneHanditorialMetiers" type="decimal" column="MOYENNE_HANDITORIAL_METIERS" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialInaptEtReclaMetiers" type="integer" column="BL_INCO_HANDITORIAL_INAPT_ET_RECLA_METIERS" nullable="true"/>
+        <field name="moyenneHanditorialInaptEtReclaMetiers" type="decimal" column="MOYENNE_HANDITORIAL_INAPT_ET_RECLA_METIERS" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialTempsComplets" type="integer" column="BL_INCO_HANDITORIAL_TEMPS_COMPLETS" nullable="true"/>
+        <field name="moyenneHanditorialTempsComplets" type="decimal" column="MOYENNE_HANDITORIAL_TEMPS_COMPLETS" precision="10" scale="1" nullable="true"/>
+        <field name="blIncoHanditorialInaptEtReclaTempsComplets" type="integer" column="BL_INCO_HANDITORIAL_INAPT_ET_RECLA_TEMPS_COMPLETS" nullable="true"/>
+        <field name="moyenneHanditorialInaptEtReclaTempsComplets" type="decimal" column="MOYENNE_HANDITORIAL_INAPT_ET_RECLA_TEMPS_COMPLETS" precision="10" scale="1" nullable="true"/>
+
+        <field name="blIncoDgcl" type="integer" column="BL_INCO_DGCL" nullable="true"/>
+        <field name="blIncoDgclJoursCarence" type="integer" column="BL_INCO_DGCL_JOURS_CARENCE" nullable="true"/>
+        <field name="moyenneDgclJoursCarence" type="decimal" column="MOYENNE_DGCL_JOURS_CARENCE" precision="10" scale="1" nullable="true"/>
+
+        <field name="nbAgentContractuelEmploiPermanent" type="integer" column="NB_AGENT_CONTRACTUEL_EMPLOI_PERMANENT" nullable="true"/>
+        <field name="nbAgentContractuelEmploiNonPermament" type="integer" column="NB_AGENT_CONTRACTUEL_EMPLOI_NON_PERMANENT" nullable="true"/>
+        <field name="nbAgentEmploiPermanent" type="integer" column="NB_AGENT_EMPLOI_PERMANENT" nullable="true"/>
+        <field name="nbAgentTitulaire" type="integer" column="NB_AGENT_TITULAIRE" nullable="true"/>
+        <field name="blUpdated" type="boolean" column="BL_UPDATED" nullable="true"/>
+    </entity>
+</doctrine-mapping>

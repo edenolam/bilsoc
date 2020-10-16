@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\RemunerationGlobaleAgent" table="remuneration_globale_agent">
+        <indexes>
+            <index name="FK_REMUNERATIONGLOBALEAGENT_BILANSOCIALAGENT" columns="ID_BILASOCIAGEN"/>
+            <index name="FK_REMUNERATIONGLOBALEAGENT_STAT" columns="ID_STAT"/>
+            <index name="FK_REMUNERATIONGLOBALEAGENT_CATEGORIE" columns="ID_CATE"/>
+            <index name="FK_REMUNERATIONGLOBALEAGENT_FILIERE" columns="ID_FILI"/>
+        </indexes>
+        <id name="idRemunerationGlobaleAgent" type="integer" column="ID_REMUNERATIONGLOBALEAGENT">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="BilanSocialAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" inversed-by="RemunerationGlobaleAgent">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN" />
+        </many-to-one>
+
+        <many-to-one field="refStatut" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStatut" inversed-by="RemunerationGlobaleAgent">
+            <join-column name="ID_STAT" referenced-column-name="ID_STAT" />
+        </many-to-one>
+        
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie" inversed-by="RemunerationGlobaleAgent">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE" />
+        </many-to-one>
+
+        <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere" inversed-by="RemunerationGlobaleAgent">
+            <join-column name="ID_FILI" referenced-column-name="ID_FILI" />
+        </many-to-one>
+        
+        <field name="mtTotalHeurePayees" type="decimal" precision="10" scale="2" column="MT_TOTAL_HEURE_PAYEES" nullable="true"/>
+        <field name="mtTotalRemunerationBrute" type="integer" column="MT_TOTAL_REMUNERATION_BRUTE" nullable="true"/>
+        <field name="mtRemunerationArticle111" type="integer" column="MT_REMUNERATION_ARTICLE_111" nullable="true"/>
+        <field name="mtRemunerationArticle88" type="integer" column="MT_REMUNERATION_ARTICLE_88" nullable="true"/>
+        <field name="mtTotalRemunerationAnnuelleBruteHeuresSupp" type="integer" column="MT_TOTAL_REMUNERATION_ANNUELLE_BRUTE_HEURES_SUPP" nullable="true"/>
+        <field name="mtTotalRemunerationAnnuelleBruteNBI" type="integer" column="MT_TOTAL_REMUNERATION_ANNUELLE_BRUTE_HEURES_NBI" nullable="true"/>
+        
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+
+    </entity>
+</doctrine-mapping>

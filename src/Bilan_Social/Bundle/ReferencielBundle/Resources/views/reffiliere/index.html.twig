@@ -1,0 +1,46 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des filières</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('reffiliere_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_reffiliere') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Emploi Fonctionnel</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refFiliere in refFilieres %}
+                    <tr>
+                        <td><a href="{{ path('reffiliere_show', { 'idFili': refFiliere.idFili }) }}">{{ refFiliere.cdFili }}</a></td>
+                        <td>{{ refFiliere.lbFili }}</td>
+                        <td>{% if refFiliere.blEmpFonc %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refFiliere.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refFiliere} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('reffiliere_show', { 'idFili': refFiliere.idFili }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('reffiliere_edit', { 'idFili': refFiliere.idFili }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

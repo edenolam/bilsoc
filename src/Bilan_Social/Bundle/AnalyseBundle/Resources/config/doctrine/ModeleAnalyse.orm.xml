@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\AnalyseBundle\Entity\ModeleAnalyse" repository-class="Bilan_Social\Bundle\AnalyseBundle\Repository\ModeleAnalyseRepository" table="modele_analyse">
+    <id name="idModeleAnalyse" type="integer" column="ID_MODELE_ANALYSE">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="cmPresentation" type="text" column="CM_PRESENTATION" nullable="false"/>
+    <field name="cdUtilCrea" type="string" column="CD_UTIL_CREA" length="100" nullable="false"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="false"/>
+    <field name="blAffi" type="boolean" column="BL_AFFI" nullable="true"/>
+    <many-to-one field="cdg" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Cdg" inversed-by="modeleAnalyse">
+        <join-column name="ID_CDG" referenced-column-name="ID_CDG" nullable="false"/>
+    </many-to-one>
+    <many-to-one field="campagne" target-entity="Bilan_Social\Bundle\CampagneBundle\Entity\Campagne" inversed-by="modeleAnalyse">
+        <join-column name="ID_CAMP" referenced-column-name="ID_CAMP" nullable="false"/>
+    </many-to-one>
+    
+    <many-to-many field="collectivites" inversed-by="modeleAnalyse" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+        <join-table name="COLLECTIVITE_MODELE_ANALYSE">
+            <join-columns>
+                <join-column name="idModeleAnalyse" referenced-column-name="ID_MODELE_ANALYSE" />
+            </join-columns>
+            <inverse-join-columns>
+                <join-column name="idColl" referenced-column-name="ID_COLL" />
+            </inverse-join-columns>
+        </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

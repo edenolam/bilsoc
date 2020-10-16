@@ -1,0 +1,6 @@
+INSERT INTO ref_stage_titularisation (CD_STAGTITU, LB_STAGTITU, BL_VALI, CD_UTILCREA, created_at) VALUES ('TS001', 'Agents stagiaires titularis�s � l''issue de leur stage', 0, 'ADMIN', now());
+INSERT INTO ref_stage_titularisation (CD_STAGTITU, LB_STAGTITU, BL_VALI, CD_UTILCREA, created_at) VALUES ('TS002', 'Prolongation de stage', 0, 'ADMIN', now());
+INSERT INTO ref_stage_titularisation (CD_STAGTITU, LB_STAGTITU, BL_VALI, CD_UTILCREA, created_at) VALUES ('TS003', 'Agents contractuels titularis�s (sans stage) sur un emploi permanent de fonctionnaire (PACTE)', 0, 'ADMIN', now());
+INSERT INTO ref_stage_titularisation (CD_STAGTITU, LB_STAGTITU, BL_VALI, CD_UTILCREA, created_at) VALUES ('TS004', 'Titularisations prononc�es en application de l''article 38 de la loi n� 84-53 du 26 janvier 1984 (travailleurs handicap�s)', 0, 'ADMIN', now());
+INSERT INTO ref_stage_titularisation (CD_STAGTITU, LB_STAGTITU, BL_VALI, CD_UTILCREA, created_at) VALUES ('TS005', 'Refus de titularisation', 0, 'ADMIN', now());
+INSERT INTO ref_stage_titularisation (CD_STAGTITU, LB_STAGTITU, BL_VALI, CD_UTILCREA, created_at) VALUES ('TS006', 'Agents contractuels ( nouvel arrivant ou d�j� pr�sent) nomm�s stagiaires dans l''ann�e 2017', 0, 'ADMIN', now());

@@ -1,0 +1,29 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS apa2cons_ind413
+$$
+
+CREATE PROCEDURE apa2cons_ind413(idBilaSociCons INT, idColl INT, idEnqu INT)
+COMMENT ''
+LANGUAGE SQL
+NOT DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+BEGIN
+
+	declare vR4131 int(11);
+	declare vR4132 int(11);
+
+	
+	SELECT  NB_VISIMEDISPONPREV_H, NB_VISIMEDISPONPREV_F INTO vR4131, vR4132
+	FROM information_colectivite_agent
+	WHERE ID_COLL = idColl
+	AND ID_ENQU = idEnqu;
+	
+	UPDATE bilan_social_consolide SET R_4131 = vR4131, R_4132 = vR4132
+	WHERE ID_BILASOCICONS = idBilaSociCons; 
+	
+	
+	
+END
+$$

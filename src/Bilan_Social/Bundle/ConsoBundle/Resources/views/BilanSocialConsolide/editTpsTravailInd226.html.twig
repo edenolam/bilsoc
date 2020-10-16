@@ -1,0 +1,565 @@
+{% if formTpsTrav226 is defined %}
+
+    {{ form_start(formTpsTrav226) }}
+
+    {% set ref = ['Nombre de jours de carence prélevés', 'Montant brut des sommes retenues pour délai de carence (€)',
+        'Nombre total d\'agents rémunérés et soumis au jour de carence', 'Nombre d\'agents auxquels a été appliqué au moins un jour de carence',
+        'Nombre d\'arrêts maladies (hors prolongations) soumis à la journée de carence'] %}
+
+    <h5>
+        Au cours de l'année {{ anneeCampagne }}, pour les agents ayant été rémunérés au moins un jour dans l'année
+    </h5><br/>
+    <h5>
+        Agents fonctionnaires
+    </h5>
+    <table width="100%" id="ind2261Table" class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <th rowspan="2"></th>
+            <th colspan="3" style="text-align: center">Hommes</th>
+            <th colspan="3" style="text-align: center">Femmes</th>
+            <th style="text-align: center"></th>
+        </tr>
+        <tr>
+            <th style="text-align: center">Cat. A</th>
+            <th style="text-align: center">Cat. B</th>
+            <th style="text-align: center">Cat. C</th>
+            <th style="text-align: center">Cat. A</th>
+            <th style="text-align: center">Cat. B</th>
+            <th style="text-align: center">Cat. C</th>
+            <th style="text-align: center" class="filiTable">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set i = 0 %}
+        {% for tag in formTpsTrav226.ind2261s %}
+            <tr>
+                <td style="min-width: 400px">
+                    {{ ref[i] }}
+                </td>
+                <td id="r22611" style="text-align: center" >{{ form_widget(tag.r22611) }}</td>
+                <td id="r22612" style="text-align: center">{{ form_widget(tag.r22612) }}</td>
+                <td id="r22613" style="text-align: center">{{ form_widget(tag.r22613) }}</td>
+                <td id="r22614" style="text-align: center">{{ form_widget(tag.r22614) }}</td>
+                <td id="r22615" style="text-align: center">{{ form_widget(tag.r22615) }}</td>
+                <td id="r22616" style="text-align: center">{{ form_widget(tag.r22616) }}</td>
+                <td id="lineTot1" class="filiTable">0</td>
+            </tr>
+            {% set i = i+1 %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br/>
+
+    <h5>
+        Agents contractuels permanents
+    </h5>
+    <table width="100%" id="ind2262Table" class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <th rowspan="2"></th>
+            <th colspan="4" style="text-align: center">Hommes</th>
+            <th colspan="4" style="text-align: center">Femmes</th>
+        </tr>
+        <tr>
+            <th style="text-align: center">Cat. A</th>
+            <th style="text-align: center">Cat. B</th>
+            <th style="text-align: center">Cat. C</th>
+            <th style="text-align: center">Cat. A</th>
+            <th style="text-align: center">Cat. B</th>
+            <th style="text-align: center">Cat. C</th>
+            <th style="text-align: center">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set i = 0 %}
+        {% for tag in formTpsTrav226.ind2262s %}
+            <tr>
+                <td style="min-width: 400px">
+                    {{ ref[i] }}
+                </td>
+                <td id="r22621" style="text-align: center">{{ form_widget(tag.r22621) }}</td>
+                <td id="r22622" style="text-align: center">{{ form_widget(tag.r22622) }}</td>
+                <td id="r22623" style="text-align: center">{{ form_widget(tag.r22623) }}</td>
+                <td id="r22624" style="text-align: center">{{ form_widget(tag.r22624) }}</td>
+                <td id="r22625" style="text-align: center">{{ form_widget(tag.r22625) }}</td>
+                <td id="r22626" style="text-align: center">{{ form_widget(tag.r22626) }}</td>
+                <td id="lineTot1" class="filiTable">0</td>
+            </tr>
+            {% set i = i+1 %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+
+    <h5>
+        Agents contractuels non permanents
+    </h5>
+    <table width="100%" id="ind2263Table" class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <th rowspan="2"></th>
+            <th colspan="4" style="text-align: center">Hommes</th>
+            <th colspan="4" style="text-align: center">Femmes</th>
+        </tr>
+        <tr>
+            <th style="text-align: center">Cat. A</th>
+            <th style="text-align: center">Cat. B</th>
+            <th style="text-align: center">Cat. C</th>
+            <th style="text-align: center">Cat. A</th>
+            <th style="text-align: center">Cat. B</th>
+            <th style="text-align: center">Cat. C</th>
+            <th style="text-align: center">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set i = 0 %}
+        {% for tag in formTpsTrav226.ind2263s %}
+            <tr>
+                <td style="min-width: 400px">
+                    {{ ref[i] }}
+                </td>
+                <td id="r22631" style="text-align: center">{{ form_widget(tag.r22631) }}</td>
+                <td id="r22632" style="text-align: center">{{ form_widget(tag.r22632) }}</td>
+                <td id="r22633" style="text-align: center">{{ form_widget(tag.r22633) }}</td>
+                <td id="r22634" style="text-align: center">{{ form_widget(tag.r22634) }}</td>
+                <td id="r22635" style="text-align: center">{{ form_widget(tag.r22635) }}</td>
+                <td id="r22636" style="text-align: center">{{ form_widget(tag.r22636) }}</td>
+                <td id="lineTot1" class="filiTable">0</td>
+            </tr>
+            {% set i = i+1 %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+
+
+    <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence"
+           name="valider" onclick="recordAuto = false;
+                    $('#progImg').show();" data-valide="1"/>
+
+    <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+    {{ form_end(formTpsTrav226) }}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            changeDetect = false;
+{#            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true %}#}
+            $(document).change();
+            update2261();
+            update2262();
+            update2263();
+
+{#            {% endif %}#}
+        });
+
+        function changedR2261(obj) {
+            update2261();
+        }
+
+        function changedR2262(obj) {
+            update2262();
+        }
+
+        function changedR2263(obj) {
+            update2263();
+        }
+
+        function update2261(){
+            var table2261 = document.getElementById('ind2261Table');
+
+            var rowLength2261 = table2261.rows.length;
+            var idxRowInput = 0;
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+            var mtTot5 = 0;
+            var mtTot6 = 0;
+
+            for(var i=2; i<rowLength2261; i+=1){
+                // contenu de la ligne entière
+                var row = table2261.rows[i];
+                // nombre de cellule sur la ligne
+                var cellLength = row.cells.length;
+
+                var lineTotal = false;
+                var lineTot1 = 0;
+                var lineTot2 = 0;
+
+                if(row.id.substring(0, 7)=="total") {
+                    lineTotal = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1;
+                            lineTot1 += mtTot1;
+                            mtTot1 = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2;
+                            lineTot1 += mtTot2;
+                            mtTot2 = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = mtTot3;
+                            lineTot1 += mtTot3;
+                            mtTot3 = 0;
+                        }
+                        else if(y==4) {
+                            cell.innerHTML = mtTot4;
+                            lineTot1 += mtTot4;
+                            mtTot4 = 0;
+                        }
+                        else if (y == 5) {
+                            cell.innerHTML = mtTot5;
+                            lineTot1 += mtTot5;
+                            mtTot5 = 0;
+                        }
+                        else if (y == 6) {
+                            cell.innerHTML = mtTot6;
+                            lineTot1 += mtTot6;
+                            mtTot6 = 0;
+                        } else if (y == 7) {
+                            cell.innerHTML = lineTot1;
+                        }
+
+                    }
+                }
+
+                lineTot1 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 6)=="r22611") {
+                        if($('#bscForm226_ind2261s_'+idxRowInput+'_r22611').val()!="") {
+                            mtTot1 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22611').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22611').val());                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22612") {
+                        if($('#bscForm226_ind2261s_'+idxRowInput+'_r22612').val()!="") {
+                            mtTot2 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22612').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22612').val());                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22613") {
+                        if($('#bscForm226_ind2261s_'+idxRowInput+'_r22613').val()!="") {
+                            mtTot3 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22613').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22613').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22614") {
+                        if($('#bscForm226_ind2261s_'+idxRowInput+'_r22614').val()!="") {
+                            mtTot4 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22614').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22614').val());
+                        }
+                    }else if(cell.id.substring(0, 6)=="r22615") {
+                        if($('#bscForm226_ind2261s_'+idxRowInput+'_r22615').val()!="") {
+                            mtTot5 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22615').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22615').val());
+                        }
+                    }else if(cell.id.substring(0, 6)=="r22616") {
+                        if($('#bscForm226_ind2261s_'+idxRowInput+'_r22616').val()!="") {
+                            mtTot6 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22616').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2261s_'+idxRowInput+'_r22616').val());
+                        }
+                    } else if (cell.id.substring(0, 8) == "lineTot1") {
+                        cell.innerHTML = lineTot1;
+                    } 
+                }
+
+                if(!lineTotal) idxRowInput++;
+            }
+        }
+
+
+
+        function update2262(){
+            var table2262 = document.getElementById('ind2262Table');
+
+            var rowLength2262 = table2262.rows.length;
+            var idxRowInput = 0;
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+            var mtTot5 = 0;
+            var mtTot6 = 0;
+
+            for(var i=2; i<rowLength2262; i+=1){
+                // contenu de la ligne entière
+                var row = table2262.rows[i];
+                // nombre de cellule sur la ligne
+                var cellLength = row.cells.length;
+
+                var lineTotal = false;
+                var lineTot1 = 0;
+                var lineTot2 = 0;
+
+                if(row.id.substring(0, 7)=="total") {
+                    lineTotal = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1;
+                            lineTot1 += mtTot1;
+                            mtTot1 = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2;
+                            lineTot1 += mtTot2;
+                            mtTot2 = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = mtTot3;
+                            lineTot1 += mtTot3;
+                            mtTot3 = 0;
+                        }
+                        else if(y==4) {
+                            cell.innerHTML = mtTot4;
+                            lineTot1 += mtTot4;
+                            mtTot4 = 0;
+                        }
+                        else if (y == 5) {
+                            cell.innerHTML = mtTot5;
+                            lineTot1 += mtTot5;
+                            mtTot5 = 0;
+                        }
+                        else if (y == 6) {
+                            cell.innerHTML = mtTot6;
+                            lineTot1 += mtTot6;
+                            mtTot6 = 0;
+                        } else if (y == 7) {
+                            cell.innerHTML = lineTot1;
+                        }
+
+                    }
+                }
+
+                lineTot1 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 6)=="r22621") {
+                        if($('#bscForm226_ind2262s_'+idxRowInput+'_r22621').val()!="") {
+                            mtTot1 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22621').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22621').val());                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22622") {
+                        if($('#bscForm226_ind2262s_'+idxRowInput+'_r22622').val()!="") {
+                            mtTot2 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22622').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22622').val());                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22623") {
+                        if($('#bscForm226_ind2262s_'+idxRowInput+'_r22623').val()!="") {
+                            mtTot3 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22623').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22623').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22624") {
+                        if($('#bscForm226_ind2262s_'+idxRowInput+'_r22624').val()!="") {
+                            mtTot4 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22624').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22624').val());
+                        }
+                    }else if(cell.id.substring(0, 6)=="r22625") {
+                        if($('#bscForm226_ind2262s_'+idxRowInput+'_r22625').val()!="") {
+                            mtTot5 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22625').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22625').val());
+                        }
+                    }else if(cell.id.substring(0, 6)=="r22626") {
+                        if($('#bscForm226_ind2262s_'+idxRowInput+'_r22626').val()!="") {
+                            mtTot6 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22626').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2262s_'+idxRowInput+'_r22626').val());
+                        }
+                    } else if (cell.id.substring(0, 8) == "lineTot1") {
+                        cell.innerHTML = lineTot1;
+                    }
+                }
+
+                if(!lineTotal) idxRowInput++;
+            }
+        }
+
+
+        function update2263(){
+            var table2263 = document.getElementById('ind2263Table');
+
+            var rowLength2263 = table2263.rows.length;
+            var idxRowInput = 0;
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+            var mtTot5 = 0;
+            var mtTot6 = 0;
+
+            for(var i=2; i<rowLength2263; i+=1){
+                // contenu de la ligne entière
+                var row = table2263.rows[i];
+                // nombre de cellule sur la ligne
+                var cellLength = row.cells.length;
+
+                var lineTotal = false;
+                var lineTot1 = 0;
+                var lineTot2 = 0;
+
+                if(row.id.substring(0, 7)=="total") {
+                    lineTotal = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1;
+                            lineTot1 += mtTot1;
+                            mtTot1 = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2;
+                            lineTot1 += mtTot2;
+                            mtTot2 = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = mtTot3;
+                            lineTot1 += mtTot3;
+                            mtTot3 = 0;
+                        }
+                        else if(y==4) {
+                            cell.innerHTML = mtTot4;
+                            lineTot1 += mtTot4;
+                            mtTot4 = 0;
+                        }
+                        else if (y == 5) {
+                            cell.innerHTML = mtTot5;
+                            lineTot1 += mtTot5;
+                            mtTot5 = 0;
+                        }
+                        else if (y == 6) {
+                            cell.innerHTML = mtTot6;
+                            lineTot1 += mtTot6;
+                            mtTot6 = 0;
+                        } else if (y == 7) {
+                            cell.innerHTML = lineTot1;
+                        }
+
+                    }
+                }
+
+                lineTot1 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 6)=="r22631") {
+                        if($('#bscForm226_ind2263s_'+idxRowInput+'_r22631').val()!="") {
+                            mtTot1 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22631').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22631').val());                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22632") {
+                        if($('#bscForm226_ind2263s_'+idxRowInput+'_r22632').val()!="") {
+                            mtTot2 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22632').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22632').val());                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22633") {
+                        if($('#bscForm226_ind2263s_'+idxRowInput+'_r22633').val()!="") {
+                            mtTot3 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22633').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22633').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r22634") {
+                        if($('#bscForm226_ind2263s_'+idxRowInput+'_r22634').val()!="") {
+                            mtTot4 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22634').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22634').val());
+                        }
+                    }else if(cell.id.substring(0, 6)=="r22635") {
+                        if($('#bscForm226_ind2263s_'+idxRowInput+'_r22635').val()!="") {
+                            mtTot5 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22635').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22635').val());
+                        }
+                    }else if(cell.id.substring(0, 6)=="r22636") {
+                        if($('#bscForm226_ind2263s_'+idxRowInput+'_r22636').val()!="") {
+                            mtTot6 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22636').val());
+                            lineTot1 += parseInt($('#bscForm226_ind2263s_'+idxRowInput+'_r22636').val());
+                        }
+                    } else if (cell.id.substring(0, 8) == "lineTot1") {
+                        cell.innerHTML = lineTot1;
+                    }
+                }
+
+                if(!lineTotal) idxRowInput++;
+            }
+        }
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm226_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_tpstrav_ind226_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind226').load('{{ path('bilan_conso_tpstrav_ind226_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if (next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_remuneration_edit') }}';
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{ 'erreur.unique.violation'|trans }}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+{% endif %}
+
+

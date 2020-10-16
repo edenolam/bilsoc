@@ -1,0 +1,302 @@
+{
+  "2017": {
+    "bdd_user": "root",
+    "bdd_mdp": "FLp54HCXrpobRD_uuCEVGrVxdFJFKKixlhD7sijYkF9P4-h7sIp45KQehVtX5hA9r_VsBZs03BayyeI6Vusn2g",
+    "bdd_port": "3309",
+    "bdd_name": "bs_2017",
+    "bdd_host": "145.239.13.32",
+    "indicateur" : {
+      "ind613": {
+        "id" : "ID_613",
+        "table" : "ind_613",
+        "method" : "getInd613s",
+        "order" : {
+            "tableRef" : "ref_motif_greve",
+            "joinKey" : "ID_MOTIGREV",
+            "refMethod" : "getRefMotifGreve",
+            "refMethodCode" : "getCdMotigrev",
+            "orderField" : "CD_MOTIGREV"
+        }
+      },
+      "ind1101": {
+        "id" : "ID_1101",
+        "table" : "ind_110_1",
+        "method" : "getInd1101sTemp",
+        "order" : {
+          "tableRef" : "ref_emploi_fonctionnel",
+          "joinKey" : "ID_EMPLFONC",
+          "refMethod" : "getRefEmploiFonctionnel",
+          "refMethodCode" : "getCdEmplFonc",
+          "orderField" : "CD_EMPLFONC"
+        }
+      },
+      "ind1102": {
+        "id" : "ID_1102",
+        "table" : "ind_110_2",
+        "method" : "getInd1102sTemp",
+        "order" : {
+          "tableRef" : "ref_emploi_fonctionnel",
+          "joinKey" : "ID_EMPLFONC",
+          "refMethod" : "getRefEmploiFonctionnel",
+          "refMethodCode" : "getCdEmplFonc",
+          "orderField" : "CD_EMPLFONC"
+        }
+      },
+      "ind1103": {
+        "id" : "ID_1103",
+        "table" : "ind_110_3",
+        "method" : "getInd1103sTemp",
+        "order" : {
+          "tableRef" : "ref_emploi_fonctionnel",
+          "joinKey" : "ID_EMPLFONC",
+          "refMethod" : "getRefEmploiFonctionnel",
+          "refMethodCode" : "getCdEmplFonc",
+          "orderField" : "CD_EMPLFONC"
+        }
+      },
+      "ind111": {
+        "id" : "ID_111",
+        "table" : "ind_111",
+        "method" : "getInd111sTemp",
+        "order" : {
+          "tableRef" : "ref_grade",
+          "joinKey" : "ID_GRAD",
+          "subRefJoinKey" : "ID_CADREMPL",
+          "refMethod" : "getRefGrade",
+          "refMethodCode" : "getCdGrad",
+          "orderField": "CD_GRAD"
+        },
+        "subRef" : {
+          "tableRef" : "ref_cadre_emploi",
+          "joinKey" : "ID_CADREMPL",
+          "refMethod" : "getRefCadreEmploi",
+          "refMethodCode" : "getCdCadrempl",
+          "orderField" : "CD_CADREMPL"
+        }
+      },
+      "ind121" : {
+        "id" : "ID_121",
+        "table" : "ind_121",
+        "method" : "getInd121sTemp",
+        "order" : {
+          "tableRef" : "ref_cadre_emploi",
+          "joinKey" : "ID_CADREMPL",
+          "refMethod" : "getRefCadreEmploi",
+          "refMethodCode" : "getCdCadrempl",
+          "orderField" : "CD_CADREMPL"
+        }
+      },
+      "ind1311" : {
+        "id" : "ID_1311",
+        "table" : "ind_1311",
+        "method" : "getInd1311sTemp",
+        "order" : {
+          "tableRef" : "ref_emploi_non_permanent",
+          "joinKey" : "ID_EMPLNONPERM",
+          "refMethod" : "getRefEmploiNonPermanent",
+          "refMethodCode" : "getCdEmplnonperm",
+          "orderField" : "CD_EMPLNONPERM"
+        }
+      },
+      "ind1312" : {
+        "id" : "ID_1312",
+        "table" : "ind_1312",
+        "method" : "getInd1312sTemp",
+        "order" : {
+          "tableRef" : "ref_emploi_non_permanent",
+          "joinKey" : "ID_EMPLNONPERM",
+          "refMethod" : "getRefEmploiNonPermanent",
+          "refMethodCode" : "getCdEmplnonperm",
+          "orderField" : "CD_EMPLNONPERM"
+        }
+      },
+      "ind311": {
+        "id" : "ID_311",
+        "table" : "ind_311",
+        "method" : "getInd311sTemps",
+        "order" : {
+          "tableRef" : "ref_categorie",
+          "joinKey" : "ID_CATE",
+          "refMethod" : "getRefCategorie",
+          "refMethodCode" : "getCdCate",
+          "orderField" : "CD_CATE"
+        }
+      },
+      "ind321": {
+        "id" : "ID_321",
+        "table" : "ind_321",
+        "method" : "getInd321sTemp",
+        "order" : {
+          "tableRef" : "ref_categorie",
+          "joinKey" : "ID_CATE",
+          "refMethod" : "getRefCategorie",
+          "refMethodCode" : "getCdCate",
+          "orderField" : "CD_CATE"
+        }
+      },
+      "ind331" : {
+        "id" : "ID_331",
+        "table" : "ind_331",
+        "method" : "getInd331sTemp",
+        "order" : {
+          "tableRef" : "ref_emploi_non_permanent",
+          "joinKey" : "ID_EMPLNONPERM",
+          "refMethod" : "getRefEmploiNonPermanent",
+          "refMethodCode" : "getCdEmplnonperm",
+          "orderField" : "CD_EMPLNONPERM"
+        }
+      },
+      "ind345": {
+        "id" : "",
+        "table" : "bilan_social_consolide",
+        "method" : "getInd344sTemp",
+        "field" : " R_3441, R_3442 "
+      },
+      "ind423" : {
+        "id" : "ID_423",
+        "table" : "ind_423",
+        "method" : "getInd423sTemp",
+        "order" : {
+          "tableRef" : "ref_inaptitude",
+          "joinKey" : "ID_INAP",
+          "refMethod" : "getRefInaptitude",
+          "refMethodCode" : "getCdInaps",
+          "orderField" : "CD_INAP"
+        }
+      },
+      "ind423Fili" : {
+        "id" : "ID_423Fili",
+        "table" : "ind_423Fili",
+        "method" : "getInd423sFili",
+        "order" : {
+          "tableRef" : "ref_filiere",
+          "joinKey" : "ID_FILI",
+          "refMethod" : "getRefFiliere",
+          "refMethodCode" : "getCdFili",
+          "orderField" : "CD_FILI"
+        }
+      },
+      "ind611": {
+          "id" : "",
+          "table" : "bilan_social_consolide",
+          "method" : "getInd611sTemp",
+          "field" : " R_6111,R_6112 "
+      },
+      "ind711": {
+          "id" : "",
+          "table" : "bilan_social_consolide",
+          "method" : "getInd711sTemp",
+          "field" : " Q_7111, Q_7112 "
+        },
+      "ind712": {
+          "id" : "",
+          "table" : "bilan_social_consolide",
+          "method" : "getInd712sTemp",
+          "field" : "Q_712"
+        },
+      "ind713": {
+          "id" : "",
+          "table" : "bilan_social_consolide",
+          "method" : "getInd713sTemp",
+          "field" : "Q_7131, Q_7132, Q_7133"
+      },
+      "ind161" : {
+        "id" : "ID_161",
+        "table" : "ind_161",
+        "method" : "getInd161sTemp",
+        "order" : {
+          "tableRef" : "ref_categorie",
+          "joinKey" : "ID_CATE",
+          "refMethod" : "getRefCategorie",
+          "refMethodCode" : "getCdCate",
+          "orderField" : "CD_CATE"
+        } 
+      },
+      "ind1612" : {
+        "id" : "ID_1612",
+        "table" : "ind_1612",
+        "method" : "getInd1612sTemp"
+      },
+      "ind162": {
+        "id": "",
+        "table": "bilan_social_consolide",
+        "method": "getInd162sTemp",
+        "field": "R_16211,R_16212, R_16213, R_16214 ",
+        "extra_var": {
+          "total111": {
+            "table": "ind_111",
+            "field": " (COALESCE(SUM(COALESCE(R_1115,0)) + SUM(COALESCE(R_1116,0)),0)) as total111 "
+          },
+          "total121": {
+            "table": "ind_121",
+            "field": " (COALESCE(sum(COALESCE(R_1211,0)) + sum(COALESCE(R_1212,0)) + sum(COALESCE(R_1213,0)) + sum(COALESCE(R_1214,0)) + sum(COALESCE(R_1216,0)) + sum(COALESCE(R_1217,0)) + sum(COALESCE(R_1218,0)) + sum(COALESCE(R_12118,0)),0)) as total121 "
+          },
+          "total161": {
+            "table": "ind_161",
+            "field": " (COALESCE(sum(COALESCE(R_1611,0)) + sum(COALESCE(R_1612,0)) + sum(COALESCE(R_1613,0)) + sum(COALESCE(R_1614,0)),0)) as  total161 "
+          }
+        }
+      },
+      "ind5111" : {
+        "id" : "ID_5111",
+        "table" : "ind_5111",
+        "method" : "getInd5111s",
+        "order" : {
+          "tableRef" : "ref_categorie",
+          "joinKey" : "ID_CATE",
+          "refMethod" : "getRefCategorie",
+          "refMethodCode" : "getCdCate",
+          "orderField" : "CD_CATE"
+        }
+      },
+      "ind5112" : {
+        "id" : "ID_5112",
+        "table" : "ind_5112",
+        "method" : "getInd5112s",
+        "order" : {
+          "tableRef" : "ref_formation",
+          "joinKey" : "ID_FORM",
+          "refMethod" : "getRefFormation",
+          "refMethodCode" : "getCdForm",
+          "orderField" : "CD_FORM"
+        }
+      },
+      "ind5113" : {
+        "id" : "ID_5113",
+        "table" : "ind_5113",
+        "method" : "getInd5113s",
+        "order" : {
+          "tableRef" : "ref_formation",
+          "joinKey" : "ID_FORM",
+          "refMethod" : "getRefFormation",
+          "refMethodCode" : "getCdForm",
+          "orderField" : "CD_FORM"
+        }
+      },
+      "ind5121" : {
+        "id" : "ID_5121",
+        "table" : "ind_5121",
+        "method" : "getInd5121s",
+        "order" : {
+          "tableRef" : "ref_emploi_non_permanent",
+          "joinKey" : "ID_EMPLNONPERM",
+          "refMethod" : "getRefEmploiNonPermanent",
+          "refMethodCode" : "getCdEmplnonperm",
+          "orderField" : "CD_EMPLNONPERM"
+        }
+      },
+      "ind5122" : {
+        "id" : "ID_5122",
+        "table" : "ind_5122",
+        "method" : "getInd5122s",
+        "order" : {
+          "tableRef" : "ref_emploi_non_permanent",
+          "joinKey" : "ID_EMPLNONPERM",
+          "refMethod" : "getRefEmploiNonPermanent",
+          "refMethodCode" : "getCdEmplnonperm",
+          "orderField" : "CD_EMPLNONPERM"
+        }
+      }
+    }
+  }
+}

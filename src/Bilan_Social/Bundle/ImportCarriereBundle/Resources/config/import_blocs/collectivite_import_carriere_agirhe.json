@@ -1,0 +1,20 @@
+{
+	"to_entity" : "Bilan_Social\\Bundle\\CollectiviteBundle\\Entity\\Collectivite",
+	"bloc_name" : "collectivite_agirhe",
+	"get_from_database" : {
+		"bloc_key" : "ID_COLL",
+		"key_field" : "idColl"
+	},
+	"fields":{
+		"affiliation":{
+			"left_key":"affiliation_cdg",
+			"right_key":"blAffiColl",
+			"type":"boolean"
+		},
+		"prenom":{
+			"left_key":"ct_cdg",
+			"right_key":"blCtCdg",
+			"type":"boolean"
+		}
+	}
+}

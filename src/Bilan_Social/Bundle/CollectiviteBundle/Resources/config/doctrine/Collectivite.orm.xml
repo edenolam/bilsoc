@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite" repository-class="Bilan_Social\Bundle\CollectiviteBundle\Repository\CollectiviteRepository" table="collectivite">
+        <indexes>
+            <index name="FK_DEPARTEMENT_COLLECTIVITE" columns="ID_DEPA"/>
+            <index name="FK_TYPECOLLECTIVITE_COLLECTIVITE" columns="ID_TYPE_COLL"/>
+            <index name="FK_TYPESURCLASSDEMO_COLLECTIVITE" columns="ID_TYPESURCLASSDEMO"/>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint columns="NM_SIRE" name="nmSire" />
+        </unique-constraints>
+        <id name="idColl" type="integer" column="ID_COLL">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="refTypeCollectivite" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTypeCollectivite">
+            <join-column name="ID_TYPE_COLL" referenced-column-name="ID_TYPE_COLL" nullable="true"/>
+        </many-to-one>
+        
+        <many-to-one field="refTypeSurclassDemo" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTypeSurclassDemo">
+            <join-column name="ID_TYPESURCLASSDEMO" referenced-column-name="ID_TYPESURCLASSDEMO" nullable="true"/>
+        </many-to-one>
+        
+        <many-to-one field="categorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE" nullable="true"/>
+        </many-to-one>
+
+        <many-to-one field="cdgDepartement" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\CdgDepartement" inversed-by="collectivites">
+            <join-column name="ID_CDG_DEPARTEMENT" referenced-column-name="ID_CDG_DEPARTEMENT" nullable="true"/>
+        </many-to-one>
+        <many-to-one field="departement" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement" inversed-by="collectivites">
+            <join-column name="ID_DEPA" referenced-column-name="ID_DEPA" nullable="true"/>
+        </many-to-one>
+        <field name="lbColl" type="string" column="LB_COLL" length="150" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="lbAdre" type="string" column="LB_ADRE" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="cdPost" type="string" column="CD_POST" length="10" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="lbVill" type="string" column="LB_VILL" length="100" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="cdInse" type="string" column="CD_INSE" length="20" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="nmSire" type="string" column="NM_SIRE" length="14" nullable="false" unique="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="nmSireRata" type="string" column="NM_SIRE_RATA" length="14" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="nmPopuInse" type="integer" column="NM_POPU_INSE" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="dtPopuInse" type="datetime" column="DT_POPU_INSE" nullable="true"/>
+        <field name="blTranBs" type="boolean" column="BL_TRAN_BS" nullable="true"/>
+        <field name="blSurclasDemo" type="boolean" column="BL_SURCLAS_DEMO" nullable="true"/>
+        <field name="nmSurclasDemo" type="integer" column="NM_SURCLAS_DEMO" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nmStratColl" type="string" length="255" column="NM_STRAT_COLL" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="blCdgColl" type="boolean" column="BL_CDG_COLL" nullable="true"/>
+        <field name="lbContCdg" type="string" column="LB_CONT_CDG" length="100" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="blAffiColl" type="boolean" column="BL_AFFI_COLL" nullable="true"/>
+        <field name="blCtCdg" type="boolean" column="BL_CT_CDG" nullable="true"/>
+        <field name="blChsct" type="boolean" column="BL_CHSCT" nullable="true"/>
+        <field name="blCollDgcl" type="boolean" column="BL_COLL_DGCL" nullable="true"/>
+        <field name="lbZoneEmplColl" type="string" column="LB_ZONE_EMPL_COLL" length="150" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="nmLogeOphlmOdhlm" type="integer" column="NM_LOGE_OPHLM_ODHLM" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="blActi" type="boolean" column="BL_ACTI" nullable="true"/>
+        <field name="blDiss" type="boolean" column="BL_DISS" nullable="true"/>
+        <field name="dtDiss" type="datetime" column="DT_DISS" nullable="true"/>
+        <field name="blFusi" type="boolean" column="BL_FUSI" nullable="true"/>
+        <field name="blFirsconn" type="boolean" column="BL_FIRSCONN" nullable="true"/>
+        <field name="dtFusi" type="datetime" column="DT_FUSI" nullable="true"/>
+        <field name="blAbso" type="boolean" column="BL_ABSO" nullable="true"/>
+        <field name="dtAbso" type="datetime" column="DT_ABSO" nullable="true"/>
+        <field name="cdgGpeec" type="boolean" column="CDG_GPEEC" nullable="true"/>
+        <field name="blAnalyseGpeec" type="boolean" column="BL_ANALYSE_GPEEC" nullable="true"/>
+        <field name="cartoGpeec" type="boolean" column="CARTO_GPEEC" nullable="true"/>
+        <field name="convention" type="boolean" column="CONVENTION" nullable="true"/>
+        <field name="gpeecAcceder" type="boolean" column="gpeec_acceder" nullable="true"/>
+        <field name="gpeecAutoriserAccesCdg" type="boolean" column="gpeec_autoriser_acces_cdg" nullable="true"/>
+        <field name="cmInfoComp" type="text" column="CM_INFO_COMP" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="cmMoti" type="text" column="CM_MOTI" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="change_request" type="boolean" column="change_request" nullable="true"/>
+        <field name="cdg_is_authorized_by_collectivity" type="boolean" column="cdg_is_authorized_by_collectivity" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <one-to-many field="utilisateurs" target-entity="Bilan_Social\Bundle\UserBundle\Entity\User" mapped-by="collectivite"></one-to-many>
+        <one-to-many field="contacts" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\CollectiviteContact" mapped-by="collectivite">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <many-to-one field="refCourtier" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCourtier" inversed-by="collectivites">
+            <join-columns>
+                <join-column name="ID_COURTIER" referenced-column-name="ID_COURTIER" />
+            </join-columns>
+        </many-to-one>
+        <one-to-many field="historiqueEchange" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\HistoriqueEchange" mapped-by="collectivite">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="historiqueCollectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\HistoriqueCollectivite" mapped-by="collectivite">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="demandeAnalyse" target-entity="Bilan_Social\Bundle\AnalyseBundle\Entity\DemandeAnalyse" mapped-by="collectivite">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <many-to-many field="modeleAnalyse" mapped-by="collectivites" target-entity="Bilan_Social\Bundle\AnalyseBundle\Entity\ModeleAnalyse"/>
+        
+        <many-to-many field="fichiers" mapped-by="collectivites" target-entity="Bilan_Social\Bundle\FileManagerBundle\Entity\Fichier"/>
+    </entity>
+</doctrine-mapping>

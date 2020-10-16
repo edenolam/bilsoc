@@ -1,0 +1,79 @@
+{% extends '@InfoCentre/layout.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+	<script type="text/javascript" src="{{ asset('js/InfoCentreBundle/infoCentre.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+	    <div id='info_centre_workflow_wrapper'>
+		    <div id='pools_manager_receiver'>
+		    	{% include '@InfoCentre/pools_manager.html.twig' with {'pools':pools} %}
+		    </div>
+		    <div id='filter_form_container'>
+		    	<h3 id="filter_form_phantom_title" class="phantom_section_title_BT_collapse">
+					{{ "infocentre.filter_form.section.title"|trans }}{#III - Filtres#}
+					<i class="fa fa-chevron-down"></i>
+				</h3>
+			    <div id='filter_form_receiver'>
+			    	{#{% include '@InfoCentre/filter_form.html.twig' with {'filter_form':filter_form} %}#}
+			    </div>
+			    <div id='filter_form_spinner_container'>
+
+				</div>
+		    </div>
+			<div id='filter_results_container'>
+				<h3 id="filter_results_phantom_title" class="phantom_section_title_BT_collapse">
+					{{ "infocentre.filter_results.section.title"|trans }}{#III - Résultats des filtres#}
+					<i class="fa fa-chevron-down"></i>
+				</h3>
+			    <div id='filter_results_receiver'>
+				    {% if filter_results is defined and current_pool is defined %}
+				    	{% include '@InfoCentre/filter_results.html.twig' with {'filter_results':filter_results} %}
+				    {% endif %}
+				</div>
+				<div id='filter_results_spinner_container'>
+
+				</div>
+		    </div>
+		</div>
+		<hr>
+		<div id='pool_export_bay_receiver'>
+			<div class="card">
+			    <div class="card-header" id="head_pool_export_bay">
+					<h3 id='pool_export_bay_collapse' data-toggle="collapse" data-target="#body_pool_export_bay" aria-controls="body_pool_export_bay">
+						{{ "infocentre.pool_export_bay.section.title"|trans }}{#III - Résultats des filtres#}
+						<i class="fa fa-chevron-down"></i>
+					</h3>
+				</div>
+				<div id="body_pool_export_bay" class="collapse" aria-labelledby="head_pool_export_bay">
+					<div class="card-body">
+					    {% if pools|length > 0 %}
+					    	{% include '@InfoCentre/pool_export_bay.html.twig' %}
+					    {% endif %}
+				    	{% include '@InfoCentre/export_tasks_list.html.twig' %}
+					</div>
+				</div>
+			</div>
+		</div>
+        {% if is_granted("ROLE_ADMIN") %}
+		<hr>
+		<div id='filter_form_container_v'>
+			<div class="card">
+				<div class="card-header" id="head_pool_export_bay">
+					<h3 id='pool_export_bay_departements_collapse' data-toggle="collapse" data-target="#body_pool_export_departements_bay" aria-controls="body_pool_export_departements_bay">
+                        {{ "infocentre.filter_form.section.title_V"|trans }}{#V - #}
+						<i class="fa fa-chevron-down"></i>
+					</h3>
+				</div>
+				<div id="body_pool_export_departements_bay" class="collapse" aria-labelledby="body_pool_export_departements_bay">
+					<div class="card-body">
+                        {% include '@InfoCentre/export_departements.html.twig' %}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+    </div>
+
+{% endblock body %}

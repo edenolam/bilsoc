@@ -1,0 +1,54 @@
+.bodyBilanSocial h1 {
+    margin-top: 0 !important;
+}
+
+
+/* FORM */
+
+.containerFormCompte {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.containerFormCompte label {
+    color: #1a355d;
+    font-weight: 400;
+}
+
+.containerButton button {
+    background-color: #df4e4e;
+    color: white;
+    border-color: #df4e4e;
+    margin-top: 10px;
+    float: right;
+}
+
+
+/* TABLEAU */
+
+
+.containerForm table {
+    background-color: white;
+    margin-bottom: 0;
+    border-radius: 5px;
+}
+
+.containerForm table th {
+    color: white;
+    background-color: #df4e4e;
+}
+
+.containerForm .boldTitle {
+    font-weight: bold;
+    color: #1a355d;
+}
+
+.borderRadiusTable:first-child {
+    border-radius: 5px 0 0 0;
+}
+
+.borderRadiusTable {
+    border-radius: 0 5px 0 0;
+}

@@ -1,0 +1,400 @@
+#------------------------------------------#
+# Messages utilisés dans l'agent par agent
+#------------------------------------------#
+
+# Nom de l'agent
+agent.lbnom.not_blank: Le nom doit être renseigné
+# Prénom de l'agent
+agent.lbpren.not_blank: Le prénom doit être renseigné
+# Date de naissance de l'agent
+agent.lbdtnais.not_blank: La date de naissance doit être renseignée
+agent.datenais.bad_format: "Le format de la date saisie est incorrect (ex: 01/2017)"
+# Genre de l'agent
+agent.cdsexe.not_blank: Le genre doit être renseigné
+# Agent rémunéré au 31/12
+agent.blAgenremu3112.not_blank: Cette réponse est obligatoire
+# Statut de l'agent
+agent.status.not_blank: Le statut doit être renseigné
+#CET
+agent.autre.cet.value: Le nombre de jour ne peut excéder 60 jours. 
+# Q28.5 Nombre de retours au temps plein pour l'agent
+agent.nbAgenempltempcompnonrenou.onemax: 'La valeur ne doit pas dépasser 1'
+
+# Création d'un nouvel agent
+new.agent.flash: Agent créé avec succès.
+# Modification d'un agent
+edit.agent.flash: Agent modifié avec succès.
+# validation d'un agent
+validate.agent.flash: Agent validé avec succès.
+# suppression d'un agent
+delete.agent.flash: Agent supprimé avec succès.
+
+# Création informations collectivite
+new.informationcollectivite.flash: Les informations de la collectivité ont été enregistrés avec succès.
+# Modification informations collectivite
+edit.informationcollectivite.flash: Les informations de la collectivité ont été modifiés avec succès.
+
+# Création informations générales
+new.informationgenerale.flash: Les informations générales de la collectivité ont été enregistrés avec succès.
+# Modification informations générales
+edit.informationgenerale.flash: Les informations générales de la collectivité ont été modifiés avec succès.
+
+#------------------------------------------#
+# Messages utilisés dans les bilans sociaux
+#------------------------------------------#
+
+# Mode de saisie
+modesaisie.bilansocial.flash: Mode de saisie sauvegardée.
+# Erreur lors de l'enregistrement du mode de saisie
+erreur.modesaisie.flash: Une erreur est survenue, veullez recommencer.
+
+#------------------------------------------#
+# Messages utilisés dans les campagnes
+#------------------------------------------#
+
+# Création d'une campagne
+new.campagne.flash: La campagne a été crée avec succès.
+# Création d'une campagne
+edit.campagne.flash: La campagne a été modifiée avec succès.
+# message si une campagne existe deja
+existe.campagne.flash: Une campagne existe déjà pour l'année renseignée.
+# message si une campagne en cours est deja ouverte
+dejaouverte.campagne.flash: Une campagne est déjà ouverte.
+# message lors d'une ouverture de campagne
+ouverture.campagne.flash: Campagne ouverte avec succès.
+# message lors de fermeture d'une campagne
+cloture.campagne.flash: Campagne clôturée avec succès.
+# message lors de campagne archivée
+archive.campagne.flash: Campagne archivée avec succès.
+# message lors d'une relance par mail
+mailrelance.campagne.flash: Le mail de relance a été envoyé avec succès.
+# erreur campagne
+erreur.campagne.flash: Une erreur est survenue, veullez recommencer.
+
+#------------------------------------------#
+# Messages utilisés pour les centres de gestion
+#------------------------------------------#
+editfiche.cdg.flash: La modification a bien été effectuée.
+erreur.cdg.flash: Une erreur est survenue, veullez recommencer.
+enregistrementdepartement.cdg.flash: Les départements ont été attribués au centre de gestion.
+
+#------------------------------------------#
+# Messages utilisés dans les actualités
+#------------------------------------------#
+
+# Date de fin de l'actualité
+actualite.dateFin.expression: La date de fin doit être supérieure à la date de début.
+# Format de l'image de l'actualité
+actualite.image.format:  fichier ({{ type }}) non valide, votre fichier doit avoir l'extension {{ types }}
+actualite.image.maxSize:  Fichier trop volumineux ({{ size }} {{ suffix }}). taille Max {{ limit }} {{ suffix }}.
+actualite.image.notfound: Fichier non trouvé.
+actualite.image.minWidth: La largeur de l'image est trop petite {{ width }}px. La largeur minimum attendue est de {{ min_width }}px.
+actualite.image.minHeight: La hauteur de l'image est trop petite {{ height }}px. La hauteur minimum attendue est de {{ max_height }}px.
+# Départements liés à l'actualité
+actualite.departement.minimum: Vous devez sélectionner au moins un départements.
+actualite.cdg.minimum: Vous devez sélectionner au moins un centre de gestion.
+actualite.image.notnull: L'image est obligatoire.
+actualite.corp.notnull: le corp de l'actualité est obligatoire.
+
+#------------------------------------------#
+# Messages utilisés dans les collectivités
+#------------------------------------------#
+
+# La collectivité est-elle rattachée au comité technique (CT) du CDG ?
+collectivite.blctcdg.not_blank: Le champ La collectivité est-elle rattachée au comité technique (CT) du CDG doit être renseigné.
+# Code postal de la collectivité
+collectivite.cdPost.not_blank: Le code postal doit être renseigné.
+collectivite.cdPost.minWidth: Le code postal doit être égal à 5.
+collectivite.cdPost.maxWidth: Le code postal doit être égal à 5.
+collectivite.cdPost.exactWidth: Le code postal doit être égal à 5.
+#numéro de siret
+collectivite.nmSire.not_blank: Le numéro de siret doit être renseigné.
+collectivite.nmSire.minWidth: Le numéro de siret doit être égal à 14.
+collectivite.nmSire.maxWidth: Le numéro de siret doit être égal à 14.
+collectivite.nmSire.exactWidth: Le numéro de siret doit être égal à 14.
+# nom de la collectivite
+collectivite.nom.not_blank: Le nom de la collectivité doit être renseigné.
+# adresse de la collectivité
+collectivite.adresse.not_blank: L'adresse de la collectivité doit être renseigné.
+# ville de la collectivité
+collectivite.ville.not_blank: La ville de la collectivité doit être renseigné.
+# CODE INSEE
+# Type de collectivité
+# Département de la collectivité
+collectivite.departement.not_blank: Le département de la collectivité doit être renseigné.
+# Centre de gestion de la collectivité
+collectivite.cdgDepartement.not_blank: Le centre de gestion de la collectivité doit être renseigné.
+# Population totale INSEE
+# Date de population totale INSEE
+# Sur-classement démographique
+# La collectivité est-elle affiliée au CDG
+collectivite.blAffiColl.not_blank: Cette réponse est obligatoire
+# La collectivité est-elle rattachée au comité technique ( CT ) du CDG ?
+# La collectivité fait-elle partie de l'échantillon de la DGCL ?
+collectivite.blCollDgcl.not_blank: Cette réponse est obligatoire
+# Zone d’emploi de la collectivité
+# SIRET de rattachement
+# Informations complémentaires
+
+editcontact.collectivite.flash: Les contacts ont été modifiés.
+
+erreur.collectivite.flash: Une erreur est survenue, veullez recommencer.
+
+demandedemodificationenvoye.collectivite.flash: Votre demande de modification a été envoyée à votre centre de gestion.
+
+modificationaccepte.collectivite.flash: Les modifications ont été acceptées.
+modificationrefuse.collectivite.flash: Les modifications ont été refusées.
+erreurtypefichier.collectivite.flash: Le type de ficher n'est pas correct, veuillez importer un fichier ".csv".
+modificationmasse.collectivite.flash: Les modifications ont été effectuées avec succès.
+#newcollectiviteadmin.collectivite.flash: La collectivité a été créée avec succès. Voici ses identifiants login psw
+demandedecreationenvoyecdg.collectivite.flash: La demande de création a été envoyée à l'administrateur avec succès.
+# login est une variable representant l'identifiant.
+# psw est une variable representant le mot de passe.
+newcollectiviteadmin.collectivite.flash: La collectivité a été créée avec succès. Voici ses identifiants <ul><li> login </li><li>psw </li></ul>
+editfiche.collectivite.flash: La modification a été effectuée avec succès.
+errorsiret.collectivite.flash: Une collectivité possède déjà ce numéro de SIRET, veuillez recommencer.
+creationaccepte.collectivite.flash: La création de la collectivité a été acceptée.
+creationrefuse.collectivite.flash: La création de la collectivité a été refusée.
+erreurexportcollectivite.collectivite.flash: L'export n' a pas pu être effectué, veuillez cocher au moins une collectivité.
+# login est une variable representant l'identifiant.
+# psw est une variable representant le mot de passe.
+identifiantcollectivite.collectivite.flash: Voici les identifiants <ul><li> login </li><li>psw </li></ul>
+
+#------------------------------------#
+# Messages utilisés dans les FAQs
+#------------------------------------#
+
+faq.sujet.not_blank: Le sujet est obligatoire
+faq.question.not_blank: La question est obligatoire
+faq.reponse.not_blank: La réponse est obligatoire
+
+#------------------------------------#
+# Messages utilisés dans les modeles de mails
+#------------------------------------#
+modelMail.objet.not_blank: L'objet du mail est obligatoire
+modelMail.body.not_blank: Le corp du mail est obligatoire
+
+
+#------------------------------------#
+# Messages utilisés dans le consolide
+#------------------------------------#
+
+# lbgrade est une variable representant le nom du grade.
+ind111Grade.consolide.incoherencelog: "Grade lbgrade : Totaux non correspondants"
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind112cadreemploi.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Totaux non correspondants avec 1.1.1"
+# genre est une variable representant le genre.
+# lbcategorie est une variable representant le nom de la catégorie.
+ind113categorie.consolide.incoherencelog: "Catégorie lbcategorie - genre : Totaux non correspondants avec 1.1.2"
+# lbfiliere est une variable representant le nom de la filière.
+ind114filiere.consolide.incoherencelog: "Filière lbfiliere : Totaux non correspondants avec 1.1.1"
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploicdi.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Le total agent en CDI est différent du total Homme + Femme en CDI. "
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploi.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Le total est différent du total tous emplois à temps complet ou non complet. "
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploianciennete.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Le total est différent du total Ancienneté dans la collectivité."
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploitotal.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Le total est différent du total Hommes + Femmes."
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploitotalcdd.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Le total CDD est différent du total Hommes + Femmes en CDD."
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind122cadreemploi.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Totaux non correspondants avec 1.2.1"
+# genre est une variable representant le genre.
+# lbcategorie est une variable representant le nom de la catégorie.
+ind123categorie.consolide.incoherencelog: "Catégorie lbcategorie - genre : Totaux non correspondants avec 1.2.2"
+# lbfiliere est une variable representant le nom de la filière.
+ind124filiere.consolide.incoherencelog: "Filière lbfiliere : Totaux non correspondants avec 1.2.1 pour l'année anneecamp"
+# lbemploinonperm est une variable representant le nom de l'emploi non permanenet.
+ind1311emploinonperm.consolide.incoherencelog: "Emploi non permanent lbemploinonperm : Le nombre d'agents rémunérés au 31/12 doivent être inférieur ou égal au nombre d'agents rémunérés au moins une fois dans l'année"
+# lbemploinonperm est une variable representant le nom de l'emploi non permanenet.
+ind1312emploinonperm.consolide.incoherencelog: "Emploi non permanent lbemploinonperm : Le nombre d'agents rémunérés au 31/12 doivent être inférieur ou égal au nombre d'agents rémunérés au moins une fois dans l'année"
+
+ind1312emploinonperm.consolide1311.incoherencelog: "Emploi non permanent lbemploinonperm : Totaux non renseignés par rapport à 1.3.1.1"
+
+ind150totauxnoncorrespondant.consolide.incoherencelog: "Totaux non correspondants avec 1.1.1, 1.2.1, 1.3.1, 1.5.2 et 1.5.3.1"
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind152cadreemploi.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Totaux non correspondants"
+# lbstagetitu est une variable representant le nom du stage de titularisation.
+ind154stagetitu.consolide.incoherencelog: "Stage titularisation lbstagetitu : Totaux non correspondants avec 1.5.0"
+# lbcategorie est une variable representant le nom de la catégorie.
+
+ind161categorieH111.consolide.incoherencelog: "Catégorie lbcategorie : Le total titulaire Homme doit être inférieur ou égal au total Homme du 1.1.1"
+ind161categorieF111.consolide.incoherencelog: "Catégorie lbcategorie : Le total titulaire Femme doit être inférieur ou égal au total Femme du 1.1.1"
+ind161categorieH121.consolide.incoherencelog: "Catégorie lbcategorie : Le total Contractuels sur emploi permanent Homme doit être inférieur ou égal au total Homme du 1.2.1"
+ind161categorieF121.consolide.incoherencelog: "Catégorie lbcategorie : Le total Contractuels sur emploi permanent Femme doit être inférieur ou égal au total Femme du 1.2.1"
+ind1612H131.consolide.incoherencelog : "Le total Contractuels sur emploi NON permanent Homme doit être inférieur ou égal au total Homme du 1.3.1(1.1)"
+ind1612F131.consolide.incoherencelog : "Le total Contractuels sur emploi NON permanent Femme doit être inférieur ou égal au total Femme du 1.3.1(1.2)"
+
+
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbarrethomme.consolide.incoherencelog: "2.1.1.1 : Motif absence lbmotiabse : Le nombre d'arrêts Hommes doit être supérieur au nombre de fonctionnaires Hommes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbjourneehomme.consolide.incoherencelog: "2.1.1.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Hommes doit être renseigné"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbjourneesuparrethomme.consolide.incoherencelog: "2.1.1.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Hommes doit être supérieur au nombre d'arrêts Hommes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbarretfemme.consolide.incoherencelog: "2.1.1.1 : Motif absence lbmotiabse : Le nombre d'arrêts Femmes doit être supérieur au nombre de fonctionnaires Femmes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbjourneefemme.consolide.incoherencelog: "2.1.1.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Femmes doit être renseigné"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbjourneesuparretfemme.consolide.incoherencelog: "2.1.1.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Femmes doit être supérieur au nombre d'arrêts Femmes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2112motifabsencenbfonctionnaire.consolide.incoherencelog: "2.1.1.2 : Motif absence lbmotiabse : Le nombre de fonctionnaire est différent du tableau 2.1.1.1"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2112motifabsencenbfonctionnaire2113.consolide.incoherencelog: "2.1.1.2 : Motif absence lbmotiabse : Le nombre de fonctionnaire est différent du tableau 2.1.1.3"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2113motifabsencenbjournee2111.consolide.incoherencelog: "2.1.1.3 : Motif absence lbmotiabse : Le nombre de journées d'absence est différent du tableau 2.1.1.1"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2113motifabsencenbjournee2112.consolide.incoherencelog: "2.1.1.3 : Motif absence lbmotiabse : Le nombre de journées d'absence est différent du tableau 2.1.1.2"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbarrethommesupemplpermhomme.consolide.incoherencelog: "2.1.2.1 : Motif absence lbmotiabse : Le nombre d'arrêts Hommes doit être supérieur au nombre de contractuels sur emplois permanents Hommes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbabsencehommesupemplpermhomme.consolide.incoherencelog: "2.1.2.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Hommes doit être renseigné"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbjourneesuparrethomme.consolide.incoherencelog: "2.1.2.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Hommes doit être supérieur au nombre d'arrêts Hommes"
+
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbarretfemmesupemplpermfemme.consolide.incoherencelog: "2.1.2.1 : Motif absence lbmotiabse : Le nombre d'arrêts Femmes doit être supérieur au nombre de contractuels sur emplois permanents Femmes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbabsencefemmesupemplpermfemme.consolide.incoherencelog: "2.1.2.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Femmes doit être renseigné"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbjourneesuparretfemme.consolide.incoherencelog: "2.1.2.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Femmes doit être supérieur au nombre d'arrêts Femmes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2122nbemploipermanent2121.consolide.incoherencelog: "2.1.2.2 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois permanents  est différent du tableau 2.1.2.1"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2122nbemploipermanent2123.consolide.incoherencelog: "2.1.2.2 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois permanents  est différent du tableau 2.1.2.3"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2123nbemploipermanent2121.consolide.incoherencelog: "2.1.2.3 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois permanents  est différent du tableau 2.1.2.1"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2123nbemploipermanent2122.consolide.incoherencelog: "2.1.2.3 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois permanents  est différent du tableau 2.1.2.2"
+
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbarrethommesupemplnonpermhomme.consolide.incoherencelog: "2.1.3.1 : Motif absence lbmotiabse : Le nombre d'arrêts Hommes doit être supérieur au nombre de contractuels sur emplois non permanents Hommes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbabsencehommesupemplnonpermhomme.consolide.incoherencelog: "2.1.3.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Hommes doit être renseigné"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbjourneesuparrethomme.consolide.incoherencelog: "2.1.3.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Hommes doit être supérieur au nombre d'arrêts Hommes"
+
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbarretfemmesupemplnonpermfemme.consolide.incoherencelog: "2.1.3.1 : Motif absence lbmotiabse : Le nombre d'arrêts Femmes doit être supérieur au nombre de contractuels sur emplois non permanents Femmes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbabsencefemmesupemplnonpermfemme.consolide.incoherencelog: "2.1.3.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Femmes doit être renseigné"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbjourneesuparretfemme.consolide.incoherencelog: "2.1.3.1 : Motif absence lbmotiabse : Le nombre de journées d'absence Femmes doit être supérieur au nombre d'arrêts Femmes"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2132motifabsencenbfonctionnaire2131: "2.1.3.2 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois non permanents est différent du tableau 2.1.3.1"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2132motifabsencenbcontractuel2133: "2.1.3.2 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois non permanents est différent du tableau 2.1.3.3"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2133motifabsencenbcontractuel2131: "2.1.3.3 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois non permanents est différent du tableau 2.1.3.1"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2133motifabsencenbcontractuel2132 : "2.1.3.3 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois non permanents est différent du tableau 2.1.3.2"
+
+ind214erreurtotalpaternite : "Totaux des nombres d'agents non correspondants avec total de la ligne paternité sur 1.1.1, 1.1.2 et 1.1.3"
+ind214erreurtotalsommepaternite : "Totaux des nombres totaux de journées d'absence non correspondants avec la somme des totaux de la ligne paternité sur 1.1.1, 1.1.2 et 1.1.3"
+
+ind221cadreemploi.consolide.incoherencelog : "Le total tout types de cycles est différent du total 1.1.1(1) + total temps complet 1.2.1"
+
+# lbcategorie est une variable representant le nom de la catégorie
+ind311erreurtotalstrictementsup: "Categorie lbcategorie : le total 3.1.1 doit être strictement supérieur à la somme des totaux 3.1.1.1 , 3.1.1.2, 3.1.1.3 et 3.1.1.4"
+# lbcategorie est une variable representant le nom de la catégorie
+ind311totalhommesupsomme: "Categorie lbcategorie : le total 3.1.1 Hommes doit être supérieur à la somme des totaux 3.1.1.1 , 3.1.1.2, 3.1.1.3 et 3.1.1.4 Hommes"
+# lbcategorie est une variable representant le nom de la catégorie
+ind311totalfemmesupsomme: "Categorie lbcategorie : le total 3.1.1 Femmes doit être supérieur à la somme des totaux 3.1.1.1 , 3.1.1.2, 3.1.1.3 et 3.1.1.4 Femmes"
+# lbcategorie est une variable representant le nom de la catégorie
+ind321totalstrictementsup: "Categorie lbcategorie : le total 3.2.1 doit être strictement supérieur à la somme des totaux 3.2.1.1 et 3.2.1.2"
+# lbcategorie est une variable representant le nom de la catégorie
+ind321totalsuphomme: "Categorie lbcategorie : le total 3.2.1 Hommes doit être supérieur à la somme des totaux 3.2.1.1 et 3.2.1.2 Hommes"
+# lbcategorie est une variable representant le nom de la catégorie
+ind321totalsupfemme: "Categorie lbcategorie : le total 3.2.1 Femmes doit être supérieur à la somme des totaux 3.2.1.1 et 3.2.1.2 Femmes"
+
+ind344chargepersonnelstrictementinferieur: "Les charges de personnel doivent être strictement inférieures au montant des dépenses de fonctionnement"
+ind411agentaffectprevent: "Agents affectés à la prévention - L'ensemble des indicateurs 1.1.1 + 1.2.1 + 1.3.1(1) et 1.3.1(2) doivent être supérieur ou égal à l'indicateur 4.1.1"
+ind411actionpreventmontant: "Actions liées à la prévention : Le montant en euros des dépenses correspondants aux mesures prises dans l'année pour l'amélioration des conditions de travail doit être inférieur ou égal à l'indicateur 3.4.4.1"
+
+# datecamp est une variable representant la date du début de campagne
+# datecrea est une variable representant la date de creation du document
+ind414annecreationdocument : "L'année de création du document doit être supérieure à 1980 et inférieure à la date de début de campagne ( datecamp )"
+# datecamp est une variable representant la date du début de campagne
+# datecrea est une variable representant la date de creation du document
+ind414annemiseajourdocument: "L'année de la dernière mise à jour doit être inférieure à la date de début de campagne ( datecamp ) et supérieure ou égale à l'année de création du document ( datecrea )"
+
+ind424allocationtempinvalidinfer111: "Allocation temporaire d'invalidité : L'ensemble des titulaires et stagiaires doit être inférieur ou égal au total 1.1.1(5) + 1.1.1(6)"
+
+ind424allocationtempinvalidhommeinfer111: "Allocation temporaire d'invalidité : L'ensemble des titulaires et stagiaires Hommes doit être inférieur ou égal au total 1.1.1(5)"
+ind424allocationtempinvalidfemmeinfer111: "Allocation temporaire d'invalidité : L'ensemble des titulaires et stagiaires Femmes doit être inférieur ou égal au total 1.1.1(6)"
+ind424allocationtempinvalidempperminfercdd121: "Allocation temporaire d'invalidité : L'ensemble des Contractuel sur emploi permanant doit être inférieur ou égal à l'ensemble des agents en CDD (1.2.1)"
+ind424allocationtempinvalidemppermhommeinfercdd121: "Allocation temporaire d'invalidité : L'ensemble des Contractuel sur emploi permanant (Hommes) doit être inférieur ou égal à l'ensemble des Hommes de 1.2.1"
+ind424allocationtempinvalidemppermfemmeinfercdd121: "Allocation temporaire d'invalidité : L'ensemble des Contractuel sur emploi permanant (Femmes) doit être inférieur ou égal à l'ensemble des Hommes de 1.2.1"
+ind431acteviolencephysiquehomme: "Actes de violence physique : L'ensemble des actes de violence physique pour les hommes émanant du personnel et des usagers avec arrêt de travail doit être égal au nombre d'arrêts des indicateurs 2.1.1(1) + 2.1.2(1) + 2.1.3(1)"
+ind431acteviolencephysiquefemme: "Actes de violence physique : L'ensemble des actes de violence physique pour les femmes émanant du personnel et des usagers avec arrêt de travail doit être égal au nombre d'arrêts des indicateurs 2.1.1(1) + 2.1.2(1) + 2.1.3(1)"
+
+ind5111categ.consolide111H.incoherencelog: "Categorie lbcate : le total 5.1.1.1 Fonctionnaire Homme doit être inférieur à total 1.1.1 Homme"
+ind5111categ.consolide111F.incoherencelog: "Categorie lbcate : le total 5.1.1.1 Fonctionnaire Femme doit être inférieur à total 1.1.1 Femme"
+ind5111categ.consolide121H.incoherencelog: "Categorie lbcate : le total 5.1.1.1 Contractuel Homme doit être inférieur à total 1.2.1 Homme"
+ind5111categ.consolide121F.incoherencelog: "Categorie lbcate : le total 5.1.1.1 Contractuel Femme doit être inférieur à total 1.2.1 Femme"
+ind5112categ.totalCPF1.incoherencelog: "Categorie lbcate - Formation lbForm : le total 5.1.1(6) CPF doit être inférieur au total 5.1.1(5)"
+ind5112categ.totalCPF2.incoherencelog: "Categorie lbcate - Formation lbForm : le total 5.1.1(10) CPF doit être inférieur au total 5.1.1(9)"
+ind5112categ.totaux.incoherencelog: "Categorie lbcate - Formation lbForm : le total 5.1.1(5) doit être égal au total 5.1.1(9)"
+ind5113categ.totalCPF1.incoherencelog: "Categorie lbcate - Formation lbForm : le total 5.1.1(6) CPF doit être inférieur au total 5.1.1(5)"
+ind5113categ.totalCPF2.incoherencelog: "Categorie lbcate - Formation lbForm : le total 5.1.1(10) CPF doit être inférieur au total 5.1.1(9)"
+ind5113categ.totaux.incoherencelog: "Categorie lbcate - Formation lbForm : le total 5.1.1(5) doit être égal au total 5.1.1(9)"
+ind5112Hcateg.ind5111H.incoherencelog : "Categorie lbcate : le total 5.1.1(7) doit être égal au total tableau récapitulatif Fonctionnaire Homme"
+ind5112Fcateg.ind5111F.incoherencelog : "Categorie lbcate : le total 5.1.1(8) doit être égal au total tableau récapitulatif Fonctionnaire Femme"
+ind5113Hcateg.ind5111H.incoherencelog : "Categorie lbcate : le total 5.1.1(7) doit être égal au total tableau récapitulatif Contractuel Homme"
+ind5113Fcateg.ind5111F.incoherencelog : "Categorie lbcate : le total 5.1.1(8) doit être égal au total tableau récapitulatif Contractuel Femme"
+
+ind5121enp.totalCPF1.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2(6) CPF doit être inférieur au total 5.1.2(5)"
+ind5121enp.totalCPF2.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2(10) CPF doit être inférieur au total 5.1.2(9)"
+ind5121enp.totaux.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2(5) doit être égal au total 5.1.2(9)"
+ind5121Henp.ind131H.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2 Homme ne doit pas dépasser le total 1.3.1 Homme"
+ind5121Fenp.ind131F.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2 Femme ne doit pas dépasser le total 1.3.1 Femme"
+
+# messages flash
+questionnaire.consolide.flash: 'Vous devez saisir le questionnaire avant de créer le bilan'
+valide.consolide.flash: 'Le bilan social a été validé avec succès.'
+erreur.consolide.flash: 'Une erreur est survenue, veuillez recommencer.'
+refuse.consolide.flash: 'Le bilan social a été refusé.'
+nocollectiviteassocie.consolide.flash: 'Pas de collectivité associée'
+noenqueteactive.consolide.flash : "Pas d'enquête active pour la collectivité"
+questionnairemodifie.consolide.flash : 'Questionnaires modifiées'
+# erreur lié au exception
+nocollectivite.consolide.exception : "Vous n'avez aucune collectivité rattachée. Contacter l'administrateur"
+noenqueteactive.consolide.exception : "Il n'y a aucune enquête active pour votre collectivité. Contacter l'administrateur"
+
+#------------------------------------------#
+# messages utilisé dans les envoies de mail
+#------------------------------------------#
+
+envoye.contact.flash : 'Votre message a été transmis avec succès.'
+erreur.contact.flash : 'Une erreur est survenue, veuillez recommencer.'
+nocontact.contact.flash : "Aucun contact de référence n'a été trouvé."
+cdgnomail.contact.flash : "Le CDG sélèctionné n'a pas d'adresse Email, votre question a été transmit à l'administrateur."
+
+#------------------------------------------#
+# messages utilisé dans les enquetes
+#------------------------------------------#
+creation.enquete.flash: "L'enquête a été créée, vous pouvez maintenant la paramétrer."
+modifie.enquete.flash: "L'enquête a été modifiée!"
+erreur.enquete.flash: "Une erreur est survenue, veuillez recommencer."
+enqueteexiste.enquete.flash: 'Une enquête existe déjà pour cette campagne !'
+enqueteouverte.enquete.flash: 'Enquete ouverte avec succès.'
+enquetedejaouverte.enquete.flash: 'Une enquete est déjà ouverte pour cette campagne.'
+enquetelancee.enquete.flash: 'Enquete lancée avec succès.'
+mailrelanceenvoye.enquete.flash: 'Le mail de relance a été envoyé avec succès.'
+erreurtypedefichier.enquete.flash: "Le type de ficher n'est pas correct, veuillez importer un fichier '.csv'"
+
+#------------------------------------------#
+# messages utilisé dans les referentiels
+#------------------------------------------#
+
+ajout.referentiel.flash: la donnée a bien été ajoutée au référentiel
+modification.referentiel.flash: la donnée a bien été modifiée
+archive.referentiel.flash : la donnée a bien été archivée
+
+#------------------------------------------#
+# messages utilisé dans les modèles de vues
+#------------------------------------------#
+ajout.modelvues.flash: L'enregistrement a été effectué
+erreur.modelvues.flash: Une erreur est survenue, veuillez recommencer.

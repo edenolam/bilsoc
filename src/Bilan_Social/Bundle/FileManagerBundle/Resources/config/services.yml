@@ -1,0 +1,12 @@
+parameters:
+    file_manager.file_manager.class:   'Bilan_Social\Bundle\FileManagerBundle\Services\FileManager'
+    file_manager.file_uploader.class:  'Bilan_Social\Bundle\FileManagerBundle\Services\FileUploader'
+
+services:
+    file_manager.file_manager:
+        class: '%file_manager.file_manager.class%'
+        arguments: ['%file_manager%', '@doctrine.orm.entity_manager', '@security.token_storage']
+        public: true
+    file_manager.file_uploader:
+        class: '%file_manager.file_uploader.class%'
+        public: true

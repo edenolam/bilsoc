@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ModelVuesBundle\Entity\ModelVues" table="model_vues">
+        <id name="idModelVues" type="integer" column="ID_MODEL_VUES">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdModelVues" type="string" column="CD_MODEL_VUES" length="255"/>
+        <field name="blTypeColl" type="boolean" column="BL_TYPE_COLL"/>
+        <field name="blLibe" type="boolean" column="BL_LIBE"/>
+        <field name="blCourtier" type="boolean" column="BL_COURTIER"/>
+        <field name="blSire" type="boolean" column="BL_SIRE"/>
+        <field name="blLbAdresse" type="boolean" column="BL_LB_ADRESSE"/>
+        <field name="blAffiCdg" type="boolean" column="BL_AFFI_CDG"/>
+        <field name="blDepa" type="boolean" column="BL_DEPA"/>
+        <field name="blCdPost" type="boolean" column="BL_CD_POST"/>
+        <field name="blLbVill" type="boolean" column="BL_LB_VILL"/>
+        <field name="blCdInse" type="boolean" column="BL_CD_INSE"/>
+        <field name="blNmPopuInse" type="boolean" column="BL_NM_POPU_INSE"/>
+        <field name="blSurclasDemo" type="boolean" column="BL_SURCLAS_DEMO"/>
+        <field name="blNmStratColl" type="boolean" column="BL_NM_STRAT_COLL"/>
+        <field name="blCtCdg" type="boolean" column="BL_CT_CDG"/>
+        <field name="blChsct" type="boolean" column="BL_CHSCT"/>
+        <field name="blCollDgcl" type="boolean" column="BL_COLL_DGCL"/>
+        <field name="cdg_is_authorized_by_collectivity" type="boolean" column="CDG_IS_AUTHORIZED_BY_COLLECTIVITY"/>
+        <field name="blBilaSoci" type="boolean" column="BL_BILA_SOCI"/>
+        <field name="fgStat" type="boolean" column="BL_ETAT_SAISIE"/>
+        <field name="blRass" type="boolean" column="BL_RASS"/>
+        <field name="blHand" type="boolean" column="BL_HAND"/>
+        <field name="blGpee" type="boolean" column="BL_GPEE"/>
+        <field name="blGpeecPlus" type="boolean" column="BL_GPEEC_PLUS"/>
+        <field name="blApa" type="boolean" column="BL_APA"/>
+        <field name="blCons" type="boolean" column="BL_CONS"/>
+        <field name="blN4ds" type="boolean" column="BL_N4DS"/>
+        <field name="blBaseCarr" type="boolean" column="BL_BASE_CARR"/>
+        <field name="blBilaSociVide" type="boolean" column="BL_BILA_SOCI_VIDE"/>
+        <field name="blNom" type="boolean" column="BL_NOM"/>
+        <field name="blTele" type="boolean" column="BL_TELE"/>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,56 @@
+{% set sheet_heads = sheet.cols %}
+
+{% set borderStyle = {borders: {
+                            allBorders: {
+                                borderStyle: 'thin',
+                                color: {
+                                    rgb: '000000'
+                                }
+                            }
+                        },
+                        alignment: {
+                            vertical: 'center',
+                            horizontal: 'center',
+                            wrapText: true,
+                        } } %}
+
+{% set contentStyle = {
+                        alignment: {
+                            vertical: 'center',
+                            wrapText: true,
+                        } } %}                        
+                        
+{% xlsrow %}
+{% for head in sheet_heads %}
+	{% set head_lbl = head.lblHead is defined ? head.lblHead : head.bddKey  %}
+	{% set head_lbl = "apa.export.headlbl." ~ head_lbl %}
+    {% xlscell { style: borderStyle } %}{{ head_lbl|trans|raw }}{% endxlscell %}
+	}
+{% endfor %}
+{% endxlsrow %}
+{% for row in rows %}
+	{% xlsrow %}
+	    {% for head in sheet_heads %}
+                {% set value_key = head.bddKey  %}
+                {% xlscell { style: contentStyle } %}
+                    {% if (head.boolean is defined) %}
+                        {% if (attribute(row, value_key) == '1') %}
+                            Oui
+                        {% elseif (attribute(row, value_key) == '0') %}
+                            Non
+                        {% else %}
+                        {% endif %}
+                    {% elseif (head.dataSexe is defined) %}
+                        {% if (attribute(row, value_key) == '1') %}
+                            Homme
+                        {% elseif (attribute(row, value_key) == '2') %}
+                            Femme
+                        {% else %}
+                        {% endif %}
+                    {% else %}
+                        {{ attribute(row, value_key)|raw }}
+                    {% endif %}
+                {% endxlscell %}
+            {% endfor %}
+	{% endxlsrow %}
+{% endfor %}

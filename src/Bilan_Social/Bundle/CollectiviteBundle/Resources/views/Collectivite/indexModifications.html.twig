@@ -1,0 +1,65 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Collectivités</a></li>
+                <li class="active">Demandes de modification</li>
+            </ol>
+        </div>
+        <h1>Liste des demandes de modification des collectivités</h1>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if collectivitesModif is not null and collectivitesModif is not empty %}
+            <table class="table table-hover">
+                <thead>
+                    <th>Numéro de siret</th>
+                    <th>Libelle</th>
+                    <th>Code postal</th>
+                    <th>Ville</th>
+                    <th>Département</th>
+                </thead>
+                <tbody>
+                    {% for coll in collectivitesModif %}
+                        <tr>
+                            <td><a href="{{ path('collectivite_modifications', {'id':  coll.idColl  }) }}">{{ coll.nmSire}}</a></td>
+                            <td>{{ coll.lbColl }}</td>
+                            <td>{{ coll.cdPost }}</td>
+                            <td>{{ coll.lbVill }}</td>
+                            <td>{{ coll.departement.cdDepa }} - {{ coll.departement.lbDepa }}</td>
+                        </tr>
+                    {% endfor %}
+                <tbody>
+            </table>
+        {%else%}
+            <div class="alert alert-success fade in" role="alert">
+                <p>Aucune collectivité n'a fait de demande de modification.</p>
+            </div>
+
+        {% endif %}
+    </div>
+{% endblock %}

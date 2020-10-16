@@ -1,0 +1,27 @@
+{
+	"to_entity" : "Bilan_Social\\Bundle\\ApaBundle\\Entity\\AbsenceArretAgent",
+	"bloc_name" : "absences_agirhe",
+	"fields":{
+		"absence_motif":{
+			"left_key":"absence_motif",
+			"right_key":"RefMotifAbsence",
+			"back_ref":false,
+			"transform":[
+				{
+					"name":"get_from_base_ref",
+					"entity_field":"cdMotiabse",
+					"by_col":"CD_MOTIABSE",
+					"from_repository":"ReferencielBundle:RefMotifAbsence"
+				}
+			]
+		},	
+		"absence_nb_jour":{
+			"left_key":"nombre_jours",
+			"right_key":"NbJourabse"
+		},
+		"absence_nb_arret":{
+			"left_key":"nb_arret",
+			"right_key":"NbArre"
+		}
+	}
+}

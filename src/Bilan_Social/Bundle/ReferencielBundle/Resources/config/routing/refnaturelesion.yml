@@ -1,0 +1,28 @@
+refnaturelesion_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefNatureLesion:index" }
+    methods:  GET
+
+refnaturelesion_show:
+    path:     /{idNaturelesi}/show
+    defaults: { _controller: "ReferencielBundle:RefNatureLesion:show" }
+    methods:  GET
+
+refnaturelesion_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefNatureLesion:new" }
+    methods:  [GET, POST]
+
+refnaturelesion_edit:
+    path:     /{idNaturelesi}/edit
+    defaults: { _controller: "ReferencielBundle:RefNatureLesion:edit" }
+    methods:  [GET, POST]
+
+refnaturelesion_delete:
+    path:     /{idNaturelesi}/delete
+    defaults: { _controller: "ReferencielBundle:RefNatureLesion:delete" }
+    methods:  DELETE
+
+csv_export_refnaturelesion:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefNatureLesion:generateCsv" }

@@ -1,0 +1,235 @@
+/* NAVBAR */
+
+.navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+    border-radius: 5px;
+}
+
+.sidebar-nav .navbar ul a {
+    color: #df4e4e;
+    text-decoration: none;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #1a355d !important;
+}
+
+.rightBloc {
+    background-color:white;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.rightBloc .nav-pills {
+    margin-bottom: 20px;
+}
+
+.rightBloc .panel-group {
+    margin-bottom: 0;
+}
+
+.rightBloc .nav-pills>li.active>a,.rightBloc .nav-pills>li.active>a:focus,.rightBloc .nav-pills>li.active>a:hover,
+.rightBloc .nav-pills>li>a:focus,.rightBloc .nav-pills>li>a:hover{
+    color: #fff;
+    background-color: #df4e4e;
+}
+
+.rightBloc a {
+    color: #1a355d;
+}
+
+
+@media (min-width: 768px){
+
+    .affix-content .container .page-header{
+        margin-top: 0;
+    }
+    .affix-sidebar{
+        padding-right:0;
+        font-size:15px;
+        padding-left: 0;
+    }
+    .affix-row, .affix-container, .affix-content{
+        height: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .sidebar-nav .navbar .navbar-collapse {
+        padding: 0;
+        max-height: none;
+    }
+    .sidebar-nav .navbar{
+        margin-bottom:0;
+        border:0;
+        border-radius: 5px;
+    }
+    .sidebar-nav .navbar ul {
+        float: none;
+        display: block;
+    }
+    .sidebar-nav .navbar li {
+        float: none;
+        display: block;
+    }
+    .sidebar-nav .navbar li a {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+}
+
+@media (min-width: 769px){
+
+    .affix-content .container .page-header{
+        margin-top: 0;
+    }
+}
+
+@media (min-width: 992px){
+
+    .affix-content .container .page-header{
+        margin-top: 0;
+    }
+}
+
+@media (min-width: 1220px){
+    .affix-row{
+        overflow: hidden;
+    }
+
+    .affix-content .container .page-header{
+        margin-top: 0;
+    }
+    .affix-content{
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+    .affix-title{
+        border-bottom: 1px solid #ecf0f1;
+        padding-bottom:10px;
+    }
+    .navbar-nav {
+        margin: 0;
+    }
+    .navbar-collapse{
+        padding: 0;
+    }
+    .sidebar-nav .navbar li a:hover, .sidebar-nav .navbar li a:focus, .sidebar-nav .navbar li a:active {
+        background-color: #df4e4e;
+        color: white;
+    }
+    .sidebar-nav .navbar li a > .caret {
+        margin-top: 8px;
+    }
+}
+
+
+/* ENQUETE */
+
+
+.enqueteOpenClose {
+    color: white;
+}
+
+.enqueteOpenClose h2 {
+    font-size: 15px;
+}
+
+.enqueteOpenClose p {
+    font-size: 11px;
+}
+
+.enqueteOpenClose p:last-child {
+    color: #df4e4e;
+}
+
+
+/* RIGHT BLOC */
+
+
+.panel-collapse .panel-body {
+    padding: 25px;
+}
+
+.containerForm {
+    background-color: #df4e4e;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.blocInfoError {
+    width: 100%;
+    color: #f29020;
+    font-weight: bold;
+}
+
+.containerForm:last-child {
+    margin-bottom: 0;
+}
+
+.containerForm h2 {
+    font-size: 17px;
+    color: white;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.containerForm h2 .glyphicon {
+    font-size: 15px;
+}
+
+.containerForm h2 span:last-child {
+    float: right;
+}
+
+.containerFormCompte button {
+    background-color: #df4e4e;
+    color: white;
+    border-color: #df4e4e;
+    margin-top: 20px;
+}
+
+
+/* FORM */
+
+
+.panel-body .containerForm:nth-child(2), .panel-body .containerForm:nth-child(3), .panel-body .containerForm:nth-child(4) {
+    padding: 10px 20px;
+}
+
+.panel-body .containerForm:nth-child(2) h2, .panel-body .containerForm:nth-child(3) h2, .panel-body .containerForm:nth-child(4) h2 {
+    margin-bottom: 0;
+}
+
+.formBoxBlock .form-group {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.formBoxBlock .form-group label {
+    margin-right: 10px;
+    display: block;
+}
+
+.formBoxBlock .form-group label:nth-child(2), .formBoxBlock .form-group label:nth-child(3) {
+    color: white;
+    font-weight: 400;
+}
+
+
+/* TABLE */
+
+.containerForm table {
+    background-color: white;
+    margin-bottom: 0;
+}
+
+.containerForm table thead th {
+    text-align: center;
+}
+
+tbody tr th {
+    font-weight: normal;
+    color: #1a355d;
+}

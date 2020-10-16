@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctNatureLesion" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscRassctNatureLesionRepository" table="bsc_rassct_nature_lesion">
+        <indexes>
+            <index name="FK_BSC_RASSCT_NATURE_LESION_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_BSC_NATURE_LESION" columns="ID_NATURE_LESION"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_NATURE_LESION" name="IDXU1_BSCRAASCTNATURELESION"/>
+		</unique-constraints>
+        <id name="bscRassctNatureLesion" type="integer" column="BSC_RASSCT_NATURE_LESION">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscRassctNatureLesions">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refNatureLesion" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefNatureLesion">
+            <join-column name="ID_NATURE_LESION" referenced-column-name="ID_NATURE_LESION" nullable="false"/>
+        </many-to-one>
+
+        <field name="rNbAccidentAvecArret" type="integer" column="R_NB_ACCIDENT_AVEC_ARRET" nullable="true" />
+        <field name="rNbAccidentSansArret" type="integer" column="R_NB_ACCIDENT_SANS_ARRET" nullable="true"/>
+        <field name="rNbJourArret" type="integer" column="R_NB_JOUR_ARRET" nullable="true"/>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,51 @@
+{
+	"to_entity" : "Bilan_Social\\Bundle\\ApaBundle\\Entity\\FormationAgent",
+	"bloc_name" : "formations_ciril",
+	"fields":{
+		"nb_jours":{
+			"left_key":"nombre_jours",
+			"right_key":"NbjourForm",
+			"type":"integer"
+		},
+		"type_formation":{
+			"left_key":"type_formation",
+			"right_key":"RefFormation",
+			"type":"string",
+			"back_ref":false,
+			"transform":[
+				{
+					"name":"get_from_ref",
+					"ref_name":"ref_type_formation",
+					"get_col":"cd_type_formation",
+					"by_col":"code"
+				},
+				{
+					"name":"get_from_base_ref",
+					"entity_field":"cdForm",
+					"by_col":"CD_FORM",
+					"from_repository":"ReferencielBundle:RefFormation"
+				}
+			]
+		},
+		"organisme_formation":{
+			"left_key":"organisme_formateur",
+			"right_key":"RefOrganismeFormation",
+			"type":"boolean",
+			"back_ref":false,
+			"transform":[
+				{
+					"name":"get_from_ref",
+					"ref_name":"ref_organisme_formation",
+					"get_col":"cd_orga",
+					"by_col":"code"
+				},
+				{
+					"name":"get_from_base_ref",
+					"entity_field":"cdOrgaform",
+					"by_col":"CD_ORGAFORM",
+					"from_repository":"ReferencielBundle:RefOrganismeFormation"
+				}
+			]
+		}
+	}
+}

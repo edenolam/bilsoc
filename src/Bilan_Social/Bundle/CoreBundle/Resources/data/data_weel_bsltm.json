@@ -1,0 +1,18 @@
+{
+	"2018":{
+		"host":"http://192.168.0.2:8086",
+    	"base_url" : "/bsltm/api/v1/"
+	},
+	"2017":{
+		"host":"http://192.168.0.2:8087",
+    	"base_url" : "/bsltm/api/v1/"
+	},
+	"bs":{
+		"host":"http://192.168.0.2:8086",
+    	"base_url" : "/bsltm/api/v1/"
+	},
+	"db_repository":{
+		"host":"http://192.168.0.2:8087",
+    	"base_url" : "/bsltm/api/v1/"
+	}
+}

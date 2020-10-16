@@ -1,0 +1,3 @@
+modelevue_modelevue:
+    resource: "@ModelVuesBundle/Resources/config/routing/modele_vue.yml"
+    prefix:   /modele

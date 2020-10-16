@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind5121" table="ind_5121">
+        <indexes>
+            <index name="FK_5121_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_5121_EMPLOINONPERMANENT" columns="ID_EMPLNONPERM"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_EMPLNONPERM" name="IDXU1_IND_5121"/>
+		</unique-constraints>
+        <id name="id5121" type="integer" column="ID_5121">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind5121s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refEmploiNonPermanent" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiNonPermanent">
+            <join-column name="ID_EMPLNONPERM" referenced-column-name="ID_EMPLNONPERM" nullable="false"/>
+        </many-to-one>
+
+        <field name="r51211" type="integer" column="R_51211" nullable="true" />
+        <field name="r51212" type="integer" column="R_51212" nullable="true"/>
+        <field name="r51213" type="integer" column="R_51213" nullable="true"/>
+        <field name="r51214" type="integer" column="R_51214" nullable="true"/>
+        <field name="r51215" type="integer" column="R_51215" nullable="true"/>
+        <field name="r51216" type="integer" column="R_51216" nullable="true"/>
+        <field name="r51217" type="integer" column="R_51217" nullable="true"/>
+        <field name="r51218" type="integer" column="R_51218" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BscGpeecPlusNbAgentsParSpeEtAge" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscGpeecPlusNbAgentsParSpeEtAgeRepository" table="bsc_gpeec_plus_nb_agents_par_spe_et_age">
+    <indexes>
+      <index name="FK_GPEEC_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+      <index name="FK_GPEEC_PLUS_NB_AGENTS_SPECIALITE" columns="ID_SPECIALITE"/>
+    </indexes>
+	<unique-constraints>
+		<unique-constraint columns="ID_BILASOCICONS,ID_SPECIALITE" name="IDXU1_BSCGPEECPLUSNBAGENTSPARSPEETAGE" />
+	</unique-constraints>
+    <id name="bscGpeecPlusNbAgentsParSpeEtAge" type="integer" column="BSC_GPEEC_PLUS_NB_AGENTS_PAR_SPE_ET_AGE">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscGpeecPlusNbAgentsParSpeEtAges">
+        <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+    </many-to-one>
+
+    <many-to-one field="refSpecialite" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefSpecialite">
+        <join-column name="ID_SPECIALITE" referenced-column-name="ID_SPECIALITE" nullable="false"/>
+    </many-to-one>
+
+    <field name="rNb1" type="integer" column="R_NB_1" nullable="true"/>
+    <field name="rNb2" type="integer" column="R_NB_2" nullable="true"/>
+    <field name="rNb3" type="integer" column="R_NB_3" nullable="true"/>
+    <field name="rNb4" type="integer" column="R_NB_4" nullable="true"/>
+    <field name="rNb5" type="integer" column="R_NB_5" nullable="true"/>
+    <field name="rNb6" type="integer" column="R_NB_6" nullable="true"/>
+    <field name="rNb7" type="integer" column="R_NB_7" nullable="true"/>
+    <field name="rNb8" type="integer" column="R_NB_8" nullable="true"/>
+    <field name="rNb9" type="integer" column="R_NB_9" nullable="true"/>
+    <field name="rNb10" type="integer" column="R_NB_10" nullable="true"/>
+
+    <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

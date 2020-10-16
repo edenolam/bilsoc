@@ -1,0 +1,51 @@
+modelmail_index:
+    path:     /
+    defaults: { _controller: "ModelMailBundle:ModelMail:index" }
+    methods:  GET
+
+modelmail_show:
+    path:     /{id}/show
+    defaults: { _controller: "ModelMailBundle:ModelMail:show" }
+    methods:  GET
+
+modelmail_showmodal:
+    path:     /{id}/modal
+    defaults: { _controller: "ModelMailBundle:ModelMail:showModal" }
+    methods:  POST
+    options:
+        expose: true
+
+modelmail_new:
+    path:     /new
+    defaults: { _controller: "ModelMailBundle:ModelMail:new" }
+    methods:  [GET, POST]
+
+modelmail_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ModelMailBundle:ModelMail:edit" }
+    methods:  [GET, POST]
+
+dupliquer_edit:
+    path:     /{id}/dupliquer
+    defaults: { _controller: "ModelMailBundle:ModelMail:duplicate" }
+    methods:  [GET, POST]
+
+modelmail_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ModelMailBundle:ModelMail:delete" }
+    methods:  DELETE
+
+modelmail_new_cdg:
+    path:     /new_cdg
+    defaults: { _controller: "ModelMailBundle:ModelMail:newCdg" }
+    methods:  [GET, POST]
+
+modelmail_edit_cdg:
+    path:     /{id}/edit_cdg
+    defaults: { _controller: "ModelMailBundle:ModelMail:editcdg" }
+    methods:  [GET, POST]
+
+modelmail_delete_cdg:
+    path:     /{id}/delete_cdg
+    defaults: { _controller: "ModelMailBundle:ModelMail:deletecdg" }
+    methods:  DELETE

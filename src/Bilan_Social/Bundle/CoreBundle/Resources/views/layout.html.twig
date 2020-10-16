@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+     <script type="text/javascript" src="{{ asset('js/inputGestion.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('node_modules/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
+
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+      <link href="{{ asset('node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block header %}
+
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+{% endblock %}

@@ -1,0 +1,409 @@
+
+    {% if formDroit714 is defined %}
+        {% set bilan_social_consolide = formDroit714.vars.data %}
+        {{ form_start(formDroit714) }}
+
+
+        <h5>
+            Participation financière aux contrats et règlements de protection sociale complémentaire de vos agents
+        </h5>
+
+
+
+        <table width="100%" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr entete="1">
+                    <th>OUI/NON</th>
+                    <th style="text-align: center">Santé</th>
+                    <th style="text-align: center">Prévoyance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="min-width: 200px; text-align: center">
+                         - via une convention de participation
+                    </td>
+                    <td>{{ form_row(formDroit714.qS7141) }}</td>
+                    <td>{{ form_row(formDroit714.qP7143)}}</td>
+                </tr>
+                <tr>
+                    <td style="min-width: 200px; text-align: center">
+                          - via un contrat ou un règlement labellisé
+                    </td>
+                    <td>{{ form_row(formDroit714.qS7142) }}</td>
+                    <td>{{ form_row(formDroit714.qP7144)}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div id="ind714b" style="display: none;">
+
+            <table width="100%" id="ind714Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr entete="1">
+                        <th>Catégorie</th>
+                        <th class="sante" style="text-align: center">Santé</th>
+                        <th class="prevoyance" style="text-align: center">Prévoyance</th>
+                        <th class="filiTable">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formDroit714.ind7141s %}
+                    {% set row_data_7141 = tag.vars.value %}
+                    {% set row_cat = row_data_7141.r71411 + row_data_7141.r71412 %}
+                    <tr idTrCate="{{tag.refCategorie.vars.value}}" id="7141idTr_{{tag.refCategorie.vars.value}}" line7141="1">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            {{ form_widget(tag.refCategorie) }}
+                            {{ tag.refCategorie.vars.data.lbCate}}
+                        </td>
+                        <td class="sante" id="r71411" data-col-group="row_cat">{{ form_widget(tag.r71411) }}</td>
+                        <td class="prevoyance" id="r71412" data-col-group="row_cat">{{ form_widget(tag.r71412) }}</td>
+                        <td data-col-id="row_cat">{{ row_cat }}</td>
+                    </tr>
+                {% endfor %}
+
+                    <tr id="7141idTr_0">
+                        <td style="text-align: center">Hors catégories (pour les agents sur emploi non permanent)</td>
+                        <td class="sante" id="r71411HC" style="text-align: center" data-col-group="row_hc_7141">{{ form_widget(formDroit714.r71411HC) }}</td>
+                        <td class="prevoyance" id="r71412HC" style="text-align: center" data-col-group="row_hc_7141">{{ form_widget(formDroit714.r71412HC) }}</td>
+                        <td data-col-id="row_hc_7141">{{ bilan_social_consolide.r71411HC + bilan_social_consolide.r71412HC }}</td>
+                    </tr>
+                {% set total_fili_7141 = bilan_social_consolide.getIndPileForBy('ind7141s') %}
+                    <tr class="filiTable row_totaux" id="totalGlo1">
+                        <th class="filiTable" style="text-align: center">Nombre total de bénéficiaires</th>
+                        <th class="sante filiTable" style="text-align: center" data-col-group="row_total_7141">{{ total_fili_7141.r71411 + bilan_social_consolide.r71411HC }}</th>
+                        <th class="prevoyance filiTable" style="text-align: center" data-col-group="row_total_7141">{{ total_fili_7141.r71412 + bilan_social_consolide.r71412HC}}</th>
+                        <th style="text-align: center" data-col-id="row_total_7141">{{ total_fili_7141.r71411 + total_fili_7141.r71412 + bilan_social_consolide.r71411HC + bilan_social_consolide.r71412HC }}</th>
+                    </tr>
+
+                {% for tag in formDroit714.ind7142s %}
+                    {% set row_data_7142 = tag.vars.value %}
+                    {% set row_ntb = row_data_7142.r71421 + row_data_7142.r71422 %}
+                    <tr idTrCate="{{tag.refCategorie.vars.value}}" id="7142idTr_{{tag.refCategorie.vars.value}}" line7142="1">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            {{ form_widget(tag.refCategorie) }}
+                            {{ tag.refCategorie.vars.data.lbCate}}
+                        </td>
+                        <td class="sante" id="r71421" data-col-group="row_ntb">{{ form_widget(tag.r71421) }}</td>
+                        <td class="prevoyance" id="r71422" data-col-group="row_ntb">{{ form_widget(tag.r71422) }}</td>
+                        <td data-col-id="row_ntb">{{ row_ntb }}</td>
+                    </tr>
+                {% endfor %}
+
+                    <tr id="7142idTr_0">
+                        <td style="text-align: center">Hors catégories (pour les agents sur emploi non permanent)</td>
+                        <td class="sante" id="r71421HC" style="text-align: center" data-col-group="row_hc_7142">{{ form_widget(formDroit714.r71421HC) }}</td>
+                        <td class="prevoyance" id="r71422HC" style="text-align: center" data-col-group="row_hc_7142">{{ form_widget(formDroit714.r71422HC) }}</td>
+                        <td data-col-id="row_hc_7142">{{ bilan_social_consolide.r71421HC + bilan_social_consolide.r71422HC }}</td>
+                    </tr>
+                {% set total_fili_7142 = bilan_social_consolide.getIndPileForBy('ind7142s') %}
+                    <tr class="filiTable row_totaux" id="totalGlo2">
+                        <th class="filiTable" style="text-align: center">Montant total des participations  (en €)</th>
+                        <th class="sante filiTable" style="text-align: center" data-col-group="row_total_7142">{{ total_fili_7142.r71421 + bilan_social_consolide.r71421HC }}</th>
+                        <th class="prevoyance filiTable" style="text-align: center" data-col-group="row_total_7142">{{ total_fili_7142.r71422 + bilan_social_consolide.r71422HC }}</th>
+                        <th style="text-align: center" data-col-id="row_total_7142">{{ total_fili_7142.r71421 + total_fili_7142.r71422 + bilan_social_consolide.r71421HC + bilan_social_consolide.r71422HC }}</th>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+        <br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formDroit714) }}
+
+
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true  %}
+
+                $(document).change();
+
+                initForm714();
+                $("#bscForm_qS7141").on("click", function () {
+                    initForm714();
+                });
+                $("#bscForm_qS7142").on("click", function () {
+                    initForm714();
+                });
+                $("#bscForm_qP7143").on("click", function () {
+                    initForm714();
+                });
+                $("#bscForm_qP7144").on("click", function () {
+                    initForm714();
+                });
+
+                // update7141();
+                // update7142();
+
+
+            {% endif %}
+        });
+
+
+        function initForm714() {
+            var qS7141Res = $('input[name="bscForm[qS7141]"]').filter(':checked').val();
+            var qS7142Res = $('input[name="bscForm[qS7142]"]').filter(':checked').val();
+            var qP7143Res = $('input[name="bscForm[qP7143]"]').filter(':checked').val();
+            var qP7144Res = $('input[name="bscForm[qP7144]"]').filter(':checked').val();
+
+            $('#ind714b').hide();
+            if (qS7141Res == "1" || qS7142Res == "1" || qP7143Res == "1" || qP7144Res == "1") {
+                $('#ind714b').show();
+
+                $(".sante" ).hide();
+                if(qS7141Res == "1" || qS7142Res == "1" ) {
+                    $(".sante" ).show();
+                }
+
+                $(".prevoyance" ).hide();
+                if(qP7143Res == "1" || qP7144Res == "1" ) {
+                    $(".prevoyance" ).show();
+                }
+
+            }
+
+        }
+
+        function changedR7141(obj) {
+            // update7141(false);
+        }
+
+        function update7141(){
+            var table714 = document.getElementById('ind714Table');
+
+            var rowLength714 = table714.rows.length;
+            var idxRowInput = 0;
+
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+
+            var mtTot1Glo = 0;
+            var mtTot2Glo = 0;
+
+
+            for(var i=0; i<rowLength714; i+=1){
+                var row = table714.rows[i];
+
+                if(row.getAttribute("entete") != undefined && row.getAttribute("entete") == "1") {
+                    continue;
+                }
+
+                var cellLength = row.cells.length;
+                var line7141 = false;
+
+                if(row.getAttribute("line7141") != undefined) {
+                    line7141 = true;
+                }
+
+                if(row.id.substring(0, 9)=="totalGlo1") {
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1Glo;
+                            mtTot1Glo = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2Glo;
+                            mtTot2Glo = 0;
+                        }
+                    }
+                }
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 8)=="r71411HC") {
+                        if($('#bscForm_r71411HC').val()!="") {
+                            mtTot1 += parseInt($('#bscForm_r71411HC').val());
+                            mtTot1Glo += parseInt($('#bscForm_r71411HC').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 8)=="r71412HC") {
+                        if($('#bscForm_r71412HC').val()!="") {
+                            mtTot2 += parseInt($('#bscForm_r71412HC').val());
+                            mtTot2Glo += parseInt($('#bscForm_r71412HC').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r71411") {
+                        if($('#bscForm_ind7141s_'+idxRowInput+'_r71411').val()!="") {
+                            mtTot1 += parseInt($('#bscForm_ind7141s_'+idxRowInput+'_r71411').val());
+                            mtTot1Glo += parseInt($('#bscForm_ind7141s_'+idxRowInput+'_r71411').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r71412") {
+                        if($('#bscForm_ind7141s_'+idxRowInput+'_r71412').val()!="") {
+                            mtTot2 += parseInt($('#bscForm_ind7141s_'+idxRowInput+'_r71412').val());
+                            mtTot2Glo += parseInt($('#bscForm_ind7141s_'+idxRowInput+'_r71412').val());
+                        }
+                    }
+
+                }
+
+                if(line7141) idxRowInput++;
+            }// end for line
+        }
+
+        function changedR7142(obj) {
+            // update7142();
+        }
+
+        function update7142(){
+            var table714 = document.getElementById('ind714Table');
+
+            var rowLength714 = table714.rows.length;
+            var idxRowInput = 0;
+
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+
+            var mtTot1Glo = 0;
+            var mtTot2Glo = 0;
+
+            for(var i=0; i<rowLength714; i+=1){
+                var row = table714.rows[i];
+
+                if(row.getAttribute("entete") != undefined && row.getAttribute("entete") == "1") {
+                    continue;
+                }
+
+                var cellLength = row.cells.length;
+                var line7142 = false;
+
+                if(row.getAttribute("line7142") != undefined) {
+                    line7142 = true;
+                }
+
+                if(row.id.substring(0, 9)=="totalGlo2") {
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1Glo;
+                            mtTot1Glo = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2Glo;
+                            mtTot2Glo = 0;
+                        }
+                    }
+                }
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 8)=="r71421HC") {
+                        if($('#bscForm_r71421HC').val()!="") {
+                            mtTot1 += parseInt($('#bscForm_r71421HC').val());
+                            mtTot1Glo += parseInt($('#bscForm_r71421HC').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 8)=="r71422HC") {
+                        if($('#bscForm_r71422HC').val()!="") {
+                            mtTot2 += parseInt($('#bscForm_r71422HC').val());
+                            mtTot2Glo += parseInt($('#bscForm_r71422HC').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r71421") {
+                        if($('#bscForm_ind7142s_'+idxRowInput+'_r71421').val()!="") {
+                            mtTot1 += parseInt($('#bscForm_ind7142s_'+idxRowInput+'_r71421').val());
+                            mtTot1Glo += parseInt($('#bscForm_ind7142s_'+idxRowInput+'_r71421').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r71422") {
+                        if($('#bscForm_ind7142s_'+idxRowInput+'_r71422').val()!="") {
+                            mtTot2 += parseInt($('#bscForm_ind7142s_'+idxRowInput+'_r71422').val());
+                            mtTot2Glo += parseInt($('#bscForm_ind7142s_'+idxRowInput+'_r71422').val());
+                        }
+                    }
+
+                }
+
+                if(line7142) idxRowInput++;
+            }// end for line
+        }
+
+
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm714_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_droit_ind714_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind714').load('{{ path('bilan_conso_droit_ind714_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        if(blRassct == true) {
+                                            window.location.href = '{{ path('bilan_conso_rassct_edit') }}';
+                                        } else if (blHand == true) {
+                                            window.location.href = '{{ path('bilan_conso_handitorial_edit') }}';
+                                        } else if (blGpeec == true) {
+                                            window.location.href = '{{ path('bilan_conso_gpeec_edit') }}';
+                                        }
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}

@@ -1,0 +1,271 @@
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+    {% set bilan_social_consolide = formFormation513.vars.data %}
+    {% if formFormation513 is defined %}
+
+        {{ form_start(formFormation513) }}
+
+        <h5>5.1.3 - Validation de l'expérience, bilan de compétence et congé de formation dans l'année {{AnneeCamp}}</h5>
+
+        Champ : le tableau qui suit concerne les fonctionnaires et les contractuels (sur un emploi permanent ou non permanent).<br/>
+
+        <div id="alerte10" style="display:none" class="alerteError">
+            Le total dépasse les 10% du total 1.1.1 + 1.2.1 + 1.3.1 = <span id="total">{{total111_121_131}}</span>
+            <br/>
+        </div>
+
+        <table width="100%" id="ind513Table" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr entete="1">
+                    <th rowspan="3"></th>
+                    <th style="text-align: center" colspan="3">Titulaires et stagiaires	</th>
+                    <th style="text-align: center" colspan="3">Contractuels</th>
+                    <th rowspan="3" style="text-align: center" >Total</th>
+                </tr>
+
+                <tr entete="1">
+                    <th style="text-align: center">Hommes</th>
+                    <th style="text-align: center">Femmes</th>
+                    <th rowspan="2" style="text-align: center">Total</th>
+                    <th style="text-align: center">Hommes</th>
+                    <th style="text-align: center">Femmes</th>
+                    <th rowspan="2" style="text-align: center">Total</th>
+                </tr>
+                <tr entete="1">
+                    <th>5.1.3(1)</th>
+                    <th>5.1.3(2)</th>
+                    <th>5.1.3(3)</th>
+                    <th>5.1.3(4)</th>
+                </tr>
+            </thead>
+            <tbody class="ind_table_totaux">
+
+            {% for tag in formFormation513.ind513s %}
+                {% set row_data = tag.vars.value %}
+                {% set row_titu = row_data.r5131 + row_data.r5132 %}
+                {% set row_cont = row_data.r5133 + row_data.r5134 %}
+                {% if (tag.firstType.vars.value == true )%}
+                    {% if (tag.type.vars.value == 1 )%}
+                        <tr id="entete" class="filiTable" >
+                            <td colspan="8"><b>Validation des acquis et des expériences</b></td>
+                        </tr>
+                    {% endif %}
+
+                    {% if (tag.type.vars.value == 2)%}
+                        <tr id="entete" class="filiTable" >
+                            <td colspan="8"><b>Bilans de compétence</b></td>
+                        </tr>
+                    {% endif %}
+
+                    {% if (tag.type.vars.value == 3 )%}
+                        <tr id="entete" class="filiTable" >
+                            <td colspan="8"><b>Congé de formation</b></td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+
+                <tr>
+                    <td style="min-width: 200px; text-align: center">
+                        {{ form_widget(tag.refValidationExperience) }}
+                        {{ form_widget(tag.type) }}
+                        {{ form_widget(tag.firstType) }}
+
+                        {% if (tag.type.vars.value == 1 )%}
+                            {{ tag.refValidationExperience.vars.data.lbEbcf}}
+                        {% endif %}
+
+                        {% if (tag.type.vars.value == 2)%}
+                            Nombre de bilans de compétences financés par la collectivité territoriale
+                        {% endif %}
+
+                        {% if (tag.type.vars.value == 3 )%}
+                            Nombre d'agents bénéficiant d'un congé de formation au titre de {{AnneeCamp}}
+                        {% endif %}
+
+                    </td>
+                    <td id="r5131" data-col-group="row_titu">{{ form_widget(tag.r5131) }}</td>
+                    <td id="r5132" data-col-group="row_titu">{{ form_widget(tag.r5132) }}</td>
+                    <td data-col-id="row_titu" data-col-group="tot_row">{{ row_titu }}</td>
+                    <td id="r5133" data-col-group="row_cont">{{ form_widget(tag.r5133) }}</td>
+                    <td id="r5134" data-col-group="row_cont">{{ form_widget(tag.r5134) }}</td>
+                    <td data-col-id="row_cont" data-col-group="tot_row">{{ row_cont }}</td>
+                    <td class="filiTable" id="lineTot1" style="text-align: center" data-col-id="tot_row">{{ row_titu + row_cont }}</td>
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+
+        <br/>
+        La validation des acquis et de l’expérience professionnelle (VAE) est un dispositif permettant aux agents pouvant justifier d’une expérience professionnelle de transformer cette expérience en un diplôme. Pour cela, un dossier doit être constitué et présenté à la commission placée auprès de la structure qui a délivré le diplôme sollicité par l'agent (école, université...). Ref. Loi de Modernisation sociale du 17 janvier 2002.
+
+
+
+        <br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formFormation513) }}
+
+        <script type="text/javascript">
+
+            $(document).ready(function ()
+            {
+                changeDetect = false;
+                $(document).change();
+
+                {% if afficheAlerte == 1  %}
+                    $('#alerte10').show();
+                {% else %}
+                    $('#alerte10').hide();
+                {% endif %}
+
+                // update513();
+            });
+
+
+
+            function changedR513(obj) {
+                // update513(false);
+            }
+
+            function update513(onInit) {
+                var table513 = document.getElementById('ind513Table');
+
+                var rowLength513 = table513.rows.length;
+                var idxRowInput = 0;
+
+
+                for (var i = 0; i < rowLength513; i += 1) {
+                    var row = table513.rows[i];
+
+                    if(row.getAttribute("entete") != undefined && row.getAttribute("entete") == "1") {
+                        continue;
+                    }
+
+                    if (row.id.substring(0, 6) == "entete") {
+                        continue;
+                    }
+
+                    var cellLength = row.cells.length;
+
+                    var lineTot1 = 0;
+
+                    for (var y = 0; y < cellLength; y += 1) {
+                        var cell = row.cells[y];
+                        var cellValue;
+
+                        if (cell.id.substring(0, 6) == "r5131") {
+                            cellValue = $('#bscForm_ind513s_' + idxRowInput + '_r5131').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                lineTot1 += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 6) == "r5132") {
+                            cellValue = $('#bscForm_ind513s_' + idxRowInput + '_r5132').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                lineTot1 += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 6) == "r5133") {
+                            cellValue = $('#bscForm_ind513s_' + idxRowInput + '_r5133').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                lineTot1 += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 6) == "r5134") {
+                            cellValue = $('#bscForm_ind513s_' + idxRowInput + '_r5134').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                lineTot1 += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 8) == "lineTot1") {
+                            cell.innerHTML = lineTot1;
+                        }
+                    }
+
+                    idxRowInput++;
+                }// end for line
+
+            }
+
+            /*
+             * METHODE AJAX SUBMIT
+             */
+            $(function () {
+                // Enregistrement en ajax
+                $('form').on('submit', function (e) {
+                    var $this = $(this).closest('div');
+                    var btn = $(this).find("input[type=submit]:focus");
+                    var value_valide = $(btn).data('valide');
+                    $('#bscForm_valide').val(value_valide);
+                    // Submit en ajax pour le fonctionnement d'appel par onglet
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ path('bilan_conso_formation_ind513_edit') }}',
+                        data: $('form').serialize(),
+                        success: function (responsejson) {
+
+
+                            if (responsejson.afficheAlerte == "1") {
+                                $('#alerte10').show();
+                            }
+                            else {
+                                $('#alerte10').hide();
+                            }
+
+                            if (responsejson.data == 1) {
+                                if (recordAuto) {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement automatique réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+                                } else {
+                                    $('#ind513').load('{{ path('bilan_conso_formation_ind513_edit') }}', function () {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                        var next = $($this).next('.panel-heading');
+                                        if(next.length == 0) {
+                                            window.location.href = '{{ path('bilan_conso_droit_edit') }}';
+                                        }
+                                    });
+                                }
+                            } else if (responsejson.data == "-3") {
+                                $('#progImg').hide();
+                                $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                messageJS.dialog("open");
+                            } else {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                messageJS.dialog("open");
+                            }
+
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(xhr);
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                            messageJS.dialog("open");
+                        }
+                    });
+                });
+            });
+
+
+
+        </script>
+    {% endif %}

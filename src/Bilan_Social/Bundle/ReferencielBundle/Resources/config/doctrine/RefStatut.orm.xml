@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStatut" table="ref_statut"
+        repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefStatutRepository" >
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_STAT" name="cdStat"/>
+        </unique-constraints>
+        <id name="idStat" type="integer" column="ID_STAT">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="lbStat" type="string" column="LB_STAT" length="100" nullable="true"/>
+        <field name="cdStat" type="string" column="CD_STAT" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="cdMotiN4ds" type="string" column="CD_MOTI_N4DS" length="255" nullable="true"/>
+        <field name="bl424" type="boolean" column="BL_424" nullable="false"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refStatut" />
+
+        <one-to-many field="EtprAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\EtprAgent" mapped-by="refStatut">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="BilanQ30Alerte" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanQ30Alerte" mapped-by="refStatut">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="RemunerationGlobaleAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\RemunerationGlobaleAgent" mapped-by="refStatut">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="RemunerationAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\RemunerationAgent" mapped-by="refStatut">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="HeuSuppReaRemAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\HeuSuppReaRemAgent" mapped-by="refStatut">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="HeuCompReaRemAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\HeuCompReaRemAgent" mapped-by="refStatut">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <many-to-many field="refMotifDepart" mapped-by="statutMotifDeparts" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifDepart">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        </many-to-many>
+        <many-to-many field="refMouvinteanne" mapped-by="statutMouvInteAnne" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMouvinteanne">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        </many-to-many>
+        <many-to-many field="refMotifArrivee" mapped-by="statutMotifArrivees" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifArrivee">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        </many-to-many>
+        <many-to-many field="refPositionStatutaires" mapped-by="statutPositionStatutaires" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefPositionStatutaire">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

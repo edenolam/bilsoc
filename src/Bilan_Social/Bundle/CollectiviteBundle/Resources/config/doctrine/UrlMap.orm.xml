@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="Bilan_Social\Bundle\CollectiviteBundle\Repository\UrlMapRepository" name="Bilan_Social\Bundle\CollectiviteBundle\Entity\UrlMap">
+        <indexes>
+            <index name="FK_MAP_DEPARTEMENT" columns="ID_URL_MAP"/>
+        </indexes>
+      <id name="id_urlmap" type="integer" column="ID_URL_MAP">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="lbUrlMap" type="string" column="lbUrlMap" length="255" nullable="true"/>
+    <many-to-one field="departement" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement" inversed-by="maps">
+        <join-column name="ID_DEPA" referenced-column-name="ID_DEPA" nullable="false"/>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

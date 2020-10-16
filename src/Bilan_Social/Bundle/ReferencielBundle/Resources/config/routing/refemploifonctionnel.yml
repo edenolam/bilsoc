@@ -1,0 +1,28 @@
+refemploifonctionnel_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefEmploiFonctionnel:index" }
+    methods:  GET
+
+refemploifonctionnel_show:
+    path:     /{idEmplfonc}/show
+    defaults: { _controller: "ReferencielBundle:RefEmploiFonctionnel:show" }
+    methods:  GET
+
+refemploifonctionnel_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefEmploiFonctionnel:new" }
+    methods:  [GET, POST]
+
+refemploifonctionnel_edit:
+    path:     /{idEmplfonc}/edit
+    defaults: { _controller: "ReferencielBundle:RefEmploiFonctionnel:edit" }
+    methods:  [GET, POST]
+
+refemploifonctionnel_delete:
+    path:     /{idEmplfonc}/delete
+    defaults: { _controller: "ReferencielBundle:RefEmploiFonctionnel:delete" }
+    methods:  DELETE
+
+csv_export_refemploifonctionnel:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefEmploiFonctionnel:generateCsv" }

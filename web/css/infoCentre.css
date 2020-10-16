@@ -1,0 +1,190 @@
+/*
+	web/css/infoCentre.css
+
+	fichier de style principal de l'InfoCentreBundle
+*/
+/*
+*	pool manager	
+*/
+.select_pool_action{
+	margin: 0;
+}
+.description_pool{
+	width: 50%;
+}
+.actions_pool{
+	text-align: center;
+}
+.pool_action_button{
+	padding: 3px;
+	margin-right: 3px;
+}
+.pool_selected{
+	background-color: steelblue;
+}
+.pool_selected *{
+	font-weight: bold;
+}
+#new_pool_collapse{
+	color: #95be0e;
+    background-color: white;
+    font-weight: bolder;
+    border-color: #95be0e;
+}
+#new_pool_collapse:hover{
+	border-color: white;
+}
+#new-pool-wrapper{
+	padding: 8px;
+	border: solid 5px white;
+}
+.field_a_prototype_remove_btn{
+	cursor: pointer;
+}
+#form_new_pool{
+	margin-top: 15px;
+	margin-bottom: 5px;
+}
+.card-header h3{
+	padding: 8px;
+	background-color: white;
+}
+fieldset{
+	margin-top: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border: 2px solid white;
+}
+fieldset legend{
+	background-color: white;
+	padding-left: 5px;
+}
+#infocentre_filter_form .radio>label, #infocentre_filter_form .checkbox>label{
+	width: 100%;
+}
+#infocentre_filter_form .inline_widget_element input,#infocentre_filter_form .inline_widget_element select,#infocentre_filter_form label.select_all_label{
+	display: inline-block !important;
+	width: auto;
+}
+#infocentre_filter_form .inline_widget_element label{
+	display: block;
+}
+#infocentre_filter_form .no_label{
+	margin-top: 1.8em;
+}
+#infocentre_filter_form .sub_item{
+	display: inline-block;
+}
+#infocentre_filter_form .select_all_fellow_checkbox_wrapper{
+	cursor: pointer;
+}
+#infocentre_filter_form .control-label{
+	font-size: 16px;
+}
+#infocentre_filter_form .child_box_border_tinyround>*{
+	border-color: #9c9c9c;
+}
+#filter_form_footer{
+	margin-right: 0px;
+	margin-left: 0px;
+}
+.phantom_section_title_BT_collapse{
+	padding: 8px;
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+.error_msg{
+	color: red;
+}
+/*
+*	filter results
+*/
+
+#info_centre_workflow_wrapper thead th{
+	font-size: 16px;
+	background-color: #95be0e;
+	border-color: white;
+	border-bottom: 0px;
+	color: white;
+	text-align: center;
+}
+#info_centre_workflow_wrapper thead th:first-of-type{
+	border-left: 0px;
+}
+#info_centre_workflow_wrapper thead th:last-of-type{
+	border-right: 0px;
+}
+#info_centre_workflow_wrapper thead .sorting::after{
+	opacity: 0.4;
+	bottom: 30%
+}
+#info_centre_workflow_wrapper thead .sorting_asc::after, #info_centre_workflow_wrapper thead .sorting_desc::after{
+	opacity: 0.8;
+}
+#select_all_to_pool_label{
+	cursor: pointer;
+}
+
+/*
+*	Export bay
+*/
+.export_logo_wrapper{
+	max-width: 40px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.export_pool_cell {
+	text-align: center;
+}
+
+.export_pool_btn{
+	min-width: 150px;
+	width:150px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	position: relative;
+}
+.image_btn_export{
+	max-width: 100%;
+	height: auto;
+	position: absolute;
+	background: floralwhite;
+	border-radius: 22px;
+	padding: 3px;
+	left: -38px;
+	top: -8px;
+	z-index: 15;
+	border: 1px;
+	border-color: #222;
+	border-width: thick;
+	width: auto;
+}
+
+
+.bs_progress_bar{
+	display: inline-table;
+}
+#export_bouttons_wrapper button{
+	padding-right: 7px;
+}
+

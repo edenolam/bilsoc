@@ -1,0 +1,9 @@
+consolide_consolide:
+    resource: "@ConsoBundle/Resources/config/routing/conso.yml"
+    prefix: /consolide
+    
+import_txt_zipped_file:
+    path:     /import_txt_zipped_file
+    defaults: { _controller: ConsoBundle:BilanSocialConsolide:getImportTxtZippedFile }
+    options:
+        expose: true

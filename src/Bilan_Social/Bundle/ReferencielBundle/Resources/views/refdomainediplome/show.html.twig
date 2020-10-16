@@ -1,0 +1,36 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refdomainediplome_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped">
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refDomaineDiplome.cdDomaineDiplome }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refDomaineDiplome.lbDomaineDiplome }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refDomaineDiplome.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refDomaineDiplome} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refdomainediplome_edit', { 'idDomaineDiplome': refDomaineDiplome.idDomaineDiplome }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+
+

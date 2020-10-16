@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefContrainteTravail" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefContrainteTravailRepository" table="ref_contrainte_travail">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_CONTTRAV" name="cdConttrav"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idConttrav" type="integer" column="ID_CONTTRAV">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdConttrav" type="string" column="CD_CONTTRAV" length="100" nullable="true"/>
+        <field name="lbConttrav" type="string" column="LB_CONTTRAV" length="100" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+
+        <many-to-many field="bilanSocialAgents" mapped-by="refContrainteTravail" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent"/>
+
+    </entity>
+</doctrine-mapping>

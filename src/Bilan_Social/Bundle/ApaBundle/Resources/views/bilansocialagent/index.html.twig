@@ -1,0 +1,322 @@
+{% extends '@Apa/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+  {#  {% block menu %}
+        {% include '@Apa/menu.html.twig' %}
+    {% endblock %}#}
+    {% set droitCdg = app.session.get('droit') %}
+    {# <div class="col-xs-9 flash {% if is_granted("ROLE_PREVIOUS_ADMIN") and droitCdg == 'voir' %}input-disabled{% endif %}"> #}
+    <div class="col-xs-9 flash {% if is_granted("ROLE_CDG") and droitCdg == 'voir' %}input-disabled{% endif %}">
+        {% for flash_message in app.session.flashBag.get('notice') %}
+            <div class="alert alert-success text-center">
+                <strong>{{ flash_message }}</strong>
+            </div>
+        {% endfor %}
+        <h4>Tableau récapitulatif</h4>
+          <table class="table table-striped">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Statut</th>
+                                <th>Effectif théorique au 31/12/{{anne_campagne - 1}}</th>
+                                <th>Nb d'arrivées en {{anne_campagne}}</th>
+                                <th>Nb de départ en {{anne_campagne}}</th>
+                                <th>Effectif présent au 31/12/{{anne_campagne}}</th>
+                                <th>Nb d'agents restant à valider</th>
+				<th>Nb d'agents validés</th>
+                            </tr>
+                        </thead>
+                        {% set totalTheorique = 0%}
+                        {% set totalArrivee = 0%}
+                        {% set totalDepart = 0%}
+                        {% set totalPresent = 0%}
+                        <tbody class="text-center">
+                            {% for info_dashboard in tabDashBoard %}
+                                <tr>
+                                    <td class="text-center">
+                                     {{ info_dashboard.0 }}
+                                    </td>
+                                    <td class="text-center">
+                                        {% set nbeffectifTheorique = (info_dashboard.4 + info_dashboard.1) - info_dashboard.5 %}
+                                        {{ nbeffectifTheorique }}
+                                        {% if info_dashboard.0 == "Fonctionnaire" or info_dashboard.0 == "Contractuel permanent" %}
+                                            {% set totalTheorique = totalTheorique + nbeffectifTheorique %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if info_dashboard.0 == "Fonctionnaire" or info_dashboard.0 == "Contractuel permanent" %}
+                                            {% set totalArrivee = totalArrivee + info_dashboard.5 %}
+                                        {% endif %}
+                                        {{ info_dashboard.5 }}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if info_dashboard.0 == "Fonctionnaire" or info_dashboard.0 == "Contractuel permanent" %}
+                                            {% set totalDepart = totalDepart + info_dashboard.4 %}
+                                        {% endif %}
+                                        {{ info_dashboard.4 }}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if info_dashboard.0 == "Fonctionnaire" or info_dashboard.0 == "Contractuel permanent" %}
+                                            {% set totalPresent = totalPresent + info_dashboard.1 %}
+                                        {% endif %}
+                                        {{ info_dashboard.1}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ info_dashboard.3 }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ info_dashboard.2 }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+{#                            Permet le calcule total de fonctionnaire + contractuel permanent pour détermnier les emplois permanents #}
+                             <tr>
+                                    <td class="text-center theorique">
+                                     Emplois permanents
+                                    </td>
+                                    <td class="text-center arrivee">
+                                       {{totalTheorique}}
+                                    </td>
+                                    <td class="text-center depart">
+                                        {{totalArrivee}}
+                                    </td>
+                                    <td class="text-center present3112">
+                                        {{totalDepart}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{totalPresent}}
+                                    </td>
+                                    <td class="text-center">
+
+                                    </td>
+                                    <td class="text-center">
+
+                                    </td>
+
+                                </tr>
+                        </tbody>
+                    </table>
+        <div class="affix-content table-responsive">
+            <h3>Liste des agents</h3>
+
+            <div>
+                {% if not is_granted("ROLE_CDG") %}
+                <a href="{{ path('bilansocialagent_new') }}" class="btn button-tableau pull-right" role="button">Ajouter un nouvel agent</a>
+                {% endif %}
+
+                <a href="{{ path('apa_export', {'_format': 'xls'}) }}" target="_blank" class="btn button-tableau pull-right" role="button">Exporter</a>
+                {% if informationGenerales.collectivite.refCourtier is not null %}
+                 <a target="_blank" class="btn button-tableau" id="apaImportCourtier" data-toggle="modal" role="button">import CSV courtier en assurance</a>
+                {% endif %}
+                {% if (listeFonctionnaires is not empty ) or ( listeContPerm is not empty ) or ( listeContNonPerm is not empty )%}
+                    {# {% if statutAgents == 1  %} #}
+                        <a id="generer_conso" href="{{path('bilan_apa_to_bilan_conso')}}" class="btn button-tableau" role="button" data-all-apa-valid="{{ statutAgents == 1 ? 1 : 0 }}">Générer un consolidé pour transmettre</a>
+                    {# {% endif %} #}
+                {% endif %}
+
+                <div class="clearfix"></div>
+                <br/>
+            </div>
+           {# <div class="alert alert-info text-center" role="alert">
+                <p>Vous pouvez déplacer les tableaux dans l'ordre que vous le souhaitez, au rechargement de la page les tableaux reviendront à leurs états initiaux</p>
+            </div>#}
+
+        <div class="parentPanel">
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Liste des fonctionnaires</h3>
+                </div>
+                <div class="panel-body">
+
+                    <table id="listagent1" class="table table-striped" data-status="FONCTIONNAIRE">
+                        <thead class="text-center">
+                            <tr>
+                                <th></th>
+                                <th>Identifiant</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Commentaire</th>
+                                <th>Date de naissance</th>
+                                <th>Genre</th>
+                                <th>Statut</th>
+                                <th>Etat</th>
+                                <th>B.O.E.T.H</th>
+                                <th>Action</th>
+                                <th><a id="dellistagent1" class="btn button-tableau pull-right del-several" data-toggle="modal" role="button"><span class="glyphicon glyphicon-trash"></span></a></th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="text-center">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Liste des contractuels sur emploi permanent</h3>
+                </div>
+                <div class="panel-body">
+                    <table id="listagent2" class="table table-striped" data-status="CONTPERM">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Identifiant</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Commentaire</th>
+                                <th>Date de naissance</th>
+                                <th>Genre</th>
+                                <th>Statut</th>
+                                <th>Etat</th>
+                                <th>B.O.E.T.H</th>
+                                <th>Action</th>
+                                <th><a id="dellistagent2" class="btn button-tableau pull-right del-several" data-toggle="modal" role="button"><span class="glyphicon glyphicon-trash"></span></a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Liste des contractuels sur emploi non permanent</h3>
+                </div>
+                <div class="panel-body">
+                    <table id="listagent3" class="table table-striped" data-status="CONTNONPERM">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Identifiant</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Commentaire</th>
+                                <th>Date de naissance</th>
+                                <th>Genre</th>
+                                <th>Statut</th>
+                                <th>Etat</th>
+                                <th>B.O.E.T.H</th>
+                                <th>Action</th>
+                                <th><a id="dellistagent3" class="btn button-tableau pull-right del-several" data-toggle="modal" role="button"><span class="glyphicon glyphicon-trash"></span></a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    {#<!-- Modal -->#}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if sansStatut is not empty %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Liste des agents dont le statut n'est pas renseigné ou à préciser</h3>
+                </div>
+                <div class="panel-body">
+                    <table id="listagent4" class="table table-striped">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Identifiant</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Nature de l'emploi</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody class="text-center">
+                            {% for bilanSocialAgent in sansStatut %}
+                                <tr>
+                                    <td>
+                                        {{ bilanSocialAgent.idBilasociagen }}
+                                    </td>
+                                    <td>{% if is_granted("ROLE_COLLECTIVITY") %}<a href="{{ path('bilansocialagent_edit', { 'idBilasociagen': bilanSocialAgent.idBilasociagen }) }}">{{ bilanSocialAgent.lbNom }}</a>{% else %}*****{% endif %}</td>
+                                    <td>{% if is_granted("ROLE_COLLECTIVITY") %}{{ bilanSocialAgent.lbPren }}{% else %}*****{% endif %}</td>
+                                    <td>{% if is_granted("ROLE_COLLECTIVITY") %}{{ bilanSocialAgent.lbNatureEmploiN4ds }}{% else %}*****{% endif %}</td>
+                                    <td>
+                                        <a href="{{ path('bilansocialagent_edit', { 'idBilasociagen': bilanSocialAgent.idBilasociagen }) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                        <a class="confirmModalLink" data-href="{{ path('bilansocialagent_delete', { 'idBilasociagen': bilanSocialAgent.idBilasociagen }) }}"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+    <div class="row footerBilanSocial">
+        <p>Conditions générales</p>
+    </div>
+
+    <div class="modal fade backconsolidemodal" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                    <p>Attention, vous allez supprimer cet agent, l’ensemble des données saisies seront perdues.<br><br>Souhaitez-vous continuer ? </p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" id="confirmModalNo">Non</a>
+                    <a href="#" class="btn btn-primary" id="confirmModalYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade backconsolidemodal" id="confirmModalSeveral">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p><i class="glyphicon glyphicon-info-sign"></i></p>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" id="confirmModalSeveralNo">Non</a>
+                    <a href="#" class="btn btn-primary" id="confirmModalSeveralYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade toConsolideModal" id="confirmToConsolideModalAllValid">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                    <p>Souhaitez vous générer votre bilan social consolidé ?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">Non</a>
+                    <a href="#" class="btn btn-primary confirmToConsolideModalYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade toConsolideModal" id="confirmToConsolideModalNotAllValid">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                    <p>Toutes vos données agent par agent ne sont pas entièrement validées , Souhaitez vous poursuivre et générer votre bilan social consolidé ?</p>
+                    <p>Vous devrez compléter les éléments manquants dans la partie consolidée</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">Non</a>
+                    <a href="#" class="btn btn-primary confirmToConsolideModalYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include  '@Apa/import/index.html.twig' with {'form' : formImportCourtier} %}
+
+
+{% endblock %}
+

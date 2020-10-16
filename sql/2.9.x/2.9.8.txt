@@ -1,0 +1,8 @@
+/*
+*   à passer pour la 2.9.8
+*/
+
+/*
+*   correction procedure Dashboard, affichage des bilan re-transmis (FG_STAT = 5)
+*/
+sql/Procedures-stockees/sp-DASHBOARD_cdg.sql

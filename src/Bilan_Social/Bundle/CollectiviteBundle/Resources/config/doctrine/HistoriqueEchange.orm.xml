@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\HistoriqueEchange" table="historique_echange">
+        <id name="idHistEcha" type="integer" column="ID_HIST_ECHA">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="lbIntiEcha" type="string" column="LB_INTI_ECHA" length="255" nullable="false"/>
+        <field name="lbTypeEcha" type="string" column="LB_TYPE_ECHA" length="255" nullable="false"/>
+        <field name="cmEcha" type="text" column="CM_ECHA" length="65535" nullable="true">
+          <options>
+            <option name="fixed"/>
+          </options>
+        </field>
+        <field name="dtEcha" type="date" column="DT_ECHLA" nullable="false"/>
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite" inversed-by="historiqueEchange">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" />
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

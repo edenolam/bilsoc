@@ -1,0 +1,55 @@
+{% extends '@User/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+           $('#year-select').on('change', function(){
+               var year = $(this).val();
+               if(year !== ""){
+                   $('#dgcl_block').html('CHARGEMENT');
+                   $('#dgcl_block_year').html('');
+                   $.ajax({
+                       url: Routing.generate('admin_gestion_fichier_dgcl_year', { 'annee' : year}),
+                       method: 'POST',
+                       async: true,
+                       success: function (response) {
+                           $('#dgcl_block_year').html('<h3>Année '+year+'</h3>');
+                           $('#dgcl_block').html(response);
+                       },
+                       error: function (jqXHR, textStatus, errorThrown) {
+                           // alert('SEARCH ERROR: ' + jqXHR + ' , ' + textStatus + ' , ' + errorThrown);
+                       }
+                   });
+               }
+           })
+        });
+
+    </script>
+{% endblock %}
+{% block body %}
+{{ parent() }}
+<div class="col-xs-9">
+    <div>
+        <ol class="breadcrumb">
+            <li><a href="#">Administration</a></li>
+            <li class="active">Gestion des fichiers de l'export DGCL</li>
+        </ol>
+    </div>
+    <h1>Informations du Centre de gestion</h1>
+    <div class="form-group">
+        <label for="year-select">Choississez une année:</label>
+        <select class="form-control" name="years" id="year-select">
+            <option value="">-- Choississez une année de campagne --</option>
+            {% for campagne in campagnes %}
+                <option value="{{ campagne.nmAnne }}">{{ campagne.nmAnne }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div id="dgcl_block_year"></div>
+    <div id="dgcl_block"></div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{#
+    showRefSharedFieldsLayout.html.twig
+
+    layout générique pour les champs communs des référentiel pour la route show
+    @Param
+        - ref : le referentiel a afficher
+#}
+{# <tr>
+    <th>Archivé</th>
+    <td>{% if ref.blVali %}Oui{% else %}Non{% endif %}</td>
+</tr> #}
+<tr>
+    <th>Exclus des totaux</th>
+    <td>{% if ref.blExclutotal %}Oui{% else %}Non{% endif %}</td>
+</tr>
+<tr>
+    <th>Ordre d'affichage</th>
+    <td>{{ ref.nmOrdre }}</td>
+</tr>

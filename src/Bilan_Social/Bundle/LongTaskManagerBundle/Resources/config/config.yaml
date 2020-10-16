@@ -1,0 +1,7 @@
+#----------------------
+#   parameters du LonkTaskManager
+#----------------------
+parameters:
+  long_task_manager:
+    host : http://192.168.2.25:8090
+    base_url : /bsltm/api/v1

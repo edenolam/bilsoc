@@ -1,0 +1,293 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+    <script type="text/javascript">
+        var buttonpressed;
+      {#  $('.button-submit').click(function(e) {
+            e.preventDefault();
+            buttonpressed = $(this).val();
+            $('#button_sender').val(buttonpressed);
+            
+            
+        });#}
+
+        function selectAll(){
+            $('#liste-champs-coll-export option').prop('selected',true);
+        }
+
+        window.onmousedown = function (e) {
+            var el = e.target;
+            if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                e.preventDefault();
+
+                // toggle selection
+                if (el.hasAttribute('selected'))
+                    el.removeAttribute('selected');
+                else
+                    el.setAttribute('selected', '');
+
+                // hack to correct buggy behavior
+                var select = el.parentNode.cloneNode(true);
+                el.parentNode.parentNode.replaceChild(select, el.parentNode);
+            }
+        };
+     {#   var $filtre = $('#parametrageEnquete_filtres');
+        var parent = $('#parametres').parent();
+
+        $filtre.change(function () {
+            $('#parametres').css('visibility', 'hidden');
+            var typeFiltre = $filtre.val();
+            var typeTmp = typeFiltre.split('-');
+            var type = typeTmp[0];
+            $('#parametres option').remove();
+            $.ajax({
+                url: '{{ path('enquete_get_option_select') }}',
+                data: {type: type},
+                type: 'POST',
+                success: function (response) {
+                    var arr = JSON.parse(response);
+                    if ('text' == arr['type']) {
+                        $('#parametres').remove();
+                        parent.append('<input type="text" name="parametres" id="parametres" class="form-control">');
+                    } else {
+                        $('#parametres').remove();
+                        parent.append('<select id="parametres" name="parametres" size="5" class="form-control"></select>');
+                        $.each(arr, function (k, v) {
+                           if(isObject(v)){
+                               $('#parametres').append('<option value="' + v.departement.idDepa + '">' + v.departement.libelle + '</option>');
+                           }else if('type' != k ) {
+                                $('#parametres').append('<option value="' + v + '">' + v + '</option>');
+                            }
+                        });
+                    }
+                    $('#parametres').css('visibility', 'visible');
+                }
+            });
+        });#}
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Collectivités</a></li>
+                <li class="active">Gestion des collectivités</li>
+            </ol>
+        </div>
+        <h1>Gérer les collectivités<a href="{{ path('collectivite_fiche') }}"><button class="btn button-tableau pull-right">Ajouter</button></a></h1>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+                        <div class='panel-heading'>
+                            <a class="displayToggle" data-toggle="collapse" href="#colonnes">
+                                <h3 style="display: inline-block;" class="panel-title">Afficher colonnes</h3>
+                                <span class="buttonplus" title="Agrandir"></span>
+                            </a>
+                        </div>
+                        <div id="colonnes" class="panel-collapse collapse">
+                            <div class='panel-body'>
+                                <div class='row' id='ajout-colonnes'>
+                                    <div class='col-md-5'>
+                                        {{ form_row(formCol.colonnes) }}
+                                    </div>
+                                    <div class='col-md-1' style="    margin-top: 17px; position: relative; left: 12px;"><br>
+                                        <p class='btn btn-default' id='ajouter-colonne'>+</p>
+                                    </div>
+                                    <div class='col-md-1' style="    margin-top: 17px; position: relative; left: 12px;"><br>
+                                        <p class='btn btn-default' id='enlever-colonne' style="padding: 6px 14px">-</p>
+                                    </div>
+                                    <div class='col-md-5 form-group'>
+                                        <select id='liste-colonnes' size='5' class='form-control'></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class='panel-heading'>
+                            <a class="displayToggle" data-toggle="collapse" href="#search">
+                                <h3 style="display: inline-block;" class="panel-title">Affiner recherche</h3>
+                                <span class="buttonplus" title="Agrandir"></span>
+                            </a>
+                        </div>
+                        <div id="search" class="panel-collapse collapse">
+                            <div class='panel-body'>
+                                <div id='param-filtre'>
+                                    <div class='row' id='param-filtre'>
+                                        <div class="col-md-4">
+                                            {{ form_row(formCol.filtres) }}
+                                        </div>
+                                       <div class="col-md-4">
+                                             <select id="conditions" name="condition" size="5" class="form-control">
+                                                    <option value="0">Choisir une condition</option>
+                                                </select>
+                                           {# {{ form_row(form.conditions) }}#}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select id="parametres" name="parametres" size="5" class="form-control">
+                                                    <option value="0">Choisir un filtre</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-12'>
+                                            <p class='btn btn-default pull-right' id='add-filtre'>Ajouter</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class='row'>
+                                    <div class='col-md-12' id='liste-filtres'>
+                                        <label>Liste des filtres</label>
+                                        <table></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+{#        <div class="panel panel-default" id='ajout-colonnes'>
+            <div class='panel-heading'>
+                <h3 class="panel-title">Ajouter un critère</h3>
+            </div>
+            <div class='row panel-body'>
+                <div class='col-md-5'>
+                    {{ form_row(formCol.colonnes) }}
+                </div>
+                <div class='col-md-1'>
+                    <label>Ajouter</label><br>
+                    <p class='btn btn-default' id='ajouter-colonne'>+</p>
+                </div>
+                <div class='col-md-1'>
+                    <label>Enlever</label><br>
+                    <p class='btn btn-default' id='enlever-colonne'>-</p>
+                </div>
+                <div class='col-md-5 form-group'>
+                    <label>Colonnes affichées</label>
+                    <select id='liste-colonnes' size='5' class='form-control'></select>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" id='ajout-filtres'>
+            <div class='panel-heading'>
+                <h3 class="panel-title">Filtres</h3>
+            </div>
+            <div class='panel-body'>
+                <div id='param-filtre'>
+                    <div class='row' id='param-filtre'>
+                        <div class="col-md-4">
+                            {{ form_row(formCol.filtres) }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_row(formCol.conditions) }}
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" for="parametres">Liste des paramètres</label>
+                                <select id="parametres" name="parametres" size="5" class="form-control">
+                                    <option value="0">Choisir un filtre</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-12'>
+                            <p class='btn btn-default pull-right' id='add-filtre'>Ajouter le filtre</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class='row'>
+                    <div class='col-md-12' id='liste-filtres'>
+                        <label>Liste des filtres</label>
+                        <table></table>
+                    </div>
+                </div>
+            </div>
+        </div>#}
+        <form action='{{ path('csv_export') }}' method='post' id='formCollectivite'>
+            <input type="hidden" name="button_sender" value='' id='button_sender'>
+            <table class="table table-hover align-center" id='essai'>
+                <thead>
+                    <tr>
+                        <th class='checkbox-export'>Selectionner<br><button type='button' class="check-all all vertical btn btn-sm check-all-export" id="example-select-all-export">Tous</button></th>
+                        <th class='col-hidden col-blSire'><input type="hidden" value="0" name="champ-nmSire">SIRET</th>
+                        <th class='col-hidden col-blLibe'><input type="hidden" value="0" name="champ-lbColl">Libellé de la collectivité</th>
+                        <th class='col-lbMail'><input type="hidden" value="1" name="champ-lbMail">Email du contact</th>
+                        <th class='col-lbPassTemp'><input type="hidden" value="1" name="champ-lbPassTemp">Mot de passe temporaire</th>
+                        <th class='col-hidden col-blTypeColl'><input type="hidden" value="0" name="champ-refTypeCollectivite">Type de la collectivité</th>
+                        <th class='col-hidden col-blAffiCdg'><input type="hidden" value="0" name="champ-blAffiColl">Affilié</th>
+                        <th class='col-lbAdresse'><input type="hidden" value="1" name="champ-lbAdre">Adresse</th>
+                        <th class='col-hidden col-blDepa'><input type="hidden" value="0" name="champ-departement">Département</th>
+                        <th class='col-hidden col-blCdPost'><input type="hidden" value="0" name="champ-cdPost">Code postal</th>
+                        <th class='col-hidden col-blLbVill'><input type="hidden" value="0" name="champ-lbVill">Ville</th>
+                        <th class='col-hidden col-blCdInse'><input type="hidden" value="0" name="champ-cdInse">Code INSEE</th>
+                        <th class='col-hidden col-blNmPopuInse'><input type="hidden" value="0" name="champ-nmPopuInse">Population totale INSEE</th>
+                        <th class='col-hidden col-blSurclasDemo'><input type="hidden" value="0" name="champ-blSurclasDemo">Sur-classement démographique</th>
+                        <th class='col-hidden col-blNmStratColl'><input type="hidden" value="0" name="champ-nmStratColl">Strate de sur-classement</th>
+                        <th class='col-hidden col-blCtCdg'><input type="hidden" value="0" name="champ-blCtCdg">Rattachement au comité technique</th>
+                        <th class='col-hidden col-blChsct'><input type="hidden" value="0" name="champ-blChsct">CHSCT propre à la collectivité</th>
+                        <th class='col-hidden col-blCollDgcl'><input type="hidden" value="0" name="champ-blCollDgcl">Echantillon DGCL</th>
+                        <th class='col-hidden col-cdg_is_authorized_by_collectivity'><input type="hidden" value="0" name="champ-cdg_is_authorized_by_collectivity">CDG autorisé à prendre la place</th>
+                        <th class='col-hidden col-blNbAgenPerm'><input type="hidden" value="0" name="champ-blNbAgenPerm">Nombre total d'agents sur emploi permanent</th>
+                        <th class='col-hidden col-blNbAgenTitu'><input type="hidden" value="0" name="champ-blNbAgenTitu">Nombre total d'agents titulaires</th>
+                        <th class='col-hidden col-blNbAgenContPerm'><input type="hidden" value="0" name="champ-blNbAgenContPerm">Nombre total d'agents contractuels sur emploi permanent</th>
+                        <th class='col-hidden col-blNbAgenContNonPerm'><input type="hidden" value="0" name="champ-blNbAgenContNonPerm">Nombre total d'agents contractuels sur emploi non permanent</th>
+                        <th class='col-hidden col-blNom'><input type="hidden" value="0" name="champ-lbNom">Nom du contact</th>
+                        <th class='col-hidden col-blTele'><input type="hidden" value="1" name="champ-lbTele">Téléphone du contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            
+
+            <input type="hidden" name="listIds" value='' id='list_id_collectivite'/>
+            <input type="hidden" name="listeColumns" value='' id='listeColumns'/>
+            
+            
+            <button type='submit' class='btn button-tableau button-submit' name='id' value='export-collectivite' id='export-collectivite' onclick="selectAll();">Exporter</button>
+            <button type='button' class='btn button-tableau' name='id' value='export-mdp-temp-modal' id='export-mdp-temp-modal' data-toggle="modal" data-target="#confirm-reinit-mdp-wrapper" onclick="selectAll();">Réinitialiser le mot de passe</button>
+        </form>
+        <div class="modal fade text-center" id='confirm-reinit-mdp-wrapper'>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                        <p>Les mots de passe vont être réinitialisés, voulez-vous continuer ?</p>
+                        <input type="hidden" name="idPara" value="">
+                    </div>
+                    <div class="modal-footer">
+                        <a id='export-mdp-temp' target="_blank"  value='export-mot-de-passe-temporaire' class="btn btn-primary pull-right button-submit workinprogressMdpUpdate" data-dismiss="modal">Oui</a>
+                        <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Non</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+{% endblock %}

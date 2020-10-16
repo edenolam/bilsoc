@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\SauvegardeDonneesAgents" table="sauvegarde_donnees_agents">
+        <id name="id" type="integer" column="ID">
+            <generator strategy="IDENTITY"/>
+        </id>
+                
+        <field name="lbNom" type="string" column="LB_NOM" nullable="true"/>
+        <field name="lbPrenom" type="string" column="LB_PRENOM" nullable="true"/>
+        <field name="dateNaissance" type="string" column="DATE_NAISSANCE" nullable="true"/>
+        <field name="blBoeth" type="boolean" column="BL_BOETH" nullable="true"/>
+        
+        <many-to-one field="idMesureInaptitudeEnCoursAnnee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMesureBoeth" inversed-by="idMesureInaptitudeEnCoursAnneeSauvegarde">
+            <join-column name="ID_MESURE_INAPTITUDE_ENCOURS_ANNNE" referenced-column-name="ID_MESURE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idMesureInaptitudeAvantAnnee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMesureBoeth" inversed-by="idMesureInaptitudeAvantAnneeSauvegarde">
+            <join-column name="ID_MESURE_INAPTITUDE_AVANT_ANNNE" referenced-column-name="ID_MESURE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idInaptitudeEnCoursAnnee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefInaptitudeBoeth" inversed-by="idInaptitudeEnCoursAnneeSauvegarde">
+            <join-column name="ID_INAPTITUDE_ENCOURS_ANNNE" referenced-column-name="ID_INAPTITUDE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idInaptitudeAvantAnnee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefInaptitudeBoeth" inversed-by="idInaptitudeAvantAnneeSauvegarde">
+            <join-column name="ID_INAPTITUDE_AVANT_ANNNE" referenced-column-name="ID_INAPTITUDE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idNatureHandicapBoeth" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefNatureHandicapBoeth" inversed-by="idNatureHandicapBoethSauvegarde">
+            <join-column name="ID_NATURE_HANDICAP_BOETH" referenced-column-name="ID_NATURE_HANDICAP_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idCategorieBoeth" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorieBoeth" inversed-by="idCategorieHanditorialSauvegarde">
+            <join-column name="ID_CATEGORIE_BOETH" referenced-column-name="ID_CATEGORIE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idMetier" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMetier" inversed-by="idMetierSauvegarde">
+            <join-column name="ID_METIER" referenced-column-name="ID_METIER"/>
+        </many-to-one>
+        
+        <many-to-one field="idDomaineDiplomeGpeec" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefDomaineDiplome" inversed-by="idDomaineDiplomeGpeecSauvegarde">
+            <join-column name="ID_DOMAINE_DIPLOME_GPEEC" referenced-column-name="ID_DOMAINE_DIPLOME" />
+        </many-to-one>
+        
+        <many-to-one field="idEnquete" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+            <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" nullable="true"/>
+        </many-to-one>
+
+        <many-to-one field="idCollectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" nullable="true"/>
+        </many-to-one>
+        
+        <many-to-one field="idSpecialite" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefSpecialite" inversed-by="idSpecialiteSauvegarde">
+            <join-column name="ID_SPECIALITE" referenced-column-name="ID_SPECIALITE" />
+        </many-to-one>
+        
+        <field name="blAvisInaptitudeEnCours" type="boolean" column="BL_AVIS_INAPTITUDE_EN_COURS" nullable="true"/>
+        <field name="blAvisInaptitudeAvant" type="boolean" column="BL_AVIS_INAPTITUDE_AVANT" nullable="true"/>
+
+    </entity>
+</doctrine-mapping>

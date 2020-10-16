@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind423Fili" table="ind_423Fili" >
+    <indexes>
+      <index name="FK_423Fili_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+      <index name="FK_423Fili_FILIERE" columns="ID_FILI"/>
+    </indexes>
+	<unique-constraints>
+		<unique-constraint columns="ID_BILASOCICONS,ID_FILI,ID_INAP" name="IDXU1_IND_423FILI"/>
+	</unique-constraints>
+    <id name="id423Fili" type="integer" column="ID_423Fili">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind423sFili">
+        <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+    </many-to-one>
+
+    <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere">
+        <join-column name="ID_FILI" referenced-column-name="ID_FILI" nullable="false"/>
+    </many-to-one>
+
+    <field name="r4231Fili" type="integer" column="R_4231Fili" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    <field name="idInap" type="string" column="ID_INAP" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

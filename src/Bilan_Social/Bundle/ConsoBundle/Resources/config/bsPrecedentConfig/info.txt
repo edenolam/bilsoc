@@ -1,0 +1,181 @@
+
+{
+//Année de la campagne recherchée
+  "2017": {
+//Utilisateur bdd
+    "bdd_user": "toto",
+//  Mdp Bdd
+    "bdd_mdp": "toto",
+// Port bdd
+    "bdd_port": "toto",
+// Nom de la base de donnée
+    "bdd_name": "toto",
+// Nom de l indicateur recherché
+    "name_ind": {
+//  Champs de l indicateur recherché
+        "fields": {
+
+        }
+      }
+  }
+}
+  /* "2015": {
+     "bdd_user": "docker",
+     "bdd_mdp": "docker",
+     "bdd_port": "",
+     "bdd_name": "bilan_social_2016",
+     "indicateur" : {
+         "ind613": {
+           "id" : "ID_613",
+           "table" : "ind_613",
+           "method" : "getInd613s",
+           "order" : {
+               "tableRef" : "ref_motif_greve",
+               "joinKey" : "ID_MOTIGREV",
+               "refMethod" : "getRefMotifGreve",
+               "refMethodCode" : "getCdMotigrev",
+               "orderField" : "CD_MOTIGREV"
+           }
+
+         },
+         "ind1101": {
+           "id" : "ID_1101",
+           "table" : "ind_1101",
+           "method" : "getInd1101s",
+           "order" : {
+             "tableRef" : "ref_emploi_fonctionnel",
+             "joinKey" : "ID_EMPLFONC",
+             "refMethod" : "getRefEmploiFonctionnel",
+             "refMethodCode" : "getCdEmplFonc",
+             "orderField" : "CD_EMPLFONC"
+           }
+         }
+       }
+     },
+   "2014": {
+     "bdd_user": "docker",
+     "bdd_mdp": "docker",
+     "bdd_port": "",
+     "bdd_name": "bilan_social",
+     "indicateur" : {
+       "ind613": {
+         "id" : "ID_613",
+         "table" : "ind_613",
+         "method" : "getInd613s",
+         "order" : {
+           "tableRef" : "ref_motif_greve",
+           "joinKey" : "ID_MOTIGREV",
+           "refMethod" : "getRefMotifGreve",
+           "refMethodCode" : "getCdMotigrev",
+           "orderField" : "CD_MOTIGREV"
+         }
+
+       }
+     }
+   },
+   "2016": {
+     "bdd_user": "docker",
+     "bdd_mdp": "docker",
+     "bdd_port": "",
+     "bdd_name": "bilan_social",
+     "indicateur" : {
+         "ind613": {
+           "id" : "ID_613",
+           "table" : "ind_613",
+           "method" : "getInd613s",
+           "order" : {
+               "tableRef" : "ref_motif_greve",
+               "joinKey" : "ID_MOTIGREV",
+               "refMethod" : "getRefMotifGreve",
+               "refMethodCode" : "getCdMotigrev",
+               "orderField" : "CD_MOTIGREV"
+           }
+         },
+         "ind1101": {
+           "id" : "ID_1101",
+           "table" : "ind_110_1",
+           "method" : "getInd1101sTemp",
+           "order" : {
+             "tableRef" : "ref_emploi_fonctionnel",
+             "joinKey" : "ID_EMPLFONC",
+             "refMethod" : "getRefEmploiFonctionnel",
+             "refMethodCode" : "getCdEmplFonc",
+             "orderField" : "CD_EMPLFONC"
+           }
+         },
+         "ind1102": {
+           "id" : "ID_1102",
+           "table" : "ind_110_2",
+           "method" : "getInd1102sTemp",
+           "order" : {
+             "tableRef" : "ref_emploi_fonctionnel",
+             "joinKey" : "ID_EMPLFONC",
+             "refMethod" : "getRefEmploiFonctionnel",
+             "refMethodCode" : "getCdEmplFonc",
+             "orderField" : "CD_EMPLFONC"
+           }
+         },
+         "ind1103": {
+           "id" : "ID_1103",
+           "table" : "ind_110_3",
+           "method" : "getInd1103sTemp",
+           "order" : {
+             "tableRef" : "ref_emploi_fonctionnel",
+             "joinKey" : "ID_EMPLFONC",
+             "refMethod" : "getRefEmploiFonctionnel",
+             "refMethodCode" : "getCdEmplFonc",
+             "orderField" : "CD_EMPLFONC"
+           }
+         },
+       "ind344": {
+         "id" : "",
+         "table" : "bilan_social_consolide",
+         "method" : "getInd344sTemp",
+         "field" : " R_3441, R_3442 "
+       },
+         "ind611": {
+           "id" : "",
+           "table" : "bilan_social_consolide",
+           "method" : "getInd611sTemp",
+           "field" : " R_6111,R_6112 "
+         },
+       "ind711": {
+           "id" : "",
+           "table" : "bilan_social_consolide",
+           "method" : "getInd711sTemp",
+           "field" : " Q_7111, Q_7112 "
+         },
+       "ind712": {
+           "id" : "",
+           "table" : "bilan_social_consolide",
+           "method" : "getInd712sTemp",
+           "field" : "Q_712"
+         },
+       "ind713": {
+           "id" : "",
+           "table" : "bilan_social_consolide",
+           "method" : "getInd713sTemp",
+           "field" : "Q_7131, Q_7132, Q_7133"
+         },
+         "ind162": {
+           "id": "",
+           "table": "bilan_social_consolide",
+           "method": "getInd162sTemp",
+           "field": "R_16211,R_16212, R_16213, R_16214 ",
+           "extra_var": {
+             "total111": {
+               "table": "ind_111",
+               "field": " (COALESCE(SUM(COALESCE(R_1115,0)) + SUM(COALESCE(R_1116,0)),0)) as total111 "
+             },
+             "total121": {
+               "table": "ind_121",
+               "field": " (COALESCE(sum(COALESCE(R_1211,0)) + sum(COALESCE(R_1212,0)) + sum(COALESCE(R_1213,0)) + sum(COALESCE(R_1214,0)) + sum(COALESCE(R_1216,0)) + sum(COALESCE(R_1217,0)) + sum(COALESCE(R_1218,0)) + sum(COALESCE(R_12118,0)),0)) as total121 "
+             },
+             "total161": {
+               "table": "ind_161",
+               "field": " (COALESCE(sum(COALESCE(R_1611,0)) + sum(COALESCE(R_1612,0)) + sum(COALESCE(R_1613,0)) + sum(COALESCE(R_1614,0)),0)) as  total161 "
+             }
+           }
+         }
+       }
+     }*/

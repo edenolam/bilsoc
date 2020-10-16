@@ -1,0 +1,32 @@
+[
+	{
+		"nom":"dubois",
+		"prenom":"alexis",
+		"data_naiss":"24/12/1993",
+		"sexe":-1,
+		"type_temps_travail":1,
+		"type_contrat":28,
+		"date_entre_coll":"12/11/2017",
+		"modalite_entre_coll":6,
+		"date_sortie_coll":"12/12/2017",
+		"absences":[
+			{},
+			{}
+		]
+	},
+	{
+		"nom":"dubois",
+		"prenom":"alexis",
+		"data_naiss":"24/12/1993",
+		"sexe":1,
+		"type_temps_travail":3,
+		"type_contrat":13,
+		"date_entre_coll":"12/11/2015",
+		"modalite_entre_coll":10,
+		"date_sortie_coll":"12/12/2016",
+		"absences":[
+			{},
+			{}
+		]
+	}
+]

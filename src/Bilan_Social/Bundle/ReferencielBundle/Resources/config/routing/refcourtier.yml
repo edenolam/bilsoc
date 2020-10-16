@@ -1,0 +1,28 @@
+refcourtier_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefCourtier:index" }
+    methods:  GET
+
+refcourtier_show:
+    path:     /{id}/show
+    defaults: { _controller: "ReferencielBundle:RefCourtier:show" }
+    methods:  GET
+
+refcourtier_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefCourtier:new" }
+    methods:  [GET, POST]
+
+refcourtier_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ReferencielBundle:RefCourtier:edit" }
+    methods:  [GET, POST]
+
+refcourtier_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ReferencielBundle:RefCourtier:delete" }
+    methods:  DELETE
+
+csv_export_refcourtier:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefCourtier:generateCsv" }

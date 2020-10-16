@@ -1,0 +1,58 @@
+########################################################################################################################
+                                / POUR LA VERSION 2.8.4.2 OU 2.8.5 /
+########################################################################################################################
+RATTRAPAGE POUR LES COLLECTIVITES SANS FG STAT = rattrapage_collectivite_sans_historique
+
+CORRECTION DASHBOARD = sp-DASHBOARD_cdg 
+
+########################################################################################################################
+
+
+##########################################################################
+                    SELECT DE CONTROLE
+##########################################################################
+
+SELECT * 
+FROM utilisateur u
+JOIN collectivite c ON u.ID_COLL = c.ID_COLL
+WHERE u.USERNAME != c.NM_SIRE 
+
+
+##########################################################################
+		 UPDATE DE RATTRAPAGE
+##########################################################################
+
+UPDATE utilisateur u
+JOIN collectivite c ON u.ID_COLL = c.ID_COLL
+SET u.USERNAME = c.NM_SIRE
+WHERE u.USERNAME != c.NM_SIRE
+
+##########################################################################
+ SELECT DE CONTROLE POUR LES COLLECTIVITES AYANT VALIDER LEUR BSC MAIS APPARAISSENT EN NON SAISIE
+##########################################################################
+ SELECT hbs.ID_HISTBILASOCI FROM collectivite c 
+        JOIN historique_bilan_social hbs ON (hbs.ID_COLL = c.ID_COLL AND hbs.DT_CHGT = (
+                        SELECT MAX(h15_.DT_CHGT) AS dctrn__2 
+                        FROM historique_bilan_social h15_ 
+                        WHERE h15_.ID_COLL = c.ID_COLL
+                        )  
+                )   
+        JOIN bilan_social_consolide bsc ON hbs.ID_ENQU = bsc.ID_ENQU AND bsc.ID_COLL = hbs.ID_COLL
+        WHERE bsc.FG_STAT = 2 AND hbs.FG_STAT = 7;
+
+###############################################################
+
+PROCEDURE DE RATTRAPAGE  = script_rattrapage_non_saisie_valide.sql
+
+###############################################################
+
+
+###############################################################
+SCRIPT D INSERT POUR LE MODAIL DE MAIL REINITIALISATION DE MDP
+###############################################################
+model_mail_interne_reinitialisation_mdp.sql
+
+--------------------------------------------------------------------
+
+
+

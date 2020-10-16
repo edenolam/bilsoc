@@ -1,0 +1,28 @@
+refpourcentagetempapartiel_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefPourcentageTempaPartiel:index" }
+    methods:  GET
+
+refpourcentagetempapartiel_show:
+    path:     /{idPourtemppart}/show
+    defaults: { _controller: "ReferencielBundle:RefPourcentageTempaPartiel:show" }
+    methods:  GET
+
+refpourcentagetempapartiel_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefPourcentageTempaPartiel:new" }
+    methods:  [GET, POST]
+
+refpourcentagetempapartiel_edit:
+    path:     /{idPourtemppart}/edit
+    defaults: { _controller: "ReferencielBundle:RefPourcentageTempaPartiel:edit" }
+    methods:  [GET, POST]
+
+refpourcentagetempapartiel_delete:
+    path:     /{idPourtemppart}/delete
+    defaults: { _controller: "ReferencielBundle:RefPourcentageTempaPartiel:delete" }
+    methods:  DELETE
+
+csv_export_refpourcentagetempapartiel:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefPourcentageTempaPartiel:generateCsv" }

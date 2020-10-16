@@ -1,0 +1,58 @@
+
+
+<div class="modal fade" id="613" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Indicateur 613 de l'année {{ indicateur_precedent.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #efefef">
+                <table width="100%" id="ind613Table" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" style="text-align: center">Cessations collectives et concertées du travail</th>
+                        <th colspan="2" style="text-align: center">Nombre de journées de grève</th>
+                    </tr>
+
+                    <tr>
+                        <th style="text-align: center">en {{indicateur_precedent.annee-1}}</th>
+                        <th style="text-align: center">en {{indicateur_precedent.annee}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    <tr class="filiTable" id="totalGlo">
+                        {% set total1 = 0 %}
+                        {% set total2 = 0 %}
+                        {% for tag in indicateur_precedent.indicateur %}
+                            {% set total1 = total1 + tag.R_6131 %}
+                            {% set total2 = total2 + tag.R_6132 %}
+                        {% endfor %}
+
+                        <td>Total (y compris les journées sans précision de la nature locale ou nationale du mot d'ordre)</td>
+                        <td style="text-align: center">{{ total1 }}</td>
+                        <td style="text-align: center">{{ total2 }}</td>
+                    </tr>
+
+
+                    {% for tag in indicateur_precedent.indicateur %}
+                        <tr>
+                            <td style="min-width: 300px">
+                                {{ tag.LB_MOTIGREV }}
+                            </td>
+                            <td id="r6132">{{ tag.R_6132 }}</td>
+                        </tr>
+                    {% endfor %}
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

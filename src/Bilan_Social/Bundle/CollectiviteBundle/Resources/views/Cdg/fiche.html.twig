@@ -1,0 +1,91 @@
+{% extends '@Collectivite/cdg_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/cdg.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/inputGestion.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Centre de Gestion</a></li>
+                <li class="active">Informations du Centre de Gestion</li>
+            </ol>
+        </div>
+        <h1>Informations du Centre de Gestion</h1>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if form is defined %}
+            {{ form_start(form) }}
+            <div class="col-xs-6">
+                {{ form_row(form.image) }}
+            </div>
+            <div class="col-xs-6">
+               {# {% if form.vars.value.pathLogo is defined and form.vars.value.pathLogo is not null %}
+                    <img src="{{ asset(form.vars.value.pathLogo) }}" alt="{{ form.vars.value.nameLogo }}" class="logo_cdg img-responsive">
+                {% endif %}#}
+                {{ render(controller(
+                               'CoreBundle:AbstractBS:renderLogo'
+                           ))
+                        }}
+            </div>
+            <div class="col-xs-12">
+                {{ form_row(form.lbCdg) }}
+                <div class="form-group">
+                    <label for="email">Adresse email de {{ username }}</label>
+                    <input type="text" name="email" id="email" class="form-control" value="{{ email }}">
+                </div>
+                {% form_theme form.contacts '@Apa/fields_child.html.twig' %}
+                <label>Contacts</label>
+                <table class="table" id="mytable10">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th style="width: 115px">Téléphone fixe</th>
+                        <th style="width: 115px">Téléphone mobile</th>
+                        <th>Fonction</th>
+                        <th>Adresse email</th>
+                        <th>Contact par défaut</th>
+                        <th id="button">
+                            <button id="add-contact" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="form8" data-prototype="{{ form_widget(form.contacts.vars.prototype)|e ('html_attr') }}">
+                    {% for contact in form.contacts %}
+                    <tr>
+                        {{ form_widget(contact) }}
+                        <td>
+                            <button type="button" class="remove btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button type='submit' class='btn button-tableau'>Modifier</button>
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

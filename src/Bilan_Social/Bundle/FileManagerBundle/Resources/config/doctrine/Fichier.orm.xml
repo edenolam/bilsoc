@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\FileManagerBundle\Entity\Fichier" table="fichier" repository-class="Bilan_Social\Bundle\FileManagerBundle\Repository\FichierRepository" >
+    <indexes>
+      <!--<index name="FK_CDG_CAMPAGNE" columns="ID_CDG"/>-->
+      <!--<index name="FK_ENQUETE_CAMPAGNE" columns="ID_CAMP"/>-->
+    </indexes>
+    
+    <id name="idFichier" type="integer" column="ID_FICHIER">
+      <generator strategy="IDENTITY"/>
+    </id>
+    
+    <field name="fileKey" type="string" column="FILE_KEY" length="43" nullable="false" unique="true" />
+    
+    <field name="ownerKey" type="string" column="OWNER_KEY" length="20" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    
+    <field name="targetYear" type="integer" column="TARGET_YEAR" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    
+    <field name="logicalFolder" type="string" column="LOGICAL_FOLDER" length="256" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    
+    <many-to-many field="cdgDepartements" inversed-by="fichiers" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\CdgDepartement">
+        <join-table name="cdg_departement_fichier">
+            <join-columns>
+                <join-column name="ID_FICHIER" referenced-column-name="ID_FICHIER" />
+            </join-columns>
+            <inverse-join-columns>
+                <join-column name="ID_CDG_DEPARTEMENT" referenced-column-name="ID_CDG_DEPARTEMENT" />
+            </inverse-join-columns>
+        </join-table>
+    </many-to-many>
+    
+    <many-to-many field="collectivites" inversed-by="fichiers" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+        <join-table name="collectivite_fichier">
+            <join-columns>
+                <join-column name="ID_FICHIER" referenced-column-name="ID_FICHIER" />
+            </join-columns>
+            <inverse-join-columns>
+                <join-column name="ID_COLL" referenced-column-name="ID_COLL" />
+            </inverse-join-columns>
+        </join-table>
+    </many-to-many>
+    
+  </entity>
+</doctrine-mapping>

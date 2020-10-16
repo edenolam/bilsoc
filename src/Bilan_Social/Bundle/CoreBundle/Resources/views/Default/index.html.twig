@@ -1,0 +1,420 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/ol.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/horsey.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/ol3-search-layer.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/ol3-layerswitcher.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/qgis2web.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/dashboard.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('node_modules/highcharts/css/highcharts.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/Dashboard/dashboard.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/highcharts/highcharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/highcharts/highcharts-more.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/highcharts/modules/solid-gauge.js') }}"></script>
+    {% if is_granted('ROLE_CDG') %}
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/qgis2web_expressions.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/polyfills.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/ol.js') }}"></script>
+        <script type="text/javascript" src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList,URL"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/horsey.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/ol3-search-layer.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/ol3-layerswitcher.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/COMMUNE0.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/COMMUNE0_style.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/layers.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/qgis2web.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/Dashboard/map/Autolinker.min.js') }}"></script>
+        
+        <script type="text/javascript">
+
+            {# loadCharts({{ compteurBs }},{{ compteurEff }},{{ nbBsTransmis }},{{ nbEnCours }},{{ nbValid }},{{ nbNonValid }},{{ nbEnCoursNonValid }},{{ nbNvelleTrans }},{{ nbNonConn }},{{ nbNonSaisi }}); #}
+            window.onmousedown = function (e) {
+                var el = e.target;
+                if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                    e.preventDefault();
+
+                    // toggle selection
+                    if (el.hasAttribute('selected'))
+                        el.removeAttribute('selected');
+                    else
+                        el.setAttribute('selected', '');
+
+                    // hack to correct buggy behavior
+                    var select = el.parentNode.cloneNode(true);
+                    el.parentNode.parentNode.replaceChild(select, el.parentNode);
+                }
+            };
+            $(document).ready(function(){
+                $('#btn-dept').trigger('click');
+            })
+            function loadCharts(compteurBs,compteurEff,nbBsTransmis,nbEnCours,nbValid,nbNonValid,nbEnCoursNonValid,nbNvelleTrans,nbNonConn,nbNonSaisi,nbReinit)
+            {
+                var gaugeOptions = {
+                    chart: {
+                        type: 'solidgauge',
+                        backgroundColor: null
+                    },
+                    title: null,
+                    pane: {
+                        center: ['50%', '85%'],
+                        size: '140%',
+                        startAngle: -90,
+                        endAngle: 90,
+                        background: {
+                            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                            innerRadius: '60%',
+                            outerRadius: '100%',
+                            shape: 'arc'
+                        }
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    // the value axis
+                    yAxis: {
+                        stops: [
+                            [0.1, '#c9302c'], // red
+                            [0.5, '#E5BB07'], // yellow
+                            [0.9, '#8BC63E'] // green
+                        ],
+                        lineWidth: 0,
+                        minorTickInterval: null,
+                        tickAmount: 2,
+                        title: {
+                            y: -70
+                        },
+                        labels: {
+                            y: 16
+                        }
+                    },
+                    plotOptions: {
+                        solidgauge: {
+                            dataLabels: {
+                                y: 5,
+                                borderWidth: 0,
+                                useHTML: true
+                            }
+                        }
+                    }
+                };
+
+                // gauge BS
+                var chartSpeed = Highcharts.chart('tauxBS', Highcharts.merge(gaugeOptions, {
+                    yAxis: {
+                        min: 0,
+                        max: 100,
+                        title: {
+                            text: null
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'Bilans sociaux',
+                        data: [compteurBs],
+                        dataLabels: {
+                            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y} %</span></div>'
+                        },
+                        tooltip: {
+                            valueSuffix: '%'
+                        }
+                    }]
+                }));
+
+                // gauge Effectifs
+                var chartSpeed = Highcharts.chart('compteurEff', Highcharts.merge(gaugeOptions, {
+                    yAxis: {
+                        min: 0,
+                        max: 100,
+                        title: {
+                            text: null
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'Bilans sociaux',
+                        data: [compteurEff],
+                        dataLabels: {
+                            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y} %</span></div>'
+                        },
+                        tooltip: {
+                            valueSuffix: '%'
+                        }
+                    }]
+                }));
+                
+                // camembert Statuts
+                var statuts = Highcharts.chart('piechart', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: null
+                    },
+                    tooltip: {
+                        pointFormat: 'Nombre: <b>{point.y}</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [{
+                        name: 'Nombre',
+                        colorByPoint: true,
+                        data: [{
+                            name: '{{ etat_saisie_bilan_social[0] }} ('+nbEnCours+')',
+                            y: nbEnCours
+                        }, {
+                            name: '{{ etat_saisie_bilan_social[1] }} ('+nbBsTransmis+')',
+                            y: nbBsTransmis
+                        }, {
+                            name: '{{ etat_saisie_bilan_social[2] }} ('+nbValid+')',
+                            y: nbValid
+                        }, {
+                            name: '{{ etat_saisie_bilan_social[3] }} ('+nbNonValid+')',
+                            y: nbNonValid
+                        }, {
+                            name: '{{ etat_saisie_bilan_social[4] }} ('+nbEnCoursNonValid+')',
+                            y: nbEnCoursNonValid
+                        }, {
+                            name: '{{ etat_saisie_bilan_social[5] }} ('+nbNvelleTrans+')',
+                            y: nbNvelleTrans
+                        }, {
+                            name: '{{ etat_saisie_bilan_social[6] }} ('+nbNonConn+')',
+                            y: nbNonConn
+                        }, {
+                            name: '{{ etat_saisie_bilan_social[7] }} ('+nbNonSaisi+')',
+                            y: nbNonSaisi
+                        },{
+                            name: '{{ etat_saisie_bilan_social[8] }} ('+nbReinit+')',
+                            y: nbReinit
+                        }]
+                    }]
+                });
+                // cf web/js Dashboard/map/qgis2web.js
+                //window.initOlMap();
+
+            }
+        </script>
+    {% endif %}
+
+    {% if is_granted("ROLE_COLLECTIVITY") %}
+        {% if firstConnMessage == true %}
+            <div id="firstConnectionMessage" class="modal show fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Bienvenue</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <p>Pour votre première connection, il est important de renseigner toutes les informations relatives à votre collectivité.</p>
+                            
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <p>Cliquez sur le lien "Continuer" afin d'accéder à vos informations et de les renseigner.</p>
+                        <a href="{{ path('collectivite_edit', { 'id': idColl }) }}"> <button type="button" class="btn btn-primary">Continuer</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $('#firstConnectionMessage').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            </script>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+    
+    <div class="col-xs-12 col-md-9" >
+{#<a href="{{ path('export_limited_file_dgcl') }}">DGCL limited</a>#}
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in col-md-9" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in col-md-9" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% if actualites is not empty and actualites is not null %}
+            <div class="bs-example">
+                <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        {% for actualite in actualites %}
+                            <li data-target="#carousel-example-captions" data-slide-to="{{ loop.index }}" class="{% if loop.first %} active {% endif %}"></li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for actualite in actualites %}
+                            <div class="item {% if loop.first %} active {% endif %} ">
+                                <a href="{{ path('actualite_show', { 'id': actualite.id }) }}" class="actu_carousel_img_wrapper">
+                                    <img src="{{ actualite.imagePublicUrl }}" alt="{{ actualite.imagePublicUrl }}" class="img-responsive">
+                                </a>
+                                <div class="carousel-caption">
+                                    <p>{{ actualite.titreActu|raw }}</p>
+                                    <a href="{{ path('actualite_show', { 'id': actualite.id }) }}">
+                                        <button class="btn button-tableau pull-right">En savoir plus</button>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-captions" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="new-caption-area"></div>
+
+        {% endif %}
+        
+        {% if is_granted('ROLE_CDG') %}
+            <div id="dashboard-wrapper">
+                 <div class="panel panel-default contentConsolide">
+                    <div class="panel-heading">
+                        <h3 class="noMargin">Liste des départements :<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="panel-body slide-up">
+                        <label><input class="checkbox-all-dept" type="checkbox"/>Tout sélectionner</label><br>
+                        {% for key, departement in departements %}
+                            <label><input class="checkbox-dept" type="checkbox" value="{{ key }}"/>{{ departement }}</label><br>
+                        {% endfor %}
+                        <button class="btn button-tableau pull-right" id="btn-dept">Afficher</button>
+                    </div>
+                </div>
+                <div id="charts-wrapper">
+                    <h4 style='text-align:center'><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Chargement des données en cours</h4>
+                    {# {% include '@Core/Default/charts.html.twig' %} #}
+                </div>
+            </div>
+        {% endif %}
+        {% if is_granted('ROLE_DGCL') %}
+         
+            {% set total_bsv = 0 %}
+            
+            <div class="col-md-6" >
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Type de collectivité</th>
+                        <th>Nombre de bilans sociaux validés</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {% for type_coll in array_type_coll %}
+                      <tr>
+                        <th>{{type_coll.typeColl}}</th>
+                          {% set total_bsv = total_bsv +  type_coll.nbColl %}
+                        <th>{{type_coll.nbColl|number_format(0, '.', ' ') }}</th>
+                      </tr>
+                    {% endfor %}
+                    <tr>
+                        <th>Total</th>
+                        <th>{{ total_bsv|number_format(0, '.', ' ') }}</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6" >
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nb agents</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>Titulaires</th>
+                        <th>{{array_nb_agents_by_statut.TITU |number_format(0, '.', ' ')}}</th>
+                    </tr>
+                    <tr>
+                        <th>Contractuels permanent</th>
+                        <th>{{array_nb_agents_by_statut.CONTPERM|number_format(0, '.', ' ')}}</th>
+                      {#  <th>Emploi permanents</th>
+                        <th>{{array_nb_agents_by_statut.CONTNONPERM|number_format(0, '.', ',')}}</th>#}
+                    </tr>
+                    <tr>
+                        <th>Ensemble des agents permanents</th>
+                        {% set total_agent_perm = array_nb_agents_by_statut.CONTPERM + array_nb_agents_by_statut.TITU %}
+                        <th>{{total_agent_perm|number_format(0, '.', ' ')}}</th>
+                    </tr>
+                    <tr>
+                        <th>Contractuels non permanent</th>
+                        <th>{{array_nb_agents_by_statut.CONTNONPERM|number_format(0, '.', ' ')}}</th>
+                    </tr>
+
+                    </tbody>
+                </table>
+                    </div>
+        {% if tasks is not empty %}
+            <div class="col-md-12">
+                <h3>Liste des exports</h3>
+                {% include '@LongTaskManager/liste.html.twig' %}
+            </div>
+        {% endif %}
+        <div class="col-md-12">
+            <a   href="{{ path('bilan_social_export_dgcl') }}">
+               <button id="inputGenerateDGCL" type="button" class="btn button-tableau">Générer le fichier ZIP</button>
+            </a>
+        </div>
+                
+               {# <div class="{% if file_exist %}col-md-6 {% else %} col-md-12{% endif  %}">
+                    {% if file_exist %}
+                        <a href="{{ path('download_DGCL')}}">
+                            <button type="button" class="btn button-tableau">Télécharger le document</button>
+                        </a>
+                    {% endif %}
+                </div>#}
+            
+           
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+

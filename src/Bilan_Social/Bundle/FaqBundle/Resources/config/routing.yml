@@ -1,0 +1,12 @@
+faq_admin:
+    resource: "@FaqBundle/Resources/config/routing/faq_admin.yml"
+    prefix: /admin/faq
+    
+faq_other:
+    resource: "@FaqBundle/Resources/config/routing/faq_user.yml"
+    prefix: /faq
+
+faq_question:
+        resource: "@FaqBundle/Resources/config/routing/question.yml"
+        prefix:   /question
+

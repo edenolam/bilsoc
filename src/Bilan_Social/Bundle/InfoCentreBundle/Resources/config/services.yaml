@@ -1,0 +1,31 @@
+services:
+    info_centre_filter_parser:
+        class: 'Bilan_Social\Bundle\InfoCentreBundle\Services\FilterParser'
+        arguments: ["@info_centre_config_finder"]
+        public: true
+    info_centre_sql_filter_parser:
+        class: 'Bilan_Social\Bundle\InfoCentreBundle\Services\SqlFilterParser'
+        arguments: [ "@doctrine.orm.entity_manager","@info_centre_config_finder","@bdd_connection_preparator","@session"]
+        public: true
+    info_centre_filter_type:
+        class: 'Bilan_Social\Bundle\InfoCentreBundle\Form\FilterType'
+        arguments : ['@info_centre_sql_filter_parser']
+        tags: [form.type]
+        public: true
+    info_centre_config_finder:
+        class: 'Bilan_Social\Bundle\InfoCentreBundle\Services\ConfigFinder'
+        public: true
+
+    Bilan_Social\Bundle\InfoCentreBundle\Controller\InfoCentreController: "@info_centre_controller"
+    info_centre_controller:
+        class: 'Bilan_Social\Bundle\InfoCentreBundle\Controller\InfoCentreController'
+        public: true
+        autowire: true
+        arguments: ["@service_container"]
+
+    Bilan_Social\Bundle\InfoCentreBundle\Controller\InfoCentreDepartementsController: "@info_centre_departements_controller"
+    info_centre_departements_controller:
+        class: 'Bilan_Social\Bundle\InfoCentreBundle\Controller\InfoCentreDepartementsController'
+        public: true
+        autowire: true
+        arguments: ["@service_container"]

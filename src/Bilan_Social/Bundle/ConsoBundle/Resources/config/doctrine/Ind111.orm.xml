@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind111" table="ind_111" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind111Repository">
+        <indexes>
+            <index name="FK_111_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_111_GRADE" columns="ID_GRAD"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_GRAD" name="IDXU1_IND_111"/>
+		</unique-constraints>
+        <id name="id111" type="integer" column="ID_111">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind111s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refGrade" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefGrade">
+            <join-column name="ID_GRAD" referenced-column-name="ID_GRAD" nullable="false"/>
+        </many-to-one>
+
+        <field name="r1111" type="integer" column="R_1111" nullable="true"/>
+        <field name="r1112" type="integer" column="R_1112" nullable="true"/>
+        <field name="r1113" type="integer" column="R_1113" nullable="true"/>
+        <field name="r1114" type="integer" column="R_1114" nullable="true"/>
+        <field name="r1115" type="integer" column="R_1115" nullable="true"/>
+        <field name="r1116" type="integer" column="R_1116" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA">
+            <options>
+                <option name="default">CURRENT_TIMESTAMP</option>
+            </options>
+        </field>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50">
+            <options>
+                <option name="default">SYSTEM</option>
+            </options>
+        </field>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

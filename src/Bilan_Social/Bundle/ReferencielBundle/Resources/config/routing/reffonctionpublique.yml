@@ -1,0 +1,28 @@
+reffonctionpublique_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefFonctionPublique:index" }
+    methods:  GET
+
+reffonctionpublique_show:
+    path:     /{idFoncpubl}/show
+    defaults: { _controller: "ReferencielBundle:RefFonctionPublique:show" }
+    methods:  GET
+
+reffonctionpublique_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefFonctionPublique:new" }
+    methods:  [GET, POST]
+
+reffonctionpublique_edit:
+    path:     /{idFoncpubl}/edit
+    defaults: { _controller: "ReferencielBundle:RefFonctionPublique:edit" }
+    methods:  [GET, POST]
+
+reffonctionpublique_delete:
+    path:     /{idFoncpubl}/delete
+    defaults: { _controller: "ReferencielBundle:RefFonctionPublique:delete" }
+    methods:  DELETE
+
+csv_export_reffonctionpublique:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefFonctionPublique:generateCsv" }

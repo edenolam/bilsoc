@@ -1,0 +1,4 @@
+sp-DASHBOARD_cdg // correction pour prendre en compte les bilans sociaux re transmit apres refus ( fg stat a 5 )
+
+
+bien vérifier la presence des chemins pour le filemanager, concernant les DGCL

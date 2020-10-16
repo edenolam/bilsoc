@@ -1,0 +1,32 @@
+{#
+	fichier de templateting pour le formulaire des filtres de l'InfoCentre
+#}
+
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{# {% set info_centre_collection_item_group_class = "" %} #}
+
+{% block choice_widget %}
+	{{ parent() }}
+    {% if expanded and not multiple %}
+    	<i class="fa fa-undo revert_choices" data-revert-for="#{{ id }}"></i>
+    {% endif %}
+{% endblock %}
+
+{#  {% block collection_widget  %}
+	{% set info_centre_collection_item_group_class = 'col-md-2' %}
+	<div class='form-group col-md-2'>
+		{{ parent() }}
+	</div>	
+	{% set info_centre_collection_item_group_class = "" %}
+{% endblock %}  #}
+
+{% block _infocentre_filter_form_sirenRattachColl_entry_row %}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %} col-md-2" data-key="{{ prototype is defined ? '0' : '__name__' }}">
+        <span class='field_a_prototype_remove_btn'><i class="fa fa-times-circle pull-right"></i></span>
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+
+    </div>
+{%- endblock _infocentre_filter_form_sirenRattachColl_entry_row %}

@@ -1,0 +1,25 @@
+BEGIN
+	declare cursIdBS INT(11);
+	declare R3311 INT(11);
+    declare R3312 INT(11);
+    DECLARE cursDone INT DEFAULT FALSE;
+    declare cursExportIndic CURSOR FOR SELECT ID_BILASOCICONS, SUM(r_3311), SUM(r_3312) FROM ind_331 WHERE ID_EMPLNONPERM NOT IN (2,3,14) GROUP BY ID_BILASOCICONS;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET cursDone = TRUE;
+    OPEN cursExportIndic;
+    export_ind_loop:LOOP
+      FETCH cursExportIndic
+      INTO cursIdBS, R3311, R3312;
+      IF cursDone
+      THEN
+        LEAVE export_ind_loop;
+      END IF;
+      UPDATE ind_331
+	  SET r_3311 = R3311 + r_3311,
+	  r_3312 = r_3312 + R3312
+	  WHERE ID_BILASOCICONS = cursIdBS
+		AND ID_EMPLNONPERM = 14;
+    DELETE FROM ind_331 WHERE ID_BILASOCICONS = cursIdBS
+		AND ID_EMPLNONPERM NOT IN(2,3,14);
+    END LOOP;
+    CLOSE cursExportIndic;
+  END

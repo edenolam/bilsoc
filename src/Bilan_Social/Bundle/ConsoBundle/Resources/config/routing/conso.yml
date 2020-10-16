@@ -1,0 +1,611 @@
+#bilan_conso_edit:
+#    path:     /QuestionCollectiviteConsolide/
+#   defaults: { _controller: "ConsoBundle:QuestionCollectiviteConsolide:GetQuestionCollectiviteConsolide" }
+#    methods:  [GET, POST]
+
+set_conso_to_zero:
+    path:     /QuestionCollectiviteConsolide/setConsoToZero
+    defaults: { _controller: "ConsoBundle:QuestionCollectiviteConsolide:setConsoToZero" }
+    methods:  [GET, POST]
+    options:
+        expose: true
+
+check_before_remove_ind:
+    path:     /QuestionCollectiviteConsolide/checkbeforremoveind
+    defaults: { _controller: "ConsoBundle:QuestionCollectiviteConsolide:checkBeforeRemoveIndicator" }
+    options:
+        expose: true
+
+
+bilan_conso_edit:
+    path:     /BilanSocialConsolide/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:EditBilanSocialConsolide" }
+    methods:  [GET, POST]
+    options:
+        expose: true
+
+
+bilan_conso_effectif_edit:
+    path:     /BilanSocialConsolide/Effectif/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffec" }
+    methods:  [GET, POST]
+
+bilan_conso_mouv_edit:
+    path:     /BilanSocialConsolide/Mouvement/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideMouv" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_edit:
+    path:     /BilanSocialConsolide/TpsTravail/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTrav" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_edit:
+    path:     /BilanSocialConsolide/Conditions/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditions" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_edit:
+    path:     /BilanSocialConsolide/Remuneration/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemuneration" }
+    methods:  [GET, POST]
+
+bilan_conso_formation_edit:
+    path:     /BilanSocialConsolide/Formation/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideFormation:EditBilanSocialConsolideFormation" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_edit:
+    path:     /BilanSocialConsolide/Droit/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroit" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_edit:
+    path:     /BilanSocialConsolide/Rassct/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassct" }
+    methods:  [GET, POST]
+
+bilan_conso_gpeec_edit:
+    path:     /BilanSocialConsolide/Gpeec/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideGpeec:EditBilanSocialConsolideGpeec" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_edit:
+    path:     /BilanSocialConsolide/Handitorial/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorial" }
+    methods:  [GET, POST]
+
+bilan_conso_dgcl_edit:
+    path:     /BilanSocialConsolide/Dgcl/
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDgcl:EditBilanSocialConsolideDgcl" }
+    methods:  [GET, POST]
+
+bilan_conso_dgcl_jours_carence_edit:
+    path:     /BilanSocialConsolide/Dgcl/JoursCarence
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDgcl:EditBilanSocialConsolideDgclJoursCarence" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind110_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind110
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd110" }
+    methods:  [GET, POST]
+
+
+bilan_conso_effectif_ind111_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind111
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd111" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind112_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind112
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd112" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind113_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind113
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd113" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind114_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind114
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd114" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind121_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind121
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd121" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind122_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind122
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd122" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind123_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind123
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd123" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind124_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind124
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd124" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind131_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind131
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd131" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind132_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind132
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd132" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind140_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind140
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideEffectif:EditBilanSocialConsolideEffecInd140" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind150_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind150
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd150" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind151_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind151
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd151" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind152_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind152
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd152" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind1531_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind1531
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd1531" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind1532_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind1532
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd1532" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind154_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind154
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd154" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind157_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind157
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd157" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind158_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind158
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd158" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind161_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind161
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd161" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind162_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind162
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd162" }
+    methods:  [GET, POST]
+
+bilan_conso_effectif_ind171_edit:
+    path:     /BilanSocialConsolide/Effectif/Ind171
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideMouvement:EditBilanSocialConsolideEffecInd171" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind210_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind210
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd210" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind211_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind211
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd211" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind212_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind212
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd212" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind213_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind213
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd213" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind214_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind214
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd214" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind215_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind215
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd215" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind216_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind216
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd216" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind217_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind217
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd217" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind221_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind221
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd221" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind222_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind222
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd222" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind223_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind223
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd223" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind224_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind224
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd224" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind225_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind225
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd225" }
+    methods:  [GET, POST]
+    
+bilan_conso_tpstrav_ind226_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind226
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd226" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind227_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind227
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideInd227" }
+    methods:  [GET, POST]
+
+bilan_conso_tpstrav_ind231_edit:
+    path:     /BilanSocialConsolide/TpsTravail/Ind231
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideTpsTravail:EditBilanSocialConsolideTpsTravInd231" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind411_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind411
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd411" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind413_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind413
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd413" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind414_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind414
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd414" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind421_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind421
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd421" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind422_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind422
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd422" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind423_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind423
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd423" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind424_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind424
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd424" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind425_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind425
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd425" }
+    methods:  [GET, POST]
+
+bilan_conso_conditions_ind431_edit:
+    path:     /BilanSocialConsolide/Conditions/Ind431
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideConditions:EditBilanSocialConsolideConditionsInd431" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_ind311_edit:
+    path:     /BilanSocialConsolide/Remuneration/Ind311
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemunerationInd311" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_ind321_edit:
+    path:     /BilanSocialConsolide/Remuneration/Ind321
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemunerationInd321" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_ind331_edit:
+    path:     /BilanSocialConsolide/Remuneration/Ind331
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemunerationInd331" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_ind341_edit:
+    path:     /BilanSocialConsolide/Remuneration/Ind341
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemunerationInd341" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_ind342_edit:
+    path:     /BilanSocialConsolide/Remuneration/Ind342
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemunerationInd342" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_ind343_edit:
+    path:     /BilanSocialConsolide/Remuneration/Ind343
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemunerationInd343" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_ind344_edit:
+    path:     /BilanSocialConsolide/Remuneration/Ind344
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemunerationInd344" }
+    methods:  [GET, POST]
+
+bilan_conso_remuneration_ind345_edit:
+    path:     /BilanSocialConsolide/Remuneration/Ind345
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRemuneration:EditBilanSocialConsolideRemunerationInd345" }
+    methods:  [GET, POST]
+
+bilan_conso_formation_ind5111_edit:
+    path:     /BilanSocialConsolide/Formation/Ind5111
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideFormation:EditBilanSocialConsolideFormationInd5111" }
+    methods:  [GET, POST]
+
+bilan_conso_formation_ind5112_edit:
+    path:     /BilanSocialConsolide/Formation/Ind5112
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideFormation:EditBilanSocialConsolideFormationInd5112" }
+    methods:  [GET, POST]
+
+bilan_conso_formation_ind5113_edit:
+    path:     /BilanSocialConsolide/Formation/Ind5113
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideFormation:EditBilanSocialConsolideFormationInd5113" }
+    methods:  [GET, POST]
+
+bilan_conso_formation_ind512_edit:
+    path:     /BilanSocialConsolide/Formation/Ind512
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideFormation:EditBilanSocialConsolideFormationInd512" }
+    methods:  [GET, POST]
+
+bilan_conso_formation_ind513_edit:
+    path:     /BilanSocialConsolide/Formation/Ind513
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideFormation:EditBilanSocialConsolideFormationInd513" }
+    methods:  [GET, POST]
+
+bilan_conso_formation_ind514_edit:
+    path:     /BilanSocialConsolide/Formation/Ind514
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideFormation:EditBilanSocialConsolideFormationInd514" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_ind611_edit:
+    path:     /BilanSocialConsolide/Droit/Ind611
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroitInd611" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_ind612_edit:
+    path:     /BilanSocialConsolide/Droit/Ind612
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroitInd612" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_ind613_edit:
+    path:     /BilanSocialConsolide/Droit/Ind613
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroitInd613" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_ind614_edit:
+    path:     /BilanSocialConsolide/Droit/Ind614
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroitInd614" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_ind711_edit:
+    path:     /BilanSocialConsolide/Droit/Ind711
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroitInd711" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_ind712_edit:
+    path:     /BilanSocialConsolide/Droit/Ind712
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroitInd712" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_ind713_edit:
+    path:     /BilanSocialConsolide/Droit/Ind713
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroitInd713" }
+    methods:  [GET, POST]
+
+bilan_conso_droit_ind714_edit:
+    path:     /BilanSocialConsolide/Droit/Ind714
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideDroit:EditBilanSocialConsolideDroitInd714" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctAccidentTravail_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctAccidentTravail
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctAccidentTravail" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctRealisationFormationSanteTravail_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctRealisationFormationSanteTravail
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctRealisationFormationSanteTravail" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctPrevisionFormationSanteTravail_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctPrevisionFormationSanteTravail
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctPrevisionFormationSanteTravail" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctAutresMesures_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctAutresMesures
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctAutresMesures" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctPredictionsAutresMesures_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctPredictionsAutresMesures
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctPredictionsAutresMesures" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctNbMaladiePros_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctNbMaladiePros
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctNbMaladiePros" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctNbAccidentTravails_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctNbAccidentTravails
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctNbAccidentTravails" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctNatureLesions_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctNatureLesions
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctNatureLesions" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctSiegeLesions_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctSiegeLesions
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctSiegeLesions" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctElementMateriels_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctElementMateriels
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctElementMateriels" }
+    methods:  [GET, POST]
+
+bilan_conso_rassct_bscRassctMaladieProCaracPros_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctMaladieProCaracPros
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctMaladieProCaracPros" }
+    methods:  [GET, POST]
+bilan_conso_rassct_bscRassctinformationCollectivite_edit:
+    path:     /BilanSocialConsolide/Rassct/BscRassctInformationCollectivite
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideRassct:EditBilanSocialConsolideRassctBscRassctInformationCollectivite" }
+    methods:  [GET, POST]
+
+bilan_conso_gpeec_bscGpeecNbAgentsTituEmpPermaParFoncEtAges_edit:
+    path:     /BilanSocialConsolide/Gpeec/BscGpeecNbAgentsTituEmpPermaParFoncEtAges
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideGpeec:EditBilanSocialConsolideGpeecBscGpeecNbAgentsTituEmpPermaParFoncEtAges" }
+    methods:  [GET, POST]
+
+bilan_conso_gpeec_bscGpeecPlusNbAgentsParSpeEtAges_edit:
+    path:     /BilanSocialConsolide/Gpeec/BscGpeecPlusNbAgentsParSpeEtAges
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideGpeec:EditBilanSocialConsolideGpeecBscGpeecPlusNbAgentsParSpeEtAges" }
+    methods:  [GET, POST]
+
+bilan_conso_gpeec_bscGpeecNiveauDeDiplome_edit:
+    path:     /BilanSocialConsolide/Gpeec/BscGpeecNiveauDeDiplome
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideGpeec:EditBilanSocialConsolideGpeecNiveauDiplome" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialQuestionsGenerales_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialQuestionsGenerales
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialQuestionsGenerales" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialInaptitudeEtReclassement_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialInaptitudeEtReclassement
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialInaptitudeEtReclassement" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialQuestionsBoeths_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialQuestionsBoeths
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialQuestionsBoeths" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialCadreEmplois_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialCadreEmplois
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialCadreEmplois" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialInaptEtReclaCadreEmplois_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialInaptEtReclaCadreEmplois
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialInaptEtReclaCadreEmplois" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialMetiers_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialMetiers
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialMetiers" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialInaptEtReclaMetiers_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialInaptEtReclaMetiers
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialInaptEtReclaMetiers" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialTempsComplets_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialTempsComplets
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialTempsComplets" }
+    methods:  [GET, POST]
+
+bilan_conso_handitorial_bscHanditorialInaptEtReclaTempsComplets_edit:
+    path:     /BilanSocialConsolide/Handitorial/BscHanditorialInaptEtReclaTempsComplets
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolideHanditorial:EditBilanSocialConsolideHanditorialBscHanditorialInaptEtReclaTempsComplets" }
+    methods:  [GET, POST]
+
+bilan_conso_to_bilan_apa:
+    path:     /retourAgentparAgent
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:ConsolideBackToApa" }
+    options:
+        expose: true
+
+bilan_conso_transmettre:
+    path:     /transmettre
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:Transmettre" }
+    options:
+        expose: true
+
+bilan_conso_valider:
+    path:     /valider
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:Valider" }
+    options:
+        expose: true
+
+bilan_conso_deverrouiller:
+    path:     /deverrouiller
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:Deverrouiller" }
+    options:
+        expose: true
+
+bilan_conso_refuser:
+    path:     /refuser
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:Refuser" }
+    options:
+        expose: true
+
+bilan_conso_get_nb_question_and_pb:
+    path:     /getNumberQuestion
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:getNumberQuestion" }
+    options:
+        expose: true
+
+
+bilan_apa_to_bilan_conso:
+    path:     /apaToConso
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:ApaToConso" }
+
+
+import_send_file_dgcl:
+    path:     /dgclToconso
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:DgclToConso" }
+    methods:  [POST]
+    options:
+        expose: true
+
+export_limited_file_dgcl:
+    path:     /dgcllimited
+    defaults: { _controller: "ConsoBundle:BilanSocialConsolide:getImportDGCLWithLimit" }
+    options:
+        expose: true

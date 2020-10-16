@@ -1,0 +1,182 @@
+{# empty Twig template #}
+{% block body %}
+{% set idEnqu = app.session.get('idEnqu') %}
+<div class="panel-heading">
+    <div class="flex">
+        <div class="step-width">
+            <div>
+                <p>Etape 1<br>Gestion de l'enquête</p>
+            </div>
+        </div>
+        <div class="step-width">
+            <div class="craue_formflow_current_step">
+                <p>Etape 2<br>Import base carrière</p>
+            </div>
+        </div>
+        <div class="step-width">
+            <div >
+                <p>Etape 3<br>Paramétrage de l'enquête</p>
+            </div>
+        </div>
+    </div>
+</div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg|raw }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-body">
+                <a href="{{ path('enquete_gestion_edition', {'idEnqu': idEnqu}) }}"><button type="submit" class="btn btn-primary">Précédent</button></a>
+                <input type="button" class='btn-primary btn pull-right' id='gestion_enquete_coll' value="Suivant"/>
+            </div>
+        </div>
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Gestion des imports base carrière</h3>
+            </div>
+            <div class="panel-body">
+            {{ form_row(form.typeImport) }}
+            <div class="col-xs-12">
+                    {{ form_row(form.document) }}
+            </div>
+            <input class="btn button-tableau pull-right margin10" type="submit" value="Importer" />
+            {{ form_end(form) }}
+                <!--<div>
+                    {% include '@ImportCarriere/SelectColl/index.html.twig' %}
+                </div>-->
+            </div>
+        </div>
+
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Liste des fichiers importés</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover dataTable align-center no-footer" id="table-actualite-en-cours">
+                    <thead>
+                        <tr>
+                            <th>Fichier</th>
+                            <th>Date d'import</th>
+                            <th>Type de fichier</th>
+                            <th>Etat</th>
+                            <th>Commentaire</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fichier in fichiers %}
+                            <tr>
+                                <td>{{ fichier.fileName }}</td>
+                                <td>{{ date(fichier.storageDate)|date('d/m/Y') }}</td>
+                                <td>{{ fichier.logicalFolder }}</td>
+                                <td>
+                                    <div class="progress" data-toggle="tooltip" data-placement="top" title="Enregistré">
+                                        <div class="progress-bar {% if fichier.statut == 1 %} progress-bar-grey {% elseif fichier.statut == 2 %} progress-bar-blue {% elseif fichier.statut == 3 %} progress-bar-green {% elseif fichier.statut == -1 %} progress-bar-warning {% else %} progress-bar-grey {% endif %}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ fichier.libelleStatut }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Liste des collectivités</h3>
+            </div>
+            <div class="panel-body">
+                <div id="tables_coll_container">
+                    <div>
+                        <p class='bold'>Collectivités que vous pouvez sélectionner afin de leur permettre de charger leur bilan social à partir des données d'une base carrière</p>
+                        <table class='table table-hover dataTable align-center no-footer' id="match-coll">
+                            <thead>
+                                <tr>
+                                    <th>Siret</th>
+                                    <th>Libellé</th>
+                                    <th>Département</th>
+                                    <th><input type='checkbox' class='select_all_self_coll'/></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for coll in tab_coll_ok %}
+                                    <tr>
+                                        <td>{{coll['NM_SIRE'] }}</td>
+                                        <td>{{coll['LB_COLL'] }}</td>
+                                        <td>{{coll['CD_DEPA'] }}</td>
+                                        <td><input type='checkbox' name='coll_selected[]' value="{{coll['NM_SIRE'] }}" {{ coll['can_import']==1 ? 'checked' : '' }}></td>
+                                    </tr>	
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                            <div>
+                                <button id='select_coll_btn' class='btn button-tableau'>Valider</button>
+                            </div>    
+                    </div>
+                    <div>
+                        <p class='bold'>Collectivités présentes uniquement au sein du fichier XML</p>
+                        <table class='table table-hover dataTable align-center no-footer' id="fichier-coll">
+                            <thead>
+                                <tr>
+                                        <th>Siret</th>
+                                        <th>Libellé</th>
+                                        <th>Département</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for coll in tab_coll_left %}
+                                    <tr>
+                                        <td>{{coll['siret'] }}</td>
+                                        <td>{{coll['libelle_collectivite'] }}</td>
+                                        <td>{{ coll['departement'] is defined ? coll['departement'] : "" }}</td>
+                                    </tr>	
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p class='bold'>Collectivités présentes uniquement au sein de la base de données du Bilan Social</p>
+                        <table class='table table-hover dataTable align-center no-footer'  id="bdd-coll">
+                            <thead>
+                                <tr>
+                                    <th>Siret</th>
+                                    <th>Libellé</th>
+                                    <th>Département</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for coll in tab_coll_right %}
+                                    <tr>
+                                        <td>{{coll['NM_SIRE'] }}</td>
+                                        <td>{{coll['LB_COLL'] }}</td>
+                                        <td>{{coll['CD_DEPA'] }}</td>
+                                    </tr>	
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% include '@ImportCarriere/SelectColl/modal_alert.html.twig' %}
+    <div class="panel panel-default contentConsolide">
+        <div class="panel-body">
+            <a href="{{ path('enquete_gestion_edition', {'idEnqu': idEnqu}) }}"><button type="submit" class="btn btn-primary">Précédent</button></a>
+            <input type="button" class='btn-primary btn pull-right' id='gestion_enquete_coll' value="Suivant"/>
+        </div>
+    </div>
+{% endblock %}

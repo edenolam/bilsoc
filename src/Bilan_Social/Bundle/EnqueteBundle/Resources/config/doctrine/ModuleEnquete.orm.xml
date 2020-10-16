@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\EnqueteBundle\Entity\ModuleEnquete" table="module_enquete">
+    <id name="idModuenqu" type="integer" column="ID_MODUENQU">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="cdModuenqu" type="string" column="CD_MODUENQU" length="10" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lbModuenqu" type="string" column="LB_MODUENQU" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

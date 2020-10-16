@@ -1,0 +1,28 @@
+refformation_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefFormation:index" }
+    methods:  GET
+
+refformation_show:
+    path:     /{idForm}/show
+    defaults: { _controller: "ReferencielBundle:RefFormation:show" }
+    methods:  GET
+
+refformation_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefFormation:new" }
+    methods:  [GET, POST]
+
+refformation_edit:
+    path:     /{idForm}/edit
+    defaults: { _controller: "ReferencielBundle:RefFormation:edit" }
+    methods:  [GET, POST]
+
+refformation_delete:
+    path:     /{idForm}/delete
+    defaults: { _controller: "ReferencielBundle:RefFormation:delete" }
+    methods:  DELETE
+
+csv_export_refformation:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefFormation:generateCsv" }

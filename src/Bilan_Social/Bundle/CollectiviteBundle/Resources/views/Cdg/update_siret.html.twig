@@ -1,0 +1,124 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/historisationCollectivite.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Collectivités</a></li>
+                <li class="active">Mise à jour d'une collectivité</li>
+            </ol>
+        </div>
+        {% if app.request.get('id') == null %}
+            <h3>Mise à jour d'une collectivité</h3>
+        {% else %}
+            {% if droitsCdg is not null %}
+                <h3>Mise à jour d'une collectivité</h3>
+                <ul class="nav nav-tabs">
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CDG') %}
+                        <li><a class="active" data-toggle="tab" href="#archiver">Mise à jour SIRET</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        {% endif %}
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {% if msg.liste is defined %}
+                        <p>{{ msg.text|raw }}</p>
+                        <ul>
+                            <li>Login : {{ msg.liste.login }}</li>
+                            <li>Mot de passe : {{ msg.liste.psw }}</li>
+                        </ul>
+                    {% else %}
+                        {{ msg|raw }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+            <div class="tab-content">
+                <input type="hidden" id="idColl" value="{{ app.request.get('id') }}">
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CDG') %}
+                        <div id="archiver" class="tab-pane fade in active">
+                            <div class="alert alert-info" role="alert">
+                                <p>SIRET : {{ infoCollectivite.nmSire }}</p>
+                                <p>Nom de la collectivité ( Raison sociale ) : {{ infoCollectivite.lbColl }}</p>
+                                <p>Adresse : {{ infoCollectivite.lbAdre }}</p>
+                                <p>Code Postal:  {{  infoCollectivite.cdPost  }}</p>
+                                <p>Departement:  {{ infoCollectivite.idDepa }}</p>
+                                <p>Ville : {{ infoCollectivite.lbVill }}</p>
+                                <p>Type de collectivité : {{ infoCollectivite.idTypeColl }}</p>
+                            </div>
+
+                            {% if form is defined %}
+                                {{ form_start(form) }}
+                                    {{ form_row(form.RefNatureMAJ) }}
+                                    {{ form_row(form.nmNouvSire) }}
+                                    {{ form_row(form.nmSireAbso) }}
+                                    {{ form_row(form.dtArch) }}
+                                    {{ form_row(form.listColl) }}
+
+                                <table class="table table-hover align-center hidden" id='dtNewCollHisto' style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th class='col-maj'>Action</th>
+                                        <th class='col-hidden col-blSireNouveau'>Siret</th>
+                                        <th class='col-hidden col-blLibe'>Libellé de la collectivité</th>
+                                        <th class='col-lbAdresse'>Adresse</th>
+                                        <th class='col-hidden col-blDepa'>Département</th>
+                                        <th class='col-hidden col-cdDepa'>Numéro département</th>
+                                        <th class='col-hidden col-blLbVill'>Ville</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+
+                                {{ form_row(form.valider) }}
+                                {{ form_end(form) }}
+                            {% endif %}
+                        {% else %}
+                            <h3>Informations d'archivage</h3>
+                            <table class='table table-hover'>
+                                <thead>
+                                    <tr>
+                                        <th>Type d'achivage</th>
+                                        <th>Date d{% if historiqueCollectivite.lbTypeArch == 'fusion' or  historiqueCollectivite.lbTypeArch == 'dissolution'%}e {% else %}'{% endif %}{{ historiqueCollectivite.lbTypeArch }}</th>
+                                        <th>Ancien SIRET</th>
+                                        {% if historiqueCollectivite.nmNouvSire is not null %}<th>Nouveau SIRET</th>{% endif %}
+                                        {% if historiqueCollectivite.nmSireAbso is not null %}<th>SIRET d'absorption</th>{% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ historiqueCollectivite.RefNatureMAJ }}</td>
+                                        <td>{{ historiqueCollectivite.dtArch|date('d M Y') }}</td>
+                                        <td>{{ historiqueCollectivite.nmAnciSire }}</td>
+                                        {% if historiqueCollectivite.nmNouvSire is not null %}<td>{{ historiqueCollectivite.nmNouvSire }}</td>{% endif %}
+                                        {% if historiqueCollectivite.nmSireAbso is not null %}<td>{{ historiqueCollectivite.nmSireAbso }}</td>{% endif %}
+                                    </tr>
+                                </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+{% endblock %}

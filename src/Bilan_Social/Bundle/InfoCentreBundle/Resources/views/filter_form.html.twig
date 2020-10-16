@@ -1,0 +1,147 @@
+{#
+	vue du formulaire de filtres pour le requeteur
+#}
+
+{% form_theme filter_form with '@InfoCentreBundle/form/filter_fields.html.twig' %}
+{#
+	[
+		{ #group
+			tag:------ #htmltag pour le groupe
+			content:------- #texte/html pour l'entête du group
+			fields_groups:[
+				{
+					field_key_1:{options},
+					filed_key_2:{options},
+				},
+				{
+					field_key_3:{options}
+				}
+			]
+		}
+	]
+#}
+{%
+	set form_filters_view_map  = info_centre_config_finder.getConfig('filterFormView')
+%}
+{# = [
+		{
+			'tag':'fieldset',
+			'content':'<legend>Informations générales</legend>',
+			'fields_groups':[
+				{
+					'nomColl':{},
+					'siretColl':{},
+					'affilColl':{}
+				},{
+					'typeColl':{}
+				},{
+					'adresseColl':{},
+					'ville':{},
+					'nomContact':{}
+				},{
+					'depaColl':{}
+				}
+			]
+		}
+	] #}
+{%
+	set options_need_precise_draw = ['select_all_btn','preceded_by','followed_by','label_extra_var','widget_extra_var','prototype']
+%}
+{%
+	set reserved_keys = ['__sub_fields','__wrapping_group','__wrapping_option']
+%}
+{%
+	set sub_fields_key = '__sub_fields'
+%}
+
+
+<section id='form-filters-wrapper' class='infocentre-section-bloc'>
+	<div class="card">
+	    <div class="card-header" id="head_form_filters">
+			<h3 data-toggle="collapse" data-target="#body_form_filters" aria-expanded="false" aria-controls="body_form_filters">
+				{{ "infocentre.filter_form.section.title"|trans }}{#II - Filtres#}
+				<i class="fa fa-chevron-down"></i>
+			</h3>
+		</div>
+		<div id="body_form_filters" class="collapse collapsed" aria-labelledby="head_form_filters">
+			<div class="card-body">
+				{{ form_start(filter_form,{'attr':{'id':'infocentre_filter_form'}}) }}
+					{% for form_mega_group_key, current_form_mega_group in form_filters_view_map %}
+						{{ include('@InfoCentre/filter_form/filter_form_mega_group.html.twig') }}
+						{# {% set temp_tag = current_form_mega_group.tag is defined ? current_form_mega_group.tag : 'fieldset' %}
+						{% set temp_content = current_form_mega_group.content is defined ? current_form_mega_group.content : 'group ' ~ form_mega_group_key %}
+						{% set temp_fields_groups = current_form_mega_group.fields_groups is defined ? current_form_mega_group.fields_groups : [] %}
+						{% if temp_fields_groups|length > 0 %}
+							<{{ temp_tag }}>
+								{{ temp_content|raw }}
+								{% for fields_group_key, fields_group in temp_fields_groups %}
+									{% if fields_group|length > 0 %}
+										{% set nb_in_group = 0 %}
+										{% set class_for_group_item = 'col-md-12' %}
+										{% for field_key, field_options in fields_group %}
+											{% if attribute(filter_form,field_key) is defined %}
+												{% set nb_in_group = nb_in_group + 1 %}
+											{% endif %}
+										{% endfor %}
+										{% if nb_in_group >= 4 %}
+											{% set col_class_for_group_item = 'col-md-' ~ (12 / 4) %}
+										{% elseif nb_in_group > 0 %}
+											{% set col_class_for_group_item = 'col-md-' ~ (12 / nb_in_group) %}
+										{% else %}
+											{% set col_class_for_group_item = 'col-md-12' %}
+										{% endif %}
+										<div class='row'>
+											{% for field_key, field_options in fields_group if %}
+												{% if attribute(filter_form,field_key) is defined %}
+													{% set col_class_on_group_item = field_options.col_nb is defined ? 'col-md-' ~ field_options.col_nb : col_class_for_group_item %}
+													{% set before_group_item = field_options.preceded_around_by is defined ? field_options.preceded_by : "" %}
+													{% set after_group_item = field_options.followed_around_by is defined ? field_options.followed_by : "" %}
+													{% set extra_class_for_item_wrapper = field_options.extra_wrapper_class is defined ? field_options.extra_wrapper_class : "" %}
+													{% set precise_draw = false %}
+													{% for option_name in options_need_precise_draw if not precise_draw %}
+														{% set precise_draw = attribute(field_options,option_name) is defined ? true : false %}
+													{% endfor %}
+													{% set class_on_group_item = col_class_on_group_item ~ " " ~ extra_class_for_item_wrapper %}
+													{# {{ dump(field_key) }}
+													{{ dump(field_options) }}
+													{{ dump(options_need_precise_draw) }}
+													{{ dump(precise_draw) }} 
+													<div class="{{ class_on_group_item }}">
+														{{ before_group_item }}
+														{% if precise_draw %}
+															{% set before_item = field_options.preceded_by is defined ? field_options.preceded_by : "" %}
+															{% set after_item = field_options.followed_by is defined ? field_options.followed_by : "" %}
+															{% set label_extra_var = field_options.label_extra_var is defined ? field_options.label_extra_var : [] %}
+															{% set widget_extra_var = field_options.widget_extra_var is defined ? field_options.widget_extra_var : [] %}
+															<div class='form-group'>
+																{{ form_label(attribute(filter_form,field_key),label_extra_var) }}
+																{{ before_item }}
+																{{ form_widget(attribute(filter_form,field_key),widget_extra_var) }}
+																{{ after_item }}
+															</div>
+														{% else %}
+															{% set row_extra_var = field_options.row_extra_var is defined ? field_options.row_extra_var : [] %}
+															{{ form_row(attribute(filter_form,field_key),row_extra_var) }}
+														{% endif %}
+														{{ after_group_item }}
+													</div>
+												{% endif %}
+											{% endfor %}
+										</div>
+									{% endif %}
+								{% endfor %}
+							</{{ temp_tag }}>
+						{% endif %} #}
+					{% endfor %}
+					{{ form_rest(filter_form) }}
+					{# {% for item in filter_form %}
+						{{ form_row(item) }}
+					{% endfor %} #}
+					<div id='filter_form_footer' class='row'>
+						<input class='pull-right btn btn-primary' type='submit' value='Valider'/>
+					</div>
+				{{ form_end(filter_form) }}
+			</div>
+		</div>
+	</div>
+</section>

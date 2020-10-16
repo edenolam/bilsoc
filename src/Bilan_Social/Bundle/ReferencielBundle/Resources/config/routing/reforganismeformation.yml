@@ -1,0 +1,28 @@
+reforganismeformation_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefOrganismeFormation:index" }
+    methods:  GET
+
+reforganismeformation_show:
+    path:     /{idOrgaform}/show
+    defaults: { _controller: "ReferencielBundle:RefOrganismeFormation:show" }
+    methods:  GET
+
+reforganismeformation_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefOrganismeFormation:new" }
+    methods:  [GET, POST]
+
+reforganismeformation_edit:
+    path:     /{idOrgaform}/edit
+    defaults: { _controller: "ReferencielBundle:RefOrganismeFormation:edit" }
+    methods:  [GET, POST]
+
+reforganismeformation_delete:
+    path:     /{idOrgaform}/delete
+    defaults: { _controller: "ReferencielBundle:RefOrganismeFormation:delete" }
+    methods:  DELETE
+
+csv_export_reforganismeformation:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefOrganismeFormation:generateCsv" }

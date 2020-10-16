@@ -1,0 +1,63 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refsanctiondisciplinaire_index') }}">Retour à la liste</a>
+
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refSanctionDisciplinaire.cdSancdisc }}</td>
+                </tr>
+                <tr>
+                    <th>libellé</th>
+                    <td>{{ refSanctionDisciplinaire.lbSancdisc }}</td>
+                </tr>
+                <tr>
+                    <th>Sanction groupe 1</th>
+                    <td>{% if refSanctionDisciplinaire.bl614G1 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Sanction groupe 2</th>
+                    <td>{% if refSanctionDisciplinaire.bl614G2 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Sanction groupe 3</th>
+                    <td>{% if refSanctionDisciplinaire.bl614G3 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Sanction groupe 4</th>
+                    <td>{% if refSanctionDisciplinaire.bl614G4 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Sanction stagiaire</th>
+                    <td>{% if refSanctionDisciplinaire.bl614G5 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Sanction agent contractuel</th>
+                    <td>{% if refSanctionDisciplinaire.bl614G6 %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refSanctionDisciplinaire.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refSanctionDisciplinaire} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refsanctiondisciplinaire_edit', { 'idSancdisc': refSanctionDisciplinaire.idSancdisc }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+    {% endblock %}
+
+

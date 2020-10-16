@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefSanctionDisciplinaire" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefSanctionDisciplinaireRepository" table="ref_sanction_disciplinaire">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_SANC_DISC" name="cdSancdisc"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idSancdisc" type="integer" column="ID_SANC_DISC">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="lbSancdisc" type="string" column="LB_SANC_DISC" length="100" nullable="true"/>
+        <field name="cdSancdisc" type="string" column="CD_SANC_DISC" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+
+        <field name="bl614G1" type="boolean" column="BL_714_G1" nullable="false"/>
+        <field name="bl614G2" type="boolean" column="BL_714_G2" nullable="false"/>
+        <field name="bl614G3" type="boolean" column="BL_714_G3" nullable="false"/>
+        <field name="bl614G4" type="boolean" column="BL_714_G4" nullable="false"/>
+        <field name="bl614G5" type="boolean" column="BL_714_G5" nullable="false"/>
+        <field name="bl614G6" type="boolean" column="BL_714_G6" nullable="false"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+        <one-to-many field="SanctionDisciplinaire" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SanctionDisciplinaire" mapped-by="RefSanctionDisciplinaire">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="SanctionDisciplinaireStagiaire" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SanctionDisciplinaireStagiaire" mapped-by="RefSanctionDisciplinaire">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="SanctionDisciplinaireContractuel" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SanctionDisciplinaireContractuel" mapped-by="RefSanctionDisciplinaire">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        
+        
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+
+
+    </entity>
+</doctrine-mapping>

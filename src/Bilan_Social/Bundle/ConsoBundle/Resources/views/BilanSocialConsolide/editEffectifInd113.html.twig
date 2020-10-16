@@ -1,0 +1,271 @@
+
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+    {% if formEffectif113 is defined %}
+
+        {{ form_start(formEffectif113) }}
+
+        <h5>
+            Champ : le tableau qui suit concerne les agents fonctionnaires occupant un emploi permanent à temps complet et partiel, rémunérés au 31/12/{{AnneeCamp}}.
+        </h5>
+
+        <table width="100%" id="ind113Table" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2"></th>
+                    <th style="text-align: center">Temps partiel de droit</th>
+                    <th style="text-align: center">Temps partiel sur autorisation</th>
+                    <th class="filiTable" style="text-align: center">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for tag in formEffectif113.ind113s %}
+                    <tr idTrCate="{{tag.refCategorie.vars.value}}" id="113idTr_{{tag.refCategorie.vars.value}}-{{tag.fgGenr.vars.value}}">
+                        {% if loop.index % 2 %}
+                            <td id="categTd" rowspan="3" style="min-width: 200px; text-align: center">
+                                {{ form_widget(tag.refCategorie) }}
+                                Catégorie {{ tag.refCategorie.vars.data.lbCate }}
+                                <br/>
+                                <span class="alerteConso">[1.1.2] = {{ tag.vars.value.totalInd112 }}</span>
+                            </td>
+                            <td id="genre" val="{{tag.fgGenr.vars.value}}">
+                                {% if tag.fgGenr.vars.value == 'H' %}
+                                    Hommes
+                                {% endif %}
+                                {% if tag.fgGenr.vars.value == 'F' %}
+                                    Femmes
+                                {% endif %}
+                                {{ form_widget(tag.fgGenr) }}
+                            </td>
+                        {% else %}
+                            <td id="genre" val="{{tag.fgGenr.vars.value}}">
+                                {% if tag.fgGenr.vars.value == 'H' %}
+                                    Hommes
+                                {% endif %}
+                                {% if tag.fgGenr.vars.value == 'F' %}
+                                    Femmes
+                                {% endif %}
+                                {{ form_widget(tag.fgGenr) }}
+                                <div style="display: none">
+                                    {{ form_widget(tag.refCategorie) }}
+                                </div>
+                            </td>
+                        {% endif %}
+
+                        <td id="r1131">{{ form_widget(tag.r1131) }}</td>
+                        <td id="r1132">{{ form_widget(tag.r1132) }}</td>
+                        <td id="lineTot1" class="filiTable" style="text-align: center"></td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br/>
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formEffectif113) }}
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function ()
+            {
+                changeDetect = false;
+            {% if questionCollectiviteConsolide.q2 == true   %}
+
+
+                    var count113
+                    = {{formEffectif113.ind113s.count()}};
+                            for (var i = 0; i < count113; i++) {
+                        $('#bscForm_ind113s_' + i + '_refCategorie').hide();
+                        var tex = $('#bscForm_ind113s_' + i + '_refCategorie option:selected').text();
+                        $('#bscForm_ind113s_' + i + '_refCategorie').parent().append(tex);
+
+                        $('#bscForm_ind113s_' + i + '_fgGenr').parent().append($('#bscForm_ind113s_' + i + '_fgGenr').val() == "H" ? "Hommes" : "Femmes");
+                    }
+
+                    var table113 = document.getElementById('ind113Table');
+
+                    var rowLength113 = table113.rows.length;
+                    var idxRowCat = [];
+                    for (var i = 1; i < rowLength113; i += 1) {
+                        var row = table113.rows[i];
+
+                        var cellLength = row.cells.length;
+
+                        for (var y = 0; y < cellLength; y += 1) {
+                            var cell = row.cells[y];
+                            if (cell.id == "categTd") {
+                                idxRowCat.push(i);
+                            }
+                        }
+                    }
+                    var idx = 2;
+                    for (var i in idxRowCat) {
+                        var row = table113.insertRow(idxRowCat[i] + idx);
+                        row.id = "total_" + idxRowCat[i] + idx;
+                        var cell1 = row.insertCell(0);
+                        cell1.innerHTML = "Total";
+                        cell1.setAttribute("style", "text-align: center; background-color: #BABABA;");
+                        var cell2 = row.insertCell(1);
+                        cell2.innerHTML = "0";
+                        cell2.setAttribute("style", "text-align: center; background-color: #BABABA;");
+                        cell2.id = "mt1_row" + idxRowCat[i] + idx;
+                        var cell3 = row.insertCell(2);
+                        cell3.innerHTML = "0";
+                        cell3.setAttribute("style", "text-align: center; background-color: #BABABA;");
+                        cell3.id = "mt2_row" + idxRowCat[i] + idx;
+                        var cell4 = row.insertCell(3);
+                        cell4.innerHTML = "0";
+                        cell4.setAttribute("style", "text-align: center; background-color: #BABABA;");
+                        cell4.id = "mtline_row_" + idxRowCat[i] + idx;
+                        idx++;
+                    }
+                    $(document).change();
+                    update113();
+
+
+            {% endif %}
+                });
+
+                function changedR113(obj) {
+                    update113(false);
+                }
+
+                function update113() {
+                    var table113 = document.getElementById('ind113Table');
+
+                    var rowLength113 = table113.rows.length;
+                    var idxRowInput = 0;
+                    var mtTot1 = 0;
+                    var mtTot2 = 0;
+
+                    for (var i = 1; i < rowLength113; i += 1) {
+                        // contenu de la ligne entière
+                        var row = table113.rows[i];
+                        // nombre de cellule sur la ligne
+                        var cellLength = row.cells.length;
+
+                        var lineTotal = false;
+                        var lineTot = 0;
+                        if (row.id.substring(0, 5) == "total") {
+                            lineTotal = true;
+
+                            for (var y = 0; y < cellLength; y += 1) {
+                                var cell = row.cells[y];
+                                if (y == 1) {
+                                    cell.innerHTML = mtTot1;
+                                    lineTot += mtTot1;
+                                    mtTot1 = 0;
+                                } else if (y == 2) {
+                                    cell.innerHTML = mtTot2;
+                                    lineTot += mtTot2;
+                                    mtTot2 = 0;
+                                } else if (y > 2) {
+                                    cell.innerHTML = lineTot;
+                                }
+                            }
+                        }
+                        lineTot = 0;
+                        for (var y = 0; y < cellLength; y += 1) {
+                            var cell = row.cells[y];
+                            if (cell.id.substring(0, 5) == "r1131") {
+                                if ($('#bscForm113_ind113s_' + idxRowInput + '_r1131').val() != "") {
+                                    mtTot1 += parseInt($('#bscForm113_ind113s_' + idxRowInput + '_r1131').val());
+                                    lineTot += parseInt($('#bscForm113_ind113s_' + idxRowInput + '_r1131').val());
+                                }
+                            } else if (cell.id.substring(0, 5) == "r1132") {
+                                if ($('#bscForm113_ind113s_' + idxRowInput + '_r1132').val() != "") {
+                                    mtTot2 += parseInt($('#bscForm113_ind113s_' + idxRowInput + '_r1132').val());
+                                    lineTot += parseInt($('#bscForm113_ind113s_' + idxRowInput + '_r1132').val());
+                                }
+                            } else if (cell.id.substring(0, 7) == "lineTot") {
+                                cell.innerHTML = lineTot;
+                            }
+                        }
+
+                        if (!lineTotal)
+                            idxRowInput++;
+                    }
+                }
+
+
+
+
+
+                /*
+                 * METHODE AJAX SUBMIT
+                 */
+                $(function () {
+                    // Enregistrement en ajax
+                    $('form').on('submit', function (e) {
+                        var $this = $(this).closest('div');
+                        var btn = $(this).find("input[type=submit]:focus");
+                        var value_valide = $(btn).data('valide');
+                        $('#bscForm113_valide').val(value_valide);
+                        // Submit en ajax pour le fonctionnement d'appel par onglet
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ path('bilan_conso_effectif_ind113_edit') }}',
+                            data: $('form').serialize(),
+                            success: function (responsejson) {
+                                if (responsejson.data == 1) {
+                                    if (recordAuto) {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement automatique réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+                                    } else {
+                                        $('#ind113').load('{{ path('bilan_conso_effectif_ind113_edit') }}', function () {
+                                            $('#progImg').hide();
+                                            $('#messageJS').html("Enregistrement réussi");
+                                            messageJS.dialog("open");
+                                            setIncoherenceTable(responsejson);
+
+                                            var next = $($this).next('.panel-heading');
+                                            if(next.length == 0) {
+                                                window.location.href = '{{ path('bilan_conso_mouv_edit') }}';
+                                            }
+                                        });
+
+                                    }
+                                } else if (responsejson.data == "-3") {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                    messageJS.dialog("open");
+                                } else {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                    messageJS.dialog("open");
+                                }
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(xhr);
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                                messageJS.dialog("open");
+                            }
+
+                        });
+
+                    });
+
+                });
+
+        </script>
+    {% endif %}

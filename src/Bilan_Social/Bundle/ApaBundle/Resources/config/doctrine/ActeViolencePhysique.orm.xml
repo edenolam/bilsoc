@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\ActeViolencePhysique" table="acte_violence_physique">
+        <indexes>
+            <index name="FK_ACTEVIOLENCEPHYSIQUE_INFOCOLLAGENT" columns="ID_INFOCOLLAGEN"/>
+            <index name="FK_ACTEVIOLENCEPHYSIQUE_REFACTEVIOLPHYS" columns="ID_ACTEVIOLPHYS"/>
+        </indexes>
+        <id name="idViolphsy" type="integer" column="ID_VIOLPHSY">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationColectiviteAgent" inversed-by="ActeViolencePhysique">
+            <join-column name="ID_INFOCOLLAGEN" referenced-column-name="ID_INFOCOLLAGEN" />
+        </many-to-one>
+        <many-to-one field="RefActeViolencePhysique" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefActeViolencePhysique" inversed-by="ActeViolencePhysique">
+            <join-column name="ID_ACTEVIOLPHYS" referenced-column-name="ID_ACTEVIOLPHYS"/>
+        </many-to-one>
+        <field name="r5311" type="integer" column="R_5311" nullable="true"/>
+        <field name="r5312" type="integer" column="R_5312" nullable="true"/>
+        <field name="r4313" type="integer" column="R_4313" nullable="true"/>
+        <field name="r4314" type="integer" column="R_4314" nullable="true"/>
+        <field name="r4315" type="integer" column="R_4315" nullable="true"/>
+        <field name="r4316" type="integer" column="R_4316" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

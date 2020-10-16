@@ -1,0 +1,17 @@
+{% extends '@Collectivite/layout.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/collectivite.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+{% endblock %}
+{% block header %}
+
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+{% endblock %}

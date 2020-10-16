@@ -1,0 +1,149 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('input,select').removeAttr('disabled');
+            $('input,select').removeAttr('readonly');
+            $('.toggle-bs').bootstrapToggle({
+                on: 'Oui',
+                off: 'Non'
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                    <li><a href="#">Collectivités</a></li>
+                    <li class="active">Validation de la création d'une collectivité</li>
+            </ol>
+        </div>
+        <h3>Valider la création d'une collectivité</h3>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if collectivite is defined and form is defined %}
+            {{ form_start(form) }}
+            <table class="table table-hover align-center" id="table-modif-coll">
+                <thead>
+                    <tr>
+                        <th>Champ</th>
+                        <th>Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ form_label(form.nmSire) }}</td>
+                        <td>{{ form_widget(form.nmSire) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.lbColl) }}</td>
+                        <td>{{ form_widget(form.lbColl) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.lbAdre) }}</td>
+                        <td>{{ form_widget(form.lbAdre) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.cdPost) }}</td>
+                        <td>{{ form_widget(form.cdPost) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.lbVill) }}</td>
+                        <td>{{ form_widget(form.lbVill) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.departement) }}</td>
+                        <td>{{ form_widget(form.departement) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.refTypeCollectivite) }}</td>
+                        <td>{{ form_widget(form.refTypeCollectivite) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.cdInse) }}</td>
+                        <td>{{ form_widget(form.cdInse) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.nmPopuInse) }}</td>
+                        <td>{{ form_widget(form.nmPopuInse) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.dtPopuInse) }}</td>
+                        <td>{{ form_widget(form.dtPopuInse) }}</td>
+                    </tr>
+                   {# <tr>
+                        <td>{{ form_label(form.nmSurclasDemo) }}</td>
+                        <td>{{ form_widget(form.nmSurclasDemo) }}</td>
+                    </tr>#}
+                    <tr>
+                        <td><label>La collectivité est-elle affiliée au CDG ?</label></td>
+                        <td>{{ form_widget(form.blAffiColl) }}</td>
+                    </tr>
+                    <tr>
+                        <td><label>La collectivité est-elle rattachée au comité technique (CT) du CDG ?</label></td>
+                        <td>{{ form_widget(form.blCtCdg) }}</td>
+                    </tr>
+                    <tr>
+                        <td><label>La collectivité a-t-elle son propre CHSCT ?</label></td>
+                        <td>{{ form_widget(form.blChsct) }}</td>
+                    </tr>
+                    <tr>
+                        <td><label>La collectivité fait-elle partie de l’échantillon de la DGCL ?</label></td>
+                        <td>{{ form_widget(form.blCollDgcl) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.lbZoneEmplColl) }}</td>
+                        <td>{{ form_widget(form.lbZoneEmplColl) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.nmSireRata) }}</td>
+                        <td>{{ form_widget(form.nmSireRata) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.cmInfoComp) }}</td>
+                        <td>{{ form_widget(form.cmInfoComp) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.cmMoti) }}</td>
+                        <td>{{ form_widget(form.cmMoti) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            
+            
+            <div>
+                <button type='button' id="valider" class="btn btn-primary pull-right reponse-crea">Valider</button>
+                <button type='button' id="refuser" class="btn button-tableau pull-right reponse-crea">Refuser</button>
+            </div>
+            <input type="hidden" id="idColl" value="{{ collectivite.idColl }}">
+            {{ form_end(form) }}
+        {% else %}
+            <p>Il n'y a pas de demande de création de collectivité associée à cet id.</p>
+        {% endif %}
+    </div>
+{% endblock %}

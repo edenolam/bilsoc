@@ -1,0 +1,421 @@
+
+    {% if formEffectif161 is defined %}
+        {% set bilan_social_consolide = formEffectif161.vars.data %}
+
+        {% if indicateur_precedent is defined and indicateur_precedent is not null %}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/btn_modal.html.twig', { 'indicateur_precedent': indicateur_precedent['ind_161'], 'name' : 161 }) }}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/modal_161.html.twig', { 'indicateur_precedent': indicateur_precedent }) }}
+        {% endif %}
+
+        {{ form_start(formEffectif161) }}
+        {{ form_row(formEffectif161.q161) }}
+
+        <div id="ind161b" style="display: none;">
+
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true  %}
+
+            <h5>
+               Champ : le tableau qui suit concerne les agents fonctionnaires occupant un emploi permanent à  temps complet et partiel
+            </h5>
+
+            <table width="100%" id="ind161Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr entete="1">
+                        <th ></th>
+                        {% if questionCollectiviteConsolide.q2 == true %}
+                        <th colspan="3" style="text-align: center">Titulaires et stagiaires</th>
+                        {% endif %}
+                        {% if questionCollectiviteConsolide.q4 == true %}
+                        <th colspan="3" style="text-align: center">Contractuels sur emploi permanent</th>
+                        <th class="filiTable" rowspan="2" style="text-align: center">Total</th>
+                        {% endif %}
+                    </tr>
+
+                    <tr entete="1">
+                        <th style="text-align: center">Catégorie hiérarchique</th>
+                        {% if questionCollectiviteConsolide.q2 == true %}
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        {% endif %}
+                        {% if questionCollectiviteConsolide.q4 == true %}
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formEffectif161.ind161s %}
+                    {% set row_data = tag.vars.value %}
+                    {% set total_row_tit_stag= row_data.r1611 + row_data.r1612 %}
+                    {% set total_row_contract = row_data.r1613 + row_data.r1614 %}
+                    {% set total_row= total_row_tit_stag + total_row_contract %}
+                    <tr idTrCate="{{tag.refCategorie.vars.value}}" id="161idTr_{{tag.refCategorie.vars.value}}">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            {{ tag.refCategorie.vars.data.lbCate }}
+                            {{ form_widget(tag.refCategorie) }}
+                        </td>
+                        {% if questionCollectiviteConsolide.q2 == true %}
+                            <td data-col-group="total_row_tit_stag1">{{ form_widget(tag.r1611) }}</td>
+                            <td data-col-group="total_row_tit_stag1">{{ form_widget(tag.r1612) }}</td>
+                            <td data-col-id="total_row_tit_stag1" data-col-group="total_row" class="filiTable">{{ total_row_tit_stag }}</td>
+                        {% else %}
+                            <td style="display:none" data-col-group="total_row_tit_stag2">{{ form_widget(tag.r1611) }}</td>
+                            <td style="display:none" data-col-group="total_row_tit_stag2">{{ form_widget(tag.r1612) }}</td>
+                            <td data-col-id="total_row_tit_stag2" style="display:none" data-col-group="total_row" class="filiTable">{{ total_row_tit_stag }}</td>
+                        {% endif %}
+                        {% if questionCollectiviteConsolide.q4 == true %}
+                            <td data-col-group="total_row_contract1">{{ form_widget(tag.r1613) }}</td>
+                            <td data-col-group="total_row_contract1">{{ form_widget(tag.r1614) }}</td>
+                            <td data-col-id="total_row_contract1" data-col-group="total_row" class="filiTable">{{ total_row_contract }}</td>
+                        {% else %}
+                            <td style="display:none" data-col-group="total_row_contract2">{{ form_widget(tag.r1613) }}</td>
+                            <td style="display:none" data-col-group="total_row_contract2">{{ form_widget(tag.r1614) }}</td>
+                            <td data-col-id="total_row_contract2" style="display:none" data-col-group="total_row" class="filiTable">{{ total_row_contract }}</td>
+                        {% endif %}
+                        <td data-col-id="total_row" class="filiTable">{{ total_row }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="filiTable row_totaux" id="totalFilGlo">
+                    {% set total_ind = bilan_social_consolide.getIndPileForBy('ind161s') %}
+                    {% set total_ind_tit_stag= total_ind.r1611 + total_ind.r1612 %}
+                    {% set total_ind_contract= total_ind.r1613 + total_ind.r1614 %}
+                    {% set total_ind_tot = total_ind_tit_stag + total_ind_contract %}
+                    <th class="filiTable" style="text-align: center">Total</th>
+                    {% if questionCollectiviteConsolide.q2 == true %}
+                        <td class="filiTable" style="text-align: center" data-col-group='total_row_tit_stag'>{{ total_ind.r1611 }}</td>
+                        <td class="filiTable" style="text-align: center" data-col-group='total_row_tit_stag'>{{ total_ind.r1612 }}</td>
+                        <td class="filiTable" style="text-align: center" data-col-id='total_row_tit_stag' data-col-group='total_ind_tot'>{{ total_ind_tit_stag }}</td>
+                    {% endif %}
+                    {% if questionCollectiviteConsolide.q4 == true %}
+                        <td class="filiTable" style="text-align: center" data-col-group='total_row_contract'>{{ total_ind.r1613 }}</td>
+                        <td class="filiTable" style="text-align: center" data-col-group='total_row_contract'>{{ total_ind.r1614 }}</td>
+                        <td class="filiTable" style="text-align: center" data-col-id='total_row_contract' data-col-group='total_ind_tot'>{{ total_ind_contract }}</td>
+                    {% endif %}
+                    <td class="filiTable" style="text-align: center" data-col-id='total_ind_tot'>{{ total_ind_tot }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            {% endif %}
+
+            {% if questionCollectiviteConsolide.q6 == true  %}
+            <table width="100%" id="ind1612Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr entete="1">
+                        <th colspan="6">Contractuels sur emploi NON permanent</th>
+                    </tr>
+                    <tr entete="1">
+                        <th colspan="3" style="text-align: center">TOTAL</th>
+                        <th colspan="3" style="text-align: center">Dont apprentis</th>
+                    </tr>
+
+                    <tr entete="1">
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formEffectif161.ind1612s %}
+                    {% set row_data = tag.vars.value %}
+                    {% set total_row_1 = row_data.r16121 + row_data.r16122 %}
+                    {% set total_row_2 = row_data.r16123 + row_data.r16124 %}
+                    <tr id="1612idTr">
+                        <td id="r16121" data-col-group="total_row_TOTAL">{{ form_widget(tag.r16121) }}</td>
+                        <td id="r16122" data-col-group="total_row_TOTAL">{{ form_widget(tag.r16122) }}</td>
+                        <td id="r16122" class="filiTable" data-col-id="total_row_TOTAL">{{ total_row_1 }}</td>
+                        <td id="r16123" data-col-group="total_row_DONT">{{ form_widget(tag.r16123) }}</td>
+                        <td id="r16124" data-col-group="total_row_DONT">{{ form_widget(tag.r16124) }}</td>
+                        <td id="r16124" class="filiTable" data-col-id="total_row_DONT">{{ total_row_2 }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            {% else %}
+                <div style="display:none">
+                    {% for tag in formEffectif161.ind1612s %}
+                        {{ form_widget(tag.r16121) }}
+                        {{ form_widget(tag.r16122) }}
+                        {{ form_widget(tag.r16123) }}
+                        {{ form_widget(tag.r16124) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+        </div>
+        
+        <br/>
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formEffectif161) }}
+
+
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true  %}
+
+                $(document).change();
+
+                {% include 'stickyheader.txt' %}
+                getBrowserSetSticky(ind161Table);
+
+                function initForm161() {
+                    var q161Res = $('input[name="bscForm161[q161]"]').filter(':checked').val();
+
+                    if (q161Res == "1") {
+                        $('#ind161b').show();
+                    } else {
+                        $('#ind161b').hide();
+                    }
+
+                }
+
+                initForm161();
+                $("#bscForm161_q161").on("click", function () {
+                    initForm161();
+                });
+
+                // putSelectOnText161('ind161s', 'refCategorie');
+
+                {#var count161 = {{formEffectif161.ind161s.count()}};#}
+                {#for (var i = 0; i < count161; i++) {#}
+                {#    $('#bscForm_ind161s_'+i+'_refCategorie').hide();#}
+                {#    var tex = $('#bscForm_ind161s_'+i+'_refCategorie option:selected').text();#}
+                {#    $('#bscForm_ind161s_'+i+'_refCategorie').parent().append(tex);#}
+
+                {#    $('#bscForm_ind161s_'+i+'_fgGenr').parent().append( $('#bscForm_ind161s_'+i+'_fgGenr').val() == "H" ? "Hommes" : "Femmes"  );#}
+                {#}#}
+
+                {#var table161 = document.getElementById('ind161Table');#}
+
+                // var rowLength161 = table161.rows.length;
+                // var idxRowCat = [];
+                // for(var i=1; i<rowLength161; i+=1){
+                //     var row = table161.rows[i];
+                //
+                //     var cellLength = row.cells.length;
+                //
+                //     for(var y=0; y<cellLength; y+=1){
+                //         var cell = row.cells[y];
+                //         if(cell.id=="categTd") {
+                //             idxRowCat.push(i);
+                //         }
+                //     }
+                // }
+
+                // update161();
+
+
+            {% endif %}
+        });
+
+        // function changedR161(obj) {
+        //     update161(false);
+        // }
+        //
+        // function update161(){
+        //     var table161 = document.getElementById('ind161Table');
+        //
+        //     var rowLength161 = table161.rows.length;
+        //     var idxRowInput = 0;
+        //
+        //     var mtTot1 = 0;
+        //     var mtTot2 = 0;
+        //     var mtTot3 = 0;
+        //     var mtTot4 = 0;
+        //
+        //
+        //     var mtTot1FilGlo = 0;
+        //     var mtTot2FilGlo = 0;
+        //     var mtTot3FilGlo = 0;
+        //     var mtTot4FilGlo = 0;
+        //
+        //
+        //     for(var i=0; i<rowLength161; i+=1){
+        //         var row = table161.rows[i];
+        //
+        //         if(row.getAttribute("entete") != undefined && row.getAttribute("entete") == "1") {
+        //             continue;
+        //         }
+        //
+        //         var cellLength = row.cells.length;
+        //
+        //         var lineTotalFilGlo = false;
+        //
+        //
+        //         if(row.id.substring(0, 11)=="totalFilGlo") {
+        //             lineTotalFilGlo = true;
+        //
+        //             for(var y=0; y<cellLength; y+=1){
+        //                 var cell = row.cells[y];
+        //                 if(y==1) {
+        //                     cell.innerHTML = mtTot1FilGlo;
+        //                     mtTot1FilGlo = 0;
+        //                 }
+        //                 else if(y==2) {
+        //                     cell.innerHTML = mtTot2FilGlo;
+        //                     mtTot2FilGlo = 0;
+        //                 }
+        //                 else if(y==3) {
+        //                     cell.innerHTML = mtTot3FilGlo;
+        //                     mtTot3FilGlo = 0;
+        //                 }
+        //                 else if(y==4) {
+        //                     cell.innerHTML = mtTot4FilGlo;
+        //                     mtTot4FilGlo = 0;
+        //                 }
+        //
+        //             }
+        //         }
+        //
+        //         for(var y=0; y<cellLength; y+=1){
+        //             var cell = row.cells[y];
+        //
+        //             if(cell.id.substring(0, 5)=="r1611") {
+        //                 if($('#bscForm161_ind161s_'+idxRowInput+'_r1611').val()!="") {
+        //                     mtTot1 += parseInt($('#bscForm161_ind161s_'+idxRowInput+'_r1611').val());
+        //                     mtTot1FilGlo += parseInt($('#bscForm161_ind161s_'+idxRowInput+'_r1611').val());
+        //                 }
+        //             }
+        //             else if(cell.id.substring(0, 5)=="r1612") {
+        //                 if($('#bscForm161_ind161s_'+idxRowInput+'_r1612').val()!="") {
+        //                     mtTot2 += parseInt($('#bscForm161_ind161s_'+idxRowInput+'_r1612').val());
+        //                     mtTot2FilGlo += parseInt($('#bscForm161_ind161s_'+idxRowInput+'_r1612').val());
+        //                 }
+        //             }
+        //             else if(cell.id.substring(0, 5)=="r1613") {
+        //                 if($('#bscForm161_ind161s_'+idxRowInput+'_r1613').val()!="") {
+        //                     mtTot3 += parseInt($('#bscForm161_ind161s_'+idxRowInput+'_r1613').val());
+        //                     mtTot3FilGlo += parseInt($('#bscForm161_ind161s_'+idxRowInput+'_r1613').val());
+        //                 }
+        //             }
+        //             else if(cell.id.substring(0, 5)=="r1614") {
+        //                 if($('#bscForm161_ind161s_'+idxRowInput+'_r1614').val()!="") {
+        //                     mtTot4 += parseInt($('#bscForm161_ind161s_'+idxRowInput+'_r1614').val());
+        //                     mtTot4FilGlo += parseInt($('#bscForm161_ind161s_'+idxRowInput+'_r1614').val());
+        //                 }
+        //             }
+        //
+        //         }
+        //
+        //         if(!lineTotalFilGlo) idxRowInput++;
+        //     }// end for line
+        // }
+
+
+
+        /**
+         * Symfony met les entity many to one en select
+         *       - Impossibilité de mettre en dsabled car à  l'envoi du form, no ne récup plus la valeur du référentiel
+         * => Solution temporaire :
+         *       - Cacher le select de l'entity référentiel
+         *       - récupérer le text sélectionné par défaut du référentiel
+         *       - ajouter ce texte à  la colonne du tab correpondant
+         */
+        function putSelectOnText161(listName, referentielName, withCompl, withNoLibelle) {
+            var count = $('#bscForm161_' + listName + '_0_' + referentielName + ' option').length;
+
+            for (var i = 0; i <= count; i++) {
+                $('#bscForm161_' + listName + '_' + i + '_' + referentielName + '').hide();
+
+                if (withNoLibelle == undefined) {
+                    var val = $('#bscForm161_' + listName + '_' + i + '_' + referentielName + ' option:selected').val();
+                    var tex = $('#bscForm161_' + listName + '_' + i + '_' + referentielName + ' option:selected').text();
+                    $('#bscForm161_'+listName+'_'+i+'_'+referentielName+'').parent().append('Catégorie ' + tex);
+                }
+
+                if (withCompl != undefined) {
+                    //$('#bscForm112_'+listName+'_'+i+'_'+referentielName+'').parent().append(' '
+                    //   + '<span id="bscForm112_'+listName+'_'+i+'_'+referentielName+'_'+val+'"></span>');
+                }
+            }
+        }
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var q161Res = $('input[name="bscForm161[q161]"]').filter(':checked').val();
+                var Res161Status = checkIfZeroOrNull(q161Res, 'ind161b', 'ind161b');
+                var value_valide = $(btn).data('valide');
+                $('#bscForm161_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+                if (Res161Status == true) {
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ path('bilan_conso_effectif_ind161_edit') }}',
+                        data: $('form').serialize(),
+                        success: function (responsejson) {
+                            if (responsejson.data == 1) {
+                                if (recordAuto) {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement automatique réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+                                } else {
+                                    $('#ind161').load('{{ path('bilan_conso_effectif_ind161_edit') }}', function () {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                        var next = $($this).next('.panel-heading');
+                                        if(next.length == 0) {
+                                            window.location.href = '{{ path('bilan_conso_tpstrav_edit') }}';
+                                        }
+                                    });
+
+                                }
+                            } else if (responsejson.data == "-3") {
+                                $('#progImg').hide();
+                                $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                messageJS.dialog("open");
+                            } else {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                messageJS.dialog("open");
+                            }
+
+
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(xhr);
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                            messageJS.dialog("open");
+                        }
+
+                    });
+                } else {
+                    $('#progImg').hide();
+                }
+
+            });
+
+        });
+
+        </script>
+    {% endif %}

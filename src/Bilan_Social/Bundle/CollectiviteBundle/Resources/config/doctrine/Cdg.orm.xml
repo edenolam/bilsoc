@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\Cdg" repository-class="Bilan_Social\Bundle\CollectiviteBundle\Repository\CdgRepository" table="cdg">
+        <id name="idCdg" type="integer" column="ID_CDG">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="lbCdg" type="string" column="LB_CDG" length="150" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="nmCdg" type="string" column="NM_CDG" length="10" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+<!--        <field name="lbUrlmap" type="string" column="LB_URLMAP" length="500" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>-->
+        <field name="pathLogo" type="string" column="Chemin_Logo" length="70" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="nameLogo" type="string" column="Nom_Logo" length="70" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="blAffiespaanal" type="boolean" column="BL_AFFIESPAANAL" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="fileKey" type="string" column="fileKey" length="255" nullable="true"/>
+
+        <!--<one-to-many field="enquetes" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete" mapped-by="cdg" />-->
+
+        <one-to-many field="cdgUtilisateurs" mapped-by="cdg" target-entity="Bilan_Social\Bundle\UserBundle\Entity\UtilisateurCdg"/>
+
+        <one-to-many field="cdgDepartements" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\CdgDepartement" mapped-by="cdg" />
+
+        <one-to-many field="cdgModelMails" target-entity="Bilan_Social\Bundle\ModelMailBundle\Entity\ModelMailCdg" mapped-by="idCdg" />
+        
+        <one-to-many field="cdgModelMailInterneApplis" target-entity="Bilan_Social\Bundle\ModelMailBundle\Entity\ModelMailInterneAppliCdg" mapped-by="idCdg" />
+
+        <one-to-many field="contacts" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\CdgContact" mapped-by="cdg">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <many-to-many field="actualites" mapped-by="cdgs" target-entity="Bilan_Social\Bundle\ActualiteBundle\Entity\Actualite"/>
+        <one-to-many field="messagePassword" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\MessagePassword" mapped-by="cdg">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="modeleAnalyse" target-entity="Bilan_Social\Bundle\AnalyseBundle\Entity\ModeleAnalyse" mapped-by="cdg">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="demandeAnalyse" target-entity="Bilan_Social\Bundle\AnalyseBundle\Entity\DemandeAnalyse" mapped-by="cdg">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

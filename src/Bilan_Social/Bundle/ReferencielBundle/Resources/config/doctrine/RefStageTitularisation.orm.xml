@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStageTitularisation" table="ref_stage_titularisation" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefStageTitularisationRepository">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_STAGTITU" name="cdStagtitu"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idStagtitu" type="integer" column="ID_STAGTITU">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdStagtitu" type="string" column="CD_STAGTITU" length="50" nullable="true"/>
+        <field name="lbStagtitu" type="string" column="LB_STAGTITU" length="255" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refStageTitularisation" />
+    </entity>
+</doctrine-mapping>

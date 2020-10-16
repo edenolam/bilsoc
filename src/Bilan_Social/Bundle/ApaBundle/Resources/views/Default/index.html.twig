@@ -1,0 +1,53 @@
+{% extends '@Apa/layout.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+        {% if (EnqueteCollectiviteparam.blBilasoci == true or (EnqueteCollectiviteparam.blBilasoci == false and (EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blHand == true))) %} 
+            createBtpModal("debut","Bienvenue","<p>Débutez la saisie par les rubriques Informations générales et Informations collectivité</p> <img src='{{ asset('img/debut_apa_image_modal.jpg') }}' alt='debut saisie agent par agent' class='center-block'/> <p>Vous pouvez commencer dans l'ordre que vous souhaitez et vous serez guidé après chaque enregistrement.</p>");   
+        {% elseif (EnqueteCollectiviteparam.blBilasoci == false and (EnqueteCollectiviteparam.blRast == false and EnqueteCollectiviteparam.blHand == false and EnqueteCollectiviteparam.blGepe == true)) %}
+            createBtpModal("debut","Bienvenue","<p>Votre bilan a bien été initialisé.</p><p>Vous pouvez dès à présent saisir vos agents.</p>");   
+        {% endif %}
+        createBtpModal("collectivite","Enregistrement réussi.","<p>Les données des informations générales ont bien été enregistrées.</p><p> Veuillez renseigner les informations collectivité. </p>");   
+        createBtpModal("generale","Enregistrement réussi.","<p>Les données des informations collectivité ont bien été enregistrées.</p><p> Veuillez renseigner les informations générales. </p>");   
+        createBtpModal("termine","Enregistrement réussi.","<p>Les données des informations générales et des informations collectivité ont bien été enregistrées.</p><p> Vous pouvez dès à présent saisir vos agents.</p>",{
+            buttons:[
+                {
+                    lbl:sfTrans("modal.btn.oupsNon"),
+                    attr:{
+                        class:"btn btn-secondary"
+                    },
+                    extra:{
+                       dismiss:"modal" 
+                    },
+                },{
+                    lbl:sfTrans("modal.btn.validerBilan"),
+                    attr:{
+                        class:"btn btn-primary"
+                    },
+                    callbacks:{
+                        click:function(){
+                            window.location.href = Routing.generate('bilansocialagent_index');
+                        }
+                    }
+                }
+            ]
+        });
+         var modal_questionnaire = {{questionnaire}}
+            if(modal_questionnaire == 2){
+                $('#generale').modal("show");
+            }else if(modal_questionnaire == 1){
+                 $('#collectivite').modal("show");
+            }else if(modal_questionnaire == 3){
+                 $('#termine').modal({backdrop: 'static', keyboard: false});
+            }else if(modal_questionnaire == 0){
+               $('#debut').modal("show");
+            }
+        });
+    </script>
+
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+{% endblock %}

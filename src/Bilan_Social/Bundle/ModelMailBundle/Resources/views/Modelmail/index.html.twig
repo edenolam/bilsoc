@@ -1,0 +1,56 @@
+{% extends '@ModelMail/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li class="active"><a href="{{ path('modelmail_index') }}">Gestion des modèles de mails</a></li>
+            </ol>
+        </div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h3>Liste des modèles de mails <a href="{{ path('modelmail_new') }}"><button class="btn button-tableau pull-right">Créer un modèle de mail</button></a></h3>
+        <hr>
+        <table class="table table-hover" id="table-modelmail">
+            <thead>
+                <tr>
+
+                    <th>Objet</th>
+
+                    <th>Actif</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for modelmail in modelmails %}
+                    <tr>
+                        {#                        <td><a href="{{ path('modelmail_show', { 'id': modelmail.id }) }}">{{ modelmail.slug }}</a></td>#}
+                        <td>{{ modelmail.objet }}</td>
+                        {#<td>{{ modelmail.body }}</td>#}
+                        <td>{% if modelmail.blVali %}Oui{% else %}Non{% endif %}</td>
+                        <td>
+                            <a href="{{ path('modelmail_show', { 'id': modelmail.id }) }}"><button class="btn button-tableau btn-outline btn-sm">Afficher</button></a>
+
+                            <a href="{{ path('modelmail_edit', { 'id': modelmail.id }) }}"><button class="btn button-tableau btn-outline btn-sm">Modifier</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

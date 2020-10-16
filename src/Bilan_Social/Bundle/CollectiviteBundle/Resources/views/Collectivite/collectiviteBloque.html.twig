@@ -1,0 +1,76 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg|raw }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if collectivite is not null and collectivite is not empty %}
+
+            <table class="table table-striped">
+                <thead>
+                <th>Raison sociale</th>
+                <th>Numéro de siret</th>
+                <th>Nombre d'erreur de connexion</th>
+                <th>Bloqué</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                    {% for CollectiviteBloque in collectivite %}
+                        {% set droit = attribute(droitsCdg, CollectiviteBloque.collectivite.idColl) %}
+                        <tr>
+                            <td>
+                                {{ CollectiviteBloque.collectivite.lbColl}}
+                            </td>
+                            <td>
+                                {{ CollectiviteBloque.username}}
+                            </td>
+                            <td>
+                                {{ CollectiviteBloque.nmErreconn }}
+                            </td>
+                            <td>
+                                {% if CollectiviteBloque.FgBlocage is not same as(0)  %}Oui{% else %} Non {% endif%}
+                            </td>
+
+                            <td>
+                                {% if droit == 'write' %}
+{#                                    <a href="{{ path('unlock_Account', { 'idUtil': CollectiviteBloque.idUtil }) }}">Débloquer</a>#}
+                                    <button class="btn unlockCollectivite" value='{{CollectiviteBloque.idUtil}}'>Débloquer</button>
+                                {% else %}
+                                    <p style='color: #a94442;margin:0;'>Vous n'avez pas les droits pour débloquer cette collectivité.</p>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+
+
+                <tbody>
+
+
+            </table>
+
+        {%else%}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Aucune collectivité n'est bloquée</p>
+            </div>
+
+        {% endif %}
+
+
+    </div>
+{% endblock %}

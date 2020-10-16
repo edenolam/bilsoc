@@ -1,0 +1,28 @@
+refdomainespecialite_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefDomaineSpecialite:index" }
+    methods:  GET
+
+refdomainespecialite_show:
+    path:     /{idDomaineSpecialite}/show
+    defaults: { _controller: "ReferencielBundle:RefDomaineSpecialite:show" }
+    methods:  GET
+
+refdomainespecialite_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefDomaineSpecialite:new" }
+    methods:  [GET, POST]
+
+refdomainespecialite_edit:
+    path:     /{idDomaineSpecialite}/edit
+    defaults: { _controller: "ReferencielBundle:RefDomaineSpecialite:edit" }
+    methods:  [GET, POST]
+
+refdomainespecialite_delete:
+    path:     /{idDomaineSpecialite}/delete
+    defaults: { _controller: "ReferencielBundle:RefDomaineSpecialite:delete" }
+    methods:  DELETE
+
+csv_export_refdomainespecialite:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefDomaineSpecialite:generateCsv" }

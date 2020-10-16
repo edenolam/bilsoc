@@ -1,0 +1,28 @@
+refnaturehandicapboeth_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefNatureHandicapBoeth:index" }
+    methods:  GET
+
+refnaturehandicapboeth_show:
+    path:     /{idNathandiboeth}/show
+    defaults: { _controller: "ReferencielBundle:RefNatureHandicapBoeth:show" }
+    methods:  GET
+
+refnaturehandicapboeth_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefNatureHandicapBoeth:new" }
+    methods:  [GET, POST]
+
+refnaturehandicapboeth_edit:
+    path:     /{idNathandiboeth}/edit
+    defaults: { _controller: "ReferencielBundle:RefNatureHandicapBoeth:edit" }
+    methods:  [GET, POST]
+
+refnaturehandicapboeth_delete:
+    path:     /{idNathandiboeth}/delete
+    defaults: { _controller: "ReferencielBundle:RefNatureHandicapBoeth:delete" }
+    methods:  DELETE
+
+csv_export_refnaturehandicapboeth:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefNatureHandicapBoeth:generateCsv" }

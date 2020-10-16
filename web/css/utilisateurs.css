@@ -1,0 +1,24 @@
+.wrapper{margin-top:20px;margin-bottom:20px;}
+.inner{margin-top:10px;margin-bottom:10px;}
+
+#table-droits-wrapper{overflow-x:scroll;}
+#lb-cdg-wrapper, #liste-ref-wrapper, #errorPsw{display:none;}
+.progress{width:100%;}
+div.slider.slider-horizontal{margin:25px !important;margin-top:10px !important;}
+
+.profil_action_button{
+	padding: 3px;
+	margin-right: 3px;
+}
+
+.select_profil_action{
+	margin: 0;
+}
+#new-profil-wrapper{
+	padding: 8px;
+	border: solid 5px white;
+}
+
+#table_profil_manager *{
+	text-align: center;
+}

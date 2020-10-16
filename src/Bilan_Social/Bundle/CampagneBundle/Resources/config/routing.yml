@@ -1,0 +1,3 @@
+campagne_campagne:
+    resource: "@CampagneBundle/Resources/config/routing/campagne.yml"
+    prefix:   /campagne

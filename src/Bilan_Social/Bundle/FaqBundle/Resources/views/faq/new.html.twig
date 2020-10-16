@@ -1,0 +1,47 @@
+{% extends '@Faq/layout.html.twig' %}
+
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="col-xs-9">
+
+        <h1>Création d'une FAQ</h1>
+        <a href="{{ path('faq_index_administration') }}"><button type="button" class="btn btn-primary pull-right">retour à la liste</button></a>
+
+        {{ form_start(form) }}
+        {{ form_row(form.question) }}
+        {{ form_row(form.reponse) }}
+        {{ form_row(form.profil) }}
+        {{ form_row(form.existCategorie) }}
+        {{ form_row(form.categorie, {
+            'attr': {'class' : 'hidden' },
+            'label_attr' : {'class' : 'hidden' } })
+        }}
+
+
+        <div class="categorieExist hidden">
+            {% if categories is not null %}
+                <select id="categoriesSelect" class='form-control'>
+                    <option value="">Choississez une catégorie existante</option>
+                    {% for categorie in categories %}
+                        <option value="{{ categorie }}">{{ categorie }}</option>
+                    {% endfor %}
+                </select>
+
+            {% else %}
+                <p>Il n'y a aucune catégorie éxistante</p>
+            {% endif %}
+        </div>
+        <div class="categoriesInput hidden" >
+            <input id="categoriesInput" class="form-control" placeholder="Veuillez entrer une nouvelle catégorie" type="text">
+        </div>
+
+
+        <input type="submit" class="btn pull-right" value="Valider" onclick="sendFaq()"/>
+        {{ form_end(form) }}
+
+
+
+    </div>
+{% endblock %}

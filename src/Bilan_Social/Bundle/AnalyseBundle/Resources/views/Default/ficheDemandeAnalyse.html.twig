@@ -1,0 +1,125 @@
+{% extends 'CoreBundle::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/analyse.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/AnalyseBundle/Analyse.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Gestion des analyses</a></li>
+                <li class="active">Fiche de demande d'analyse</li>
+            </ol>
+        </div>
+        <h3 class='title'>Fiche de demande d'analyse</h3>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% if droits is not null and demande is not null %}
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Informations sur la collectivité</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label>SIRET</label>
+                        <input type="text" value="{{ demande.collectivite.nmSire }}" class='form-control' disabled>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Libellé</label>
+                        <input type="text" value="{{ demande.collectivite.lbColl }}" class='form-control' disabled>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Département</label>
+                        <input type="text" value="{{ demande.collectivite.departement.cdDepa }} - {{ demande.collectivite.departement.lbDepa }}" class='form-control' disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Informations sur la demande</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label>Type d'analyse</label>
+                        <input type="text" value="{{ demande.lbTypeAnalyse }}" class='form-control' disabled>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Nom de l'analyse</label>
+                        <input type="text" value="{{ demande.lbAnalyse }}" class='form-control' disabled>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Date de la demande</label>
+                        <input type="text" value="{{ demande.dtCrea|date('d/m/Y') }}" class='form-control' disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label>Détail de la demande</label>
+                        <textarea disabled rows='4' class='form-control' style="overflow:auto;resize:none">{{ demande.cmDetail }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Déposer l'analyse personnalisée</h3>
+            </div>
+            <div class="panel-body">
+{#                {% if disabled == false %}#}
+                    {% if form is defined %}
+                        {{ form_start(form) }}
+    {#                    {{ form_row(form.lbNomAnalyse) }}#}
+                        <label>Import de l'analyse</label>
+                        {{ form_row(form.importAnalyse) }}
+                        {#<p id="file-select"><span class='bold'>Fichier sélectionné : </span><span id='name-file'></span></p>#}
+                        <button type="submit" class='btn button-tableau pull-right' id="btn-import-masse-coll">Déposer</button>
+                        {{ form_end(form) }}
+{#                    {% endif %}#}
+{#                {% else %}#}
+                   {# <div class="alert alert-danger fade in" role="alert">
+                        <p>Une analyse personnalisée existe déjà pour cette collectivité. Pour en ajouter une nouvelle, veuillez supprimer celle existante.</p>
+                    </div>#}
+                    {#{% if infosFichier is not empty %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>{{ infosFichier.nom }}<span class="delete-file" id="{{ infosFichier.fileKey }}" style="margin-left:20px;cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="margin-right:5px;"></span>Supprimer</span></p>
+                            </div>
+                        </div>
+                    {% endif %}#}
+                {% endif %}
+                
+            </div>
+        </div>
+        {% else %}
+            <div class="alert alert-danger fade in" style='margin-top: 20px;'>
+                <p>Vous n'avez pas le droit d'accéder à cette demande.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

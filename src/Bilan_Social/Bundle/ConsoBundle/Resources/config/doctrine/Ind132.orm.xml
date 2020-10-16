@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind132" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind132Repository" table="ind_132">
+        <indexes>
+            <index name="FK_132_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_132_FILIERE" columns="ID_FILI"/>
+        </indexes>
+        <id name="id132" type="integer" column="ID_132">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind132s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere">
+            <join-column name="ID_FILI" referenced-column-name="ID_FILI" nullable="false"/>
+        </many-to-one>
+
+        <field name="r13211" type="integer" column="R_13211_1" nullable="true" />
+        <field name="r13212" type="integer" column="R_13212_1" nullable="true"/>
+        <field name="r13213" type="integer" column="R_13213_2" nullable="true"/>
+        <field name="r13214" type="integer" column="R_13214_2" nullable="true"/>
+<!--        <field name="r13221" type="integer" column="R_13221_1" nullable="true"/>-->
+<!--        <field name="r13222" type="integer" column="R_13222_1" nullable="true"/>-->
+<!--        <field name="r13223" type="integer" column="R_13223_2" nullable="true"/>-->
+<!--        <field name="r13224" type="integer" column="R_13224_2" nullable="true"/>-->
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

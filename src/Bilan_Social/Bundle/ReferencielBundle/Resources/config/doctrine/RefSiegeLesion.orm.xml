@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefSiegeLesion" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefSiegeLesionRepository" table="ref_siege_lesion">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_SIEGE_LESION" name="cdSiegelesi"/>
+        </unique-constraints>
+        <id name="idSiegelesi" type="integer" column="ID_SIEGE_LESION">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdSiegelesi" type="string" column="CD_SIEGE_LESION" length="50" nullable="true"/>
+        <field name="lbSiegelesi" type="text" column="LB_SIEGE_LESION" length="65535" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <one-to-many field="idSiegeLesion" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\AbsenceArretAgent" mapped-by="idSiegeLesion">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

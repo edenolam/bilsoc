@@ -1,0 +1,75 @@
+{#
+	vue des résultats des filtre du requeteur InfoCentre
+#}
+<section id='form-results-wrapper'  class='infocentre-section-bloc'>
+	<div class="card">
+	    <div class="card-header" id="head_filters_result">
+			<h3 id='filter_results_collapse' data-toggle="collapse" data-target="#body_filter_results" aria-expanded="false" aria-controls="body_filters_result">
+				{{ "infocentre.filter_results.section.title"|trans }}{#III - Résultats des filtres#}
+				<i class="fa fa-chevron-down"></i>
+			</h3>
+		</div>
+		<div id="body_filter_results" class="collapse" aria-labelledby="head_filters_result">
+			<div class="card-body">
+				<section>
+					<h3>{{ "infocentre.filter_results.section.results.sub_title"|trans }}</h3>
+					{% if filter_list is not defined or filter_list is empty or filter_list is null %}
+						<h4> Veuillez appliquer au moins un filtre </h4>
+					{% else %}
+						<table id='filter_results_table' class="table stripe">
+							<thead>
+								<tr>
+									<th>
+										Inclure
+										<div>
+											<label id="select_all_to_pool_label">
+												<input type="checkbox" id="select_all_to_pool"/>
+												Tout cocher
+											</label>
+										</div>
+									</th>
+								</tr>	
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						<div id="filter_results_include_to_pool_error_container"></div>
+						<button type="button" id='include_to_pool_action' class='btn btn-primary'>Inclure la sélection à l'échantillon</button>
+					{% endif %}
+				</section>
+				<section>
+					<h3>{{ "infocentre.filter_results.section.current_pool.sub_title"|trans }}</h3>
+					{% if current_pool is not defined and current_pool is not null%}
+						<p>Veuillez sélectionner un échantillon</p>
+					{% else %}
+						<table id='current_pool_items_list' class="table stripe order-column">
+							<thead>
+								<tr>
+									<th>Retirer</th>
+									<th>Siret</th>
+									<th>Raison sociale</th>
+									<th>Année</th>
+									<th>Département</th>
+								</tr>	
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						<div>
+							{% if form_edit_pool is not defined %}
+								<p>problème lors de la génération du formulaire</p>
+							{% else %}	
+								{{ form_start(form_edit_pool,{'attr':{'id':'infocentre_edit_pool_form'}}) }}
+									{% for item in form_edit_pool %}
+										{{ form_row(item) }}
+									{% endfor %}
+									<input type='submit' form-target='' id='save_pool_edit' class='btn btn-primary' value="Sauvegarder l'échantillon"/>
+								{{ form_end(form_edit_pool) }}
+							{% endif %}
+						</div>
+					{% endif %}
+				</section>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,91 @@
+<div class="modal fade" id="111_{{ id_filiere }}" tabindex="-1" role="dialog" aria-labelledby="111_{{ id_filiere }}" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="111_modal">Indicateur 111 de l'année {{ indicateur_precedent.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #efefef">
+                {% if indicateur_precedent.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.annee }}
+                {% else %}
+                
+                    <table {#width="100%"#} id="ind111Table_modal" class="table table-striped table-hover table-bordered sticky-header">
+                        <thead>
+                            <tr entete="1">
+                                <th width="20%"></th>
+                                <th colspan="5" style="text-align: center">Tous emplois</th>
+                                <th class="filiTable" rowspan="5" style="text-align: center">Total temps complet + temps non complet</th>
+                                <th colspan="2" style="text-align: center">Tous emplois</th>
+                                <th class="filiTable" rowspan="5" style="text-align: center">Total</th>
+                            </tr>
+                            <tr entete="1">
+                                <th class="th-tableau-ind" rowspan="4">
+                                    Grades<br/>
+                                    Cadres d'emplois<br/>
+                                    FILIERES
+                                </th>
+                                <th style="text-align: center">Temps complet</th>
+                                <th colspan="4" style="text-align: center">Temps non complet</th>
+                                <th style="text-align: center">Hommes</th>
+                                <th style="text-align: center">Femmes</th>
+                            </tr>
+                            <tr entete="1">
+                                <th rowspan="2">
+                                </th>
+                                <th colspan="3" style="text-align: center">Par quotité</th>
+                                <th  rowspan="3" class="filiTable" style="text-align: center">Total Temps non complet</th>
+                                <th rowspan="2">
+                                </th>
+                                <th rowspan="2">
+                                </th>
+                            </tr>
+                            <tr entete="1">
+                                <th  style="text-align: center">moins de 17 H 30</th>
+                                <th style="text-align: center"> 17 H 30 à  moins de 28 H</th>
+                                <th style="text-align: center"> 28 H ou plus</th>
+                                    {#<th class="filiTable" >
+                                    </th>#}
+                            </tr>
+                            <tr entete="1">
+                                <th style="text-align: center">1.1.1 (1)</th>
+                                <th style="text-align: center">1.1.1 (2)</th>
+                                <th style="text-align: center">1.1.1 (3)</th>
+                                <th style="text-align: center">1.1.1 (4)</th>
+                                <th style="text-align: center">1.1.1 (5)</th>
+                                <th style="text-align: center">1.1.1 (6)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="111tbody_modal">
+                            {% for key, filiere in indicateur_precedent.indicateur %}
+                                {% if (id_filiere == key) %}
+                                    {% for tag in filiere %}
+                                        {% set total1 = tag.R_1112 + tag.R_1113 + tag.R_1114 %}
+                                        {% set total2 = tag.R_1111 + tag.R_1112 + tag.R_1113 + tag.R_1114 %}
+                                        {% set total3 = tag.R_1115 + tag.R_1116 %}
+                                        <tr>
+                                            <td>
+                                                {{ tag.LB_GRAD }}
+                                            </td>
+                                            <td id="r1111" style="text-align: center">{{ tag.R_1111 }}</td>
+                                            <td id="r1112" style="text-align: center">{{ tag.R_1112 }}</td>
+                                            <td id="r1113" style="text-align: center">{{ tag.R_1113 }}</td>
+                                            <td id="r1114" style="text-align: center">{{ tag.R_1114 }}</td>
+                                            <td class="filiTable" style="text-align: center">{{ total1 }}</td>
+                                            <td class="filiTable" style="text-align: center">{{ total2 }}</td>
+                                            <td id="r1115" style="text-align: center">{{ tag.R_1115 }}</td>
+                                            <td id="r1116" style="text-align: center">{{ tag.R_1116 }}</td>
+                                            <td class="filiTable" style="text-align: center">{{ total3 }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

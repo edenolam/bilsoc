@@ -1,0 +1,28 @@
+refmotifentretien_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMotifEntretien:index" }
+    methods:  GET
+
+refmotifentretien_show:
+    path:     /{idMotientr}/show
+    defaults: { _controller: "ReferencielBundle:RefMotifEntretien:show" }
+    methods:  GET
+
+refmotifentretien_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMotifEntretien:new" }
+    methods:  [GET, POST]
+
+refmotifentretien_edit:
+    path:     /{idMotientr}/edit
+    defaults: { _controller: "ReferencielBundle:RefMotifEntretien:edit" }
+    methods:  [GET, POST]
+
+refmotifentretien_delete:
+    path:     /{idMotientr}/delete
+    defaults: { _controller: "ReferencielBundle:RefMotifEntretien:delete" }
+    methods:  DELETE
+
+csv_export_refmotifentretien:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMotifEntretien:generateCsv" }

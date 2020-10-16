@@ -1,0 +1,8 @@
+services:
+    bs.import.user.step:
+        class: Bilan_Social\Bundle\ImportBundle\Step\ItemStep
+        arguments:
+            - '@bs.import.csv_reader'
+            - '@bs.import.user_processor'
+            - '@bs.import.orm.writer'
+            - 20

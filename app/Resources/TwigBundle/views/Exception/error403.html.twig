@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block header %}
+    {#   {{ parent() }}#}
+
+{% endblock %}
+
+{% block body %}
+<div id="titleConsolide" class="col-md-12 col-md-12" style="text-align: center"> <img src="{{ asset('img/logos/Logo_Application_BS.png') }}" alt="Logo_Application_BS.png" class="img-responsive logo_application center-block"/></div>
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div class="hero-unit" style="text-align: center; margin-left: auto; margin-right: auto; margin-bottom: auto; margin-top: 30%;">
+                <h1>Accès refusé <small>{# <font face="Tahoma" color="red">Erreur 403</font></small></h1> #}
+                <br/>
+                <p style="font-size: 30px">Vous n'avez pas les droits d'accès à la page que vous avez demandée</p>
+                <p style="font-size: 20px"><b>Vous pouvez cliquer sur le lien suivant pour revenir à l'accueil</b></p>
+                <a href="{{ path('homepage') }}" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Accueil</a>
+                <p style="font-size: 20px"><b>Ou sur ce lien pour revenir à la page précédente</b></p>
+                <button onclick="window.history.go(-1); return false;" type="button">Page précedente</button>
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

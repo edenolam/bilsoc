@@ -1,0 +1,87 @@
+{% extends '@Collectivite/cdg_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+    <link href="{{ asset('node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/cdg.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Centre de gestion</a></li>
+                <li class="active">Informations du Centre de gestion</li>
+            </ol>
+        </div>
+        <h1>Informations du Centre de gestion</h1>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {#{% if form is defined %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        {% endif %}#}
+        <div id="cdg-wrapper" class="wrapper">
+            {% if cdgs is defined %}
+                <label>Centres de gestion</label>
+                <select class="form-control" id="select-cdg">
+                    <option value="default">Sélectionner un CDG</option>
+                {% for cdg in cdgs %}
+                    <option value="{{ cdg.idCdg }}">{{ cdg.lbCdg }}</option>
+                {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+        <div id="dept-wrapper" class="wrapper">
+            {% if cdgs is defined %}
+                <label>Départements</label>
+                <div class="inner">
+                    <input type="text" value="" placeholder="Recherche" id="recherche-dept" class="form-control">
+                </div>
+                <div id="table-cdg-dept-wrapper">
+                    <table class="table table-hover" id="table-cdg-dept">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Libelle</th>
+                                <th>Affecté</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dept in departements %}
+                                <tr>
+                                    <td>{{ dept.cdDepa }}</td>
+                                    <td>{{ dept.lbDepa }}</td>
+                                    <td><input type="checkbox" data-toggle="toggle" data-on="Oui" data-off="Non" data-size="small" id="{{ dept.idDepa }}" class="toggle-dept"></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+        <div id="modifier-wrapper" class="wrapper">
+            <button class="btn button-tableau disabled" id="modifier-dept">Modifier</button>
+        </div>
+    </div>
+{% endblock %}

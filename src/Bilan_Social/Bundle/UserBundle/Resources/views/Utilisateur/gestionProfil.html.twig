@@ -1,0 +1,129 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/utilisateurs.css') }}">
+    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/UserBundle/utilisateur.js') }}"></script>
+    <script src="{{ asset('node_modules/bootstrap-slider/dist/bootstrap-slider.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#table_profil_manager').DataTable({
+                "scrollX": true,
+                "scrollY": true,
+                language: {
+                    processing: "Traitement en cours...",
+                    search: "Rechercher&nbsp;:",
+                    lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info: "_START_ &agrave; _END_ sur _TOTAL_ collectivités",
+                    infoEmpty: "0 &agrave; 0 sur 0 collectivités",
+                    infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix: "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable: "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first: "Premier",
+                        previous: "Pr&eacute;c&eacute;dent",
+                        next: "Suivant",
+                        last: "Dernier"
+                    },
+                    aria: {
+                    sortAscending: ": activer pour trier la colonne par ordre croissant",
+                    sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+            $('#table_profil_manager').DataTable().responsive.recalc();;
+            $('.dataTables_length').addClass('bs-select');
+          
+        });
+    </script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div class="alert alert-success fade in" role="alert" style="display: none">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </div>
+        <div class="alert alert-danger fade in" role="alert" style="display: none">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </div>
+        <div id='profil_workflow_wrapper'>
+            <div id='profil_manager_receiver'>
+                {% set profils_empty = profils is defined and profils|length > 0 ? false : true %}
+                <section id='profil-manager-wrapper'  class='infocentre-section-bloc'>
+                    <div class="card">
+                        <div id="body_profils_manager">
+                            <div class="card-body">
+                                <div id='profils-list-wrapper'>
+                                    
+                                    {% if not profils_empty %}
+                                        <table id='table_profil_manager' class="table stripe table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nom du job</th>
+                                                    <th>Description</th>
+                                                    <th>Thème</th>
+                                                    <th>Date de création</th>
+                                                    {% for profil in profils %}
+                                                        <th data-id-profil="{{ profil.idProfil }}" class="profil_td">
+                                                            <div class='nom_profil'>{{ profil.nomProfil }}</div>
+                                                            <div class="actions_profil">
+                                                                <button class='btn btn-danger profil_action_button delete_profil_action' title="Supprimer le profil">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </button>
+                                                            </div>
+                                                        </th>
+                                                    {% endfor %}
+                                                    <th>
+                                                        <button type='button' class='btn btn-primary' id='new_profil_collapse' data-toggle="collapse" data-target="#new-profil-wrapper" aria-expanded="false" aria-controls="new-profil-wrapper">+</button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for eA in export_admin %}
+                                                    <tr>
+                                                        <td>{{ eA.name }}</td>
+                                                        <td>{{ eA.description }}</td>
+                                                        <td>{{ eA.theme }}</td>
+                                                        <td>{{ eA.date|date("d/m/Y")}}</td>
+                                                        {% for profil in profils %}
+                                                            {% set is_checked = eA.profils.contains(profil) %}
+                                                            <td>
+                                                                <input type="checkbox" class="check" data-id-profil="{{ profil.idProfil }}" data-id-export-admin="{{ eA.id }}"  value="{{ profil.idProfil }}" {{is_checked ? 'checked="checked" ': ""}}>
+                                                            </td>
+                                                        {% endfor %}  
+                                                        <td></td>  
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <button class='btn btn-primary profil_action_button profil_export_admin' title="Enregistrer">
+                                            Enregistrer
+                                        </button>
+                                    {% else %}
+                                        <p>Aucun profil.</p>
+                                    {% endif %}
+                                </div>
+                                <hr/>
+        
+                                <div id='new-profil-wrapper' class='collapse {{ profils_empty ? "in" : "" }}'>
+                                    <h3>Création des profils</h3>
+                                    {{ form_start(form, {'action': path('utilisateur_create_profil')}) }}
+                                        <div class='col-md-2'>
+                                            {{ form_row(form.nomProfil) }}
+                                        </div>
+                                    <input type='submit' form-target='' id='save_profil_create' class='btn btn-primary' value="Créer le profil"/>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des cadres emplois</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refcadreemploi_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refcadreemploi') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>libellé</th>
+                    <th>Catégorie</th>
+                    <th>Filiere</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refCadreEmploi in refCadreEmplois %}
+
+                    <tr>
+                        <td><a href="{{ path('refcadreemploi_show', { 'idCadrempl': refCadreEmploi.idCadrempl }) }}">{{ refCadreEmploi.cdCadrempl }}</a></td>
+                        <td>{{ refCadreEmploi.lbCadrempl }}</td>
+                        <td>{{ refCadreEmploi.refCategorie.lbCate }}</td>
+                        <td>{{ refCadreEmploi.refFiliere.lbFili }}</td>
+                        <td>{% if refCadreEmploi.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refCadreEmploi} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refcadreemploi_show', { 'idCadrempl': refCadreEmploi.idCadrempl }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refcadreemploi_edit', { 'idCadrempl': refCadreEmploi.idCadrempl }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

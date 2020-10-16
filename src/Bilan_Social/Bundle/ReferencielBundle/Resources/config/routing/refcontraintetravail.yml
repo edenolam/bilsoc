@@ -1,0 +1,28 @@
+refcontraintetravail_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefContrainteTravail:index" }
+    methods:  GET
+
+refcontraintetravail_show:
+    path:     /{idConttrav}/show
+    defaults: { _controller: "ReferencielBundle:RefContrainteTravail:show" }
+    methods:  GET
+
+refcontraintetravail_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefContrainteTravail:new" }
+    methods:  [GET, POST]
+
+refcontraintetravail_edit:
+    path:     /{idConttrav}/edit
+    defaults: { _controller: "ReferencielBundle:RefContrainteTravail:edit" }
+    methods:  [GET, POST]
+
+refcontraintetravail_delete:
+    path:     /{idConttrav}/delete
+    defaults: { _controller: "ReferencielBundle:RefContrainteTravail:delete" }
+    methods:  DELETE
+
+csv_export_refcontraintetravail:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefContrainteTravail:generateCsv" }

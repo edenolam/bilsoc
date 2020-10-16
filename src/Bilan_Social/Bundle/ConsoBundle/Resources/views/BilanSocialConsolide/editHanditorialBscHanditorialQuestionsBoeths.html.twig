@@ -1,0 +1,738 @@
+
+    {% if formHanditorialBscHanditorialQuestionsBoeths is defined %}
+
+            {% set campagne = campagne_service.GetCurrentCampagne() %}
+            {% set AnneeCamp = '' %}
+            {% if campagne is not null %}
+                {% set AnneeCamp = campagne.nmAnne %}
+            {% endif %}
+
+        {{ form_start(formHanditorialBscHanditorialQuestionsBoeths) }}
+
+       {#<!--  <div class="panel-body">
+           <table width="100%" id="bscHanditorialAncienneteAgentsTable" class="table table-striped table-hover table-bordered">
+               <thead>
+               <tr>
+                   <th colspan='10'>Ancienneté des agents</th>
+               </tr>
+               <tr>
+                   <th colspan='2'>Moins de 1 an</th>
+                   <th colspan='2'>Entre 1 et 3 ans</th>
+                   <th colspan='2'>Entre 4 et 6 ans</th>
+                   <th colspan='2'>Entre 7 et 12 ans</th>
+                   <th colspan='2'>Plus de 12 ans</th>
+               </tr>
+               <tr>
+                   <th>Hommes</th>
+                   <th>Femmes</th>
+                   <th>Hommes</th>
+                   <th>Femmes</th>
+                   <th>Hommes</th>
+                   <th>Femmes</th>
+                   <th>Hommes</th>
+                   <th>Femmes</th>
+                   <th>Hommes</th>
+                   <th>Femmes</th>
+               </tr>
+               </thead>
+       
+               <tbody>
+               {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialAncienneteAgents %}
+                   <tr>
+                       <td>
+                           {{ form_row(tag.moinsUnAnH) }}
+                       </td>
+                       <td>
+                           {{ form_row(tag.moinsUnAnF )}}
+                       </td>
+                       <td>
+                           {{ form_row(tag.entreUnEtTroisH) }}
+                       </td>
+                       <td>
+                           {{ form_row(tag.entreUnEtTroisF )}}
+                       </td>
+                       <td>
+                           {{ form_row(tag.entreQuatreEtSixH) }}
+                       </td>
+                       <td>
+                           {{ form_row(tag.entreQuatreEtSixF)}}
+                       </td>
+                       <td>
+                           {{ form_row(tag.entreSeptEtDouzeH) }}
+                       </td>
+                       <td>
+                           {{ form_row(tag.entreSeptEtDouzeF)}}
+                       </td>
+                       <td>
+                           {{ form_row(tag.plusDouzeH) }}
+                       </td>
+                       <td>
+                           {{ form_row(tag.plusDouzeF )}}
+                       </td>
+                   </tr>
+               {% endfor %}
+               </tbody>
+           </table>
+       </div> -->#}
+        <div class="panel-body">
+        <table width="100%" id="bscHanditorialQuestionsGeneralesTable" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Catégorie B.O.E.T.H de vos agents</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialQuestionsBoeths %}
+                <tr id="{{ tag.refCategorieBoeth.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refCategorieBoeth) }}
+                        {{ tag.refCategorieBoeth.vars.data.lbCategorieboeth}}
+                    </td>
+
+                   <td>
+                         {{ form_row(tag.categorieH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.categorieF )}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div class="panel-body">
+        <table width="100%" id="bscHanditorialNatureHandicapsTable" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Nature de leur(s) handicap(s)</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialNatureHandicaps %}
+                <tr id="{{ tag.refNatureHandicapBoeth.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refNatureHandicapBoeth) }}
+                        {{ tag.refNatureHandicapBoeth.vars.data.lbNathandiboeth }}
+                    </td>
+
+                   <td>
+                         {{ form_row(tag.natureHandicapH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.natureHandicapF )}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {#<!-- <div class="panel-body whiteBackGround">
+        <label>
+            Des agents ont-ils bénéficiés d'un avis d'inaptitude au cours de l'année {{AnneeCamp}} ?
+            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qAgentAvisInapHanditorial" aria-hidden="true"></span>
+        </label>
+        {{ form_row(formHanditorialBscHanditorialQuestionsBoeths.qHandiB22) }}
+    
+        
+    </div>
+        <div class="panel panel-default" id="inaptitudePanel">
+            <div class="panel-heading">
+                <p style="text-align:center"> Tableaux Avis inaptude au cours de l'année {{AnneeCamp}} </p>
+            </div>
+            <div class="clearfix"></div>
+    
+            <div class="panel-body">
+                <table style="display: none" width="100%" id="bscHanditorialAvisInaptitudeTable" class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Avis Inaptitude au cours de l'année {{AnneeCamp}}</th>
+                            <th style="text-align: center">Homme</th>
+                            <th style="text-align: center">Femme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialAvisInaptitudes %}
+                        <tr id="{{ tag.refInaptitudeBoeth.vars.value }}">
+                            <td style="min-width: 400px">
+                                {{ form_widget(tag.refInaptitudeBoeth) }}
+                                {{ tag.refInaptitudeBoeth.vars.data.lbInaptitudeboeth }}
+                            </td>
+    
+                           <td>
+                                 {{ form_row(tag.avisInaptitudeH) }}
+                            </td>
+                            <td>
+                                 {{ form_row(tag.avisInaptitudeF )}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="panel-body">
+                <table style="display: none" width="100%" id="bscHanditorialMesureInaptitudeTable" class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mesure Inaptitude au cours de l'année {{AnneeCamp}}</th>
+                            <th style="text-align: center">Homme</th>
+                            <th style="text-align: center">Femme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialMesureInaptitudes %}
+                        <tr id="{{ tag.refMesureBoeth.vars.value }}">
+                            <td style="min-width: 400px">
+                                {{ form_widget(tag.refMesureBoeth) }}
+                                {{ tag.refMesureBoeth.vars.data.lbMesureboeth }}
+                            </td>
+    
+                           <td>
+                                 {{ form_row(tag.mesureInaptitudeH) }}
+                            </td>
+                            <td>
+                                 {{ form_row(tag.mesureInaptitudeF )}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div> -->
+        
+    <!-- <div class="panel-body whiteBackGround">
+        <label>
+            Des agents ont-ils bénéficiés d'un avis d'inaptitude avant l'année {{AnneeCamp}} ?
+            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qAgentAvisInapAvantHanditorial" aria-hidden="true"></span>
+        </label>
+        {{ form_row(formHanditorialBscHanditorialQuestionsBoeths.qHandiB23) }}
+    </div>
+    <div class="panel panel-default" id="inaptitudeAvantPanel">
+        <div class="panel-heading">
+            <p style="text-align:center"> Tableaux Avis inaptude avant l'année {{AnneeCamp}} </p>
+        </div>
+        <div class="clearfix"></div>
+    <div class="panel-body">
+        <table style="display: none" width="100%" id="bscHanditorialAvisInaptitudeAvantTable" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Avis Inaptitude avant l'année {{AnneeCamp}}</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialAvisInaptitudesAvant %}
+                <tr id="{{ tag.refInaptitudeBoeth.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refInaptitudeBoeth) }}
+                        {{ tag.refInaptitudeBoeth.vars.data.lbInaptitudeboeth }}
+                    </td>
+    
+                   <td>
+                         {{ form_row(tag.avisInaptitudeAvantH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.avisInaptitudeAvantF )}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    
+    <div class="panel-body">
+        <table style="display: none" width="100%" id="bscHanditorialMesureInaptitudeAvantTable" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Mesure Inaptitude avant l'année {{AnneeCamp}}</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialMesureInaptitudesAvant %}
+                <tr id="{{ tag.refMesureBoeth.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refMesureBoeth) }}
+                        {{ tag.refMesureBoeth.vars.data.lbMesureBoeth }}
+                    </td>
+    
+                   <td>
+                         {{ form_row(tag.mesureInaptitudeAvantH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.mesureInaptitudeAvantF )}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    </div> -->#}
+
+        
+    <div class="panel-body">
+        <table width="100%" id="bscHanditorialModeEntreesTable" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Quels sont les modes d'entrées des agents B.O.E.T.H. ?</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialModeEntrees %}
+                <tr id="{{ tag.refMotifArrivee.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refMotifArrivee) }}
+                        {{ tag.refMotifArrivee.vars.data.lbMotiarri }}
+                    </td>
+
+                   <td>
+                         {{ form_row(tag.modeEntreeH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.modeEntreeF)}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        
+    {#<!-- <div class="panel-body">
+        <table width="100%" id="bscHanditorialStatutAgentsTable" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Au 31/12 de l'année {{AnneeCamp}}, quels étaient les derniers statuts des agents ?</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialStatutAgents %}
+                <tr class="{{ tag.refStatut.vars.data.cdStat }}" id="{{ tag.refStatut.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refStatut) }}
+                        {{ tag.refStatut.vars.data.lbStat }}
+                    </td>
+    
+                   <td>
+                         {{ form_row(tag.statutAgentH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.statutAgentF)}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div> -->#}
+        <div class="panel-body" id="bscHanditorialArticlesTable" >
+            <table width="100%"  class="table table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>Sur la base de quels articles de quel alinéa de l'article 3 de la loi n°84-53 ont-ils été nommés ?</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialArticles %}
+                    <tr id="{{ tag.refArticle.vars.value }}">
+                        <td style="min-width: 400px">
+                            {{ form_widget(tag.refArticle) }}
+                            {{ tag.refArticle.vars.data.lbTypecdd }}
+                        </td>
+
+                        <td>
+                            {{ form_row(tag.articleH) }}
+                        </td>
+                        <td>
+                            {{ form_row(tag.articleF)}}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div class="panel-body" id="b4_1a"  style="display: none">
+        <div >
+            <label>Des agents ont-ils été titularisé au cours de l'année {{AnneeCamp}} ?</label>
+            {{ form_row(formHanditorialBscHanditorialQuestionsBoeths.qHandiB41A) }}
+        </div>
+    </div>
+
+        
+    <div class="panel-body" id="b4_1b" style="display: none">
+        <div  >
+            <label>Des agents ont-ils été titularisé au cours de l'année {{AnneeCamp}} au titre de l'article 38 de la loi n°84-53 du 26 janvier 1984 ?</label>
+            {{ form_row(formHanditorialBscHanditorialQuestionsBoeths.qHandiB41B) }}
+        </div>
+    </div>
+
+        
+
+        
+    <div class="panel-body" style="display: none" id="bscHanditorialModeSortiesTitulaireTable">
+        <table  width="100%"  class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Quels sont les modes de sorties si titulaires ?</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialModeSortiesTitulaire %}
+                <tr id="{{ tag.refMotifDepart.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refMotifDepart) }}
+                        {{ tag.refMotifDepart.vars.data.lbMotidepa }}
+                    </td>
+
+                   <td>
+                         {{ form_row(tag.modeSortieTitulaireH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.modeSortieTitulaireF)}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        
+    <div class="panel-body" id="bscHanditorialModeSortiesNonTitulaireTable" style="display: none">
+        <table  width="100%"  class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Quels sont les modes de sorties si non titulaires ?</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialModeSortiesNonTitulaire %}
+                <tr id="{{ tag.refMotifDepart.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refMotifDepart) }}
+                        {{ tag.refMotifDepart.vars.data.lbMotidepa }}
+                    </td>
+
+                   <td>
+                         {{ form_row(tag.modeSortieNonTitulaireH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.modeSortieNonTitulaireF)}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        
+    <div class="panel-body">
+        <table width="100%" id="bscHanditorialDerniersDiplomesTable" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Derniers diplomes des agents</th>
+                    <th style="text-align: center">Homme</th>
+                    <th style="text-align: center">Femme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in formHanditorialBscHanditorialQuestionsBoeths.bscHanditorialDerniersDiplomes %}
+                <tr id="{{ tag.refDomaineDiplome.vars.value }}">
+                    <td style="min-width: 400px">
+                        {{ form_widget(tag.refDomaineDiplome) }}
+                        {{ tag.refDomaineDiplome.vars.data.lbDomaineDiplome }}
+                    </td>
+
+                   <td>
+                         {{ form_row(tag.dernierDiplomeH) }}
+                    </td>
+                    <td>
+                         {{ form_row(tag.dernierDiplomeF)}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        
+
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display: none"/>
+
+        {{ form_end(formHanditorialBscHanditorialQuestionsBoeths) }}
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            {% include 'stickyheader.txt' %}
+            getBrowserSetSticky(bscHanditorialQuestionsGeneralesTable);
+            getBrowserSetSticky(bscHanditorialNatureHandicapsTable);
+            getBrowserSetSticky(bscHanditorialModeEntreesTable);
+            
+            changeDetect = false;
+            $(document).change();
+
+            isTitulaire();
+            isNotTitulaire();
+            initFormB41B();
+            /*$('#bscHanditorialStatutAgentsTable tr.TITU').on('change', function() {
+                isTitulaire(true);
+            });
+            $('#bscHanditorialStatutAgentsTable tr').not(".TITU").on('change', function() {
+                isNotTitulaire(true);
+            });*/
+
+            $("#bscFormHanditorialQuestionsBoeths_qHandiB41A").on("click", function () {
+                initFormB41B();
+            });
+        });
+
+        function initRadio(nameInput, divToShow, inputValue) {
+
+            var value = $('input[name="'+nameInput+'"]').filter(':checked').val();
+            if (value == "1") {
+                $('#' + divToShow).show();
+            } else {
+                $('#' + divToShow).hide();
+                $('#' + inputValue).val('');
+            }
+        }
+
+        function toggleFiliere(toggleObj, pidFili) {
+        var css = toggleObj.getAttribute('class');
+
+        {% if idFili != null and idFili != 0 %}
+            // Sauvegarde auto
+            if (currentTab != "")
+                saveTab(currentTab);
+        {% endif %}
+
+            if (css == "buttonplus") {
+                $('#cadreEmploi').load('{{ path('bilan_conso_handitorial_bscHanditorialQuestionsBoeths_edit') }}?idFili=' + pidFili, function () {
+                    disabled();
+                });
+
+            } else {
+                $('#cadreEmploi').load('{{ path('bilan_conso_handitorial_bscHanditorialQuestionsBoeths_edit') }}?idFili=' + 0, function () {
+                    disabled();
+                });
+
+            }
+        }
+
+        function isTitulaire(bool) {
+            var val = 0;
+            $('.TITU').find('input').each(function() {
+                {#var inputValue = $(this).find('input').val();
+                val += parseInt(val) + parseInt(inputValue != '' ? inputValue : 0);#}
+                var inputValue = $(this).val();
+                val = parseInt(val) + parseInt(inputValue != '' ? inputValue : 0);
+            });
+            if(val == 0) {
+                $('#b4_1a').hide();
+                $('#bscHanditorialModeSortiesTitulaireTable').hide();
+                $('#b4_1a').val('0');
+                $('#bscHanditorialModeSortiesTitulaireTable').find('input').val('');
+
+                if(bool){
+                    notify_move('#b4_1a', 'del', '');
+                    notify_move('#bscHanditorialModeSortiesTitulaireTable', 'del');
+                }
+
+            } else {
+
+                $('#b4_1a').show();
+                $('#bscHanditorialModeSortiesTitulaireTable').show();
+                if(bool) {
+                    notify_move('#b4_1a', 'add', { 'title' : "Des agents ont-ils été titularisé au cours de l'année ?"});
+                    notify_move('#bscHanditorialModeSortiesTitulaireTable', 'add', { 'title' : "Quels sont les modes de sorties si titulaires ?"});
+                }
+            }
+        }
+
+        function isNotTitulaire(bool) {
+        var val = 0;
+            /*$('#bscHanditorialStatutAgentsTable').find('tr').not('.TITU').find('input').each(function() {
+                var inputValue = $(this).val();
+                val = parseInt(val) + parseInt(inputValue != '' ? inputValue : 0);
+            });*/
+            if(val == 0) {
+                $('#bscHanditorialArticlesTable').hide();
+                $('#bscHanditorialModeSortiesNonTitulaireTable').hide();
+                $('#bscHanditorialArticlesTable').val('0');
+                $('#bscHanditorialModeSortiesNonTitulaireTable').find('input').val('');
+                if(bool) {
+                    notify_move('#bscHanditorialArticlesTable', 'del');
+                    notify_move('#bscHanditorialModeSortiesNonTitulaireTable', 'del');
+                }
+            } else {
+
+                $('#bscHanditorialArticlesTable').show();
+                $('#bscHanditorialModeSortiesNonTitulaireTable').show();
+                if(bool){
+                    notify_move('#bscHanditorialArticlesTable', 'add', {'title' : "Sur la base de quels articles de quel alinéa de l'article 3 de la loi n°84-53 ont-ils été nommés ?"});
+                    notify_move('#bscHanditorialModeSortiesNonTitulaireTable', 'add', {'title' : "Quels sont les modes de sorties si non titulaires ?"});
+                }
+
+
+            }
+        }
+        $(document).on('click','.notify_alert', function(){
+           scrollTo($(this).data('link'));
+        });
+        function notify_move(element_moved, action, option){
+
+            $.notify.addStyle('link', {
+                html: "<div data-link='"+element_moved+"' class='alert alert-success notify_alert' role='alert'><span data-notify-html /></div>",
+                classes: {
+                    base: {
+                        "background-color": "lightblue",
+                        "padding": "5px",
+                        "width" : "50%"
+                    }
+                }
+            });
+
+            var str_action = 'modifié';
+            var str_title = 'Un(e) tableau/Question ';
+
+            if(action === 'add'){
+                str_action = "a été ajouté";
+            }else if(action === 'del'){
+                str_action = "a été supprimé";
+            }
+
+            if(!isEmpty(option.title)){
+                str_title = option.title;
+            }
+            var text =  "<strong>" + str_title + "</strong> " + str_action + " cliquer ici pour y acceder";
+            var element_exist = $(document).find('.notify_alert');
+            var bool = true;
+            $( element_exist ).each(function() {
+                if($(this).data('link') == element_moved){
+                    bool = false;
+                }
+            });
+
+            if(bool){
+
+                $.notify(text,  {
+                    position: 'bottom left',
+                    // default positions
+                    elementPosition: 'bottom left',
+                    globalPosition: 'bottom left',
+                    // default style
+                    style: 'link',
+                    // default class (string or [string])
+                    className: 'alert alert-info notify_alert',
+                    showDuration: 700,
+                    autoHideDelay: 15000,
+                    arrowShow: false,
+                    autoHide: true
+                });
+            }else{
+                return false;
+            }
+
+        }
+
+        function initFormB41B() {
+            var B41B = $('input[name="bscFormHanditorialQuestionsBoeths[qHandiB41A]"]').filter(':checked').val();
+
+            if (B41B == "1") {
+                $('#b4_1b').show();
+            } else {
+                $('#b4_1b').hide();
+            }
+
+        }
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                var regex = /\,(?!\s*?[\{\[\"\'\w])/g;
+                $('#bscFormHanditorialQuestionsBoeths_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_handitorial_bscHanditorialQuestionsBoeths_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#questions_boeths').load('{{ path('bilan_conso_handitorial_bscHanditorialQuestionsBoeths_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        if (blGpeec == true) {
+                                            window.location.href = '{{ path('bilan_conso_gpeec_edit') }}';
+                                        }
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+

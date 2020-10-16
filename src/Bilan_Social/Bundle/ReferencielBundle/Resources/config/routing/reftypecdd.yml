@@ -1,0 +1,28 @@
+reftypecdd_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefTypeCdd:index" }
+    methods:  GET
+
+reftypecdd_show:
+    path:     /{idTypeCdd}/show
+    defaults: { _controller: "ReferencielBundle:RefTypeCdd:show" }
+    methods:  GET
+
+reftypecdd_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefTypeCdd:new" }
+    methods:  [GET, POST]
+
+reftypecdd_edit:
+    path:     /{idTypeCdd}/edit
+    defaults: { _controller: "ReferencielBundle:RefTypeCdd:edit" }
+    methods:  [GET, POST]
+
+reftypecdd_delete:
+    path:     /{idTypeCdd}/delete
+    defaults: { _controller: "ReferencielBundle:RefTypeCdd:delete" }
+    methods:  DELETE
+
+csv_export_reftypecdd:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefTypeCdd:generateCsv" }

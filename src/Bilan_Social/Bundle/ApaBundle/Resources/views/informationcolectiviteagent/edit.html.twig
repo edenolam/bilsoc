@@ -1,0 +1,1845 @@
+{% extends '@Apa/layout.html.twig' %}
+{% block javascripts %}
+    <script type="text/javascript">
+        /**/
+        var anneCreaCamp
+            = {{ campagne.nmAnne }};
+    </script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/ApaBundle/informationCollectivite.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set droitCdg = app.session.get('droit') %}
+    <div class="col-xs-9 {% if is_granted("ROLE_CDG") and droitCdg == 'voir' %}input-disabled{% endif %}">
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading noPadding">
+                    <h3 class="panel-title" style="max-height:40px;"><span
+                                style="position:relative;bottom:6px;left:25px;color:#1b1464;font-size:1.2em;"><img
+                                    src="{{ asset("img/icone/unlock.png") }}" style="width:50px;margin-right:8px;"/> Informations collectivité</span>
+                    </h3>
+                </div>
+            </div>
+            {{ form_start(edit_form) }}
+
+            {% if (enquetecoll.blBilasoci == true) %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> 1.3.2  - Recours à du personnel temporaire en {{campagne.nmAnne}} <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                        data-target="#q132" aria-hidden="true"></span> <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                           <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet132 is defined %}{% if array_pc_bool.onglet132 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            {% if array_pc_bool.onglet132 is defined %}{% if array_pc_bool.onglet132 == 1 %}{% if totalInd132 == 0.0 %} 100 % (données à 0){% elseif totalInd132 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                        </div>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        {{ form_row(edit_form.blRecPersTemp) }}
+                         <h5>
+                           Champ : personnes de droit public ou privé qui sont dans le cadre d'une mission temporaire et qui sont mises à disposition par les CDG ou intérimaires.<br/>
+                           Ces agents ne doivent pas avoir été recensés à l'indicateur 1.2.1.<br/>
+                           Remarque : si une personne a exercé au cours de plusieurs périodes distinctes, ne la compter qu'une fois.<br/>
+                        </h5>
+                        <table id="infocoll132" class="table {% if edit_form.blRecPersTemp.vars.value == 0 %} hidden {% endif %}} table-striped table-hover table-bordered" >
+                            <thead>
+                               <tr>
+                                    <th></th>
+                                    <th style="text-align: center" colspan="2">Effectifs présents au 31 décembre {{AnneeCamp}}</th>
+                                    <th style="text-align: center" colspan="2">Effectifs présents au moins un jour entre le 1er janvier {{AnneeCamp}} et le 31 décembre {{AnneeCamp}}</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th style="text-align: center">Hommes 1.3.2(1)</th>
+                                    <th style="text-align: center">Femmes 1.3.2(2)</th>
+                                    <th style="text-align: center">Hommes 1.3.2(3)</th>
+                                    <th style="text-align: center">Femmes 1.3.2(4)</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td style="min-width: 200px">Personnels remplaçants mis à disposition par le centre de gestion</td>
+                                </tr>
+                                {% for infocoll132 in edit_form.infocoll132 %}
+                                    <tr id="132tr_{{ infocoll132.refFiliere.vars.data.idFili }}" >
+                                        <td>{{ infocoll132.refFiliere.vars.data.lbFili }}</td>
+                                        <td id="r1571" style="text-align: center">{{ form_widget(infocoll132.r1321) }}</td>
+                                        <td id="r1572" style="text-align: center">{{ form_widget(infocoll132.r1322) }}</td>
+                                        <td id="r1572" style="text-align: center">{{ form_widget(infocoll132.r1323) }}</td>
+                                        <td id="r1572" style="text-align: center">{{ form_widget(infocoll132.r1324) }}</td>
+                                    </tr>
+                                {% endfor %}
+                                  <tr class="filiTable"  style="text-align: center">
+                                    <td>Total</td>
+                                    <td class="r1321_tot">0</td>
+                                    <td class="r1322_tot">0</td>
+                                    <td class="r1323_tot">0</td>
+                                    <td class="r1324_tot">0</td>
+                                </tr>
+                                <tr>
+                                    <td>Personnels employés dans le cadre du recours au service des entreprises  (intérim) </td>
+                                    <td>{{ form_row(edit_form.r13221) }}</td>
+                                    <td>{{ form_row(edit_form.r13222) }}</td>
+                                    <td>{{ form_row(edit_form.r13223) }}</td>
+                                    <td>{{ form_row(edit_form.r13224) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                             {{ form_row(edit_form.onglet132 )}}
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> 1.5.7 - Nombre d’agents fonctionnaires et contractuels sur emploi permanent ayant bénéficié d’un accompagnement par un conseiller en évolution professionnelle <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3> </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet157 is defined %}{% if array_pc_bool.onglet157 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            {% if array_pc_bool.onglet157 is defined %}{% if array_pc_bool.onglet157 == 1 %}{% if totalInd157 == 0.0 %} 100 % (données à 0){% elseif totalInd157 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="panel-body" style="display: none;">
+
+                        <table id="infocoll157" class="table" >
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Catégories</th>
+                                <th style="text-align: center">Hommes</th>
+                                <th style="text-align: center">Femmes</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for infocoll157 in edit_form.infocoll157 %}
+                                    <tr id="157tr_{{ infocoll157.refCategorie.vars.data.idCate }}" >
+                                        <td>{{ infocoll157.refCategorie.vars.data.lbCate }}</td>
+                                        <td id="r1571" style="text-align: center">{{ form_widget(infocoll157.r1571) }}</td>
+                                        <td id="r1572" style="text-align: center">{{ form_widget(infocoll157.r1572) }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {{ form_row(edit_form.onglet157 )}}
+                    </div>
+                </div>
+            {% endif %}
+            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blHand == true)) %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">1.6.2 - Respect de obligation d'emploi et dépenses réalisées couvrant partiellement l'obligation d'emploi (ouvrant droit à réduction des unités manquantes) et taux d'emploi <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+						data-target="#q162" aria-hidden="true"></span> <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+					</div>
+					<div class="row pcCollectivite">
+						<div class="progress col-xs-10 pcCollectivite">
+							<div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet162 is defined  %}{% if array_pc_bool.onglet162 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+							</div>
+                            
+						</div>
+						<div class="col-xs-4">
+							{% if array_pc_bool.onglet162 is defined %}{% if array_pc_bool.onglet162 == 1 %}{% if totalInd162 == 0 %} 100 % (données à 0){% elseif totalInd162 != 0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+						</div>
+					</div>
+					<div class="panel-body" style="display: none;">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Dépenses réalisées couvrant partiellement l'obligation d'emploi</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tbody>
+
+
+										<tr>
+											<th>Montant total des marchés passés dans l'année * <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+											data-target="#mtDepetota" aria-hidden="true"></span></th>
+											<td>
+												{{ form_row(edit_form.mtDepetota)}}
+											</td>
+										</tr>
+										<tr>
+											<th>Dépenses affectées à des mesures adoptées en vue de faciliter l'insertion professionnelle des personnes handicapées dans la fonction publique <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+											data-target="#mtDepeinsepershand" aria-hidden="true"></span></th>
+											<td>
+												{{ form_row(edit_form.mtDepeinsepershand)}}
+											</td>
+										</tr>
+										<tr>
+											<th>Dépenses réalisées par l'employeur pour accueillir ou maintenir dans l'emploi des personnes lourdement handicapées <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+											data-target="#mtRealemplpershand" aria-hidden="true"></span></th>
+											<td>
+												{{ form_row(edit_form.mtRealemplpershand)}}
+											</td>
+										</tr>
+										<tr>
+											<th>Dépenses d'aménagement des postes de travail effectuées pour maintenir dans leur emploi les agents reconnus inaptes à l'exercice de leurs fonctions dans les conditions réglementaires applicables à la fonction publique territoriale et qui n'appartiennent pas à l'une des catégories mentionnées à l'article 2 du décret. <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+											data-target="#mtDepeamentrav" aria-hidden="true"></span></th>
+											<td>
+												{{ form_row(edit_form.mtDepeamentrav)}}
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+								{{ form_row(edit_form.onglet162 )}}
+							</div>
+						</div>
+					</div>
+				</div>
+            {% endif %}
+            {% if (enquetecoll.blBilasoci == true) %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">2.1.0 - Nombre de journées de congés supplémentaires accordées à l'ensemble des agents  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+					</div>
+					<div class="row pcCollectivite">
+						<div class="progress col-xs-10 pcCollectivite">
+							 <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet21 is defined %}{% if array_pc_bool.onglet21 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+							</div>
+						</div>
+						<div class="col-xs-4">
+							{% if array_pc_bool.onglet21 is defined %}{% if array_pc_bool.onglet21 == 1 %}{% if totalInd21 == 0 %} 100 % (données à 0){% elseif totalInd21 != 0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+						</div>
+					</div>
+					<div class="panel-body" style="display: none;">
+						 <table class="table">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Nombre de jours accordés à l'ensemble des agents</th>
+								</tr>
+							</thead>
+							<tbody>
+{#								<tr>#}
+{#									<td>#}
+{#										Autorisations d'absence exceptionnelles accordées à tous les agents : journées liées aux traditions locales, journées de congés supplémentaires accordées par la collectivité (journée du maire, fermeture exceptionnelle, etc.) - hors droits acquis et jours de fractionnement #}
+{#									</td>#}
+{#									<td>#}
+{#										{{ form_row(edit_form.r2101) }}#}
+{#									</td>#}
+{#								</tr>#}
+								<tr>
+									<td>
+										Droits acquis (cycles de travail délibérés avant le 1er janvier 2002)<span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+										data-target="#r2102" aria-hidden="true"></span>
+									</td>
+									<td>
+										{{ form_row(edit_form.r2102) }}
+									</td>
+								</tr>
+								<tr>
+                                    <td>Votre collectivité accorde-t-elle des journées de congés supplémentaires à l'ensemble de ses agents
+                                        au-delà du nombre de jours de congés légal hors droits acquis et jours de fractionnement ?
+                                    </td>
+                                    <td id="r2103">{{ form_widget(edit_form.r2103) }}</td>
+                                </tr>
+                                <tr id="afficheR1204" class=" {% if edit_form.r2103.vars.value == 0 %} hidden {% endif %}}">
+                                    <td>
+                                        Nombre de jours accordés à l'ensemble des agents (Exemple: 2 ponts = 2 jours)
+                                    </td>
+                                    <td>{{ form_widget(edit_form.r2104) }} </td>
+                                </tr>
+
+							</tbody>
+						 </table>
+						{{ form_row(edit_form.onglet21 )}}
+					</div>
+				</div>
+            {% endif %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">  2.1.5 - Congés de présence parentale des FONCTIONNAIRES ET CONTRACTUELS,
+                        par catégorie hiérarchique <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet215 is defined %}{% if array_pc_bool.onglet215 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        {% if array_pc_bool.onglet215 is defined %}{% if array_pc_bool.onglet215 == 1 %}{% if totalInd215 == 0.0 %} 100 % (données à 0){% elseif totalInd215 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <h5>
+                        Champ : le tableau qui suit concerne les fonctionnaires et contractuels sur emploi permanent ayant bénéficié d'un congé de présence parentale au cours de l'année {{ AnneeCamp }}.
+                    </h5>
+                    <p>Remarque: si un agent a été absent sur plusieurs périodes dans l'année, ne le compter qu'une seule fois.</p>
+
+                    <table id="infocoll215" class="table table-striped table-hover table-bordered" >
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">Catégories</th>
+                            <th style="text-align: center">Nombre d'agents</th>
+                            <th style="text-align: center">Nombre total de journées d'absence au titre du congé parentale</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for infocoll215 in edit_form.infocoll215 %}
+                            <tr id="215tr_{{ infocoll215.refCategorie.vars.data.idCate }}" >
+                                <td style="min-width: 300px">{{ infocoll215.refCategorie.vars.data.lbCate }}</td>
+                                <td id="r2151" style="text-align: center">{{ form_widget(infocoll215.r2151) }}</td>
+                                <td id="r2152" style="text-align: center">{{ form_widget(infocoll215.r2152) }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {{ form_row(edit_form.onglet215 )}}
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">   2.1.6 - Congés de solidarité familiale des agents FONCTIONNAIRES ET CONTRACTUELS,
+                        par catégorie hiérarchique <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet216 is defined %}{% if array_pc_bool.onglet216 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        {% if array_pc_bool.onglet216 is defined %}{% if array_pc_bool.onglet216 == 1 %}{% if totalInd216 == 0.0 %} 100 % (données à 0){% elseif totalInd216 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <h5>
+                        Champ : le tableau qui suit concerne les fonctionnaires et contractuels sur emploi permanent ayant bénéficié d'un congé de solidarité familiale au cours de l'année {{ AnneeCamp }}.
+                    </h5>
+                    <p>Remarque: si un agent a été absent sur plusieurs périodes dans l'année, ne le compter qu'une seule fois.</p>
+
+                    <table id="infocoll216" class="table table-striped table-hover table-bordered" >
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">Catégories</th>
+                            <th style="text-align: center">Nombre d'agents</th>
+                            <th style="text-align: center">Nombre total de journées d'absence au titre du congé de solidarité familiale</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for infocoll216 in edit_form.infocoll216 %}
+                            <tr id="216tr_{{ infocoll216.refCategorie.vars.data.idCate }}" >
+                                <td style="min-width: 300px">{{ infocoll216.refCategorie.vars.data.lbCate }}</td>
+                                <td id="r2161" style="text-align: center">{{ form_widget(infocoll216.r2161) }}</td>
+                                <td id="r2162" style="text-align: center">{{ form_widget(infocoll216.r2162) }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {{ form_row(edit_form.onglet216 )}}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">   2.1.7 - Entretiens avant et après des congés de 6 mois ou plus <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet217 is defined %}{% if array_pc_bool.onglet217 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.onglet217 is defined %}{% if array_pc_bool.onglet217 == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+
+                    <h5>
+                        Champ: les tableaux qui suivent ne concernent que les agents sur emploi permanent
+                    </h5>
+                    <br/>
+                    <h5>
+                        Départ en congé
+                    </h5>
+                    <table width="100%" id="ind2171Table" class="table table-striped table-hover table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>{{ form_label(edit_form.q2171) }}</td>
+                                <td>{{ form_widget(edit_form.q2171) }}</td>
+                            </tr>
+                            <tr class="hidden">
+                                <td>{{ form_label(edit_form.r2171) }}</td>
+                                <td>{{ form_widget(edit_form.r2171) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <table width="100%" id="ind2171Table" class="table table-striped table-hover table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>{{ form_label(edit_form.q2172) }}</td>
+                            <td>{{ form_widget(edit_form.q2172) }}</td>
+                        </tr>
+                        <tr class="hidden">
+                            <td>{{ form_label(edit_form.r2172) }}</td>
+                            <td>{{ form_widget(edit_form.r2172) }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <h5>
+                        Retour de congé
+                    </h5>
+                    <table width="100%" id="ind2171Table" class="table table-striped table-hover table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>{{ form_label(edit_form.q2173) }}</td>
+                            <td>{{ form_widget(edit_form.q2173) }}</td>
+                        </tr>
+                        <tr class="hidden">
+                            <td>{{ form_label(edit_form.r2173) }}</td>
+                            <td>{{ form_widget(edit_form.r2173) }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <table width="100%" id="ind2171Table" class="table table-striped table-hover table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>{{ form_label(edit_form.q2174) }}</td>
+                            <td>{{ form_widget(edit_form.q2174) }}</td>
+                        </tr>
+                        <tr class="hidden">
+                            <td>{{ form_label(edit_form.r2174) }}</td>
+                            <td>{{ form_widget(edit_form.r2174) }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    {{ form_row(edit_form.onglet217 )}}
+                </div>
+            </div>
+            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true)) %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">2.2.5 Charte du temps  <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+						data-target="#q225" aria-hidden="true"></span> <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+					</div>
+					<div class="row pcCollectivite">
+						<div class="progress col-xs-10 pcCollectivite">
+							<div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet225 is defined %}{% if array_pc_bool.onglet225 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+							</div>
+						</div>
+						<div class="col-xs-2">
+							{% if array_pc_bool.onglet225 is defined %}{% if array_pc_bool.onglet225 == 1 %}100{% else %}0{% endif %}{% endif %}%
+						</div>
+					</div>
+					<div class="panel-body" style="display: none;">
+						{{ form_row(edit_form.blChartemp) }}
+						{{ form_row(edit_form.onglet225 )}}
+					</div>
+					
+				</div>
+            {% endif %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">2.2.7 Modalités de contrôle des arrêts maladie <span style="cursor: pointer"
+                                                                                                 class="glyphicon glyphicon-question-sign"
+                                                                                                 data-toggle="modal"
+                                                                                                 alt="Cliquer pour plus d'information"
+                                                                                                 title="Cliquer pour plus d'information"
+                                                                                                 data-target="#q227"
+                                                                                                 aria-hidden="true"></span>
+                        <span class="pull-right clickable panel-collapsed"><i
+                                    class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow=""
+                             aria-valuemin="0" aria-valuemax="20"
+                             style="width:{% if array_pc_bool.onglet227 is defined %}{% if array_pc_bool.onglet227 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.onglet227 is defined %}{% if array_pc_bool.onglet227 == 1 %}100{% else %}0{% endif %}{% endif %}
+                        %
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    {{ form_row(edit_form.r2271) }}
+                    {{ form_row(edit_form.r2272) }}
+                    {{ form_row(edit_form.onglet227 ) }}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">3.1.1- Rémunérations des fonctionnaires<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet311 is defined %}{% if array_pc_bool.onglet311 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.onglet311 is defined %}{% if array_pc_bool.onglet311 == 1 %}100{% else %}0{% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <label>3.1.1.0 - Au 31/12/{{campagne.nmAnne}}, avez-vous mis en place le RIFSEEP pour au moins un cadre d'emplois ?</label>
+                    {{ form_row(edit_form.q3110 )}}
+                    <div class="q3111 hidden">
+                        <label>Avez-vous délibéré sur la mise en place d'une part CIA ?</label>
+                        {{ form_row(edit_form.q3111 )}}
+                    </div>
+
+                    {{ form_row(edit_form.onglet311 )}}
+                </div>
+
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">3.2.1 -Rémunérations des contractuels sur emploi permanent <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet321 is defined %}{% if array_pc_bool.onglet321 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.onglet321 is defined %}{% if array_pc_bool.onglet321 == 1 %}100{% else %}0{% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <label>3.2.1.0 - Avez-vous mis en place le RIFSEEP au plus tard au 31/12/{{campagne.nmAnne}} (contractuels) ?</label>
+                    {{ form_row(edit_form.rifseepContractuel )}}
+
+                    {{ form_row(edit_form.onglet321 )}}
+                </div>
+            </div>
+
+            {% if (enquetecoll.blBilasoci == true) %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">3.4.1 - Indemnisation du chômage pour les titulaires <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                        data-target="#q341" aria-hidden="true"></span> <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                           <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet341 is defined %}{% if array_pc_bool.onglet341 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            {% if array_pc_bool.onglet341 is defined %}{% if array_pc_bool.onglet341 == 1 %}{% if totalInd341 == 0.0 %} 100 % (données à 0){% elseif totalInd341 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                        </div>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        {{ form_row(edit_form.blAutoassusansconvtitu) }}
+                        {{ form_row(edit_form.blAutoassuavecconvtitu) }}
+                         <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nombre d'allocataires dans l'année {{campagne.nmAnne}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                       Anciens titulaires
+                                    </td>
+                                    <td>
+                                        {{ form_row(edit_form.titu341) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                       Anciens stagiaires
+                                    </td>
+                                    <td>
+                                        {{ form_row(edit_form.stag341) }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                         </table>
+                        {{ form_row(edit_form.onglet341 )}}
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> 3.4.2 - Indemnisation du chômage pour les contractuels <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                        data-target="#q342" aria-hidden="true"></span> <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                           <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet342 is defined %}{% if array_pc_bool.onglet342 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            {% if array_pc_bool.onglet342 is defined %}{% if array_pc_bool.onglet342 == 1 %}{% if totalInd342 == 0.0 %} 100 % (données à 0){% elseif totalInd342 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                        </div>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        {{ form_row(edit_form.blAutoassusansconvcont) }}
+                        {{ form_row(edit_form.blAutoassuavecconvcont) }}
+                        {{ form_row(edit_form.blRegiassuchom) }}
+
+                         <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nombre d'allocataires dans l'année {{campagne.nmAnne}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                       Anciens contractuels
+                                    </td>
+                                    <td>
+                                        {{ form_row(edit_form.contractuel342) }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                         </table>
+                         {{ form_row(edit_form.onglet342 )}}
+                    </div>
+                </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> 3.4.3 - Maintien des primes en cas de congé maladie <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                           <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet343 is defined %}{% if array_pc_bool.onglet343 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            {% if array_pc_bool.onglet343 is defined %}{% if array_pc_bool.onglet343 == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                        </div>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                         {{ form_row(edit_form.mpccm) }}
+                        {{ form_row(edit_form.onglet343 )}}
+                    </div>
+                </div>
+            {% endif %}
+{#            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true)) %}#}
+{#                <div class="panel panel-default">#}
+{#                    <div class="panel-heading">#}
+{#                        <h3 class="panel-title"> 3.4.4 - Heures supplémentaires et heures complémentaires <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q344" aria-hidden="true"></span> <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>#}
+{#                    </div>#}
+{#                    <div class="row pcCollectivite">#}
+{#                        <div class="progress col-xs-10 pcCollectivite">#}
+{#                           <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet344 is defined %}{% if array_pc_bool.onglet344 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-xs-2">#}
+{#                            {% if array_pc_bool.onglet344 is defined %}{% if array_pc_bool.onglet344 == 1 %}100{% else %}0 {% endif %}{% endif %}%#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="panel-body" style="display: none;">#}
+
+{#                        {{ form_row(edit_form.blHeursupp) }}#}
+{#                        {{ form_row(edit_form.blHeurcomp) }}#}
+{#                        {{ form_row(edit_form.onglet344 )}}#}
+{#                    </div>#}
+
+{#                </div>#}
+{#            {% endif %}#}
+            {% if (enquetecoll.blBilasoci == true) %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"> 3.4.5 - Dépenses de fonctionnement de la collectivité et dépenses de personnel<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                       <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet345 is defined %}{% if array_pc_bool.onglet345 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        {% if array_pc_bool.onglet345 is defined %}{% if array_pc_bool.onglet345 == 1 %}{% if totalInd345 == 0.0 %} 100 % (données à 0){% elseif totalInd345 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <label class="control-label required">Montant des dépenses de fonctionnement de la collectivité constatées au compte administratif de l'année de référence ( en Euro )</label> <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                    data-target="#mtDepefonccoll" aria-hidden="true"></span>
+                    {{ form_row(edit_form.mtDepefonccoll) }}
+                    <label class="control-label required">Charge de personnel</label> <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                    data-target="#mtCharpers" aria-hidden="true"></span>
+                    {{ form_row(edit_form.mtCharpers) }}
+                    {{ form_row(edit_form.lbRati) }}
+                    {{ form_row(edit_form.onglet345 )}}
+                </div>
+                
+            </div>
+            {% endif %}
+            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true)) %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> 4.1.2 - Actions liées à la prévention dans
+                            l'année {{ campagne.nmAnne }} <span style="cursor: pointer"
+                                                                class="glyphicon glyphicon-question-sign"
+                                                                data-toggle="modal"
+                                                                alt="Cliquer pour plus d'information"
+                                                                title="Cliquer pour plus d'information"
+                                                                data-target="#q412" aria-hidden="true"></span> <span
+                                    class="pull-right clickable panel-collapsed"><i
+                                        class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow=""
+                                 aria-valuemin="0" aria-valuemax="20"
+                                 style="width:{% if array_pc_bool.onglet412 is defined %}{% if array_pc_bool.onglet412 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            {% if array_pc_bool.onglet412 is defined %}{% if array_pc_bool.onglet412 == 1 %}{% if totalInd412 == 0.0 %} 100 % (données à 0){% elseif totalInd412 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                        </div>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        {{ form_row(edit_form.blAgenaffeprev) }}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Formations</th>
+                                <th>Montant en euros</th>
+                                <th>Nombre de jours</th>
+                                <th>Nombre d'agents</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for actionPrev in edit_form.actionPrevention %}
+                                <tr>
+                                    <td>
+                                        {{ actionPrev.vars.value.RefActionPreventions.lbActionPrev }}
+                                    </td>
+                                    <td>
+                                        {{ form_row(actionPrev.r5121) }}
+                                    </td>
+                                    {% if actionPrev.vars.value.RefActionPreventions.cdActionprev == 'AP004' or actionPrev.vars.value.RefActionPreventions.cdActionprev == 'AP005' %}
+                                    <td>
+                                        {{ form_row(actionPrev.r5122, {'value': '', 'disabled': true}) }}
+                                    </td>
+                                    <td>
+                                        {{ form_row(actionPrev.nbAgent, {'value': '', 'disabled': true}) }}
+                                    </td>
+                                    {% else %}
+                                        <td>
+                                            {{ form_row(actionPrev.r5122) }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(actionPrev.nbAgent) }}
+                                        </td>
+                                    {% endif %}
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {{ form_row(edit_form.onglet412 ) }}
+                    </div>
+                </div>
+            {% endif %}
+
+
+
+            {% if (enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true)) %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">4.1.3 - Nombre de visites médicales sur demande de l'agent en {{ campagne.nmAnne }}  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                       <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet413 is defined %}{% if array_pc_bool.onglet413 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                       </div>
+                    </div>
+                    <div class="col-xs-4">
+                        {% if array_pc_bool.onglet413 is defined %}{% if array_pc_bool.onglet413 == 1 %}{% if totalInd413 == 0.0 %} 100 % (données à 0){% elseif totalInd413 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                      <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Hommes</th>
+                            <th>Femmes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Nombre de visites médicales spontanées chez le médecin de prévention, en {{AnneeCamp}}
+                            </td>
+                            <td>{{ form_row(edit_form.nbVisimedisponprevH) }}</td>
+                            <td>{{ form_row(edit_form.nbVisimedisponprevF) }}</td>
+                        </tr>
+                    </tbody>
+                 </table>
+                    {{ form_row(edit_form.onglet413 )}}
+                </div>
+                
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">4.1.4 à 4.1.6 - Documents et démarches de prévention  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet414 is defined %}{% if array_pc_bool.onglet414 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.onglet414 is defined %}{% if array_pc_bool.onglet414 == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">4.1.4  - Document unique d'évaluation des risques professionnels (DUERP)<span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#q414" aria-hidden="true"></span></h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_row(edit_form.blDocurisqpro) }}
+                            <div id="blDocurisqpro" {% if edit_form.blDocurisqpro.vars.value == 1 %} {% else %}class="hidden" {% endif %}>
+                                <div id="encours" class="hidden">
+                                    <p>L'année entrée doit être inférieur à l'année de création de la campagne, et supérieure à 1980. Sinon veuillez selectionner "en cours" </p>
+                                </div>
+                                {{ form_row(edit_form.nmAnnecrea) }}
+                                <div id="maj" class="hidden">
+                                    <p>L'année entrée doit être inférieur à l'année de création de la campagne, et supérieure ou égale à l'année de création du document.</p>
+                                </div>
+                                {{ form_row(edit_form.nmAnnedernmaj) }}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">4.1.5 - Plan de prévention des risques psychosociaux (RPS) <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#q415" aria-hidden="true"></span></h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {{ form_row(edit_form.blPlanprevrisqpsysoci) }}
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">4.1.6  - Démarches de prévention des risques <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#q416" aria-hidden="true"></span></h3>
+                        </div>
+                        <div class="panel-body">
+                            <label>Votre collectivité a-t-elle mis en place les démarches de prévention suivantes:</label>
+                            {{ form_row(edit_form.blDemaprevtroumuscu) }}
+                            {{ form_row(edit_form.blDemaprevrisqcanc) }}
+                            {{ form_row(edit_form.blAutrdemaprev) }}
+                        </div>
+                    </div>
+                    {{ form_row(edit_form.onglet414 )}}
+                </div>
+                
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">4.1.7  - Registre de santé et de sécurité au travail  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                         <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet417 is defined %}{% if array_pc_bool.onglet417 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.onglet417 is defined %}{% if array_pc_bool.onglet417 == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    {{ form_row(edit_form.blRegisantsecutrav) }}
+                    {{ form_row(edit_form.onglet417 )}}
+                </div>
+                
+            </div>
+
+             <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"> 4.2.5 - Contrat d'assurance statutaire pour la prise en charge du risque maladie  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                       <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.ongletq425 is defined %}{% if array_pc_bool.ongletq425 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                    </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.ongletq425 is defined %}{% if array_pc_bool.ongletq425 == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    {{ form_row(edit_form.q425) }}
+                    {{ form_row(edit_form.ongletq425 )}}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">4.3.1- Nombre d'actes de violence physiques et de signalements pour actes de violences sexuelles, agissements sexiste, harcèlement moral et sexuel envers le personnel au cours de l'année {{campagne.nmAnne}}  <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q43" aria-hidden="true"></span><span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet43 is defined %}{% if array_pc_bool.onglet43 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.onglet43 is defined %}{% if array_pc_bool.onglet43 == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+
+                    <label>Est-ce que certains agents de votre collectivité ont été victimes d'actes de violence physique (y compris violences sexuelles) en {{AnneeCamp}}, de la part d'usagers ou d'autres agents ?</label>
+                    {{ form_row(edit_form.blActeviolphys) }}
+                    
+                    <div id="blActeviolphys" {% if edit_form.blActeviolphys.vars.value == 1 %} {% else %}class="hidden" {% endif %} >
+                     <h5>
+                         Champ : le tableau qui suit concerne tous les agents, titulaires et contractuels, y compris sur un emploi non permanent.
+                    </h5>
+                        <table class="table table-striped table-hover table-bordered" id="ind4311Table">
+                            <thead>
+                            <tr>
+                                <th rowspan="2"></th>
+                                <th colspan="2" style="text-align: center">Nombre d'actes de violence physique (y compris violences sexuelles) envers le personnel au cours de l'année {{AnneeCamp}}</th>
+                            </tr>
+                                <tr>
+                                    <th>Hommes</th>
+                                    <th>Femmes</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for acteviolencephysique in edit_form.acteviolencephysique %}
+                                    <tr>
+                                        <td>
+
+                                            {{ acteviolencephysique.vars.value.RefActeViolencePhysique.lbActviolphys }}
+                                            {#                                {{ form_row(acteviolencephysique.RefActeViolencePhysique) }}#}
+                                        </td>
+                                        <td>
+                                            {{ form_row(acteviolencephysique.r5311) }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(acteviolencephysique.r5312) }}
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+                                <tr class="filiTable"  style="text-align: center">
+                                    <td>Total</td>
+                                    <td class="r5311_tot">0</td>
+                                    <td class="r5312_tot">0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><br/>
+
+
+                    <label> Est-ce que certains agents de votre collectivité ont été victimes de harcèlement moral en {{AnneeCamp}}, de la part d'usagers ou d'autres agents ?</label>
+                    {{ form_row(edit_form.q432) }}
+                     <div id="blq432" {% if edit_form.q432.vars.value == 1 %} {% else %}class="hidden" {% endif %} >
+                     <h5>
+                         Champ : le tableau qui suit concerne tous les agents, titulaires et contractuels, y compris sur un emploi non permanent.
+                    </h5>
+                        <table class="table table-striped table-hover table-bordered" id="ind4312Table">
+                            <thead>
+                            <tr>
+                                <th rowspan="2"></th>
+                                <th colspan="2" style="text-align: center">Nombre de signalements au DRH pour harcelement moral</th>
+                            </tr>
+                                <tr>
+                                    <th>Hommes</th>
+                                    <th>Femmes</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for acteviolencephysique in edit_form.acteviolencephysique %}
+                                    <tr>
+                                        <td>
+
+                                            {{ acteviolencephysique.vars.value.RefActeViolencePhysique.lbActviolphys }}
+                                            {#                                {{ form_row(acteviolencephysique.RefActeViolencePhysique) }}#}
+                                        </td>
+                                        <td>
+                                            {{ form_row(acteviolencephysique.r4313) }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(acteviolencephysique.r4314) }}
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+                                <tr class="filiTable" id="tot4312" style="text-align: center">
+                                    <td>Total</td>
+                                    <td class="r4313_tot">0</td>
+                                    <td class="r4314_tot">0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+
+                    <label>Est-ce que certains agents de votre collectivité ont été victimes de harcèlement sexuel ou agissements sexistes en {{AnneeCamp}}, de la part d'usagers ou d'autres agents ?</label>
+                    {{ form_row(edit_form.q433) }}
+                     <div id="blq433" {% if edit_form.blActeviolphys.vars.value == 1 %} {% else %}class="hidden" {% endif %} >
+                     <h5>
+                         Champ : le tableau qui suit concerne tous les agents, titulaires et contractuels, y compris sur un emploi non permanent.
+                    </h5>
+                        <table class="table table-striped table-hover table-bordered" id="ind4313Table">
+                            <thead>
+                            <tr>
+                                <th rowspan="2"></th>
+                                <th colspan="2" style="text-align: center">Nombre de signalements au DRH pour harcelement sexuel ou agissements sexistes</th>
+                            </tr>
+                                <tr>
+                                    <th>Hommes</th>
+                                    <th>Femmes</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for acteviolencephysique in edit_form.acteviolencephysique %}
+                                    <tr>
+                                        <td>
+
+                                            {{ acteviolencephysique.vars.value.RefActeViolencePhysique.lbActviolphys }}
+                                            {#                                {{ form_row(acteviolencephysique.RefActeViolencePhysique) }}#}
+                                        </td>
+                                        <td>
+                                            {{ form_row(acteviolencephysique.r4315) }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(acteviolencephysique.r4316) }}
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+                                <tr class="filiTable" id="tot4313" style="text-align: center">
+                                    <td>Total</td>
+                                    <td class="r4315_tot">0</td>
+                                    <td class="r4316_tot">0</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    {{ form_row(edit_form.onglet43 )}}            
+                </div>
+            </div>
+            {% endif %}
+            {% if (enquetecoll.blBilasoci == true) %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">5.1.4 - Coûts de formation  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet514 is defined %}{% if array_pc_bool.onglet514 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        {% if array_pc_bool.onglet514 is defined %}{% if array_pc_bool.onglet514 == 1 %}{% if totalInd514 == 0.0 %} 100 % (données à 0){% elseif totalInd514 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+
+                                <th>Montants pour l'année {#{{campagne.nmAnne}}#} en euros</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <th>CNFPT au titre de la cotisation obligatoire</th>
+                                <td>
+                                    {{ form_row(edit_form.mtCnfptcotiobl) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>CNFPT au delà de la cotisation obligatoire (formations payantes)</th>
+                                <td>
+                                    {{ form_row(edit_form.mtCnfptsupcotiobl) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Autres organismes </th>
+                                <td>
+                                    {{ form_row(edit_form.mtAutrorga) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Frais de déplacement à la charge de la collectivité <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                                data-target="#mtFraidepla" aria-hidden="true"></span></th>
+                                <td>
+                                    {{ form_row(edit_form.mtFraidepla) }}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                {{ form_row(edit_form.onglet514 )}}
+                </div>
+            </div>
+            {% endif %}
+            {% if ((enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true and collectivite.blCtCdg == false)) ) %}
+                <div class="panel panel-default {% if informationColectiviteAgent.collectivite.blCtCdg == true %} hidden {% endif %}">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">6.1.1 - Réunions statutaires <span style="cursor: pointer"
+                                                                                   class="glyphicon glyphicon-question-sign"
+                                                                                   data-toggle="modal"
+                                                                                   alt="Cliquer pour plus d'information"
+                                                                                   title="Cliquer pour plus d'information"
+                                                                                   data-target="#q611"
+                                                                                   aria-hidden="true"></span><span
+                                    class="pull-right clickable panel-collapsed"><i
+                                        class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow=""
+                                 aria-valuemin="0" aria-valuemax="20"
+                                 style="width:{% if array_pc_bool.onglet611 is defined %}{% if array_pc_bool.onglet611 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            {% if array_pc_bool.onglet611 is defined %}{% if array_pc_bool.onglet611 == 1 %}{% if totalInd611 == 0.0 %} 100 % (données à 0){% elseif totalInd611 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                        </div>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        <h4>
+                            Pour les collectivités de 50 agents ou plus, et pour les centres de gestion
+                        </h4>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th colspan="2">Nombre de réunions dans l'année</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>du comité technique *</td>
+                                <td>
+                                    {{ form_row(edit_form.nbReunct) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> des commissions administratives paritaires</td>
+                                <td>
+                                    {{ form_row(edit_form.nbReuncommiadmi) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> des commissions consultatives paritaires</td>
+                                <td>
+                                    {{ form_row(edit_form.nbReuncommiconsu) }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        {{ form_row(edit_form.nbReunchsct) }}
+                        <div{% if (informationColectiviteAgent.collectivite.refTypeCollectivite.lbTypeColl == 'CDG') %} {% else %} class="hidden" {% endif %}>
+                            <h4>Pour les centres de gestion, uniquement</h4>
+                            <label> Votre comité technique (CT) a-t-il siégé en {{ campagne.nmAnne }} pour exercer les
+                                missions dévolues à un comité d'hygiène et de sécurité et condition de travail (CHSCT)?</label>
+                        </div>
+                        <div{% if (informationColectiviteAgent.collectivite.refTypeCollectivite.lbTypeColl != 'CDG') %} {% else %} class="hidden" {% endif %}>
+                            <h4> Pour les collectivités de 50 agents ou plus, uniquement </h4>
+                            <label>Disposez-vous d'un comité d'hygiène et de sécurité et condition de travail (CHSCT) au sein de votre collectivité?</label>
+                        </div>
+                        {{ form_row(edit_form.blCtsiegmissdevo) }}
+                        <div id="blCtsiegmissdevo" {% if edit_form.blCtsiegmissdevo.vars.value == 1 %} {% else %}class="hidden" {% endif %} >
+                            <div {% if (informationColectiviteAgent.collectivite.refTypeCollectivite.lbTypeColl != 'CDG') %} {% else %} class="hidden" {% endif %}>
+                                <label>Nombre de réunions du CHSCT dans l'année {{campagne.nmAnne}}</label>
+                            </div>
+                            <div{% if (informationColectiviteAgent.collectivite.refTypeCollectivite.lbTypeColl == 'CDG') %} {% else %} class="hidden" {% endif %}>
+                                <label>Nombre de réunions du CT dans l'année {{campagne.nmAnne}} pour exercer les missions dévolues à un CHSCT</label>
+                            </div>
+                            {{ form_row(edit_form.nbReunctmissdevo) }}
+                            <div{% if (informationColectiviteAgent.collectivite.refTypeCollectivite.lbTypeColl != 'CDG') %} {% else %} class="hidden" {% endif %}>
+                                <label>Nombre de jours d'activité des représentants en CHSCT</label>
+                                {{ form_row(edit_form.nbJourActRep) }}
+                                <label>Nombre de jours d'activité du secrétaire du CHSCT</label>
+                                {{ form_row(edit_form.nbJourActSec) }}
+                            </div>
+                        </div>
+                        {{ form_row(edit_form.onglet611 ) }}
+                    </div>
+                </div>
+            {% endif %}
+            {% if ((enquetecoll.blBilasoci == true or (enquetecoll.blBilasoci == false and enquetecoll.blRast == true))) %}
+                <div class="panel panel-default {% if (informationColectiviteAgent.collectivite.blAffiColl == 0 or informationColectiviteAgent.collectivite.blAffiColl is null  or informationColectiviteAgent.collectivite.refTypeCollectivite.lbTypeColl == 'CDG') %} {% else %} hidden {% endif %}">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">6.1.2 - Droits syndicaux <span
+                                    class="pull-right clickable panel-collapsed"><i
+                                        class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow=""
+                                 aria-valuemin="0" aria-valuemax="20"
+                                 style="width:{% if array_pc_bool.onglet612 is defined %}{% if array_pc_bool.onglet612 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            {% if array_pc_bool.onglet612 is defined %}{% if array_pc_bool.onglet612 == 1 %}{% if totalInd612 == 0.0 %} 100 % (données à 0){% elseif totalInd612 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                        </div>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+
+                                <th>Nombre de jours dans l'année {#{{campagne.nmAnne}}#}</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                            <tr>
+                                <th>Journées d'autorisations spéciales d'absence accordées en application de l'article
+                                    16 du décret du 3 avril 1985
+                                </th>
+                                <td>
+                                    {{ form_row(edit_form.nbJourautospeacco) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th> Journées d'absence pour formation syndicale accordées aux fonctionnaires</th>
+                                <td>
+                                    {{ form_row(edit_form.nbJourabse) }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel-body" style="display: none;">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+
+                                <th>Nombre d'heures dans l'année {#{{campagne.nmAnne}}#}</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                            <tr>
+                                <th>Volume du contingent global d'heures d'autorisations spéciales d'absence calculé en
+                                    application de l'article 14 du décret du 3 avril 1985
+                                </th>
+                                <td>
+                                    {{ form_row(edit_form.nbHeurglob) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Heures de décharges d'activité de service <span style="cursor: pointer"
+                                                                                    class="glyphicon glyphicon-question-sign"
+                                                                                    data-toggle="modal"
+                                                                                    alt="Cliquer pour plus d'information"
+                                                                                    title="Cliquer pour plus d'information"
+                                                                                    data-target="#nbHeurd"
+                                                                                    aria-hidden="true"></span> :
+                                </th>
+
+                            </tr>
+                            <tr>
+                                <th> - auxquelles ont droit les organisations syndicales</th>
+                                <td>
+                                    {{ form_row(edit_form.nbHeurdroisynd) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th> - effectivement utilisées</th>
+                                <td>
+                                    {{ form_row(edit_form.nbHeurutil) }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Nombre de protocoles dans l'année {#{{campagne.nmAnne}}#}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Nombre de protocoles d'accords (avec seuil complémentaire) <span
+                                            style="cursor: pointer" class="glyphicon glyphicon-question-sign"
+                                            data-toggle="modal" alt="Cliquer pour plus d'information"
+                                            title="Cliquer pour plus d'information" data-target="#nbProtacco"
+                                            aria-hidden="true"></span></th>
+                                <td>
+                                    {{ form_row(edit_form.nbProtacco) }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        {{ form_row(edit_form.onglet612 ) }}
+                    </div>
+
+                </div>
+            {% endif %}
+            {% if (enquetecoll.blBilasoci == true) %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">6.1.3 - Conflits du travail : grèves  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                         <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet613 is defined %}{% if array_pc_bool.onglet613 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                    </div>
+                    </div>
+                    <div class="col-xs-4">
+                        {% if array_pc_bool.onglet613 is defined %}{% if array_pc_bool.onglet613 == 1 %}{% if totalInd613 == 0.0 %} 100 % (données à 0){% elseif totalInd613 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <label>Votre collectivité est-elle concernée par les grèves en {{campagne.nmAnne}} ?</label>
+                    {{ form_row(edit_form.blGrev) }}
+                    <div id="blGrev" {% if edit_form.blGrev.vars.value == 1 %} {% else %}class="hidden" {% endif %} >
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+
+                                    <th colspan="2">Nombre de journées de grève <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                                    data-target="#nbjourgreve" aria-hidden="true"></span> </th>
+
+                                </tr>
+                                <tr>
+                                    <th>Cessations collectives et concertées du travail</th>
+                                    <th>en {{campagne.nmAnne}}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for ConflitTravail in edit_form.ConflitTravail %}
+                                    <tr>
+                                        <td>
+                                            {{ ConflitTravail.vars.value.RefMotifGreve.lbMotigrev }}
+                                        </td>
+
+                                        <td>
+                                            {{ form_row(ConflitTravail.r7131) }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    {{ form_row(edit_form.onglet613 )}}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">6.1.4 - Sanctions disciplinaires et motifs sanctions disciplinaires  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                         <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet614 is defined %}{% if array_pc_bool.onglet614 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                    </div>
+                    </div>
+                    <div class="col-xs-4">
+                        {% if array_pc_bool.onglet614 is defined %}{% if array_pc_bool.onglet614 == 1 %}{% if totalInd614 == 0.0 %} 100 % (données à 0){% elseif totalInd614 != 0.0 %} 100 %{% endif %}{% else %} 0 % {% endif %}{% endif %}
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <div>
+                         <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center" class="tableHeaderFixed">Sanctions disciplinaires</th>
+                                    <th style="text-align: center" colspan="2"class="tableHeaderFixed">Nombres d'agents</th>
+                                </tr>
+                                        <tr>
+                                    <td colspan="1" rowspan="2" class="filiTable">Fonctionnaires titulaires</td>
+                                    <td colspan="2" class="filiTable">Nombre de sanctions prononcées concernant les fonctionnaires
+                titulaires (art. 89 de la loi du 26 janvier 1984) en {{ AnneeCamp }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="text-center">Hommes</td>
+                                    <td colspan="1" class="text-center">Femmes</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr id="trTotalGroupe1" class="filiTable">
+                                    <td>Sanctions du 1er groupe :</td>
+                                    <td id="totalGroupe1">0</td>
+                                    <td id="totalGroupe1_2">0</td>
+                                </tr>
+                                {% for SanctionDisciplinaire in edit_form.AgentSanctionDisciplinaire %}
+                                    {% if SanctionDisciplinaire.vars.value.RefSanctionDisciplinaire.bl614G1 %}
+                                        <tr>
+                                            <td>
+                                                {{ SanctionDisciplinaire.vars.value.RefSanctionDisciplinaire.lbSancdisc }}
+                                            </td>
+                                            <td>
+                                                {{ form_row(SanctionDisciplinaire.nbAgentsH) }}
+                                            </td>
+                                            <td>
+                                                {{ form_row(SanctionDisciplinaire.nbAgentsF) }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                <tr id="trTotalGroupe2" class="filiTable">
+                                    <td>Sanctions du 2e groupe :</td>
+                                    <td id="totalGroupe2">0</td>
+                                    <td id="totalGroupe2_2">0</td>
+                                </tr>
+                                {% for SanctionDisciplinaire in edit_form.AgentSanctionDisciplinaire %}
+                                    {% if SanctionDisciplinaire.vars.value.RefSanctionDisciplinaire.bl614G2 %}
+                                        <tr>
+                                            <td>
+                                                {{ SanctionDisciplinaire.vars.value.RefSanctionDisciplinaire.lbSancdisc }}
+                                            </td>
+                                            <td>
+                                                {{ form_row(SanctionDisciplinaire.nbAgentsH) }}
+                                            </td>
+                                            <td>
+                                                {{ form_row(SanctionDisciplinaire.nbAgentsF) }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                <tr id="trTotalGroupe3" class="filiTable">
+                                    <td>Sanctions du 3e groupe :</td>
+                                    <td id="totalGroupe3">0</td>
+                                    <td id="totalGroupe3_2">0</td>
+                                </tr>
+                                {% for SanctionDisciplinaire in edit_form.AgentSanctionDisciplinaire %}
+                                    {% if SanctionDisciplinaire.vars.value.RefSanctionDisciplinaire.bl614G3 %}
+                                        <tr>
+                                            <td>
+                                                {{ SanctionDisciplinaire.vars.value.RefSanctionDisciplinaire.lbSancdisc }}
+                                            </td>
+                                            <td>
+                                                {{ form_row(SanctionDisciplinaire.nbAgentsH) }}
+                                            </td>
+                                            <td>
+                                                {{ form_row(SanctionDisciplinaire.nbAgentsF) }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                <tr id="trTotalGroupe4" class="filiTable">
+                                    <td>Sanctions du 4e groupe :</td>
+                                    <td id="totalGroupe4">0</td>
+                                    <td id="totalGroupe4_2">0</td>
+                                </tr>
+                                {% for SanctionDisciplinaire in edit_form.AgentSanctionDisciplinaire %}
+                                    {% if SanctionDisciplinaire.vars.value.RefSanctionDisciplinaire.bl614G4 %}
+                                        <tr>
+                                            <td>
+                                                {{ SanctionDisciplinaire.vars.value.RefSanctionDisciplinaire.lbSancdisc }}
+                                            </td>
+                                            <td>
+                                                {{ form_row(SanctionDisciplinaire.nbAgentsH) }}
+                                            </td>
+                                            <td>
+                                                {{ form_row(SanctionDisciplinaire.nbAgentsF) }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                         <table class="table table-bordered text-center">
+                            <thead>
+                                 <tr>
+                                    <td colspan="1" rowspan="2" class="filiTable">Fonctionnaires stagiaires</td>
+                                     <td colspan="2" class="filiTable">Nombre de sanctions prononcées concernant les fonctionnaires stagiaires (art. 6 du
+                        décret n° 92-1194 du 4 novembre 1992) en {{ AnneeCamp }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="text-center">Hommes</td>
+                                    <td colspan="1" class="text-center">Femmes</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for SanctionDisciplinaireStagiaire in edit_form.AgentSanctionDisciplinaireStagiaire %}
+                                    <tr>
+
+                                        <td>
+                                            {{ SanctionDisciplinaireStagiaire.vars.value.RefSanctionDisciplinaire.lbSancdisc }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(SanctionDisciplinaireStagiaire.nbAgentsH) }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(SanctionDisciplinaireStagiaire.nbAgentsF) }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                         <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <td colspan="1" rowspan="2" class="filiTable">Contractuel</td>
+                                    <td colspan="2" class="filiTable">Nombre de sanctions prononcées concernant les agents contractuels (art. 36-1 du
+                        décret n° 88-145 du 15 février 1988) en {{ AnneeCamp }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="text-center">Hommes</td>
+                                    <td colspan="1" class="text-center">Femmes</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for SanctionDisciplinaireContractuel in edit_form.AgentSanctionDisciplinaireContractuel %}
+
+                                    <tr>
+                                        <td>
+                                            {{ SanctionDisciplinaireContractuel.vars.value.RefSanctionDisciplinaire.lbSancdisc }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(SanctionDisciplinaireContractuel.nbAgentsH) }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(SanctionDisciplinaireContractuel.nbAgentsF) }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                         <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+
+                                    <th style="text-align: center" class="tableHeaderFixed">Motifs sanctions disciplinaires</th>
+                                    <th style="text-align: center" colspan="2"class="tableHeaderFixed">Nombres d'agents</th>
+                                </tr>
+                                 <tr>
+                                    <td></td>
+                                    <td style="text-align: center" >Hommes</td>
+                                    <td style="text-align: center" >Femmes</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for MotifSanctionDisciplinaire in edit_form.AgentMotifSanctionDisciplinaire %}
+                                    <tr>
+                                        <td>
+                                            {{ MotifSanctionDisciplinaire.vars.value.RefMotifSanctionDisciplinaire.lbMotiSancdisc }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(MotifSanctionDisciplinaire.nbAgentsH) }}
+                                        </td>
+                                        <td>
+                                            {{ form_row(MotifSanctionDisciplinaire.nbAgentsF) }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {{ form_row(edit_form.onglet614 )}}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">7.1 - Action sociale relevant de la collectivité dans l'année {{campagne.nmAnne}}  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.onglet71 is defined %}{% if array_pc_bool.onglet71 == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.onglet71 is defined %}{% if array_pc_bool.onglet71 == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"> 7.1.1 - Œuvres sociales à destination du personnel ou de leurs familles </h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_row(edit_form.blSubvverscomi) }}
+                            {{ form_row(edit_form.blCotisubvcomiinter) }}
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">7.1.2 - Prestations servies directement ou via un Comité d'Œuvres Sociales  par la collectivité territoriale</h3>
+                        </div>
+                        {#<div class="panel-body">
+                            {{ form_row(edit_form.blPresservcoll) }}
+                        </div>#}
+                        <div class="panel-body">
+                            {{ form_row(edit_form.blPresservcomsoc) }}
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">7.1.3 - Aides à la garde d'enfants  </h3>
+                        </div>
+                        <div class="panel-body">
+                            <label>Votre collectivité a-t-elle des dispositifs pour favoriser la garde d'enfants de ses agents?</label>
+                            {{ form_row(edit_form.blPlacresecrec) }}
+                            {{ form_row(edit_form.blAidefinagardenfa) }}
+                            {{ form_row(edit_form.blAutrgardenfa) }}
+                            <div id="blAutrgardenfaDescription" {% if (edit_form.blAutrgardenfa.vars.value == 1) %}{% else %}class="hidden" {% endif %}>
+                                {{ form_row(edit_form.blAutrgardenfaDescription) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">7.1.4 - Protection sociale complémentaire <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#q714" aria-hidden="true"></span></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    {#                            Participation financière aux contrats et réglements de protection sociale complémentaire de vos agents#}
+                                    <h3 class="panel-title">Santé</h3>
+                                </div>
+                                <div class="panel-body">
+                                    {{ form_row(edit_form.blSantconvparti) }}
+                                    {{ form_row(edit_form.blSantcontregl) }}
+                                    <div id="blSantyes" {% if (edit_form.blSantcontregl.vars.value  == 1) or (edit_form.blSantconvparti.vars.value == 1) %} {% else %}class="hidden" {% endif %}>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Categorie</th>
+                                                    <th>Nombre total de bénéficiaires</th>
+                                                    <th>Montant total des participations*  (en €)</th>
+
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                {% for Sante in edit_form.Sante %}
+
+                                                    <tr>
+                                                        <td>
+                                                            {{ Sante.vars.value.refCategorie.lbCate }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_row(Sante.r81411) }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_row(Sante.r81412) }}
+                                                        </td>
+
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    {#                            Participation financière aux contrats et réglements de protection sociale complémentaire de vos agents#}
+                                    <h3 class="panel-title">Prévoyance </h3>
+                                </div>
+                                <div class="panel-body">
+                                    {{ form_row(edit_form.blPrevoconvparti) }}
+                                    {{ form_row(edit_form.blPrevocontregl) }}
+                                    <div id="blPrevyes" {% if (edit_form.blPrevocontregl.vars.value  == 1) or (edit_form.blPrevoconvparti.vars.value == 1) %} {% else %}class="hidden" {% endif %}>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Categorie</th>
+                                                    <th>Nombre total de bénéficiaires</th>
+                                                    <th>Montant total des participations*  (en €)</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                {% for Prevoyance in edit_form.Prevoyance %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ Prevoyance.vars.value.refCategorie.lbCate }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_row(Prevoyance.r81421) }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_row(Prevoyance.r81422) }}
+                                                        </td>
+
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                            
+                    {{ form_row(edit_form.onglet71 )}}
+                </div>
+            </div>
+			{% endif %}
+            {% if enquetecoll.blRast == true%}
+            <div class="panel panel-default panel-default-rassct">
+                <div class="panel-heading panel-heading-rassct">
+                    <h3 class="panel-title panel-title-rassct">RASSCT  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                </div>
+                <div class="row pcCollectivite">
+                    <div class="progress col-xs-10 pcCollectivite">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.ongletRassct is defined %}{% if array_pc_bool.ongletRassct == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {% if array_pc_bool.ongletRassct is defined %}{% if array_pc_bool.ongletRassct == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                    </div>
+                </div>
+                <div class="panel-body" style="display: none;">
+                    {{ form_row(edit_form.rassctExistEvalRPS) }}
+                    {{ form_row(edit_form.rassctMajEvalRPS) }}
+                    {{ form_row(edit_form.rassctDiagRPS) }}
+                    {{ form_row(edit_form.rassctExistPrevActionSante) }}
+                    {{ form_row(edit_form.rassctActiMedecPrev) }}
+                    {{ form_row(edit_form.rassctDesiACFI) }}
+                    {{ form_row(edit_form.rassctNbVisitACFI) }}
+                    {{ form_row(edit_form.rassctNbCtChsct) }}
+                    {{ form_row(edit_form.rassctExistPrevEntreExte) }}
+                    {{ form_row(edit_form.rassctExistDiagPeniAnnex) }}
+                    {{ form_row(edit_form.rassctNeceFicheSuiviFact) }}
+                    {{ form_row(edit_form.rassctExistFicheExpoPeni) }}
+                    {{ form_row(edit_form.rassctNeceFicheAmiante) }}
+                    {{ form_row(edit_form.rassctExistFicheAmiante) }}
+                    {{ form_row(edit_form.ongletRassct )}}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if enquetecoll.blHand == true%}
+                <div class="panel panel-default panel-default-hand">
+                    <div class="panel-heading panel-heading-hand">
+                        <h3 class="panel-title panel-title-hand">HANDITORIAL  <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+                    </div>
+                    <div class="row pcCollectivite">
+                        <div class="progress col-xs-10 pcCollectivite">
+                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="20" style="width:{% if array_pc_bool.ongletHand is defined %}{% if array_pc_bool.ongletHand == 1 %}100{% else %}0 {% endif %}{% endif %}%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            {% if array_pc_bool.ongletHand is defined %}{% if array_pc_bool.ongletHand == 1 %}100{% else %}0 {% endif %}{% endif %}%
+                        </div>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        {{ form_row(edit_form.handMailCorres) }}
+                        <label>
+                            A3 - Au 31/12 de l'année {{campagne.nmAnne}}, votre collectivité était-elle soumise à l'obligation d'emploi de travailleurs handicapés ?
+                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#qA3Handitorial" aria-hidden="true"></span>
+                        </label>
+                        {{ form_row(edit_form.handObliEmplTrav) }}
+                        <label>
+                            A5-1 - Nombre d'inaptitude émis au cours de l'année {{campagne.nmAnne}} :
+                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#qA51Handitorial" aria-hidden="true"></span>
+                        </label><br />
+                        <label>A5-1-1 - Combien d'avis d'inaptitude temporaire ont été délivrés au cours de l'année {{campagne.nmAnne}} ?</label>
+                        {{ form_row(edit_form.handNbAvisInapTempo) }}
+                        <label>A5-1-2 - Combien d'avis d'inaptitude définitive à ses fonctions ont été délivrés au cours de l'année {{campagne.nmAnne}} ?</label>
+                        {{ form_row(edit_form.handNbAvisInapDef) }}
+                        <label>A5-1-3 - Combien d'avis d'inaptitude définitive à toutes fonctions ont été délivrés au cours de l'année {{campagne.nmAnne}} ?</label>
+                        {{ form_row(edit_form.handNbAvisInapDefToutesFonctions) }}
+                        <label>A5-2 - Nombre de mesures (arrêtés) mises en oeuvre, à la suite d'avis d'inaptitude :</label><br />
+                        <label>
+                            A5-2-0 - Combien de reclassements ont été demandés au cours de l'année {{campagne.nmAnne}} ?
+                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#qA520Handitorial" aria-hidden="true"></span>
+                        </label>
+                        {{ form_row(edit_form.handNbReclaDemande) }}
+                        <div id="A5-2-0" {% if edit_form.handNbReclaDemande.vars.value is not empty and edit_form.handNbReclaDemande.vars.value is defined %}{% else %}class="hidden" {% endif %}>
+                        {{ form_row(edit_form.handNbDemReclaInapAcciTravMaladiePro) }}
+                        </div>
+                        <label>
+                            A5-2-1 - Combien de reclassements (arrêtés) ont été prononcés au cours de l'année {{campagne.nmAnne}} ?
+                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#qA521Handitorial" aria-hidden="true"></span>
+                        </label>
+                        {{ form_row(edit_form.handNbRecla) }}
+                        <div id="A5-2-1" {% if edit_form.handNbRecla.vars.value is not empty and edit_form.handNbRecla.vars.value is defined %}{% else %}class="hidden" {% endif %}>
+                        {{ form_row(edit_form.handNbReaReclaInapAcciTravMaladiePro) }}
+                        </div>
+                        <label>A5-2-2 - Combien de retraites pour invalidité ont été prononcés au cours de l'année {{campagne.nmAnne}} ?</label>
+                        {{ form_row(edit_form.handNbRetraiteInval) }}
+                        <label>A5-2-3 - Combien de licenciements pour inaptitude physique ont été prononcés au cours de l'année {{campagne.nmAnne}} ?</label>
+                        {{ form_row(edit_form.handNbLicencInapPhysi) }}
+                        <label>
+                            A6-2 - Combien de mesures d'aménagement de poste ou des conditions de travail (hors avis de reclassement) ont-elles été prononcées au cours l'année {{campagne.nmAnne}} au bénéfice de B.O.E.T.H. ?
+                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#qA62Handitorial" aria-hidden="true"></span>
+                        </label>
+                        {{ form_row(edit_form.handNbMesureAmenaPosteCondTravBoeth) }}                       
+                        <label>
+                            A7-2 - Combien de mesures de changement d'affectation (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{campagne.nmAnne}} au bénéfice de B.O.E.T.H. ?
+                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information"
+                            data-target="#qA72Handitorial" aria-hidden="true"></span>
+                        </label>
+                        {{ form_row(edit_form.handNbMesureChangAffecBoeth) }}    
+                        <label>
+                            A8 - Des mesures de disponibilités d'office (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{campagne.nmAnne}} ?
+                            <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qA8Handitorial" aria-hidden="true"></span>
+                        </label>
+                        {{ form_row(edit_form.handDispoOffice) }}
+                        <div id="A8" {% if (edit_form.handDispoOffice.vars.value == 1) %}{% else %}class="hidden" {% endif %}>
+                            <label>A8-2 - Combien de mesures de disponibilité d'office (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{campagne.nmAnne}} au bénéfice de B.O.E.T.H. ?</label>
+                            {{ form_row(edit_form.handNbDispoOfficeBoeth) }}
+                        </div>
+                            {{ form_row(edit_form.ongletHand )}}
+                        </div>
+                </div>
+            {% endif %}
+
+            {#{{ form_row(edit_form.Enregistrer )}}#}
+            {#            {{ form_row(edit_form._token) }}#}
+            <div style="display: none">{{ form_row(edit_form) }}</div>
+            {{ form_end(edit_form, {'render_rest': true}) }}
+            {% if InformationgeneraleExist is not empty and  InformationgeneraleExist is defined %}
+                <a href="{{ path('bilansocialagent_index') }}">
+                    <button type="button" class="btn btn-primary">retour listes des agents</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

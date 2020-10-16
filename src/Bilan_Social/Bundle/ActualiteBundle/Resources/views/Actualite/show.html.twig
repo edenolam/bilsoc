@@ -1,0 +1,27 @@
+{% extends '@Actualite/layout.html.twig' %}
+
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="col-lg-9">
+        <div class="text-center actu_header_img_wrapper">
+            <img src="{{ imagePublicUrl }}" alt="{{ imagePublicUrl }}" class="img-responsive image-apercu">
+        </div>
+        <div class="actu">
+
+            <h1 class="noMargin noPadding"><strong>{{ actualite.titreActu }}</strong></h1>
+            <p>
+                {{ actualite.texteActu|raw }}
+            </p>
+            <div class="clearfix"></div>
+        </div>
+        {% if docPublicUrl is not null %}
+            <a href="{{ docPublicUrl }}">
+                <button type="button" class="btn button-tableau">Télécharger le document</button>
+            </a>
+        {% endif %}
+        {#     <a class="btn btn-danger pull-right margin10" href="{{ path('actualite_index') }}">Retour aux actualités</a>#}
+    </div>
+{% endblock body %}
+

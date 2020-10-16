@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\Etpr114AnneePrecedente" table="etpr_114_annee_precedente">
+<!--        <indexes>-->
+<!--            <index name="FK_ETPR114ANNEEPRECEDENTE_FILIERE" columns="ID_FILI"/>-->
+<!--            <index name="FK_ETPR114ANNEEPRECEDENTE_INFORMATIONCOLLECTIVITEAGENT" columns="ID_INFOCOLLAGEN"/>-->
+<!--        </indexes>-->
+        <id name="idEtpr114" type="integer" column="ID_ETPR114">
+            <generator strategy="IDENTITY"/>
+        </id>
+<!--        <many-to-one field="RefFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere" inversed-by="Etpr114AnneePrecedente">-->
+<!--            <join-column name="ID_FILI" referenced-column-name="ID_FILI"/>-->
+<!--        </many-to-one>-->
+<!--        <many-to-one field="idInfocollagen" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationColectiviteAgent" inversed-by="Etpr114AnneePrecedente">-->
+<!--            <join-column name="ID_INFOCOLLAGEN" referenced-column-name="ID_INFOCOLLAGEN" />-->
+<!--        </many-to-one>-->
+
+<!--        <field name="r1141" type="decimal" column="R_1141" precision="10" scale="2" nullable="true"/>-->
+<!--        <field name="r1142" type="decimal" column="R_1142" precision="10" scale="2" nullable="true"/>-->
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

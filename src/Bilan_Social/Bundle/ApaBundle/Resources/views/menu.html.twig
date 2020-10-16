@@ -1,0 +1,448 @@
+<div id="wrapper" class="col-md-3">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="clearfix">
+        <div class="menu-header noPadding consolideHeader">
+            {% set Fgstat = "" %}
+            {% if bilanSocialAgent is defined %}
+                {% set Fgstat = bilanSocialAgent.fgstat %}
+
+            {% endif %}
+
+            {% if app.user.username is defined %}
+
+                <div class="align-center">
+                    {% if(is_granted("ROLE_CDG")) %}
+                        {% set cdg = user_cdg.findCDGByUtilisateur(app.user) %}
+                        <img src="{{ asset(cdg.pathLogo) }}" alt="{{ cdg.nameLogo }}" class="logo_cdg img-responsive center-block"/>
+                    {% elseif(is_granted("ROLE_COLLECTIVITY")) %}
+                        {% set cdg = user_cdg.findCdgByCollectivite(app.user) %}
+
+                        <img src="{{ asset(cdg.pathLogo) }}" alt="{{ cdg.nameLogo }}" class="logo_cdg img-responsive center-block"/>
+
+                    {% elseif(is_granted("ROLE_ADMIN")) %}
+
+
+                    {% endif %}
+                </div>
+
+                <label class="raisonSociale"> <strong>
+                        {# {% if (is_granted("ROLE_COLLECTIVITY") and not is_granted('ROLE_PREVIOUS_ADMIN')) %} #}
+                        {% if (is_granted("ROLE_COLLECTIVITY")) %}
+                            {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+                                {{ collectiviteinfo.lbColl }}
+                            {% endfor %}
+                        {% elseif(is_granted("ROLE_CDG")) %}
+                            {% set Cdg = user_cdg.findCDGByUtilisateur(app.user) %}
+                            {{ Cdg.lbCdg }}
+                            {% if app.session.get('user_siret') is defined and app.session.get('user_siret') is not null %}
+                                <p>Connecté en tant que {{ app.session.get('user_siret') }}</p>
+                        {# {% elseif(is_granted("ROLE_PREVIOUS_ADMIN")) %} #}
+                            {# {% set Cdg = user_cdg.findCDGByUtilisateur(app.user) %}
+                            {{ Cdg.lbCdg }} #}
+                            {# {% if app.session.get('user_siret') is defined and app.session.get('user_siret') is not null %} #}
+                                {# {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+                                    
+                                    <p>Connecté en tant que {{ collectiviteinfo.nmSire }}</p>
+                                {% endfor %}
+                                 {% if contactPrincipalCollectivite is not null %}
+                                    <p>Nom : {{ contactPrincipalCollectivite.lbNom }}</p>
+                                    <p>Téléphone : {{ contactPrincipalCollectivite.lbTele }}</p>
+                                    <p>Email : {{ contactPrincipalCollectivite.lbMail }}</p>
+                                {% endif%}  #}
+                                <a href="{{ path('remove_cdg_session') }}" onclick="window.close()">Se déconnecter</a>
+                            {% endif %}
+                        {% elseif (is_granted("ROLE_ADMIN")) %}
+                            ADMIN
+                        {% endif %}
+                    </strong>
+                </label>
+                {% if is_granted("ROLE_COLLECTIVITY") %}
+                    <br /><label>Siret : {{ app.user.username }}</label><br />
+                    <label>Dernière connexion le {{ app.user.dtlastconn|date('d M Y') }} <br> à {{ app.user.dtlastconn|date('H:i:s') }}</label>
+                    <div>
+                        <a href="{{ path('logout') }}" class='logout'><span class="glyphicon glyphicon-off" aria-hidden="true"></span>Déconnexion</a>
+
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <ul class="sidebar-nav">
+          {% if (app.session.get('user_siret') is not defined and app.session.get('user_siret') is null) or is_granted("ROLE_COLLECTIVITY") or is_granted("ROLE_CDG") %}
+            <li class="sidebar-brand menu-li">
+                <a href="{{ path('homepage') }}">
+                    <div class="col-xs-12 menu-div accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span>Accueil</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            {% endif %}
+            {% if (InformationgeneraleExist is not empty and  InformationgeneraleExist is defined) or (EnqueteCollectiviteparam.blBilasoci == false) %}
+                <li class="sidebar-brand menu-li">
+                    <a href="{{ path('bilansocialagent_list_agent') }}">
+                        <div class="col-xs-12 menu-div accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <i class="fa fa-list-alt fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span>Listes des Agents</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            {% endif %}
+            {% if (EnqueteCollectiviteparam.blBilasoci == true or (EnqueteCollectiviteparam.blBilasoci == false and (EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blHand == true))) %}
+                {% if InformationgeneraleExist is not empty and  InformationgeneraleExist is defined %}
+                    <li>
+                        <a href="{{ path('informationgenerale_edit', { 'idInfogene': InformationgeneraleExist.idInfogene }) }}">
+                            <div class="col-xs-12 menu-div  unlock ColorWhite" style="display: flex ">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <i class="ColorWhite fa fa-unlock-alt fa-3x" aria-hidden="true"></i>
+                                </div>
+
+                                <div class="col-xs-9">
+                                    <div>
+                                        <span>Informations Générales</span>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: 100%;">
+                                            </div>
+                                        </div>
+                                        <span class="noMargin">
+                                            Saisie
+                                        </span>
+                                        <span class="progress-completed">100%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+
+                {% else %}
+                    <li>
+                        <a href="{{ path('informationgenerale_new') }}">
+                            <div class="col-xs-12 menu-div lock ColorWhite" style="display: flex ">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <i class="ColorWhite fa fa-lock fa-3x" aria-hidden="true"></i>
+                                </div>
+
+                                <div class="col-xs-9">
+                                    <div>
+                                        <span>Informations Générales</span>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: 0%;">
+                                            </div>
+                                        </div>
+                                        <span class="noMargin">
+                                            A saisir
+                                        </span>
+                                        <span class="progress-completed">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endif %}
+            {% if (EnqueteCollectiviteparam.blBilasoci == true or (EnqueteCollectiviteparam.blBilasoci == false and (EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blHand == true))) %}
+                {% if InformationCollectiviteExist is not empty %}
+                    {{ render(controller('ApaBundle:InformationColectiviteAgent:renderPcToMenu', {'informationColectiviteAgent' : InformationCollectiviteExist }))}}
+                {% else %}
+                    <li>
+                        <a href="{{ path('informationcolectiviteagent_new') }}">
+                            <div class="col-xs-12 menu-div lock ColorWhite" style="display: flex ">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <i class="ColorWhite fa fa-lock fa-3x" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div>
+                                        <span>Informations Collectivité</span>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width:0;">
+                                            </div>
+                                        </div>
+                                        <span class="progress-completed">0%</span>
+                                        <p class="noMargin progress-etat">
+                                            A saisir
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endif %}
+
+            {% if app.request.attributes.get('_route') == 'bilansocialagent_new' or app.request.attributes.get('_route') == 'bilansocialagent_edit' %}
+                <li>
+                    <a class="each_menu_apa" id="menu_statut" href="#" data-target="section_statut">
+                        <div class="col-xs-12 menu-div" style="display: flex">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-12.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span>Statut</span>
+                                    <div class="progress">
+                                        <div class="progressbar_statut progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                             role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                        </div>
+                                    </div>
+                                    <p class="noMargin statut_etat progress-etat">
+                                        A saisir
+                                    </p>
+                                    <span class="progress-completed onglet statut_value">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="each_menu_apa" id="menu_remu" href="#" data-target="section_remuneration">
+                        <div class="col-xs-12 menu-div" style="display: flex">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-13.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+
+                                <div>
+                                    <span>Rémunération</span>
+                                    <div class="progress">
+                                        <div class="progressbar_remuneration progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                             role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                        </div>
+                                    </div>
+                                    <p class="noMargin remuneration_etat progress-etat">
+                                        A saisir
+                                    </p>
+                                    <span class="progress-completed onglet remuneration_value">0%</span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="each_menu_apa" id="menu_absence" href="#" data-target="section_absences">
+                        <div class="col-xs-12 menu-div" style="display: flex">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-15.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+
+                                <div>
+                                    <span>Absence</span>
+                                    <div class="progress">
+                                        <div class="progressbar_absence progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                             role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+
+                                        </div>
+
+                                    </div>
+                                    <p class="noMargin absence_etat progress-etat">
+                                        A saisir
+                                    </p>
+                                    <span class="progress-completed onglet absence_value">0%</span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="each_menu_apa" id="menu_formation" data-target="section_formation">
+                        <div class="col-xs-12 menu-div" style="display: flex">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-14.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+
+                                <div>
+                                    <span>Formation</span>
+                                    <div class="progress">
+                                        <div class="progressbar_formation progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                             role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+
+                                        </div>
+
+                                    </div>
+                                    <p class="noMargin formation_etat progress-etat">
+                                        A saisir
+                                    </p>
+                                    <span class="formation_value progress-completed  onglet">0%</span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a class="each_menu_apa" id="menu_autre" href="#" data-target="section_autres">
+                        <div class="col-xs-12 menu-div" style="display: flex">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-16.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+
+                                <div>
+                                    <span>Autre</span>
+                                    <div class="progress">
+                                        <div class="progressbar_autre progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                             role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+
+                                        </div>
+
+                                    </div>
+                                    <p class=" autre_etat progress-etat">
+                                        A saisir
+                                    </p>
+                                    <span class="autre_value progress-completed onglet">0%</span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                {% if EnqueteCollectiviteparam.blRast == true and InformationgeneraleExist is defined and InformationgeneraleExist is not empty and InformationgeneraleExist.Q2 == true %} 
+                    <li>
+                        <a class="each_menu_apa" id='menu_rassct' href="#bilan_social_bundle_apabundle_bilansocialagent_blBoeth" data-target="rassct">
+                            <div class="col-xs-12 menu-div" style="display: flex">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <img src="{{ asset("img/icone/DescriptionSite-17.png") }}" class="icone-menu"/>
+                                </div>
+                                <div class="col-xs-9">
+
+                                    <div>
+                                        <span> Rassct</span>
+                                        <div class="progress">
+                                            <div class="progressbar_rassct progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                                 role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+
+                                            </div>
+
+                                        </div>
+                                        <p class="noMargin rassct_etat progress-etat">
+                                            A saisir
+                                        </p>
+                                        <span class="rassct_value progress-completed onglet">0%</span>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </a>
+                    </li>
+                {% endif %}
+                {% if EnqueteCollectiviteparam.blhand == true and InformationgeneraleExist is defined and InformationgeneraleExist is not empty %}
+                    <li>
+                        <a class="each_menu_apa" id='menu_handi' href="#" data-target="hand">
+                            <div class="col-xs-12 menu-div" style="display: flex">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <img src="{{ asset("img/icone/DescriptionSite-19.png") }}" class="icone-menu"/>
+                                </div>
+                                <div class="col-xs-9">
+
+                                    <div>
+                                        <span> Handitorial</span>
+                                        <div class="progress">
+                                            <div class="progressbar_handitorial progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                                 role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" >
+
+                                            </div>
+
+                                        </div>
+                                        <p class="noMargin handitorial_etat progress-etat">
+                                            A saisir
+                                        </p>
+                                        <span class="handitorial_value progress-completed onglet">0%</span>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if (EnqueteCollectiviteparam.blGepe == true ) %}
+                    <li>
+                        <a href="#" class="each_menu_apa" id="menu_gpeec" data-target="section_gpeec">
+                            <div class="col-xs-12 menu-div" style="display: flex">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <img src="{{ asset("img/icone/DescriptionSite-18.png") }}" class="icone-menu"/>
+                                </div>
+                                <div class="col-xs-9">
+
+                                    <div>
+                                        <span> Gpeec</span>
+                                        <div class="progress">
+                                            <div class="progressbar_gpeec progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                                 role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+
+                                            </div>
+
+                                        </div>
+                                        <p class="noMargin gpeec_etat progress-etat">
+                                            A saisir
+                                        </p>
+                                        <span class="gpeec_value progress-completed onglet">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+                {#{% if collectivite.blCollDgcl == true %}#}
+                   {# <li>
+                        <a class="each_menu_apa" id='menu_dgcl' href="#" data-target="dgcl">
+                            <div class="col-xs-12 menu-div" style="display: flex">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <img src="{{ asset("img/logos/logo_dgcl.jpg") }}" class="icone-menu"/>
+                                </div>
+                                <div class="col-xs-9">
+
+                                    <div>
+                                        <span> Jours de carence</span>
+                                        <div class="progress">
+                                            <div class="progressbar_dgcl progress-bar {% if Fgstat is defined and Fgstat == 1 %} progress-bar-green  {% else %} progress-bar-grey {% endif %} "
+                                                 role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" >
+
+                                            </div>
+
+                                        </div>
+                                        <p class="noMargin dgcl_etat progress-etat">
+                                            A saisir
+                                        </p>
+                                        <span class="dgcl_value progress-completed onglet">0%</span>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </li>#}
+               {# {% endif %}#}
+            {% endif %}
+        </ul>
+    </div>
+
+</div>

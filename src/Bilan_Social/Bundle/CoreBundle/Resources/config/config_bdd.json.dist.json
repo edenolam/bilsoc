@@ -1,0 +1,51 @@
+{
+  "2018": {
+    "bdd_user": "root",
+    "bdd_mdp": "qNjjTHSlqCddzbio94lbk7wNul3ULsxMP8cDpHfDrE0rFNcD4n1A2pMcJ__DyDlI0SyEd-yBGqJ_eSv3uMhqDQ",
+    "bdd_port": "3309",
+    "bdd_name": "bs_2018",
+    "bdd_host": "54.38.253.40"
+  },
+  "2017": {
+    "bdd_user": "root",
+    "bdd_mdp": "qNjjTHSlqCddzbio94lbk7wNul3ULsxMP8cDpHfDrE0rFNcD4n1A2pMcJ__DyDlI0SyEd-yBGqJ_eSv3uMhqDQ",
+    "bdd_port": "3309",
+    "bdd_name": "bs_2017",
+    "bdd_host": "54.38.253.40"
+  },
+  "batchs_2017": {
+    "bdd_user": "root",
+    "bdd_mdp": "qNjjTHSlqCddzbio94lbk7wNul3ULsxMP8cDpHfDrE0rFNcD4n1A2pMcJ__DyDlI0SyEd-yBGqJ_eSv3uMhqDQ",
+    "bdd_port": "3309",
+    "bdd_name": "bs_batchs_2017",
+    "bdd_host": "54.38.253.40"
+  },
+  "batchs_2018": {
+    "bdd_user": "root",
+    "bdd_mdp": "FLp54HCXrpobRD_uuCEVGrVxdFJFKKixlhD7sijYkF9P4-h7sIp45KQehVtX5hA9r_VsBZs03BayyeI6Vusn2g",
+    "bdd_port": "3309",
+    "bdd_name": "bs_batchs_2018",
+    "bdd_host": "145.239.13.32"
+  },
+  "bsltm_2017": {
+    "bdd_user": "root",
+    "bdd_mdp": "FLp54HCXrpobRD_uuCEVGrVxdFJFKKixlhD7sijYkF9P4-h7sIp45KQehVtX5hA9r_VsBZs03BayyeI6Vusn2g",
+    "bdd_port": "3309",
+    "bdd_name": "bsltm",
+    "bdd_host": "145.239.13.32"
+  },
+  "bsltm_repository": {
+    "bdd_user": "root",
+    "bdd_mdp": "FLp54HCXrpobRD_uuCEVGrVxdFJFKKixlhD7sijYkF9P4-h7sIp45KQehVtX5hA9r_VsBZs03BayyeI6Vusn2g",
+    "bdd_port": "3309",
+    "bdd_name": "bsltm",
+    "bdd_host": "145.239.13.32"
+  },
+  "bs": {
+    "bdd_user": "root",
+    "bdd_mdp": "JZVp${YziNZ0J5{H$&=X:|it",
+    "bdd_port": "3306",
+    "bdd_name": "bs",
+    "bdd_host": "54.37.20.225"
+  }
+}

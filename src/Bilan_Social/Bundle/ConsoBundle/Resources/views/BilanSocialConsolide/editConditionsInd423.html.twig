@@ -1,0 +1,181 @@
+
+
+    {% if formConditions423 is defined %}
+        {% set bilan_social_consolide = formConditions423.vars.data %}
+
+        {{ form_start(formConditions423) }}
+
+        <div id="ind423">
+
+            {% if indicateur_precedent is defined and indicateur_precedent is not null %}
+                {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/btn_modal.html.twig', { 'indicateur_precedent': indicateur_precedent['ind_423'], 'name' : 423 }) }}
+                {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/modal_423.html.twig', { 'indicateur_precedent': indicateur_precedent }) }}
+            {% endif %}
+
+            <h5>
+                Champ : le tableau qui suit concerne les agents titulaires, stagiaires et conctractuels.<br />
+                Les critères ne sont pas exclusifs : un agent peut-être recensé dans plusieurs cases.
+            </h5>
+
+            <table width="100%" id="ind423Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2"></th>
+                        <th style="text-align: center">Nombre total</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+                {% set exclude_demande = false %}
+                {% set exclude_deci = false %}
+                {% for tag in formConditions423.ind423s if tag.refInaptitude.vars.data.blDema is same as(true) %}
+                    <tr idTrCate="{{tag.refInaptitude.vars.value}}" id="423idTr_{{tag.refInaptitude.vars.value}}">
+                        {% if tag.refInaptitude.vars.data.blDema is same as(true) and exclude_demande is same as(false) %}
+                            {% set exclude_demande = true %}
+                            <td rowspan="{{ nbDem }}">Demandes</td>
+                        {% endif %}
+                        <td id="categTd" {% if tag.refInaptitude.vars.data.blFili == 1 %} colspan="2" {% endif%} style="min-width: 200px;">
+                            {{ form_widget(tag.refInaptitude) }}
+                            {{ tag.refInaptitude.vars.data.lbInap}}
+                        </td>
+                        <td id="r4231" data-col-group="lineTotr423Deman" class="{% if tag.refInaptitude.vars.data.blFili == 1 %} hidden {% endif%}" >{{ form_row(tag.r4231) }}</td>
+                    </tr>
+                {% endfor %}
+
+                <tr class="filiTable row_totaux">
+                    {% set total_ind = bilan_social_consolide.getIndPileForBy('ind423s',['idInap'],[4,5,6],{'exclude':true}) %}
+                    {% set total = total_ind.r4231  %}
+                    <td colspan="2" style="text-align: center"><b>Total</b></td>
+                    <td style="text-align: center" data-col-group='lineTotr423Deman'>{{total}}</td>
+                </tr>
+                {% for tag in formConditions423.ind423s if tag.refInaptitude.vars.data.blDema is same as(false) %}
+                    <tr idTrCate="{{tag.refInaptitude.vars.value}}" id="423idTr_{{tag.refInaptitude.vars.value}}">
+                        {% if tag.refInaptitude.vars.data.blDema is same as(false) and exclude_deci is same as(false) %}
+                            {% set exclude_deci = true %}
+                            <td rowspan="{{ nbDeci }}">Décisions</td>
+                        {% endif %}
+                        <td id="categTd" {% if tag.refInaptitude.vars.data.blFili == 1 %} colspan="2" {% endif%} style="min-width: 200px;">
+                            {{ form_widget(tag.refInaptitude) }}
+                            {{ tag.refInaptitude.vars.data.lbInap}}
+                        </td>
+                        <td id="r4231" data-col-group="lineTotr423Deci" class="{% if tag.refInaptitude.vars.data.blFili == 1 %} hidden {% endif%}" >{{ form_row(tag.r4231) }}</td>
+                    </tr>
+                {% endfor %}
+                    <tr class="filiTable row_totaux">
+                        {% set total_ind = bilan_social_consolide.getIndPileForBy('ind423s',['idInap'],[1,2,14]) %}
+                        {% set total = total_ind.r4231  %}
+                        <td colspan="2" style="text-align: center"><b>Total</b></td>
+                        <td style="text-align: center" data-col-group='lineTotr423Deci'>{{total}}</td>
+                    </tr>
+                {% if formConditions423.ind423sFili|length > 0 %}
+
+                    {% for tagF in formConditions423.ind423sFili %}
+                        <tr idTrCate="{{tagF.vars.value.idInap }}" id="423idTr_{{tagF.vars.value.idInap }}">
+                            {% if loop.first %}<td rowspan="{{ nbFili }}">Décisions d'inaptitude</td>{% endif %}
+                            <td id="categTd" style="min-width: 200px;">
+                                <span class="text-uppercase" style="margin-left: 45px">Filière {{ tagF.refFiliere.vars.data.lbFili }}</span>
+                            </td>
+                            <td id="r4231">{{ form_widget(tagF) }}</td>
+                        </tr>
+                    {% endfor%}
+                    <tr class="filiTable row_totaux">
+                        {% set total_ind = bilan_social_consolide.getIndPileForBy('ind423s') %}
+                        {% set total = total_ind.r4231  %}
+                        <td colspan="2" style="text-align: center"><b>Total</b></td>
+                        <td style="text-align: center" data-col-group='lineTotr423Deci'>{{total}}</td>
+                    </tr>
+
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <br/>
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formConditions423) }}
+
+        <script type="text/javascript">
+
+        {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true %}
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            $(document).change();
+
+
+            var table423 = document.getElementById('ind423Table');
+
+        });
+        {% endif %}
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm423_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_conditions_ind423_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind423').load('{{ path('bilan_conso_conditions_ind423_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_formation_edit') }}';
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}

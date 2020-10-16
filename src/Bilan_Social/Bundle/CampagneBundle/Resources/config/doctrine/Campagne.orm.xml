@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CampagneBundle\Entity\Campagne" repository-class="Bilan_Social\Bundle\CampagneBundle\Repository\CampagneRepository" table="campagne">
+        <id name="idCamp" type="integer" column="ID_CAMP">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <field name="lbCamp" type="string" column="LB_CAMP" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="nmAnne" type="integer" column="NM_ANNE" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="dtDebu" type="datetime" column="DT_DEBU" nullable="true"/>
+        <field name="dtClot" type="datetime" column="DT_CLOT" nullable="true"/>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+
+        <one-to-many field="modeleAnalyse" target-entity="Bilan_Social\Bundle\AnalyseBundle\Entity\ModeleAnalyse" mapped-by="campagne">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="enquetes" fetch="EAGER" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete" mapped-by="campagne">
+        </one-to-many>
+
+        <many-to-many field="users" mapped-by="campagnes" target-entity="Bilan_Social\Bundle\UserBundle\Entity\User"/>
+
+    </entity>
+</doctrine-mapping>

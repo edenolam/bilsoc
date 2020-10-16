@@ -1,0 +1,47 @@
+question_index:
+    path:     /
+    defaults: { _controller: "FaqBundle:Question:index" }
+    methods:  [GET, DELETE]
+
+question_show:
+    path:     /{id}/show
+    defaults: { _controller: "FaqBundle:Question:show" }
+    methods:  GET
+
+question_new_collectivite:
+    path:     /QuestionCollectivite
+    defaults: { _controller: "FaqBundle:Question:newQuestionByCollectivite" }
+    methods:  [GET, POST]
+
+question_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FaqBundle:Question:edit" }
+    methods:  [GET, POST]
+
+question_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FaqBundle:Question:delete" }
+    methods:  DELETE
+    options:
+        expose: true
+
+question_contact:
+    path:   /contact
+    defaults: { _controller: "FaqBundle:Question:contact" }
+    options:
+        expose: true
+
+question_new_cdg:
+    path:     /QuestionCdg
+    defaults: { _controller: "FaqBundle:Question:newQuestionByCdg" }
+    methods:  [GET, POST]
+
+question_repondre_cdg:
+    path:     /{id}/repondre
+    defaults: { _controller: "FaqBundle:Question:Repondre" }
+    methods:  [GET, POST]
+    
+question_repondue_cdg:
+    path:     /{id}/repondu
+    defaults: { _controller: "FaqBundle:Question:Repondu" }
+    methods:  [GET, POST]

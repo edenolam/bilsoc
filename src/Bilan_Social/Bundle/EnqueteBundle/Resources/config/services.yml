@@ -1,0 +1,6 @@
+services:
+    enquete.form.flow.create:
+        class: Bilan_Social\Bundle\EnqueteBundle\Form\CreateEnqueteFlow
+        parent: craue.form.flow
+    enquete.controller:
+        class: Bilan_Social\Bundle\EnqueteBundle\EnqueteController

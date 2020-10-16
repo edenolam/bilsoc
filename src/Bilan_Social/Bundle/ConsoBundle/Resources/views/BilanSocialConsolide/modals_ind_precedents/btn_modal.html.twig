@@ -1,0 +1,5 @@
+{% if indicateur_precedent is not null and indicateur_precedent is not empty %}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ name }}">
+        Afficher données précédentes {{ indicateur_precedent.annee }}
+    </button>
+{% endif %}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind155" table="ind_155">
+        <indexes>
+            <index name="FK_155_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_155_AVANCEMENTPROMOTIONCONC" columns="ID_AVANPROMCONC"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_AVANPROMCONC" name="IDXU1_IND_155"/>
+		</unique-constraints>
+        <id name="id155" type="integer" column="ID_155">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind155s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refAvancementPromotionConcours" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefAvancementPromotionConcours">
+            <join-column name="ID_AVANPROMCONC" referenced-column-name="ID_AVANPROMCONC" nullable="false"/>
+        </many-to-one>
+
+        <field name="r1551" type="integer" column="R_1551" nullable="true" />
+        <field name="r1552" type="integer" column="R_1552" nullable="true" />
+
+
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>
+

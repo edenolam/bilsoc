@@ -1,0 +1,14 @@
+/*
+* fichier de style principal du LongTaskManager
+*/
+.long_task_fiche{
+	padding-bottom : 15px;
+	padding-top : 15px;
+	margin-right : 10px;
+	margin-left : 10px;
+	margin-bottom: 5px;
+	min-height : 16vh;
+}
+.long_task_fiche .progress{
+	height: auto;
+}

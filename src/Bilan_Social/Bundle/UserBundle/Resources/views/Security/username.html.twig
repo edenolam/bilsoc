@@ -1,0 +1,71 @@
+{% extends '@User/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/utilisateurs.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/UserBundle/User.js') }}"></script>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <div class='col-xs-offset-3 col-xs-6'>
+        <div id="titleConsolide" class="col-md-12" style="text-align: center; margin-bottom: 20vh;"> 
+            <a href="{{ path('homepage') }}">
+                <img src="{{ asset('img/logos/Logo_Application_BS.png') }}" alt="Logo_Application_BS.png" class="img-responsive center-block"/>
+            </a>           
+        </div>
+        
+        <h3 class='text-center'>Mot de passe oublié</h3>
+        <div class=''>
+            <div id="messageJS" class="alert alert-danger fade in" style="display:none"></div>
+            <div id="messageCDG" class="alert alert-info fade in" style="display:none"></div>
+            <label>Veuillez renseigner votre identifiant.</label>
+            <input id="identifiant" type="text" class="form-control">
+            <div class='col-xs-12' style='margin-top: 10px;'>
+            <button type="button" class="btn btn-primary pull-right btn-reinit">Réinitialiser</button>
+            <a href="{{ path('homepage') }}"><button type="button" class="btn btn-danger pull-left btn-dismiss" data-dismiss="modal">Annuler</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{#{% extends '@User/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+       <link rel="stylesheet" href="{{ asset('css/utilisateurs.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css" rel="stylesheet">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script src="{{ asset('js/UserBundle/User.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    
+    <div class="container">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h2 class="form-reset-heading identification-center">Réinitialisation du mot de passe</h2>
+        <input id="identifiant" type="text" class="form-control">
+           
+        <button type="button" class="btn btn-primary pull-right btn-reinit">Réinitialiser</button>
+        <button type="button" class="btn btn-secondary pull-left btn-dismiss" data-dismiss="modal">Annuler</button>
+    </div>
+{% endblock %}#}

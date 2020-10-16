@@ -1,0 +1,32 @@
+faq_index_administration:
+    path:     /administration
+    defaults: { _controller: "FaqBundle:faq:index" }
+    methods:  [GET, POST]
+
+faq_show:
+    path:     /{id}/show
+    defaults: { _controller: "FaqBundle:faq:show" }
+    methods:  GET
+
+faq_new:
+    path:     /new
+    defaults: { _controller: "FaqBundle:faq:new" }
+    methods:  [GET, POST]
+
+faq_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FaqBundle:faq:edit" }
+    methods:  [GET, POST]
+
+faq_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FaqBundle:faq:delete" }
+    methods:  DELETE
+
+export_excel_faq:
+    path:     /administration/export.{_format}
+    defaults: 
+        _controller: "FaqBundle:faq:exportExcelFaq"
+        _format: xlsx
+    requirements:
+        _format: csv|xls|xlsx

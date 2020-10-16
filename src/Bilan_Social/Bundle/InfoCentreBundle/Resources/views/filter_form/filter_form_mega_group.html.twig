@@ -1,0 +1,33 @@
+{#
+*	template de rendu d'un mega_group (le fieldset généralement) du filter_form
+*
+*	/!\
+*	|	il ne doit pas être utilisé tel quel mais à l'intérieur 
+*	|	du filter_form.html.twig car utilisant les variables du template parent 
+*	/!\
+#}
+{% set temp_tag = current_form_mega_group.tag is defined ? current_form_mega_group.tag : 'fieldset' %}
+{% set temp_title_tag = current_form_mega_group.title_tag is defined ? current_form_mega_group.title_tag : 'legend' %}
+{% set temp_collapse = current_form_mega_group.collapse is defined ? current_form_mega_group.collapse : false %}
+{% set temp_content = current_form_mega_group.content is defined ? current_form_mega_group.content : 'group ' ~ form_mega_group_key %}
+{% set temp_fields_groups = current_form_mega_group.fields_groups is defined ? current_form_mega_group.fields_groups : [] %}
+{% set title_attr_str = "" %}
+{% set before_body = "" %}
+{% set after_body = "" %}
+{%  if temp_collapse == true %}
+	{% set id_collapse_target = "form_fieldset_body_collapse_" ~ form_mega_group_key %}
+	{% set before_body = "<div id='" ~ id_collapse_target ~ "' class='collapse'>" %}
+	{% set after_body = "</div>" %}
+	{% set title_attr_str = 'data-toggle="collapse" data-target="#' ~ id_collapse_target ~ '" aria-expanded="false" aria-controls="' ~ id_collapse_target ~ '"' %}
+	{% set temp_content = temp_content ~ "<i class='fa fa-chevron-down'></i>" %}
+{% endif %}
+{% if temp_fields_groups|length > 0 %}
+	<{{ temp_tag }}>
+		<{{ temp_title_tag }} {{ title_attr_str|raw }}>{{ temp_content|raw }}</{{ temp_title_tag }}>
+		{{ before_body|raw }}
+		{% for fields_group_key, fields_group in temp_fields_groups %}
+			{{ include('@InfoCentre/filter_form/filter_form_row.html.twig') }}
+		{% endfor %}
+		{{ after_body|raw }}
+	</{{ temp_tag }}>
+{% endif %}

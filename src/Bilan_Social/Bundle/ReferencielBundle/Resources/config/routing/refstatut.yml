@@ -1,0 +1,28 @@
+refstatut_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefStatut:index" }
+    methods:  GET
+
+refstatut_show:
+    path:     /{idStat}/show
+    defaults: { _controller: "ReferencielBundle:RefStatut:show" }
+    methods:  GET
+
+refstatut_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefStatut:new" }
+    methods:  [GET, POST]
+
+refstatut_edit:
+    path:     /{idStat}/edit
+    defaults: { _controller: "ReferencielBundle:RefStatut:edit" }
+    methods:  [GET, POST]
+
+refstatut_delete:
+    path:     /{idStat}/delete
+    defaults: { _controller: "ReferencielBundle:RefStatut:delete" }
+    methods:  DELETE
+
+csv_export_refstatut:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefStatut:generateCsv" }

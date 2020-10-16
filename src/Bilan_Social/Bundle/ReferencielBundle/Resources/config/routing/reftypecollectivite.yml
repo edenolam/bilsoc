@@ -1,0 +1,28 @@
+reftypecollectivite_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefTypeCollectivite:index" }
+    methods:  GET
+
+reftypecollectivite_show:
+    path:     /{idTypeColl}/show
+    defaults: { _controller: "ReferencielBundle:RefTypeCollectivite:show" }
+    methods:  GET
+
+reftypecollectivite_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefTypeCollectivite:new" }
+    methods:  [GET, POST]
+
+reftypecollectivite_edit:
+    path:     /{idTypeColl}/edit
+    defaults: { _controller: "ReferencielBundle:RefTypeCollectivite:edit" }
+    methods:  [GET, POST]
+
+reftypecollectivite_delete:
+    path:     /{idTypeColl}/delete
+    defaults: { _controller: "ReferencielBundle:RefTypeCollectivite:delete" }
+    methods:  DELETE
+
+csv_export_reftypecollectivite:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefTypeCollectivite:generateCsv" }

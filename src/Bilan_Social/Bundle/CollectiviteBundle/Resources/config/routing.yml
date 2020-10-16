@@ -1,0 +1,7 @@
+collectivite_collectivite:
+    resource: "@CollectiviteBundle/Resources/config/routing/collectivite.yml"
+    prefix:   /collectivite
+
+cdg_cdg:
+    resource: "@CollectiviteBundle/Resources/config/routing/cdg.yml"
+    prefix:   /cdg

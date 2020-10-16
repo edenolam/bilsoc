@@ -1,0 +1,5 @@
+Trace pour l'udpate en masse sur 2087 collectivite le 23/04/2018 à 9h20 environs sur l'environnement de recette et de prod.
+
+UPDATE collectivite SET LB_ZONE_EMPL_COLL=REPLACE(LB_ZONE_EMPL_COLL,'+ë','é') WHERE LB_ZONE_EMPL_COLL LIKE '%+ë%'
+
+Requete déjà éxécutée pour correction du ticket 4430.

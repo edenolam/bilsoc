@@ -1,0 +1,28 @@
+reftypesurclassdemo_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefTypeSurclassDemo:index" }
+    methods:  GET
+
+reftypesurclassdemo_show:
+    path:     /{idTypeSurclassDemo}/show
+    defaults: { _controller: "ReferencielBundle:RefTypeSurclassDemo:show" }
+    methods:  GET
+
+reftypesurclassdemo_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefTypeSurclassDemo:new" }
+    methods:  [GET, POST]
+
+reftypesurclassdemo_edit:
+    path:     /{idTypeSurclassDemo}/edit
+    defaults: { _controller: "ReferencielBundle:RefTypeSurclassDemo:edit" }
+    methods:  [GET, POST]
+
+reftypesurclassdemo_delete:
+    path:     /{idTypeSurclassDemo}/delete
+    defaults: { _controller: "ReferencielBundle:RefTypeSurclassDemo:delete" }
+    methods:  DELETE
+
+csv_export_reftypesurclassdemo:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefTypeSurclassDemo:generateCsv" }

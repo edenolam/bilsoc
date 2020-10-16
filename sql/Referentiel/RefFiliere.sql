@@ -1,0 +1,12 @@
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('AD', 'Administrative', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('TE', 'Technique', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('CU', 'Culturelle', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('SP', 'Sportive', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('SO', 'Sociale', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('MS', 'M�dico-sociale', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('MT', 'M�dico-technique', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('PM', 'Police municipale', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('AN', 'Animation', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('IS', 'Incendie et secours', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('EHF', 'Emplois hors fili�re', 0, 'ADMIN', now());
+INSERT INTO ref_filiere(CD_FILI, LB_FILI,  BL_VALI,CD_UTILCREA, created_at) VALUES ('AUT', 'Autres', 0, 'ADMIN', now());

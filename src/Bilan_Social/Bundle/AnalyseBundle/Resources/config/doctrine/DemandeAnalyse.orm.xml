@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\AnalyseBundle\Entity\DemandeAnalyse" repository-class="Bilan_Social\Bundle\AnalyseBundle\Repository\DemandeAnalyseRepository" table="demande_analyse">
+    <id name="idDemandeAnalyse" type="bigint" column="ID_DEMANDE_ANALYSE">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="cmDetail" type="text" column="CM_DETAIL" nullable="false"/>
+    <field name="lbTypeAnalyse" type="string" column="LB_TYPE_ANALYSE" length="100" nullable="false"/>
+    <field name="lbAnalyse" type="string" column="LB_ANALYSE" length="100" nullable="false"/>
+    <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true">
+        <options>
+            <option name="fixed"/>
+        </options>
+    </field>
+    <field name="cdUtilCrea" type="string" column="CD_UTIL_CREA" length="100" nullable="false"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="false"/>
+    <field name="analyseRead" type="boolean" column="ANALYSE_READ" nullable="true"/>
+    <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite" inversed-by="demandeAnalyse">
+        <join-column name="ID_COLL" referenced-column-name="ID_COLL" nullable="false"/>
+    </many-to-one>
+    <many-to-one field="cdg" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Cdg" inversed-by="demandeAnalyse">
+        <join-column name="ID_CDG" referenced-column-name="ID_CDG" nullable="false"/>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

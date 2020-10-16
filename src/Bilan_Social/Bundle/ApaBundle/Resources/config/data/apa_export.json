@@ -1,0 +1,628 @@
+{
+	"data":{
+		"bsas":{
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_etprs":{
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_absences":{
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_remus": {
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_formations":{
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_gpeecs":{
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_gpeecs_plus":{
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_handitorial":{
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_rassct":{
+			"from_result_set":"result_proc_export_apa_coll"
+		},
+		"bsas_dgcl_carence":{
+			"from_result_set":"result_proc_export_apa_coll"
+		}
+	},
+	"sheets":[
+		{
+			"type":"list",
+			"name":"infoAgents",
+			"data_key":"bsas",
+			"cols":[
+				{
+					"bddKey":"ID_BILASOCIAGEN"
+				},
+				{
+                                        "bddKey" : "ID_ENQU"
+				},
+				{
+					"bddKey" : "LB_NOM"
+				},
+				{
+					"bddKey" : "LB_PREN"
+				},
+				{
+					"bddKey" : "LB_DATENAIS"
+				},
+				{
+					"bddKey" : "CD_SEXE",
+                                        "dataSexe" : true
+				},
+				{
+					"bddKey" : "BL_BOETH",
+					"boolean" : true
+                                },
+				{
+					"bddKey" : "BL_AGENREMU3112",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_AGENREMUANNE",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_AGENARRIANNECOLL",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_EMPLFONC",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "LB_GRADDETA"
+				},
+				{
+					"bddKey" : "DT_DETAEMPLFONC"
+				},
+				{
+					"bddKey" : "DT_ARRISTAT"
+				},
+				{
+					"bddKey" : "BL_ACQUSTATANNE",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_AGENTITUSTAGANNE",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "LB_DATEDEPACOLL"
+				},
+				{
+					"bddKey" : "CD_MOTIDECE"
+				},
+				{
+					"bddKey" : "BL_PROMAVANSTAGANNE",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_HEURESUPPCOMP",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_TEMPCOMP",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_TEMPPLEIN",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "NB_DEMAPART"
+				},
+				{
+					"bddKey" : "NB_DEMAPARTACCE"
+				},
+				{
+					"bddKey" : "NB_PREMDEMASATI"
+				},
+				{
+					"bddKey" : "NB_MODIEMPLPERMTEMPCOMP"
+				},
+				{
+					"bddKey" : "NB_AGENEMPLTEMPCOMPNONRENOU"
+				},
+				{
+					"bddKey" : "MT_REMUANNUBRUT"
+				},
+				{
+					"bddKey" : "BL_AGENABSE",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "NB_ALLOTEMPINVTRAV"
+				},
+				{
+					"bddKey" : "NB_ALLOTEMPINVAPRO"
+				},
+				{
+					"bddKey" : "BL_ENTRDEPACONG",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_ENTRRETOCONG",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_CET",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_CETOUVERT",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "NB_JOURCUMU3112"
+				},
+				{
+					"bddKey" : "NB_JOURVERS3112"
+				},
+				{
+					"bddKey" : "NB_JOURDEPE3112"
+				},
+				{
+					"bddKey" : "NB_JOURINDE3112"
+				},
+				{
+					"bddKey" : "NB_JOURPRISRAFP3112"
+				},
+				{
+					"bddKey" : "NB_JOURDONNEBENEF"
+				},
+				{
+					"bddKey" : "BL_TELETRAV",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_TELETRAVBENEF",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_AGENPREV",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_DEMAINAP",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "LB_INAPDEMA"
+				},
+				{
+					"bddKey" : "BL_DECIINAP",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "LB_INAPDECI"
+				},
+				{
+					"bddKey" : "BL_FORMSUIV",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_VAE",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "ID_EBCF"
+				},
+				{
+					"bddKey" : "BL_BILACOMP",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "NB_BILACOMP"
+				},
+				{
+					"bddKey" : "BL_CONGFORM",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_CDI",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "FG_STAT"
+				},
+				{
+					"bddKey" : "created_at"
+				},
+				{
+					"bddKey" : "updated_at"
+				},
+				{
+					"bddKey" : "LB_POSISTAT"
+				},
+				{
+					"bddKey" : "LB_STAT"
+				},
+				{
+					"bddKey" : "LB_FONCPUBL"
+				},
+				{
+					"bddKey" : "LB_EMPLFONC"
+				},
+				{
+					"bddKey" : "LB_CATE"
+				},
+				{
+					"bddKey" : "LB_FILI"
+				},
+				{
+					"bddKey" : "LB_CADREMPL"
+				},
+				{
+					"bddKey" : "LB_GRAD"
+				},
+				{
+					"bddKey" : "LB_MOTIARRI"
+				},
+				{
+					"bddKey" : "LB_STAGTITU"
+				},
+				{
+					"bddKey" : "LB_MOTIDEPA"
+				},
+				{
+					"bddKey" : "LB_TEMPNONCOMP"
+				},
+				{
+					"bddKey" : "LB_TEMPPART"
+				},
+				{
+					"bddKey" : "LB_POURTEMPPART"
+				},
+				{
+					"bddKey" : "LB_CYCLTRAV"
+				},
+				{
+					"bddKey" : "BL_CYCLTRAV",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "LB_TYPEMISSPREV"
+				},
+				{
+					"bddKey" : "LB_EMPLNONPERM"
+				},
+				{
+					"bddKey" : "LB_STRUORIG"
+				},
+				{
+					"bddKey" : "LB_TYPECDD"
+				},
+				{
+					"bddKey" : "LB_CADREEMPORIG"
+				},
+				{
+					"bddKey" : "LB_MOTIENTRDEP"
+				},
+				{
+					"bddKey" : "BL_STRUORIGPOSISTAT",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "DT_CHANSTAT"
+				},
+				{
+					"bddKey" : "BL_POSIACTI",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "BL_POSIACTINONREMU",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "LB_POSISTATNONREMU"
+				},
+				{
+					"bddKey" : "LB_FILIEMPLFONC"
+				},
+				{
+					"bddKey" : "LB_FILIINAP"
+				},
+				{
+					"bddKey" : "BL_DEMAPART",
+					"boolean" : true
+				},
+				{
+					"bddKey" : "NB_ALLOTEMPINVAAUTRECAS"
+				},
+				{
+					"bddKey" : "CD_PROFESSIONCATEGSOCIO"
+				},
+				{
+					"bddKey" : "PC_FILLGROUP_STATUT"
+				},
+				{
+					"bddKey" : "PC_FILLGROUP_REMUNERATION"
+				},
+				{
+					"bddKey" : "PC_FILLGROUP_ABSENCE"
+				},
+				{
+					"bddKey" : "PC_FILLGROUP_FORMATION"
+				},
+				{
+					"bddKey" : "PC_FILLGROUP_AUTRE"
+				},
+				{
+					"bddKey" : "PC_FILLGROUP_RASSCT"
+				},
+				{
+					"bddKey" : "PC_FILLGROUP_HANDITORIAL"
+				},
+				{
+					"bddKey" : "PC_FILLGROUP_GPEEC"
+				},
+				{
+					"bddKey" : "LB_ALERTE_NONPERM_N4DS"
+				},
+	            {
+					"bddKey" : "PC_FILL_AGENT"
+	            }
+			]
+		},
+		{
+			"type":"list",
+			"name":"etprsAgents",
+			"data_key":"bsas_etprs",
+			"cols":[
+				{
+			        "bddKey":"ID_ETPRAGENT"
+				},        
+				{
+			        "bddKey":"ID_BILASOCIAGEN"
+				},        
+				{
+			        "bddKey":"NB_HEUR"
+				},        
+				{
+			        "bddKey":"NB_HEUR_ETPR"
+				},        
+				{
+			        "bddKey":"LB_STAT"
+				},        
+				{
+			        "bddKey":"LB_FILI"
+				},    	    
+				{
+			        "bddKey":"LB_EMPLNONPERM"
+				},        
+				{
+			        "bddKey":"LB_CADREMPL"
+				},        
+				{
+			        "bddKey":"DT_OUT"
+				},        
+				{
+			        "bddKey":"DT_IN"
+				},        
+				{
+			        "bddKey":"created_at"
+				},        
+				{
+			        "bddKey":"CD_UTILCREA"
+				},        
+				{
+			        "bddKey":"updated_at"
+				},        
+				{
+			        "bddKey":"CD_UTILMODI"
+				}    
+
+			]
+		},
+		{
+			"type":"list",
+			"name":"absencesAgents",
+			"data_key":"bsas_absences",
+			"cols":[
+				{
+				    "bddKey":"ID_ABSEARREAGEN"
+				},
+				{
+				    "bddKey":"ID_BILASOCIAGEN"
+				},
+				{
+				    "bddKey":"NB_ARRE"
+				},
+				{
+				    "bddKey":"NB_JOURABSE"
+				},
+				{
+				    "bddKey":"LB_MOTIABSE"
+				},
+				{
+				    "bddKey":"LB_NATURE_LESION"
+				},
+				{
+				    "bddKey":"LB_SIEGE_LESION"
+				},
+				{
+				    "bddKey":"LB_ELEMENT_MATERIEL"
+				},
+				{
+				    "bddKey":"LB_MALADIE_PROFESSIONNELLE"
+				},
+				{
+				    "bddKey":"LB_TYPE_ACTIVITE_MALADIE_PRO"
+				},
+				{
+				    "bddKey":"LB_TYPE_ACTIVITE_ARRET_TRAVAIL"
+				},
+				{
+				    "bddKey":"ACCIDENT_AVEC_ARRET"
+				},
+				{
+				    "bddKey":"ANNEE_EVENEMENT"
+				},
+				{
+				    "bddKey":"created_at"
+				},
+				{
+				    "bddKey":"CD_UTILCREA"
+				},
+				{
+				    "bddKey":"updated_at"
+				},
+				{
+				    "bddKey":"CD_UTILMODI"
+				}
+			]
+		},
+		{
+			"type":"list",
+			"name":"remunerationsAgents",
+			"data_key":"bsas_remus",
+			"cols":[
+				{
+				    "bddKey":"ID_REMUNERATIONAGENT"
+				},
+				{
+				    "bddKey":"ID_BILASOCIAGEN"
+				},
+				{
+				    "bddKey":"LB_STAT"
+				},
+				{
+				    "bddKey":"LB_CATE"
+				},
+				{
+				    "bddKey":"MT_TOTAL_REMUNERATION_BRUTE"
+				},
+				{
+				    "bddKey":"MT_PRIME"
+				},
+				{
+				    "bddKey":"MT_NBI"
+				},
+				{
+					"bddKey":"MT_HC_HS"
+				},
+				{
+					"bddKey":"MT_SFT"
+				},
+				{
+					"bddKey":"MT_IR"
+				},
+				{
+				    "bddKey":"NB_HEURE_SUPP"
+				},
+				{
+				    "bddKey":"NB_HEURE_COMPL"
+				}
+			]
+		},
+		{
+			"type":"list",
+			"name":"formationAgents",
+			"data_key":"bsas_formations",
+			"cols":[
+				{
+				    "bddKey":"ID_FORMAGEN"
+				},
+				{
+				    "bddKey":"ID_BILASOCIAGEN"
+				},
+				{
+				    "bddKey":"NB_JOUR_FORM"
+				},
+				{
+				    "bddKey":"LB_ORGAFORM"
+				},
+				{
+				    "bddKey":"LB_FORM"
+				},
+				{
+				    "bddKey":"BL_CPF",
+                                    "boolean": true
+				},
+				{
+				    "bddKey":"created_at"
+				},
+				{
+				    "bddKey":"CD_UTILCREA"
+				},
+				{
+				    "bddKey":"updated_at"
+				},
+				{
+				    "bddKey":"CD_UTILMODI"
+				}
+			]
+		},
+		{
+			"type":"list",
+			"name":"gpeecAgents",
+			"data_key":"bsas_gpeecs",
+			"cols":[
+				{
+				    "bddKey":"ID_BILASOCIAGEN"
+				},
+				{
+				    "bddKey":"LB_METIER"
+				},
+				{
+				    "bddKey":"LB_DOMAINE_DIPLOME"
+				}
+			]
+		},
+		{
+			"type":"list",
+			"name":"gpeecPlusAgents",
+			"data_key":"bsas_gpeecs_plus",
+			"cols":[
+				{
+				    "bddKey":"ID_BILASOCIAGEN"
+				},
+				{
+				    "bddKey":"LB_SPECIALITE"
+				}
+			]
+		},
+		{
+			"type":"list",
+			"name":"handitorialAgents",
+			"data_key":"bsas_handitorial",
+			"cols":[
+				{
+				    "bddKey":"ID_BILASOCIAGEN"
+				},
+				{
+				    "bddKey":"LB_CATEGORIE_BOETH"
+				},
+				{
+				    "bddKey":"LB_NATURE_HANDICAP_BOETH"
+				}
+			]
+		},
+		{
+			"type":"list",
+			"name":"rassctAgents",
+			"data_key":"bsas_rassct",
+			"cols":[
+				{
+				    "bddKey":"ID_BILASOCIAGEN"
+				},
+				{
+				    "bddKey":"LB_MALADIE_PROFESSIONNELLE"
+				},
+				{
+				    "bddKey":"LB_TYPE_ACTIVITE_MALADIE_PRO"
+				},
+				{
+				    "bddKey":"LB_TYPE_ACTIVITE_ARRET_TRAVAIL"
+				}
+			]
+		}
+	]
+}

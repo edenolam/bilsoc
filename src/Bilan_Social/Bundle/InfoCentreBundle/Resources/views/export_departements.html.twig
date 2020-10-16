@@ -1,0 +1,84 @@
+<section id='form-filters-wrapper' class='infocentre-section-bloc'>
+	<div class="card">
+
+		<div id="body_echantillon">
+			<div class="card-body">
+					<form class="form-horizontal" id='export_pool_form' target='_blank' action='{{ path("info_centre_pool_export") }}'>
+						<div class="form-group" style="margin: 20px">
+							<label class="col-sm-2 control-label" style="font-size: 15px">
+								Échantillon à exporter :
+							</label>
+							<div class="col-sm-5">
+								<select id="export_pool_id_select_table" name="export_pool_id_select_table" class="form-control">
+									{% for pool in pools if pool.blAct == 1 %}
+										<option value="{{ pool.id }}" {{ current_pool is defined and current_pool is not null and current_pool.id == pool.id ? "selected" : "" }}>{{ pool.nom }}</option>
+									{% endfor %}
+								</select>
+							</div>
+
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	<div class="card">
+		<div id="body_select_export">
+			<div class="card-body">
+				<table class="table table-bordered">
+					<thead>
+					<tr>
+						<th>Nom de l'export</th>
+						<th>Description</th>
+						<th>Thème</th>
+						<th>Date de création de l'export</th>
+						<th>Action</th>
+					</tr>
+					</thead>
+					<tbody id="pool_export_bouttons_table_receiver">
+                    {% for line in export_admin %}
+						<tr>
+							<td>{{ line.name }}</td>
+							<td>{{ line.description }}</td>
+							<td>{{ line.theme }}</td>
+							<td>{{ line.date|date('d-m-Y') }}</td>
+						{#	<td>{{ line.fgstat }}</td>#}
+							<td><button type="button" data-job="{{ line.action }}" data-long-task="{{ line.isLongTask() }}" class="runjob btn btn-info">Exporter</button></td>
+
+						</tr>
+
+                    {% endfor %}
+					</tbody>
+					<div id="export_pool_error_container"></div>
+				</table>
+			</div>
+		</div>
+	</div>
+	{#<div class="card">
+		<div id="body_list_export">
+			<div class="card-body">
+				<table class="table table-bordered">
+					<thead>
+					<tr>
+						<th>Nom du job</th>
+						<th>Description</th>
+						<th>Thème</th>
+						<th>Date de création du job</th>
+						<th>Bouton d'action</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>Exemple d'export</td>
+						<td>Année 2017</td>
+						<td>DGCL</td>
+						<td>DATE</td>
+						<td>ACTIONNN</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>#}
+</section>

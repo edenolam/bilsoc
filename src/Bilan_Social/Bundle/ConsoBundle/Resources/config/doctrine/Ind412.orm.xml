@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind412" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind412Repository" table="ind_412">
+        <indexes>
+            <index name="FK_412_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_412_ACTIONPREV" columns="ID_ACTIONPREV"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_ACTIONPREV" name="IDXU1_IND_412"/>
+		</unique-constraints>
+        <id name="id412" type="integer" column="ID_412">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind412s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refActionPrevention" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefActionPrevention">
+            <join-column name="ID_ACTIONPREV" referenced-column-name="ID_ACTIONPREV" nullable="false"/>
+        </many-to-one>
+
+        <field name="r4121" type="decimal" column="R_4121" precision="10" scale="2" nullable="true" />
+        <field name="r4122" type="integer" column="R_4122" nullable="true" />
+        <field name="r4123" type="integer" column="R_4123" nullable="true" />
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

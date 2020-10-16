@@ -1,0 +1,1 @@
+/var/local/bilan_social_data/db-1/backups/master/every_2_days

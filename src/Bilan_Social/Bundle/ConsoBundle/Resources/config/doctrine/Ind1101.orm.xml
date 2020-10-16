@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1101" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind1101Repository" table="ind_110_1">
+        <indexes>
+            <index name="FK_1101_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_1101_EMPLOIFONCTIONNEL" columns="ID_EMPLFONC"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_EMPLFONC" name="IDXU1_IND_1101"/>
+		</unique-constraints>
+        <id name="id1101" type="integer" column="ID_1101">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind1101s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refEmploiFonctionnel" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiFonctionnel">
+            <join-column name="ID_EMPLFONC" referenced-column-name="ID_EMPLFONC" nullable="false"/>
+        </many-to-one>
+
+        <field name="r1101" type="integer" column="R_1101" nullable="true"/>
+        <field name="r1102" type="integer" column="R_1102" nullable="true"/>
+        <field name="r1103" type="integer" column="R_1103" nullable="true"/>
+        <field name="r1104" type="integer" column="R_1104" nullable="true"/>
+        <field name="r1105" type="integer" column="R_1105" nullable="true"/>
+        <field name="r1106" type="integer" column="R_1106" nullable="true"/>
+        <field name="r1107" type="integer" column="R_1107" nullable="true"/>
+        <field name="r1108" type="integer" column="R_1108" nullable="true"/>
+        <field name="r1109" type="integer" column="R_1109" nullable="true"/>
+        <field name="r1110" type="integer" column="R_1110" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA">
+        <options>
+            <option name="default">CURRENT_TIMESTAMP</option>
+        </options>
+        </field>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50">
+        <options>
+            <option name="default">SYSTEM</option>
+        </options>
+        </field>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true" />
+    </entity>
+</doctrine-mapping>

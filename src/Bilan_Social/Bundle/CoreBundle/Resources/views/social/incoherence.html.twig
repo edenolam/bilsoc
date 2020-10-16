@@ -1,0 +1,23 @@
+{% extends '@Core/layout.html.twig' %}
+
+
+{% block body %}
+    <h1>Incoherences</h1>
+
+    <table>
+        <tr>
+            <th>Formulaire</th>
+            <th>Champ</th>
+            <th>Message</th>
+        </tr>
+        {% for incoherence in incoherences %}
+            <tr>
+                <td>{{ incoherence.form }}</td>
+                <td>{{ incoherence.field }}</td>
+                <td>{{ incoherence.message }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+

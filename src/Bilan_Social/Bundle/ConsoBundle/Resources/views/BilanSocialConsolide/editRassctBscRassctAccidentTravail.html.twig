@@ -1,0 +1,214 @@
+
+    {% if formRassctBscRassctAccidentTravail is defined %}
+
+        {% set campagne = campagne_service.GetCurrentCampagne() %}
+        {% set AnneeCamp = '' %}
+        {% if campagne is not null %}
+            {% set AnneeCamp = campagne.nmAnne %}
+        {% endif %}
+
+        {{ form_start(formRassctBscRassctAccidentTravail) }}
+
+        {% set ref = ["Nombre d'accidents sans arrêt",
+            "Nombre d'accidents avec arrêt entre 1 et 3 jours",
+            "Nombre d'accidents avec arrêt entre 4 et 21 jours",
+            "Nombre d'accidents avec arrêt entre 22 et 89 jours",
+            "Nombre d'accidents avec arrêt de 90 jours ou plus"] %}
+
+            <table width="100%" id="bscRassctAccidentTravailTable" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th style="text-align: center">{{AnneeCamp-1}}</th>
+                        <th style="text-align: center">{{AnneeCamp}}</th>
+                    </tr>
+                    <tr>
+                        <th>Accident du travail / de service</th>
+                        <th>Nombre</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set i = 0 %}
+                    {% for tag in formRassctBscRassctAccidentTravail.bscRassctAccidentTravails %}
+                    <tr>
+                        <td style="min-width: 400px">
+                            {{ ref[i] }}
+                        </td>
+
+                       <td>
+                             {{ form_row(tag.rAccident_1) }}
+                        </td>
+                        <td>
+                             {{ form_row(tag.rAccident_2) }}
+                        </td>
+                    </tr>
+                    {% set i = i+1 %}
+                    {% endfor %}
+                    <tr class="filiTable" id="total">
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        <th class="accidentTravailTotalN1" style="text-align: center">0</th>
+                        <th class="accidentTravailTotalN" style="text-align: center">0</th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br/>
+
+            <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                    $('#progImg').show();" data-valide="1" />
+
+            <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formRassctBscRassctAccidentTravail) }}
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            totColumn('accidentTravailN1', 'accidentTravailTotalN1');
+            totColumn('accidentTravailN', 'accidentTravailTotalN');
+            
+            changeDetect = false;
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true  %}
+                $(document).change();
+                update224();
+
+            {% endif %}
+        });
+
+        function changedR224(obj) {
+            totColumn('accidentTravailN1', 'accidentTravailTotalN1');
+            totColumn('accidentTravailN', 'accidentTravailTotalN');
+        }
+
+        function update224(onInit) {
+            var table224 = document.getElementById('ind224Table');
+            var rowLength224 = table224.rows.length;
+            var idxRowInput = 0;
+
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+
+
+            var mtTot1Glo = 0;
+            var mtTot2Glo = 0;
+
+
+            for (var i = 2; i < rowLength224; i += 1) {
+                var row = table224.rows[i];
+                var cellLength = row.cells.length;
+
+                var lineTotal = false;
+                var lineTot1 = 0;
+
+
+
+                lineTot1 = 0;
+                for (var y = 0; y < cellLength; y += 1) {
+                    var cell = row.cells[y];
+                    if (cell.id.substring(0, 6) == "r2241") {
+                        if ($('#bscForm224_ind224s_' + idxRowInput + '_r2241').val() != "") {
+                            mtTot1 += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2241').val());
+                            mtTot1Glo += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2241').val());
+                            lineTot1 += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2241').val());
+                        }
+                    } else if (cell.id.substring(0, 6) == "r2242") {
+                        if ($('#bscForm224_ind224s_' + idxRowInput + '_r2242').val() != "") {
+                            mtTot2 += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2242').val());
+                            mtTot2Glo += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2242').val());
+                            lineTot1 += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2242').val());
+                        }
+
+                    } else if (cell.id.substring(0, 8) == "lineTot1") {
+                        cell.innerHTML = lineTot1;
+
+                    }
+
+                }
+
+                if (!lineTotal)
+                    idxRowInput++;
+            }// end for line
+
+            if (!onInit) {
+
+            }
+
+        }
+
+
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscFormRassctAccidentTravail_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_rassct_bscRassctAccidentTravail_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#accident_travail').load('{{ path('bilan_conso_rassct_bscRassctAccidentTravail_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        if (blHand == true) {
+                                            window.location.href = '{{ path('bilan_conso_handitorial_edit') }}';
+                                        } else if (blGpeec == true) {
+                                            window.location.href = '{{ path('bilan_conso_gpeec_edit') }}';
+                                        }
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+
+

@@ -1,0 +1,463 @@
+<div id="wrapper" class="col-md-3">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="clearfix">
+        <div class="menu-header noPadding consolideHeader">
+            {% set Fgstat = "" %}
+            {% if bilanConso is defined and bilanConso is not null%}
+                {% set Fgstat = bilanConso.fgstat %}
+
+            {% endif %}
+            {% set currentCampagne = campagne_service.getCurrentCampagne %}
+            {% if app.user.username is defined %}
+
+                <div class="align-center">
+                {% if(is_granted("ROLE_CDG")) %}
+                    {% set cdg = user_cdg.findCDGByUtilisateur(app.user) %}
+                      <img src="{{ cdg.pathLogo is not empty ? asset(cdg.pathLogo) : '' }}" alt="{{ cdg.nameLogo }}" class="logo_cdg img-responsive center-block"/>
+                {% elseif(is_granted("ROLE_COLLECTIVITY")) %}
+                    {% set cdg = user_cdg.findCdgByCollectivite(app.user) %}
+                      <img src="{{ asset(cdg.pathLogo) }}" alt="{{ cdg.nameLogo }}" class="logo_cdg img-responsive center-block"/>
+                {% elseif(is_granted("ROLE_ADMIN")) %}
+                {% endif %}
+                </div>
+                <label class="raisonSociale">
+                    {% if (is_granted("ROLE_COLLECTIVITY")) %}
+                        {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+                            <strong>Raison sociale :   {{ collectiviteinfo.lbColl }} </strong>
+                        {% endfor %}
+                    {% elseif(is_granted("ROLE_CDG")) %}
+                        {% for cdginfo in user_cdg.findOneByCdgByUtilisateur(app.user) %}
+                            <strong>Raison sociale : {{ cdginfo.lbCdg }} </strong>
+                        {% endfor %}
+                        {% if app.session.get('user_siret') is defined and app.session.get('user_siret') is not null %}
+                            <p>Connecté en tant que {{ app.session.get('user_siret') }}</p>
+                            {% if contactPrincipalCollectivite is not null %}
+                               <p>Nom : {{ contactPrincipalCollectivite.lbNom }}</p>
+                               <p>Téléphone : {{ contactPrincipalCollectivite.lbTele }}</p>
+                               <p>Email : {{ contactPrincipalCollectivite.lbMail }}</p>
+                           {% endif%}
+                            <a href="{{ path('remove_cdg_session') }}">Se déconnecter</a>
+                        {% endif %}
+                    {% elseif (is_granted("ROLE_ADMIN")) %}
+                        <strong> Identifiant:  ADMIN  </strong>
+                        <label>Dernière connexion le {{app.user.dtlastconn|localizeddate('none', 'none', app.request.locale, "Europe/Paris", 'dd MMM Y')}} <br> à {{app.user.dtlastconn|date('H:i:s')}}</label>
+
+                    {% endif %}
+
+                </label>
+                {% if is_granted("ROLE_COLLECTIVITY") %}
+                    <label>Siret : {{ app.user.username }}</label>
+                    <br>
+                    <label>Identifiant : {{ app.user.username }}</label>
+                    <br>
+                    <label>Dernière connexion le {{app.user.dtlastconn|localizeddate('none', 'none', app.request.locale, "Europe/Paris", 'dd MMM Y')}} <br> à {{app.user.dtlastconn|date('H:i:s')}}</label>
+
+                {% endif %}
+
+                <div>
+
+                        <a href="{{ path('logout') }}" class='logout'><span class="glyphicon glyphicon-off" aria-hidden="true"></span>Déconnexion</a>
+
+                </div>
+
+
+            {% endif %}
+        </div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand menu-li" >
+
+                <div class="col-xs-12 menu-div menu-accueil"  style="display: flex;">
+                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                        <img src="{{ asset("img/icone/DescriptionSite-01.png") }}" class="icone-menu"/>
+                    </div>
+                    <div class="col-xs-9">
+                        <div>
+                            <a class="lien-menu" href="{{ path('homepage') }}"><span>Accueil</span> </a>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+            <li class="sidebar-brand menu-li">
+
+                <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                        <img src="{{ asset("img/icone/DescriptionSite-02.png") }}" class="icone-menu"/>
+                    </div>
+                    <div class="col-xs-9">
+                        <div>
+                            <span class="titre-menu-accueil">Mon compte</span>
+                            <div class="sous-menu-accueil">
+                                {% if is_granted("ROLE_COLLECTIVITY") %}
+                                    <a href="{{ path('collectivite_edit', {'id':  idColl}) }}"><span>Mes informations</span></a>
+                                    {% if (info_saisie != '')%}
+                                        <a href="{{ path('bilan_social_historique_collectivite') }}"><span>Historique du bilan social</span></a>
+                                    {% endif %}
+                                    <a href="{{ path('historique_echanges') }}"><span>Historique des échanges</span></a>
+                                {% endif %}
+                                {% if is_granted("ROLE_CDG") %}
+                                    <a href="{{ path('cdg_fiche') }}"><span>Mes informations</span></a>
+                                    <a href="{{ path('message_reset_password') }}"><span>Modifier le message de réinitialisation du mot de passe</span></a>
+                                {% endif %}
+                                <a class="lien-menu" href="{{ path('change_password_by_user') }}"><span>Mon mot de passe</span> </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+            {% if is_granted("ROLE_ADMIN")%}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-10.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Comptes utilisateurs</span>
+                                <div class="sous-menu-accueil">
+                                    <a class="lien-menu" href="{{ path('utilisateur_recherche') }}"><span>Rechercher un utilisateur</span> </a>
+                                    <a class="lien-menu" href="{{ path('utilisateur_fiche') }}"><span>Ajouter un utilisateur</span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-03.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Référentiels</span>
+                                <div class="sous-menu-accueil">
+                                    <a class="lien-menu" href="{{ path('referenciel_homepage') }}"><span>Liste des référentiels</span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            {% endif %}
+
+            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_CDG") %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-05.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Actualités générales</span>
+                                <div class="sous-menu-accueil">
+                                    <a class="lien-menu" href="{{ path('actualite_new') }}"><span>Ajouter une actualité</span> </a>
+                                    <a class="lien-menu" href="{{ path('actualite_index') }}"><span>Liste des actualités</span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-04.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">CMS</span>
+                                <div class="sous-menu-accueil">
+                                    <a class="lien-menu" target="_blank" href="{{cms_url}}"><span>Gérer ssle site institutionnel</span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+
+
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-06.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Campagne</span>
+                                <div class="sous-menu-accueil">
+                                    <a class="lien-menu" href="{{ path('campagne_homepage') }}"><span>Gérer mes campagnes</span> </a>
+                                    {% if currentCampagne is not empty %}
+                                        <a class="lien-menu" href="{{ path('campagne_suivi') }}"><span>Suivi d'une campagne</span> </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endif %}
+
+
+            <li class="sidebar-brand menu-li">
+                <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                        <img src="{{ asset("img/icone/DescriptionSite-07.png") }}" class="icone-menu"/>
+                    </div>
+                    <div class="col-xs-9">
+                        <div>
+                            <span class="titre-menu-accueil">FAQ / Poser une question</span>
+                            <div class="sous-menu-accueil">
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <a class="lien-menu" href="{{ path('faq_new') }}"><span>Ajouter une FAQ</span> </a>
+                                    <a class="lien-menu" href="{{ path('faq_index_administration') }}"><span>Liste des FAQ</span> </a>
+                                {% else %}
+                                    <a class="lien-menu" href="{{ path('faq_index_client') }}"><span>Liste des FAQ</span> </a>
+                                {% endif %}
+                                {% if  not is_granted("ROLE_ADMIN") %}
+                                    {% if is_granted("ROLE_COLLECTIVITY") %}
+                                        <a class="lien-menu" href="{{ path('question_new_collectivite') }}"><span>Poser une question</span></a>
+                                    {% elseif is_granted("ROLE_CDG")%}
+                                        <a class="lien-menu" href="{{ path('question_new_cdg') }}"><span>Poser une question</span></a>
+                                        <a class="lien-menu" href="{{ path('question_index') }}"><span>Historique des questions collectivité</span></a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+
+            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_CDG") %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-08.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Compte collectivités</span>
+                                <div class="sous-menu-accueil">
+                                    <a class="lien-menu" href="{{ path('collectivite_homepage') }}"><span>Gestion des comptes collectivités</span> </a>
+                                    <a class="lien-menu" href="{{ path('collectivite_recherche') }}"><span>Recherche personnalisée de comptes collectivités</span> </a>
+                                    <a class="lien-menu" href="{{ path('collectivite_modification_masse_import') }}"><span>Modification en masse des collectivités</span> </a>
+                                    <a class="lien-menu" href="{{ path('index_modifications') }}"><span>Demandes de modification des collectivités</span> </a>
+                                    {#<a class="lien-menu" href="{{ path('collectivite_fiche') }}"><span>Ajouter une collectivité</span> </a>#}
+                                    <a class="lien-menu" href="{{ path('collectivite_bloque') }}"><span class="badge badge-light" style='background-color:#1a355d;'>{% if is_granted('ROLE_CDG') %}{{ user_collectivite.getCollectiviteBloqueByCdg(app.user)|length }}{% elseif is_granted('ROLE_ADMIN') %}{{ user_collectivite.getCollectiviteBloque()|length }}{% endif %}</span> <span>Débloquer collectivité</span> </a>
+                                    {#<a href="{{ path('bilan_social_historique') }}"><span>Historique des bilans sociaux</span></a>#}
+                                    {% if is_granted("ROLE_ADMIN") %}<a class="lien-menu" href="{{ path('collectivite_liste_demande_creation') }}"><span>Liste des demandes de création</span> </a>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_COLLECTIVITY") %}
+                {% if currentCampagne is not empty and blAnalyse is defined %}
+                    {% if blAnalyse is not null and blAnalyse.blAffi == true %}
+                        <li class="sidebar-brand menu-li">
+                            <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <img src="{{ asset("img/icone/DescriptionSite-25.png") }}" class="icone-menu"/>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div>
+                                        <span class="titre-menu-accueil">Analyses</span>
+                                        <div class="sous-menu-accueil">
+                                            <a class="lien-menu" href="{{ path('analyse_demande') }}"><span>Mes analyses</span> </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if is_granted("ROLE_CDG") %}
+                {% if currentCampagne is not empty and analyse is defined %}
+                    {% if analyse is not null and analyse == true %}
+                        <li class="sidebar-brand menu-li">
+                            <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <img src="{{ asset("img/icone/DescriptionSite-25.png") }}" class="icone-menu"/>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div>
+                                        <span class="titre-menu-accueil">Analyses</span>
+                                        <div class="sous-menu-accueil">
+                                                <a class="lien-menu" href="{{ path('analyse_homepage') }}"><span>Gestion des analyses</span> </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_CDG") %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-09.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Modèles de mails</span>
+                                <div class="sous-menu-accueil">
+                                     {% if is_granted("ROLE_ADMIN")  %}
+                                    <a class="lien-menu" href="{{ path('modelmail_index') }}"><span>Gestion des modèles de mails partagés</span> </a>
+                                    <a class="lien-menu" href="{{ path('modelmailinterneappli_index') }}"><span>Gestion des modèles de mails interne à l'application</span> </a>
+                                    {% endif %}
+                                      {% if is_granted("ROLE_CDG")  %}
+                                           <a class="lien-menu" href="{{ path('modelmail_index') }}"><span>Gestion des modèles de mails partagés</span> </a>
+                                          {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN")  %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-10.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Comptes CDG</span>
+                                <div class="sous-menu-accueil">
+                                    <a class="lien-menu" href="{{ path('cdg_index_departements') }}"><span>Affectation des départements</span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-26.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Modèles de vues</span>
+                                <div class="sous-menu-accueil">
+                                    <a class="lien-menu" href="{{ path('model_vues_homepage') }}"><span>Gérer les modèles de vues</span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            {% endif %}
+
+            {% if is_granted("ROLE_CDG") %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-11.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Import base carrière</span>
+                                <div class="sous-menu-accueil">
+                                    {% if (currentCampagne is not null) %}
+                                        <a class="lien-menu" href="{{ path('import_carriere_homepage') }}"><span>Importer les données d’une base carrière</span> </a>
+                                    {% else %}
+                                        Pas de campagne en cours
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+
+            {% endif %}
+            {% if is_granted("ROLE_COLLECTIVITY") or is_granted("ROLE_CDG") %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-11.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Enquête</span>
+
+                                <div class="sous-menu-accueil">
+                                    {% if is_granted("ROLE_COLLECTIVITY") %}
+
+                                        {% if currentEnquete is not empty and bilanConso is null%}
+                                            <a class="lien-menu {% if contactPrincipalCollectivite is not defined or contactPrincipalCollectivite is null %} blocktoinfocoll{% endif%} " href="{{ path('bilan_social_homepage') }}"><span>Mon enquête {{ currentCampagne.nmAnne }}</span> </a>
+                                        {% elseif  currentEnquete is not empty and bilanConso is not null and (bilanConso.fgStat == 0 or bilanConso.fgStat == 4 or bilanConso.fgStat == 3)   %}
+                                            <a class="lien-menu {% if contactPrincipalCollectivite is not defined or contactPrincipalCollectivite is null %} blocktoinfocoll{% endif%}" href="{{ path('bilan_social_homepage') }}"><span>Mon enquête {{ currentCampagne.nmAnne }}</span> </a>
+                                            {#   {% else %}
+                                                   <a class="lien-menu" href="{{ path('bilan_social_homepage') }}"><span>Mon enquête {{ currentCampagne.nmAnne }}</span> </a>#}
+                                        {% endif %}
+                                        {% if (url is not null)%}
+{#                                            {% if (info_saisie.blapa == 0 or (info_saisie.blapa == 1 and info_saisie.blcons == 1) )%}#}
+                                                <a class="lien-menu {% if contactPrincipalCollectivite is not defined or contactPrincipalCollectivite is null %} blocktoinfocoll{% endif%}" href="{{ url }}"><span>Saisie de l'enquête</span> </a>
+                                          {#  {% else %}
+                                                <a class="lien-menu  {% if contactPrincipalCollectivite is not defined or contactPrincipalCollectivite is null %} blocktoinfocoll{% endif%}" href="{{ path('bilansocialagent_index') }}"><span>Saisie de l'enquête</span> </a>
+                                            {% endif %}#}
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if is_granted("ROLE_CDG") %}
+                                        {% if currentCampagne is not empty %}
+                                            <a class="lien-menu" href="{{ path('enquete_homepage') }}"><span>Gestion des enquêtes</span> </a>
+                                        {% endif %}
+                                        {% if currentEnquete is not empty and currentCampagne is not empty %}
+                                            <a class="lien-menu" href="{{ path('enquete_suivi') }}"><span>Suivi des enquêtes</span> </a>
+                                        {% endif %}
+                                    {% endif %}
+                                    {#                        <a class="lien-menu" href="{{ path('enquete_homepage') }}"><span>Importer les données d’une base carrière</span> </a>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            {% endif %}
+
+            <li class="sidebar-brand menu-li">
+
+                <div class="col-xs-12 menu-div menu-application" style="display: flex ">
+                    <div class="col-xs-9">
+
+                          <span class="titre-menu titre-menu-application">
+                              Application Bilan Social
+                          </span>
+                          <div class="sous-menu sous-menu-application">
+                              <p> version {{ app_version }} </p>
+                          </div>
+                      </div>
+                      </div>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+
+</div>

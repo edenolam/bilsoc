@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Reftypesurclassdemo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Cdtypesurclassdemo</th>
+                <td>{{ refTypeSurclassDemo.cdTypeSurclassDemo }}</td>
+            </tr>
+            <tr>
+                <th>Lbtypesurclassdemo</th>
+                <td>{{ refTypeSurclassDemo.lbTypeSurclassDemo }}</td>
+            </tr>
+            <tr>
+                <th>Stratsurclassdemo</th>
+                <td>{{ refTypeSurclassDemo.stratSurclassDemo }}</td>
+            </tr>
+            <tr>
+                <th>Blvali</th>
+                <td>{% if refTypeSurclassDemo.blVali %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cdutilcrea</th>
+                <td>{{ refTypeSurclassDemo.cdUtilcrea }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if refTypeSurclassDemo.createdAt %}{{ refTypeSurclassDemo.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cdutilmodi</th>
+                <td>{{ refTypeSurclassDemo.cdUtilmodi }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if refTypeSurclassDemo.updatedAt %}{{ refTypeSurclassDemo.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idtypesurclassdemo</th>
+                <td>{{ refTypeSurclassDemo.idTypeSurclassDemo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('reftypesurclassdemo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('reftypesurclassdemo_edit', { 'idTypeSurclassDemo': refTypeSurclassDemo.idTypeSurclassDemo }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

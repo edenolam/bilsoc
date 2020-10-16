@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\CdgDepartement" repository-class="Bilan_Social\Bundle\CollectiviteBundle\Repository\CdgDepartementRepository" table="cdg_departement">
+        <indexes>
+            <index name="FK_CDG_COLLECTIVITE" columns="ID_CDG"/>
+            <index name="FK_DEPARTEMENT_COLLECTIVITE" columns="ID_DEPA"/>
+        </indexes>
+        <id name="idCdgDepartement" type="integer" column="ID_CDG_DEPARTEMENT">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="cdg" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Cdg" inversed-by="cdgDepartements">
+            <join-column name="ID_CDG" referenced-column-name="ID_CDG"/>
+        </many-to-one>
+
+        <many-to-one field="departement" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement">
+            <join-column name="ID_DEPA" referenced-column-name="ID_DEPA"/>
+        </many-to-one>
+
+        <field name="dateDebut" type="date" column="DATE_DEBUT" nullable="true"/>
+        <field name="dateFin" type="date" column="DATE_FIN" nullable="true"/>
+        <field name="fgType" type="string" column="FG_TYPE" length="1" nullable="true"/>
+
+        <one-to-many target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite" mapped-by="cdgDepartement" field="collectivites" />
+        <many-to-many field="actualites" mapped-by="cdgDepartements" target-entity="Bilan_Social\Bundle\ActualiteBundle\Entity\Actualite"/>
+        
+        <many-to-many field="fichiers" mapped-by="cdgDepartements" target-entity="Bilan_Social\Bundle\FileManagerBundle\Entity\Fichier"/>
+         
+        <one-to-many target-entity="Bilan_Social\Bundle\UserBundle\Entity\UtilisateurDroits" mapped-by="cdgDepartement" field="utilisateurDroits">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <many-to-many field="enquetes" inversed-by="cdgDepartements" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+            <join-table name="cdg_departements_enquetes">
+                <join-columns>
+                    <join-column name="ID_CDG_DEPARTEMENT" referenced-column-name="ID_CDG_DEPARTEMENT" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

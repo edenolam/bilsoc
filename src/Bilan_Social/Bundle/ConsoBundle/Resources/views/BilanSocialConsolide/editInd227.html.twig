@@ -1,0 +1,104 @@
+{% if formInd227 is defined %}
+
+    {{ form_start(formInd227) }}
+
+    <div>
+
+        <table width="100%" id="ind227Table" class="table table-striped table-hover table-bordered">
+
+            <tbody>
+            <tr>
+                <td>Avez-vous mis en place des procédures administratives de contrôle des arrêts maladies ?
+                </td>
+                <td id="r2271">{{ form_widget(formInd227.r2271) }}</td>
+            </tr>
+            <tr>
+                <td>Avez-vous mis en place des procédures médicales de contrôle des arrêts maladies ?</td>
+                <td id="r2272">{{ form_widget(formInd227.r2272) }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <br/>
+
+
+    <input class="btn button-tableau pull-right" type="submit"
+           value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1"/>
+
+    <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+    {{ form_end(formInd227) }}
+
+    <script type="text/javascript">
+
+        changeDetect = false;
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm227_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_tpstrav_ind227_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind227').load('{{ path('bilan_conso_tpstrav_ind227_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_conditions_edit') }}';
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+{% endif %}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\EnqueteBundle\Entity\TypeImport" table="type_import">
+    <id name="idTypeimpo" type="integer" column="ID_TYPEIMPO">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="cdTypeimpo" type="string" column="CD_TYPEIMPO" length="20" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lbTypeimpo" type="string" column="LB_TYPEIMPO" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,52 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refinaptitude_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refInaptitude.cdInap }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refInaptitude.lbInap }}</td>
+                </tr>
+                <tr>
+                    <th>Demande</th>
+                    <td>{% if refInaptitude.blDema %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+
+                <tr>
+                    <th>Décision</th>
+                    <td>{% if refInaptitude.blDeci %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Filière</th>
+                    <td>{% if refInaptitude.blFili %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Agent</th>
+                    <td>{% if refInaptitude.blVisuagen %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refInaptitude.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refInaptitude} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refinaptitude_edit', { 'idInap': refInaptitude.idInap }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

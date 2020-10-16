@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefCategorieRepository" table="ref_categorie">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_CATE" name="cdCate"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idCate" type="integer" column="ID_CATE">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdCate" type="string" column="CD_CATE" length="50" nullable="true"/>
+        <field name="lbCate" type="string" column="LB_CATE" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="blCons" type="boolean" column="BL_CONS" nullable="true"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refCategorie" />
+        <one-to-many field="sante_categorie" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Sante" mapped-by="refCategorie" />
+        <one-to-many field="prevoyance_categorie" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Prevoyance" mapped-by="refCategorie" />
+        <one-to-many field="RemunerationGlobaleAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\RemunerationGlobaleAgent" mapped-by="refCategorie" />
+        <one-to-many field="RemunerationAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\RemunerationAgent" mapped-by="refCategorie" />
+        <one-to-many field="agentremufonctionnaire_categorie" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\AgentRemunerationFonctionnaire" mapped-by="refCategorie" />
+        <one-to-many field="agentremucontperm_categorie" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\AgentRemunerationContractuelPermanent" mapped-by="refCategorie" />
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,180 @@
+/*
+*	fichier web/css/helper.css
+*
+*	fonctionne conjointement avec le fichier web/js/helper.js
+*/
+
+/*
+*   DataTable Helper
+*/
+.dt-btn-header-wrapper{
+    position: absolute;
+    bottom: 5px;
+    width: inherit;
+}
+.dataTables_scrollBody .dt-btn-header-wrapper{
+    display: none;
+}
+.dt-text-header-wrapper{
+    margin-bottom: 20px;
+}
+.dataTable.stripe tr.even{
+    background-color: white;
+}
+.dataTable.stripe tr.odd{
+    background-color: #f6f7f9;
+}
+/*
+*	filtre
+*/
+.filtre .suppr{
+	cursor: pointer;
+}
+
+.modal h5 {
+    font-weight: bold; 
+}
+.modal .modal-header {
+    background-color: #8cc63f; 
+}
+.modal .close {
+    color: black;
+    font-weight: bold;
+    opacity: 1;
+}
+.modal .modal-body {
+    padding: 60px;
+}
+/*.modal .modal-content {
+    font-family: serif;
+}*/
+/*
+*   common
+*/
+.form_inline_child_block>*:not(label),.form_inline_child_block>*:not(label).collapse.in{
+    display: inline-block;
+}
+.form_inline_child_block>label{
+    display: block;
+}
+/*
+*   padding et margin
+*/
+.little_push_dl,.little_push_rd,.little_push_down {
+    margin-top: 10px;
+}
+.little_push_lu,.little_push_ur,.little_push_up {
+    margin-bottom: 10px;
+}
+.little_push_lu,.little_push_dl,.little_push_left {
+    margin-right: 10px;
+}
+.little_push_ur,.little_push_rd,.little_push_right{
+    margin-right: 10px;
+}
+/*
+*   box border
+*/
+.box_border,.box_border_slim,.box_border_bold,.box_border_round,.box_border_smallround,.box_border_tinyround{
+    border: solid;
+    padding: 4px;
+}
+.box_border_slim{
+    border-width: 1px;
+}
+.box_border_bold{
+    border-width: 2.5px;
+}
+.box_border_round{
+    border-radius: 20px;
+}
+.box_border_smallround{
+    border-radius: 10px;
+}
+.box_border_tinyround{
+    border-radius: 5px; 
+}
+.child_box_border>*,.child_box_border_slim>*,.child_box_border_bold>*,.child_box_border_round>*,.child_box_border_smallround>*,.child_box_border_tinyround>*{
+    border: solid;
+    padding: 4px;
+}
+.child_box_border_slim>*{
+    border-width: 1px;
+}
+.child_box_border_bold>*{
+    border-width: 2.5px;
+}
+.child_box_border_round>*{
+    border-radius: 20px;
+}
+.child_box_border_smallround>*{
+    border-radius: 10px;
+}
+.child_box_border_tinyround>*{
+    border-radius: 5px;
+}
+/*
+*   form style
+*/
+.form_choices_inline.checkbox,.form_choices_inline .checkbox,.form_choices_inline.radio,.form_choices_inline .radio{
+    display: inline-block;
+    margin-right: 4px;
+}
+.revert_choices{
+    cursor: pointer;
+}
+.form_choices_col_2>div{
+    width: 49.555555%
+}
+.form_choices_col_3>div{
+    width: 32.3333333%
+}
+.form_choices_col_4>div{
+    width: 24.3333333%
+}
+.form_choices_col_5>div{
+    width: 19.3333333%
+}
+.form_choices_col_6>div{
+    width: 16.3333333%
+}
+/*
+*   bouttons
+*/
+.txt_btn{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.sm_btn{
+     padding: 2px 5px;
+}
+/*
+*   TEST
+*/
+/*[data-toggle="collapse"]::after{
+    content: '<i class="fa fa-chevron-down collapse-btn"></i>';
+}*/
+/*
+*   animation du chevron au clic sur un BootstrapCollapse
+*/
+[data-toggle="collapse"]{
+    cursor: pointer;
+}
+[data-toggle="collapse"] .fa-chevron-up,[data-toggle="collapse"] .fa-chevron-down{
+    transition: transform 0.5s linear;
+}
+[data-toggle="collapse"][aria-expanded="false"] .fa-chevron-up{
+    transform: rotate(180deg);
+    
+}
+[data-toggle="collapse"][aria-expanded="true"] .fa-chevron-down,[data-toggle="collapse"][aria-expanded="true"] .collapse-btn{
+    transform: rotate(180deg);
+}
+
+/*
+* Image
+*/
+
+.width50px {
+    max-width: 50px;
+}

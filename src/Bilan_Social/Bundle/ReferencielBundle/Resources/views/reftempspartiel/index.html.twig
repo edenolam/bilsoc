@@ -1,0 +1,49 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des temps partiel</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('reftempspartiel_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_reftempspartiel') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Code N4DS</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refTempsPartiel in refTempsPartiels %}
+                    <tr>
+                        <td><a href="{{ path('reftempspartiel_show', { 'idTemppart': refTempsPartiel.idTemppart }) }}">{{ refTempsPartiel.cdTemppart }}</a></td>
+                        <td>{{ refTempsPartiel.lbTemppart }}</td>
+                        <td>{{ refTempsPartiel.cdModaN4ds }}</td>
+                        <td>{% if refTempsPartiel.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refTempsPartiel} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('reftempspartiel_show', { 'idTemppart': refTempsPartiel.idTemppart }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('reftempspartiel_edit', { 'idTemppart': refTempsPartiel.idTemppart }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+

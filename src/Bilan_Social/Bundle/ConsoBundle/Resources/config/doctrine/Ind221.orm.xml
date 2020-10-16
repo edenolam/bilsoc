@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind221" table="ind_221">
+        <indexes>
+            <index name="FK_221BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_221_CYCLTRAV" columns="ID_CYCLTRAV"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_CYCLTRAV" name="IDXU1_IND_221"/>
+		</unique-constraints>
+        <id name="id221" type="integer" column="ID_221">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind221s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refCycleTravail" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCycleTravail">
+            <join-column name="ID_CYCLTRAV" referenced-column-name="ID_CYCLTRAV" nullable="false"/>
+        </many-to-one>
+
+        <field name="r2211" type="integer" column="R_2211" nullable="true" />
+        <field name="r2212" type="integer" column="R_2212" nullable="true" />
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>
+

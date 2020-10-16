@@ -1,0 +1,28 @@
+reffiliere_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefFiliere:index" }
+    methods:  GET
+
+reffiliere_show:
+    path:     /{idFili}/show
+    defaults: { _controller: "ReferencielBundle:RefFiliere:show" }
+    methods:  GET
+
+reffiliere_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefFiliere:new" }
+    methods:  [GET, POST]
+
+reffiliere_edit:
+    path:     /{idFili}/edit
+    defaults: { _controller: "ReferencielBundle:RefFiliere:edit" }
+    methods:  [GET, POST]
+
+reffiliere_delete:
+    path:     /{idFili}/delete
+    defaults: { _controller: "ReferencielBundle:RefFiliere:delete" }
+    methods:  DELETE
+
+csv_export_reffiliere:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefFiliere:generateCsv" }

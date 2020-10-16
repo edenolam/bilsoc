@@ -1,0 +1,21 @@
+services:
+#    user.proposal.listener:
+#        class: Bilan_Social\Bundle\UserBundle\Listener\UserProposalListener
+#        arguments:
+#            - '@security.authorization_checker'
+#        tags:
+#            - { name: doctrine.event_listener, event: preUpdate }
+#            - { name: doctrine.event_listener, event: postFlush }
+
+    bs.user.manager:
+        class: Bilan_Social\Bundle\UserBundle\Manager\UserManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - 'Bilan_Social\Bundle\UserBundle\Entity\User'
+
+    login_listener:
+        class: 'Bilan_Social\Bundle\UserBundle\Listener\LoginListener'
+        arguments: ['@security.authorization_checker', '@doctrine']
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+

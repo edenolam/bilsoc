@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind5112" table="ind_5112">
+        <indexes>
+            <index name="FK_5112_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_5112_CATEGORIE" columns="ID_CATE"/>
+            <index name="FK_5112_FORMATION" columns="ID_FORM"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_CATE,ID_FORM" name="IDXU1_IND_5112"/>
+		</unique-constraints>
+        <id name="id5112" type="integer" column="ID_5112">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind5112s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refFormation" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFormation">
+            <join-column name="ID_FORM" referenced-column-name="ID_FORM" nullable="false"/>
+        </many-to-one>
+
+        <field name="r51121" type="integer" column="R_51121" nullable="true" />
+        <field name="r51122" type="integer" column="R_51122" nullable="true"/>
+        <field name="r51123" type="integer" column="R_51123" nullable="true"/>
+        <field name="r51124" type="integer" column="R_51124" nullable="true"/>
+        <field name="r51125" type="integer" column="R_51125" nullable="true"/>
+        <field name="r51126" type="integer" column="R_51126" nullable="true"/>
+        <field name="r51127" type="integer" column="R_51127" nullable="true"/>
+        <field name="r51128" type="integer" column="R_51128" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

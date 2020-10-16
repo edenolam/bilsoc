@@ -1,0 +1,220 @@
+<div id="messageJS" class="alert alert-danger fade in" style="display:none"></div>
+{% if app.session.flashBag.has('notice') %}
+<div class="alert alert-success fade in" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {% for msg in app.session.flashBag.get('notice') %}
+        {{ msg }}
+    {% endfor %}
+</div>
+{% endif %}
+{% if app.session.flashBag.has('error') %}
+<div class="alert alert-danger fade in" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {% for msg in app.session.flashBag.get('error') %}
+        {{ msg }}
+    {% endfor %}
+</div>
+{% endif %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="noMargin">Modification en masse des collectivités</h3>
+    </div>
+<div class="panel-body">
+        <div id="ecran-modi-masse">
+            <div class="form-group">
+                <label class="btn btn-default btn-file control-label required" for="form_importCollectivite">Choisissez un fichier</label>
+                <input type="file" id="form_importCollectivite" name="form[importCollectivite]" style="display:none;">
+                <p id="file-select"><span class='bold'>Fichier sélectionné : </span><span id='name-file'></span></p>
+                <button type="button" class='btn button-tableau' id="import-masse-coll">Importer</button>
+                <p> Le type du fichier attendu est au format ".csv"</p>
+                
+                <div id='table-modif-mass-wrapper' style="display: none">
+                    <table class='table table-hover' id='table-modif-mass'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p>Modifier</p>
+                                    <div>
+                                        <button type="button" class="check-all all vertical btn btn-sm" id="modif">Tous</button>
+                                    </div>
+                                </th>
+                                <th>SIRET</th>
+                                <th>Strate de sur-classement</th>
+                                <th class='col-hidden col-checkAll col-blBilaSoci col-blRass col-blHand col-blGpee col-bl-GpeecPlus col-blApa col-blCons col-blN4ds col-blBaseCarr col-blBilaSociVide' id="check">Tout cocher</th>
+                                <th>
+                                    <p>Sur-classement démographique</p>
+                                    <div>
+                                        <button type="button" class="check-all all vertical btn btn-sm" id="blSurclasDemo">Tous</button>
+                                    </div>
+                                </th>
+                                <th>
+                                    <p>La collectivité est-elle affiliée au CDG ?</p>
+                                    <div>
+                                        <button type="button" class="check-all all vertical btn btn-sm" id="blAffiColl">Tous</button>
+                                    </div>
+                                </th>
+                                <th>
+                                    <p>La collectivité est-elle rattachée au comité technique du CDG ?</p>
+                                    <div>
+                                        <button type="button" class="check-all all vertical btn btn-sm" id="blCtCdg">Tous</button>
+                                    </div>
+                                </th>
+                                <th class='chsct'>
+                                    <p>La collectivité a-t-elle son propre CHSCT ?</p>
+                                    <div>
+                                        <button type="button" class="check-all all vertical btn btn-sm" id="blChsct">Tous</button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <button class='btn button-tableau' type="button" id='modif-masse'>Modifier</button>
+                    <div id="messageJS" class="alert fade in" style="display:none"></div>
+                </div>
+            </div>
+             <div class="alert alert-danger fade in" role="alert" id='alert-err'>
+                               <p>Ces numéros de SIRET ne correspondent pas à des collectivités appartenant à ce CDG, ou n'ont pas encore été validées par l'administrateur :</p>
+                                <br>
+                                <ul id='list-err'>
+                                </ul>
+                                <br>
+                                <p>Veuillez nettoyer votre fichier et recommencer l'import.</p>
+            </div>
+             <div class="alert alert-danger fade in" role="alert" id='err-format'>
+                </div>
+        </div>
+    </div>                     
+</div>                     
+  {#  <div class="panel-body">
+        {% if form is defined %}
+            {{ form_start(form) }}
+            <label>Import des collectivités</label>
+            {{ form_widget(form) }}
+            <p id="file-select"><span class='bold'>Fichier sélectionné : </span><span id='name-file'></span></p>
+            <button type="submit" class='btn button-tableau pull-right' id="btn-import-masse-coll">Importer</button>
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
+</div>
+{% if siretImp is defined and siretImp != null and siretImp is not empty %}
+    {% if siretErrors is defined and (siretErrors == null or siretErrors is empty) %}
+        <form action='' id='form-modif-masse' name='form-modif-masse'>
+            <table class='table table-hover' id='table-modif-mass'>
+                <thead>
+                    <tr>
+                        <th>
+							<p class='dt-text-header-wrapper'>Modifier</p>
+							<div>
+								<button class="check-all all vertical btn btn-sm" id="modif">Oui</button>
+							</div>
+						</th>
+                        <th>SIRET</th>
+                        <th>Strate de sur-classement</th>
+                        <th class='col-hidden col-checkAll col-blBilaSoci col-blRass col-blHand col-blGpee col-blApa col-blCons col-blN4ds col-blBaseCarr col-blBilaSociVide' id="check">Tout cocher</th>
+                        <th>
+							<p class='dt-text-header-wrapper'>Sur-classement démographique</p>
+							<div>
+								<button class="check-all all vertical btn btn-sm" id="blSurclasDemo">Oui</button>
+							</div>
+						</th>
+                        <th>
+							<p class='dt-text-header-wrapper'>La collectivité est-elle affiliée au CDG ?</p>
+							<div>
+								<button class="check-all all vertical btn btn-sm" id="blAffiColl">Oui</button>
+							</div>
+						</th>
+                        <th>
+							<p class='dt-text-header-wrapper'>La collectivité est-elle rattachée au comité technique du CDG ?</p>
+							<div>
+								<button class="check-all all vertical btn btn-sm" id="blCtCdg">Oui</button>
+							</div>
+						</th>
+                        <th class='chsct'>
+							<p class='dt-text-header-wrapper'>La collectivité a-t-elle son propre CHSCT ?</p>
+							<div>
+							<button class="check-all all vertical btn btn-sm" id="blChsct">Oui</button>
+							</div>
+						</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for siret in siretImp %}
+                        {% set nmSire = null %}
+                        {% set blSurclasDemo = null %}
+                        {% set nmStratColl = null %}
+                        {% set blAffiColl = null %}
+                        {% set blCtCdg = null %}
+                        {% set blChsct = null %}
+                        {% if is_granted('ROLE_ADMIN') %}{% set blCollDgcl = null %}{% endif %}
+                        {% set idColl = null %}
+                        {% for coll in collectivites %}
+                            {% if coll.nmSire == siret %}
+                                {% set nmSire = coll.nmSire %}
+                                {% set blSurclasDemo = coll.blSurclasDemo %}
+                                {% set nmStratColl = coll.nmStratColl %}
+                                {% set blAffiColl = coll.blAffiColl %}
+                                {% set blCtCdg = coll.blCtCdg %}
+                                {% set blChsct = coll.blChsct %}
+                                {% if is_granted('ROLE_ADMIN') %}{% set blCollDgcl = coll.blChsct %}{% endif %}
+                                {% set idColl = coll.idColl %}
+                            {% endif %}
+                        {% endfor %}
+                        <tr id='{{ idColl }}'>
+                                        <td  class="btn-toggle"><input type='checkbox' name='modif'></td>
+                                        <td>{{ nmSire }}</td>
+                                        <td><input type='text' value='{% if nmStratColl is not null %}{{ nmStratColl }}{% endif %}' name='nmStratColl' class='form-control' pattern="^[0-9]\d*$" title="Ce champ n'accepte que des caractères numériques."></td>
+                                        <td class='col-hidden col-blBilaSoci col-blRass col-blHand col-blGpee col-blApa col-blCons col-blN4ds col-blBaseCarr col-blBilaSociVide'><button class="check-all all btn btn-sm" id="{{ idColl }}">Tous</button></td>
+                                        <td class='col-hidden col-blHand btn-toggle'> {{ blSurclasDemo is not null and blSurclasDemo == true ? 1 : 0 }}</td>
+                                        <td class='col-hidden col-blApa btn-toggle'> {{ blAffiColl is defined and blAffiColl == true ? 1 : 0 }}</td>
+                                        <td class='col-hidden col-blCons btn-toggle'>{{ blCtCdg is defined and blCtCdg == true ? 1 : 0 }}</td>
+                                        <td class='col-hidden col-blN4ds btn-toggle'>{{ blChsct is defined and blChsct == true ? 1 : 0 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type='submit' class='btn button-tableau' id='modif-masse'>Modifier</button>
+        </form>
+      {% else %}
+    {% if siretErrors is defined and siretErrors != null and siretErrors is not empty %}
+        <div class="alert alert-danger fade in" role="alert">
+            {% if is_granted('ROLE_CDG') %}
+           <p>Ces numéros de SIRET ne correspondent pas à des collectivités appartenant à ce CDG, ou n'ont pas encore été validées par l'administrateur :</p>
+            {% elseif is_granted('ROLE_ADMIN') %}
+                <p>Ces numéros de SIRET n'existent pas :</p>
+            {% endif %}
+
+            <br>
+            <ul>
+            {% for err in siretErrors %}
+                <li>{{ err }}</li>
+            {% endfor %}
+            </ul>
+            <br>
+            <p>Veuillez nettoyer votre fichier et recommencer l'import.</p>
+        </div>
+    {% endif %}
+    {% endif %}
+
+
+{% else %}
+    {% if siretErrors is defined and siretErrors != null and siretErrors is not empty %}
+        <div class="alert alert-danger fade in" role="alert">
+            {% if is_granted('ROLE_CDG') %}
+           <p>Ces numéros de SIRET ne correspondent pas à des collectivités appartenant à ce CDG, ou n'ont pas encore été validées par l'administrateur :</p>
+            {% elseif is_granted('ROLE_ADMIN') %}
+                <p>Ces numéros de SIRET n'existent pas :</p>
+            {% endif %}
+
+            <br>
+            <ul>
+            {% for err in siretErrors %}
+                <li>{{ err }}</li>
+            {% endfor %}
+            </ul>
+            <br>
+            <p>Veuillez nettoyer votre fichier et recommencer l'import.</p>
+        </div>
+    {% endif %}#}
+{#{% endif %}#}

@@ -1,0 +1,148 @@
+{% extends '@Faq/layout.html.twig' %}
+
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9 flash">
+        {% for flash_message in app.flashes() %}
+            <div class="alert alert-success text-center">
+                <strong>{{ flash_message }}</strong>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="col-xs-9">
+        <h1>Listes des questions liées à vos collectivités.</h1>
+        {% if questions_ecriture is not empty %}
+        <div class="panel panel-default">
+            <div class='panel-heading'>
+                <a class="displayToggle" data-toggle="collapse" href="#ecriture">
+                    <h3 style="display: inline-block;" class="panel-title">Questions/Réponses de vos collectivités</h3>
+                    <span class="buttonplus" title="Agrandir"></span>
+                </a>
+            </div>
+            <div id="ecriture" class="panel-collapse collapse">
+                <div class='panel-body'>
+                    <table class="table table-striped" id="questions_ecriture">
+                        <thead>
+                            <tr>
+                                <th>Numéro de siret</th>
+                                <th>Département</th>
+                                <th>Libéllé collectivité</th>
+                                <th>Sujet</th>
+                                <th>Date de création</th>
+                                <th>Répondu</th>
+                                <th>Date de réponse</th>
+                                <th>Accès</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for question in questions_ecriture %}
+                                {% set date_without_hours = question.createdAt.date|date("d/m/Y") %}
+                                {% set date_array = date_without_hours|split('/') %}
+                                {% set date_temp = date_array.2 ~ '-' ~ date_array.1 ~ '-' ~ date_array.0 %}
+
+                                {% if question.updatedAt is not empty %}
+                                    {% set date_without_hours_repondre = question.updatedAt.date|date("d/m/Y") %}
+                                    {% set date_array_repondre = date_without_hours_repondre|split('/') %}
+                                    {% set date_temp_repondre = date_array_repondre.2 ~ '-' ~ date_array_repondre.1 ~ '-' ~ date_array_repondre.0 %}
+                                {% else %}
+                                    {% set date_without_hours_repondre = "" %}
+                                    {% set date_temp_repondre = "" %}
+                                {% endif %}
+                                <tr {% if question.questionRead != true and question.blCloturer != true %}style="font-weight: bold"{% endif %} >
+                                    <td>{{question.nmSire}}</td>
+                                    <td>{{question.lbDepa}}</td>
+                                    <td>{{question.lbColl}}</td>
+                                    <td>{{question.sujet}}</td>
+                                    <td data-order={{ date_temp }}>{{ date_without_hours }}</td>
+                                    <td>{% if question.blCloturer %}Oui{% else %}Non{% endif %}</td>
+                                    <td data-order={{ date_temp_repondre }}>{{ question.updatedAt is empty ? "" : date_without_hours_repondre }}</td>
+                                    <td>
+                                            <a href="{{ path('question_repondre_cdg', { 'id': question.id }) }}">Question</a>
+                                    </td>
+                                    <td class="flex">
+                                        <div>{% if question.blCloturer %}<a href="{{ path('question_repondue_cdg', { 'id': question.id }) }}">Réouvrir</a>{%endif%}</div>
+                                            <a class="delQuestModalLink" href="#" data-href="{{ path('question_delete', { 'id': question.id }) }}" data-id="{{ question.id }}" ><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if questions_lecture is not empty %}
+        <div class="panel panel-default">
+            <div class='panel-heading'>
+                <a class="displayToggle" data-toggle="collapse" href="#lecture">
+                    <h3 style="display: inline-block;" class="panel-title">Autres questions/réponses</h3>
+                    <span class="buttonplus" title="Agrandir"></span>
+                </a>
+            </div>
+            
+            <div id="lecture" class="panel-collapse collapse">
+                <div class='panel-body'>
+                    <table class="table table-striped" id="questions_lecture">
+                        <thead>
+                            <tr>
+                                <th>Numéro de siret</th>
+                                <th>Département</th>
+                                <th>Libéllé collectivité</th>
+                                <th>Sujet</th>
+                                <th>Date de création</th>
+                                <th>Répondu</th>
+                                <th>Date de réponse</th>
+                                <th>Accès</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for question in questions_lecture %}
+                                {% set date_without_hours = question.createdAt.date|date("d/m/Y") %}
+                                {% set date_array = date_without_hours|split('/') %}
+                                {% set date_temp = date_array.2 ~ '-' ~ date_array.1 ~ '-' ~ date_array.0 %}
+
+                                {% if question.updatedAt is not empty %}
+                                    {% set date_without_hours_repondre = question.updatedAt.date|date("d/m/Y") %}
+                                    {% set date_array_repondre = date_without_hours_repondre|split('/') %}
+                                    {% set date_temp_repondre = date_array_repondre.2 ~ '-' ~ date_array_repondre.1 ~ '-' ~ date_array_repondre.0 %}
+                                {% else %}
+                                    {% set date_without_hours_repondre = "" %}
+                                    {% set date_temp_repondre = "" %}
+                                {% endif %}
+                                <tr {% if question.questionRead != true %}style="font-weight: bold"{% endif %} >
+                                    <td>{{question.nmSire}}</td>
+                                    <td>{{question.lbDepa}}</td>
+                                    <td>{{question.lbColl}}</td>
+                                    <td>{{question.sujet}}</td>
+                                    <td data-order={{ date_temp }}>{{ date_without_hours }}</td>
+                                    <td>{% if question.blCloturer %}Oui{% else %}Non{% endif %}</td>
+                                    <td data-order={{ date_temp_repondre }}>{{ question.updatedAt is empty ? "" : date_without_hours_repondre }}</td>
+                                    <td>
+                                            <a href="{{ path('question_repondre_cdg', { 'id': question.id }) }}">Question</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="delQuestModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Attention, vous allez supprimer cette question.<br><br>Souhaitez-vous continuer ? </p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" id="confirmDelQuestModalNo">Non</a>
+                    <a href="#" class="btn btn-primary" id="confirmDelQuestModalYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

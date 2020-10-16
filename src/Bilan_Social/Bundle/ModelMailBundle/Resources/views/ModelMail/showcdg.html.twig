@@ -1,0 +1,42 @@
+{% extends '@ModelMail/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li>Gestion des modèles de mails</li>
+                <li class="active">Détails du modèle de mail</li>
+            </ol>
+        </div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h3>Modèle du mail : {{ modelmail.objet }}<a href="{{ path('modelmail_index') }}"><button class="btn btn-default pull-right">Retour à la liste</button></a></h3>
+        <hr>
+        <div id="corps-mail">
+            <div id="objet-mail" class="mail">
+                <label>Objet du mail : </label> 
+                <p>{{ modelmail.objet }}</p>
+            </div>
+            <hr>
+            <div id="contenu-mail" class="mail">
+                <label>Contenu du mail : </label>
+                {{ modelmail.body|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

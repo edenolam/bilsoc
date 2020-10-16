@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CoreBundle\Entity\IncoherenceLog" repository-class="Bilan_Social\Bundle\CoreBundle\Repository\IncoherenceLogRepository" table="incoherencelog">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <one-to-one field="user" target-entity="Bilan_Social\Bundle\UserBundle\Entity\User">
+            <join-column name="ID_UTIL" referenced-column-name="ID_UTIL" />
+        </one-to-one>
+
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="incoherenceLogs">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <field name="message" type="string" column="message" length="2000" nullable="true"/>
+        <field name="form" type="string" column="form"  length="255" nullable="true"/>
+        <field name="tableNum" type="string" column="tableNum" length="255" nullable="true"/>
+        <field name="field" type="string" column="field" length="255" nullable="true"/>
+        <field name="idToggle1" type="string" column="idToggle1" length="255" nullable="true"/>
+        <field name="idToggle2" type="string" column="idToggle2" length="255" nullable="true"/>
+        <field name="blIncoherence" type="boolean" column="BL_INCO" nullable="true"/>
+    </entity>
+</doctrine-mapping>

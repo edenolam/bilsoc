@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\EnqueteBundle\Entity\ModeSaisieEnquete" table="mode_saisie_enquete">
+    <id name="idModecamp" type="integer" column="ID_MODECAMP">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="cdModecamp" type="string" column="CD_MODECAMP" length="10" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lbModecamp" type="string" column="LB_MODECAMP" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

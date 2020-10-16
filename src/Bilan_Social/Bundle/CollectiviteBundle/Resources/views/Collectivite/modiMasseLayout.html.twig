@@ -1,0 +1,32 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{#    <link href="{{ asset('node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css') }}" rel="stylesheet">#}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+{#    <script src="{{ asset('node_modules/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>#}
+    <script>
+        
+        $('.btn-toggle input').bootstrapToggle({
+            on: 'Oui',
+            off: 'Non',
+            size: 'small'
+          });
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('collectivite_homepage') }}">Collectivités</a></li>
+                <li class="active">Valider les modifications</li>
+            </ol>
+        </div>
+        {% include '@Collectivite/Collectivite/modificationMasse.html.twig' %}
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+<div class="handitorial_boeth {% if(form.blBoeth.vars.value == 1) %} {% else %} hidden {% endif %}">
+    {{ form_row(form.Handitorials.idCategorieHanditorialBoeth) }}
+    <label>
+        B2-1b - Quelle est la nature de son (ses) handicap(s) ?
+        <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qB21bHanditorial" aria-hidden="true"></span>
+    </label>
+    {{ form_row(form.Handitorials.idNatureHandicapBoeth) }}
+</div>
+<label>B2-2 - Un agent a-t-il bénéficié d'un avis d'inaptitude au cours de l'année {{ anne_campagne }} ?</label>
+{{ form_row(form.Handitorials.blAvisInaptitudeEnCours) }}
+<div id="b2_2" {% if (form.Handitorials.blAvisInaptitudeEnCours.vars.value == 1) %} {% else %} class="hidden" {% endif %}>
+    <label>B2-2a - Quel avis d'inaptitude a été prononcé au cours de l'année {{ anne_campagne }} ?</label>
+    {{ form_row(form.Handitorials.idInaptitudeEnCoursAnnee) }}
+    <label>B2-2b - Quelle décision a été prise suite à l'inaptitude prononcée au cours de l'année {{ anne_campagne }} ?</label>
+    {{ form_row(form.Handitorials.idMesureInaptitudeEnCoursAnnee) }}
+</div>
+<label>B2-3 - Un agent a-t-il bénéficié d'un avis d'inaptitude avant l'année {{ anne_campagne }} ?</label>
+{{ form_row(form.Handitorials.blAvisInaptitudeAvant) }}
+<div id="b2_3" {% if (form.Handitorials.blAvisInaptitudeAvant.vars.value == 1) %} {% else %} class="hidden" {% endif %}>
+    <label>B2-3a - Quel avis d'inaptitude a été prononcé avant l'année {{ anne_campagne }} ?</label>
+    {{ form_row(form.Handitorials.idInaptitudeAvantAnnee) }}
+    <label>B2-3b - Quelle décision a été prise suite à l'inaptitude prononcée avant l'année {{ anne_campagne }} ?</label>
+    {{ form_row(form.Handitorials.idMesureInaptitudeAvantAnnee) }}
+</div>

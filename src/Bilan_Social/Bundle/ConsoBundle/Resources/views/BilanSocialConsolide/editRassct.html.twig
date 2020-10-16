@@ -1,0 +1,599 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+    <div class="col-md-9 contentConsolide pull-right" style='padding-right:0;padding-left:0;'>
+        <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-17.png") }}" class="icone-menu"/> Rassct
+            {% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}
+                <button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>
+            {% endif %}
+            {# {% if consolide != null and is_granted('ROLE_PREVIOUS_ADMIN') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true%} #}
+            {% if consolide != null and is_granted('ROLE_CDG') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true%}
+                <button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>
+            {% endif %}
+        </h3>
+        <div id="incoh_wrapper">
+        <div id="incoh">
+            <div id="incohpanel" class="panel panel-default">
+
+                <span class="pull-right buttonmoins" id="HideShowIncoh" title="Réduire" ></span>
+
+                Incohérences <span id="nbErreur" class="badge"></span>
+                <table id="incoherenceTable" width="50%" class="table table-striped table-hover table-bordered">
+                    <tbody>
+                        {% if incoherenceList != null and incoherenceList.count() > 0  %}
+                            {% for tag in incoherenceList %}
+                                {% if tag.form == '8' %}
+                                    <tr>
+                                        <td><a href="#" onclick="openError('{{tag.idToggle1}}', '{{tag.idToggle2}}', '{{tag.field}}')">{{tag.tableNum}}</a>
+                                        </td>
+                                        <td>{{ tag.message }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <br/>
+                <div id='incoh-legende'>
+                    <div>
+                        <p>Contrôle de cohérence :</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-error'>&nbsp;</span>Erreur de cohérence</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-atte'>&nbsp;</span>Donnée(s) en attente</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-vali'>&nbsp;</span>Validé</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="ghost hidden"></div>
+    </div>
+
+    <div class="panel panel-default col-md-9 contentConsolide pull-right">
+
+
+        <!--  information Collectivite Rassct -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                    Informations Collectivites Rassct
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctInformationCollectivite" class="progress-bar rassct" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctInformationCollectivite }}% {% endif %}" >
+                            <span class="sr-only rassctInformationCollectivite-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctInformationCollectivite-value rassct">{% if consolide != null %}{% if consolide.moyenneRassctInformationCollectivite == 0 %} A saisir {% elseif consolide.moyenneRassctInformationCollectivite == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_information_collectivite" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="information_collectivite" style="display: none;">
+
+        </div>
+        <!--  Aciddent du travail / de service -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Durée des arrêts suite à des accidents de travail en {{ AnneeCamp }} et {{ AnneeCamp-1 }}
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctAccidentTravail" class="progress-bar rassct {% if consolide != null %}{% if consolide.blIncoRassctAccidentTravail == 1 %} {% elseif consolide.blIncoRassctAccidentTravail == 2 %} blue {% elseif consolide.blIncoRassctAccidentTravail == 3 %} orange {% elseif consolide.blIncoRassctAccidentTravail == 4 %} green {% endif %}{% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctAccidentTravail }}% {% endif %}" >
+                            <span class="sr-only rassctAccidentTravail-value">0%</span>
+                        </div>
+                    </div>
+                    <span class="pbrassctAccidentTravail-value rassct">{% if consolide != null %}{% if consolide.blIncoRassctAccidentTravail == 1 or consolide.blIncoRassctAccidentTravail == null %} A saisir {% elseif consolide.blIncoRassctAccidentTravail == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoRassctAccidentTravail == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoRassctAccidentTravail == 4 %}{% if totalBscRassctAccidentTravail == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscRassctAccidentTravail != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir {% endif%}</span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_accident_travail" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="accident_travail" style="display: none;">
+
+        </div>
+
+        <!--  Réalisation formation santé travail -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Actions réalisées de formation, de sensibilisation à la santé et à la sécurité du travail
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctRealisationFormationSanteTravail" class="progress-bar rassct" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctRealisationFormationSanteTravail }}% {% endif %}" >
+                            <span class="sr-only rassctRealisationFormationSanteTravail-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctRealisationFormationSanteTravail-value rassct">{% if consolide != null %}{% if consolide.moyenneRassctRealisationFormationSanteTravail == 0 %} A saisir {% elseif consolide.moyenneRassctRealisationFormationSanteTravail == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_realisation_formation_sante_travail" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="realisation_formation_sante_travail" style="display: none;">
+
+        </div>
+
+        <!--  Prévision formation santé travail -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Actions prévues de formation, de sensibilisation à la santé et à la sécurité du travail
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctPrevisionFormationSanteTravail" class="progress-bar rassct" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctPrevisionFormationSanteTravail }}% {% endif %}" >
+                            <span class="sr-only rassctPrevisionFormationSanteTravail-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctPrevisionFormationSanteTravail-value rassct">{% if consolide != null %}{% if consolide.moyenneRassctPrevisionFormationSanteTravail == 0 %} A saisir {% elseif consolide.moyenneRassctPrevisionFormationSanteTravail == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_prevision_formation_sante_travail" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="prevision_formation_sante_travail" style="display: none;">
+
+        </div>
+
+        <!--  Autres mesures (N) -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Autres mesures mises en place : matériel, équipement, études, audit, conseil...
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctAutresMesures" class="progress-bar rassct" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctAutresMesures }}% {% endif %}" >
+                            <span class="sr-only rassctAutresMesures-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctAutresMesures-value rassct">{% if consolide != null %}{% if consolide.moyenneRassctAutresMesures == 0 %} A saisir {% elseif consolide.moyenneRassctAutresMesures == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_autres_mesures" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="autres_mesures" style="display: none;">
+
+        </div>
+
+        <!--  Maladie Pro / Carac Pro rassct -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Données générales concernant les maladies professionnelles ou à caractère professionnel ou contractées en service
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctMaladieProCaracPro" class="progress-bar rassct" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctMaladieProCaracPro }}% {% endif %}" >
+                            <span class="sr-only rassctMaladieProCaracPro-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctMaladieProCaracPro-value rassct">{% if consolide != null %}{% if consolide.moyenneRassctMaladieProCaracPro == 0 %} A saisir {% elseif consolide.moyenneRassctMaladieProCaracPro == 100 %}{% if totalBscRassctMaladieProCaracPro == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscRassctMaladieProCaracPro != 0.0 %} Saisie cohérente{% endif %} {%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_maladie_pro_carac_pro" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="maladie_pro_carac_pro" style="display: none;">
+
+        </div>
+
+        <!--  Prédictions autres mesures (N+1) -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Prédictions - Autres mesures mises en place : matériel, équipement, études, audit, conseil...
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctPredictionsAutresMesures" class="progress-bar rassct" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctPredictionsAutresMesures }}% {% endif %}" >
+                            <span class="sr-only rassctPredictionsAutresMesures-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctPredictionsAutresMesures-value rassct">{% if consolide != null %}{% if consolide.moyenneRassctPredictionsAutresMesures == 0 %} A saisir {% elseif consolide.moyenneRassctPredictionsAutresMesures == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_predictions_autres_mesures" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="predictions_autres_mesures" style="display: none;">
+
+        </div>
+
+        <!--  Nombre maladie professionnelle -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Nombre de maladies professionnelles et nombre de jours d'arrêts selon le type d'activité
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctNbMaladiePro" class="progress-bar rassct" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctNbMaladiePro }}% {% endif %}" >
+                            <span class="sr-only rassctNbMaladiePro-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctNbMaladiePro-value rassct">{% if consolide != null %}{% if consolide.moyenneRassctNbMaladiePro == 0 %} A saisir {% elseif consolide.moyenneRassctNbMaladiePro == 100 %} {% if totalBscRassctNbMaladiePro == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscRassctNbMaladiePro != 0.0 %} Saisie cohérente{% endif %} {%endif%}{%endif%} </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_nb_maladie_pro" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="nb_maladie_pro" style="display: none;">
+
+        </div>
+
+        <!--  Nombre accident travail -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                     Nombre d'accidents de travail et nombre de jours d'arrêt selon le type d'activité
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctNbAccidentTravail" class="progress-bar rassct {% if consolide != null %}{% if consolide.blIncoRassctNbAccidentTravail == 1 %} {% elseif consolide.blIncoRassctNbAccidentTravail == 2 %} blue {% elseif consolide.blIncoRassctNbAccidentTravail == 3 %} orange {% elseif consolide.blIncoRassctNbAccidentTravail == 4 %} green {% endif %}{% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctNbAccidentTravail }}% {% endif %}" >
+                            <span class="sr-only rassctNbAccidentTravail-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctNbAccidentTravail-value rassct">{% if consolide != null %}
+                        {% if consolide.blIncoRassctNbAccidentTravail == 1 or consolide.blIncoRassctNbAccidentTravail == null %} A saisir {% elseif consolide.blIncoRassctNbAccidentTravail == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoRassctNbAccidentTravail == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoRassctNbAccidentTravail == 4 %}{% if totalBscRassctNbAccidentTravail == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscRassctNbAccidentTravail != 0.0 %} Saisie cohérente{% endif %} {% endif%}{% else %} A saisir {% endif%}</span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_nb_accident_travail" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="nb_accident_travail" style="display: none;">
+
+        </div>
+
+        <!--  Nature lieson rassct -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                    Nombre d'accidents de travail et nombre de jours d'arrêt suivant la nature des lésions
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctNatureLesion" class="progress-bar rassct {% if consolide != null %}{% if consolide.blIncoRassctNatureLesion == 1 %} {% elseif consolide.blIncoRassctNatureLesion == 2 %} blue {% elseif consolide.blIncoRassctNatureLesion == 3 %} orange {% elseif consolide.blIncoRassctNatureLesion == 4 %} green {% endif %}{% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctNatureLesion }}% {% endif %}" >
+                            <span class="sr-only rassctNatureLesion-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctNatureLesion-value rassct">{% if consolide != null %}{% if consolide.blIncoRassctNatureLesion == 1 or consolide.blIncoRassctNatureLesion == null %} A saisir {% elseif consolide.blIncoRassctNatureLesion == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoRassctNatureLesion == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoRassctNatureLesion == 4 %}{% if totalBscRassctNatureLesion == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscRassctNatureLesion != 0.0 %} Saisie cohérente{% endif %} {% endif%}{% else %} A saisir {% endif%}</span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_nature_lesion" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="nature_lesion" style="display: none;">
+
+        </div>
+
+        <!--  Nature siege rassct -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                    Nombre d'accidents de travail et nombre de jours d'arrêt suivant le siège des lésions
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctSiegeLesion" class="progress-bar rassct {% if consolide != null %}{% if consolide.blIncoRassctSiegeLesion == 1 %} {% elseif consolide.blIncoRassctSiegeLesion == 2 %} blue {% elseif consolide.blIncoRassctSiegeLesion == 3 %} orange {% elseif consolide.blIncoRassctSiegeLesion == 4 %} green {% endif %}{% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctSiegeLesion }}% {% endif %}" >
+                            <span class="sr-only rassctSiegeLesion-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctSiegeLesion-value rassct">{% if consolide != null %}{% if consolide.blIncoRassctSiegeLesion == 1 or consolide.blIncoRassctSiegeLesion == null %} A saisir {% elseif consolide.blIncoRassctSiegeLesion == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoRassctSiegeLesion == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoRassctSiegeLesion == 4 %}{% if totalBscRassctSiegeLesion == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscRassctSiegeLesion != 0.0 %} Saisie cohérente{% endif %} {% endif%}{% else %} A saisir {% endif%}</span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_siege_lesion" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="siege_lesion" style="display: none;">
+
+        </div>
+
+        <!--  Element materiel rassct -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                    Nombre d'accidents de travail et nombre de jours d'arrêt en fonction des éléments matériels
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pbrassctElementMateriel" class="progress-bar rassct{% if consolide != null %}{% if consolide.blIncoRassctElementMateriel == 1 %} {% elseif consolide.blIncoRassctElementMateriel == 2 %} blue {% elseif consolide.blIncoRassctElementMateriel == 3 %} orange {% elseif consolide.blIncoRassctElementMateriel == 4 %} green {% endif %}{% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneRassctElementMateriel }}% {% endif %}" >
+                            <span class="sr-only rassctElementMateriel-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pbrassctElementMateriel-value rassct">{% if consolide != null %}{% if consolide.blIncoRassctElementMateriel == 1 or consolide.blIncoRassctElementMateriel == null %} A saisir {% elseif consolide.blIncoRassctElementMateriel == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoRassctElementMateriel == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoRassctElementMateriel == 4 %}{% if totalBscRassctElementMateriel == 0.0 %} Saisie cohérente (données à 0){% elseif totalBscRassctElementMateriel != 0.0 %} Saisie cohérente{% endif %} {% endif%}{% else %} A saisir {% endif%}</span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle_element_materiel" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="element_materiel" style="display: none;">
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {% set NumForm = '8' %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Attention à vérifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var numForm = '8';
+        var nomForm = 'rassct';
+        var nbInd = {{ nombreQuestion.nmquestion.rassct }};
+
+       /* var blHand = {{ enqueteCollActive.blHand ? 1 : 0 }};
+        var blGpeec = {{ enqueteCollActive.blGepe ? 1 : 0 }};*/
+
+        function initTab() {
+            if (currentTab != "") saveTab();
+            $('#content').html("");
+            $('#content').load('{{ path('bilan_conso_rassct_edit') }}', function () { });
+            currentTab = "0";
+        }
+
+        $.ajaxSetup({cache: false});
+        initTab();
+
+        var idToggleCurr = "";
+        var idDivCurr = "";
+
+        $(document).ready(function ()
+        {
+            $('#HideShowIncoh').on('click', function() {
+                var incohHeight = $('#incoh').height();
+                $("#incoh_wrapper").css('height', incohHeight);
+                $("#incoh").affix({
+                    offset: {
+                      top: distance
+                    }
+                });
+            });
+            addToggle("toggle_accident_travail", "accident_travail");
+            addToggle("toggle_realisation_formation_sante_travail", "realisation_formation_sante_travail");
+            addToggle("toggle_information_collectivite", "information_collectivite");
+            addToggle("toggle_prevision_formation_sante_travail", "prevision_formation_sante_travail");
+            addToggle("toggle_autres_mesures", "autres_mesures");
+            addToggle("toggle_predictions_autres_mesures", "predictions_autres_mesures");
+            addToggle("toggle_nb_maladie_pro", "nb_maladie_pro");
+            addToggle("toggle_nb_accident_travail", "nb_accident_travail");
+            addToggle("toggle_nature_lesion", "nature_lesion");
+            addToggle("toggle_siege_lesion", "siege_lesion");
+            addToggle("toggle_element_materiel", "element_materiel");
+            addToggle("toggle_maladie_pro_carac_pro", "maladie_pro_carac_pro");
+
+            initCount(numForm);
+        });
+
+        /*
+         * METHODES GENERALES
+         */
+
+
+        function initDiv(idDiv) {
+        if (idDiv == undefined || idDiv == "null" || idDiv == "") {
+            } else {
+                if (idDiv == "accident_travail") {
+                    $('#accident_travail').load('{{ path('bilan_conso_rassct_bscRassctAccidentTravail_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "realisation_formation_sante_travail") {
+                    $('#realisation_formation_sante_travail').load('{{ path('bilan_conso_rassct_bscRassctRealisationFormationSanteTravail_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "prevision_formation_sante_travail") {
+                    $('#prevision_formation_sante_travail').load('{{ path('bilan_conso_rassct_bscRassctPrevisionFormationSanteTravail_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "autres_mesures") {
+                    $('#autres_mesures').load('{{ path('bilan_conso_rassct_bscRassctAutresMesures_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "predictions_autres_mesures") {
+                    $('#predictions_autres_mesures').load('{{ path('bilan_conso_rassct_bscRassctPredictionsAutresMesures_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "nb_maladie_pro") {
+                    $('#nb_maladie_pro').load('{{ path('bilan_conso_rassct_bscRassctNbMaladiePros_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "nb_accident_travail") {
+                    $('#nb_accident_travail').load('{{ path('bilan_conso_rassct_bscRassctNbAccidentTravails_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "nature_lesion") {
+                    $('#nature_lesion').load('{{ path('bilan_conso_rassct_bscRassctNatureLesions_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "siege_lesion") {
+                    $('#siege_lesion').load('{{ path('bilan_conso_rassct_bscRassctSiegeLesions_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "element_materiel") {
+                    $('#element_materiel').load('{{ path('bilan_conso_rassct_bscRassctElementMateriels_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "maladie_pro_carac_pro") {
+                    $('#maladie_pro_carac_pro').load('{{ path('bilan_conso_rassct_bscRassctMaladieProCaracPros_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                if (idDiv == "information_collectivite") {
+                    $('#information_collectivite').load('{{ path('bilan_conso_rassct_bscRassctinformationCollectivite_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+            }
+        }
+
+
+        $('#HideShowIncoh').click(function () {
+            HideShowIncoh();
+        });
+
+        function setIncoherenceTable(responsejson) {
+            incoherenceList = responsejson.list.rassct;
+            /*console.log(incoherenceList);*/
+            var table = document.getElementById('incoherenceTable');
+
+            var tbody = $(table).find('tbody');
+
+            var html_table_incoh = '';
+            $.each(incoherenceList, function() {
+                // console.log(this);
+                html_table_incoh += '<tr>';
+                html_table_incoh += '<td>'+"<a href=\"#\" onclick=\"openError('" + this.idToggle1 + "', '" + this.idToggle2 + "', '" + this.field + "')\">" + this.tableNum + "</a></td>";
+                html_table_incoh += '<td>'+ this.message +'</td>';
+                html_table_incoh += '</tr>';
+            });
+            $(tbody).html(html_table_incoh);
+
+            setIncoherenceLight(numForm);
+
+            $.each(responsejson.rassct.pgInd, function() {
+                setPgInd(this.ind, this.blinco, this.moyenne, nomForm);
+            });
+
+            getMoyenneRassct(responsejson);
+            setPgMenu('rassct','rassct', responsejson);
+        }
+
+
+        var getMoyenneRassct = function (response)
+        {
+            var total = Math.ceil(Math.ceil(response.pc.pcRassct) / nbInd);
+            $('#ValRassct').html(total + "%");
+            $('#pbRassct').css('width', total + "%");;
+
+        }
+
+        function getNumberQuestionAndPb() {
+            $.ajax({
+                url: Routing.generate('bilan_conso_get_nb_question_and_pb'),
+                method: 'POST',
+                async: true,
+                success: function (responsejson) {
+                    // console.log(response);
+                },
+                complete: function(){
+
+                }
+            });
+        }
+
+    </script>
+
+{% endblock %}

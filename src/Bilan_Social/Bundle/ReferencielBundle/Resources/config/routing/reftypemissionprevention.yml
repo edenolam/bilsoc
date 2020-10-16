@@ -1,0 +1,28 @@
+reftypemissionprevention_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefTypeMissionPrevention:index" }
+    methods:  GET
+
+reftypemissionprevention_show:
+    path:     /{idTypemissprev}/show
+    defaults: { _controller: "ReferencielBundle:RefTypeMissionPrevention:show" }
+    methods:  GET
+
+reftypemissionprevention_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefTypeMissionPrevention:new" }
+    methods:  [GET, POST]
+
+reftypemissionprevention_edit:
+    path:     /{idTypemissprev}/edit
+    defaults: { _controller: "ReferencielBundle:RefTypeMissionPrevention:edit" }
+    methods:  [GET, POST]
+
+reftypemissionprevention_delete:
+    path:     /{idTypemissprev}/delete
+    defaults: { _controller: "ReferencielBundle:RefTypeMissionPrevention:delete" }
+    methods:  DELETE
+
+csv_export_reftypemissionprevention:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefTypeMissionPrevention:generateCsv" }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefAbstractEntity">
+        <field name="blExclutotal" type="boolean" column="BL_EXCLUTOTAL" length="10" nullable="false">
+            <options>
+                <option name="default">0</option>
+                <option name="comment">Si la ligne du référenteiel est exclu des totaux sur les indicateurs consolidés</option>
+            </options>
+        </field>
+
+        <field name="nmOrdre" type="integer" column="NM_ORDRE" length="10" nullable="false" >
+            <generator strategy="AUTO" />
+        </field>
+        <field name="blVali" type="boolean" column="BL_VALI" nullable="true"/>
+    </mapped-superclass>
+</doctrine-mapping>

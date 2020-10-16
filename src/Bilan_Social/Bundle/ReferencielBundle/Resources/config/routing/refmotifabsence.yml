@@ -1,0 +1,28 @@
+refmotifabsence_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMotifAbsence:index" }
+    methods:  GET
+
+refmotifabsence_show:
+    path:     /{idMotiabse}/show
+    defaults: { _controller: "ReferencielBundle:RefMotifAbsence:show" }
+    methods:  GET
+
+refmotifabsence_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMotifAbsence:new" }
+    methods:  [GET, POST]
+
+refmotifabsence_edit:
+    path:     /{idMotiabse}/edit
+    defaults: { _controller: "ReferencielBundle:RefMotifAbsence:edit" }
+    methods:  [GET, POST]
+
+refmotifabsence_delete:
+    path:     /{idMotiabse}/delete
+    defaults: { _controller: "ReferencielBundle:RefMotifAbsence:delete" }
+    methods:  DELETE
+
+csv_export_refmotifabsence:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMotifAbsence:generateCsv" }

@@ -1,0 +1,192 @@
+
+    {% if formTpsTrav231 is defined %}
+
+        {{ form_start(formTpsTrav231) }}
+
+            {% set ind = ['2.3.1.1', '2.3.1.2', '2.3.1.3', '2.3.1.4', '2.3.1.5'] %}
+            {% set ref = ['Nombre de demandes présentées', 'Nombre de demandes acceptées', 'Nombre de premières demandes satisfaites', 'Nombre de modifications de quotités', 'Nombre de retours au temps plein'] %}
+
+            <table width="100%" id="ind231Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2"></th>
+                        <th colspan="1" style="text-align: center">Hommes</th>
+                        <th colspan="1" style="text-align: center">Femmes</th>
+                        <th class="filiTable" colspan="1" style="text-align: center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set i = 0 %}
+                    {% for tag in formTpsTrav231.ind231s %}
+                    <tr>
+                        <td>{{ ind[i] }}</td>
+                        <td style="min-width: 400px">
+                            {{ ref[i] }}
+                        </td>
+
+                       <td id="r2311">
+                             {{ form_row(tag.r2311) }}
+                        </td>
+                        <td id="r2312">
+                             {{ form_row(tag.r2312) }}
+                        </td>
+                        <td id="lineTot1" class="filiTable">0</td>
+                    </tr>
+                    {% set i = i+1 %}
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <br/>
+
+            2.3.1.1 il s'agit du nombre de demandes présentées et non du nombre d'agents ayant présenté des demandes au cours  de
+            l'année. (Un agent peut avoir déposé deux demandes au cours de la même année.)<br/>
+            <br/>
+           2.3.1.2 il s'agit du nombre de demandes acceptées et non du nombre d'agents ayant présenté des demandes au cours  de
+            l'année. (Un agent peut avoir déposé deux demandes au cours de la même année.)<br/>
+            <br/>
+           2.3.1.4 il s'agit du nombre de modifications présentées par des agents occupant un emploi permanent à temps complet
+           et exerçant leurs fonctions à temps partiel qui, lors de leur demande de renouvellement modifient la quotité du temps de travail par rapport à la période précédente.<br/>
+           Ne pas prendre en compte les retours au temps plein.<br/>
+           <br/>
+           2.3.1.5 il s'agit du nombre d'agents occupés sur un emploi à temps complet et exerçant leurs fonctions à temps partiel choisi
+           qui ne renouvellent pas leur demande de travail à temps partiel.<br/>
+
+
+            <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                    $('#progImg').show();" data-valide="1" />
+
+            <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formTpsTrav231) }}
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true  %}
+                $(document).change();
+                update231();
+
+            {% endif %}
+        });
+
+        function changedR231(obj) {
+            update231();
+        }
+
+        function update231(onInit){
+            var table231 = document.getElementById('ind231Table');
+
+            var rowLength231 = table231.rows.length;
+            var idxRowInput = 0;
+
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+
+            for(var i=1; i<rowLength231; i+=1){
+                var row = table231.rows[i];
+                var cellLength = row.cells.length;
+
+                var lineTot1 = 0
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 5)=="r2311") {
+                        if($('#bscForm231_ind231s_'+idxRowInput+'_r2311').val()!="") {
+                            mtTot1 += parseInt($('#bscForm231_ind231s_'+idxRowInput+'_r2311').val());
+                            lineTot1 += parseInt($('#bscForm231_ind231s_'+idxRowInput+'_r2311').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 5)=="r2312") {
+                        if($('#bscForm231_ind231s_'+idxRowInput+'_r2312').val()!="") {
+                            mtTot2 += parseInt($('#bscForm231_ind231s_'+idxRowInput+'_r2312').val());
+                            lineTot1 += parseInt($('#bscForm231_ind231s_'+idxRowInput+'_r2312').val());
+                        }
+                    }
+
+                    else if(cell.id.substring(0, 8)=="lineTot1") {
+                        cell.innerHTML = lineTot1;
+                    }
+
+
+                }
+
+                idxRowInput++;
+            }// end for line
+
+        }
+
+
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm231_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_tpstrav_ind231_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind231').load('{{ path('bilan_conso_tpstrav_ind231_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_remuneration_edit') }}';
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+
+

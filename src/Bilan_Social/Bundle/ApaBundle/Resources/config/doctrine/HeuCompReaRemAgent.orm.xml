@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\HeuCompReaRemAgent" table="heu_comp_rea_rem_agent">
+        <indexes>
+            <index name="FK_HEUCOMPREAREMAGENT_BILANSOCIALAGENT" columns="ID_BILASOCIAGEN"/>
+            <index name="FK_HEUCOMPREAREMAGENT_STAT" columns="ID_STAT"/>
+            <index name="FK_HEUCOMPREAREMAGENT_FILI" columns="ID_FILI"/>
+        </indexes>
+        <id name="idHeuCompReaRemAgent" type="integer" column="ID_REMANNBRUHEUCOMPAGENT">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="BilanSocialAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" inversed-by="HeuCompReaRemAgent">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN" />
+        </many-to-one>
+
+        <many-to-one field="refStatut" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStatut" inversed-by="HeuCompReaRemAgent">
+            <join-column name="ID_STAT" referenced-column-name="ID_STAT" />
+        </many-to-one>
+        <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere" inversed-by="HeuCompReaRemAgent">
+            <join-column name="ID_FILI" referenced-column-name="ID_FILI" />
+        </many-to-one>
+        <many-to-one field="refCadreEmploi" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCadreEmploi" inversed-by="HeuCompReaRemAgent">
+            <join-column name="ID_CADREMPL" referenced-column-name="ID_CADREMPL" />
+        </many-to-one>
+
+        <field name="nbHeure" type="integer" column="NB_HEUR" nullable="true"/>
+        <field name="blTempsComplet" type="integer" column="BL_TEMPS_COMPLET" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+
+    </entity>
+</doctrine-mapping>

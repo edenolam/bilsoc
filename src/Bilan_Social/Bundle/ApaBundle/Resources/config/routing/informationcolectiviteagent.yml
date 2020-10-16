@@ -1,0 +1,19 @@
+informationcolectiviteagent_show:
+    path:     /{idInfocollagen}/show
+    defaults: { _controller: "ApaBundle:InformationColectiviteAgent:show" }
+    methods:  GET
+
+informationcolectiviteagent_new:
+    path:     /new
+    defaults: { _controller: "ApaBundle:InformationColectiviteAgent:new" }
+    methods:  [GET, POST]
+
+informationcolectiviteagent_edit:
+    path:     /{idInfocollagen}/edit
+    defaults: { _controller: "ApaBundle:InformationColectiviteAgent:edit" }
+    methods:  [GET, POST]
+
+informationcolectiviteagent_delete:
+    path:     /{idInfocollagen}/delete
+    defaults: { _controller: "ApaBundle:InformationColectiviteAgent:delete" }
+    methods:  DELETE

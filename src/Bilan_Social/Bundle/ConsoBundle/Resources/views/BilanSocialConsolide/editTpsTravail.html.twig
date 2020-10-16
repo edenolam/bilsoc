@@ -1,0 +1,1130 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+
+
+    <div class="col-md-9 contentConsolide pull-right" style='padding-right:0;padding-left:0;'>
+        {# <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-22.png") }}" class="icone-menu"/> Absences et temps de travail{% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_PREVIOUS_ADMIN') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3> #}
+        <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-22.png") }}" class="icone-menu"/> Absences et temps de travail{% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_CDG') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3>
+        <div id="incoh_wrapper">
+        <div id="incoh">
+
+
+            <div id="incohpanel" class="panel panel-default">
+
+                <span class="pull-right buttonmoins" id="HideShowIncoh" title="Réduire" ></span>
+
+                Incohérences <span id="nbErreur" class="badge"></span>
+                <table id="incoherenceTable" width="50%" class="table table-striped table-hover table-bordered">
+                    <tbody>
+                        {% if incoherenceList != null and incoherenceList.count() > 0  %}
+                            {% for tag in incoherenceList %}
+                                {% if tag.form == '3' %}
+                                    <tr>
+                                        <td><a href="#" onclick="openError('{{tag.idToggle1}}', '{{tag.idToggle2}}', '{{tag.field}}')">{{tag.tableNum}}</a>
+                                        </td>
+                                        <td>{{ tag.message }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <br/>
+                <div id='incoh-legende'>
+                    <div>
+                        <p>Contrôle de cohérence :</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-error'>&nbsp;</span>Erreur de cohérence</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-atte'>&nbsp;</span>Donnée(s) en attente</p>
+                    </div>
+                    <div>
+                        <p><span class="badge badge-pill" id='cohe-vali'>&nbsp;</span>Validé</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="ghost hidden"></div>
+    </div>
+
+    <div class="panel panel-default col-md-9 contentConsolide pull-right">
+
+        {% if EnqueteCollectiviteparam.blBilaSoci == true %}
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        2.1.0 - Nombre de journées de congés supplémentaires accordées à l'ensemble des agents
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb210" class="progress-bar tpstrav" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd210 }}% {% endif %}" >
+                                <span class="sr-only ind210-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb210-value status">{% if consolide != null %}{% if consolide.moyenneInd210 == 0 %} A saisir {% elseif consolide.moyenneInd210 == 100 %}{% if totalInd210 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd210 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle210" title="Agrandir" ></span>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind210" style="display: none;">
+
+            </div>
+        {% endif  %}
+
+        {%  if EnqueteCollectiviteparam.blBilaSoci == true or  ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blRast == true  ) %}
+            {% if questionCollectiviteConsolide.q1 == true  %}
+                <!--  Tab 2.1.1 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            2.1.1 - Nombre de fonctionnaires ayant été absents au moins un jour dans l'année, par motif (hors formations, journées de grève et absences syndicales) présents dans les effectifs au 31/12/{{ anneeCampagneEnCours }}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb211" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd211 == 1 %} {% elseif consolide.blIncoInd211 == 2 %} blue {% elseif consolide.blIncoInd211 == 3 %} orange {% elseif consolide.blIncoInd211 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd211 }}%{% endif %};">
+                                    <span class="sr-only ind211-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb211-value status">{% if consolide != null %} {% if consolide.blIncoInd211 == 1 or consolide.blIncoInd211 == null %} A saisir {% elseif consolide.blIncoInd211 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd211 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd211 == 4 %}{% if totalInd211 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd211 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle211" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind211" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+            {% if questionCollectiviteConsolide.q3 == true  %}
+                <!--  Tab 2.1.2 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            2.1.2 - Nombre de CONTRACTUELS SUR EMPLOI PERMANENT ayant été absents au moins un jour dans l'année, par motif (hors formations, journées de grève et absences syndicales) présents au 31/12/{{ anneeCampagneEnCours }}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb212" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd212 == 1 %} {% elseif consolide.blIncoInd212 == 2 %} blue {% elseif consolide.blIncoInd212 == 3 %} orange {% elseif consolide.blIncoInd212 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd212 }}%{% endif %};">
+                                    <span class="sr-only ind212-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb212-value status">{% if consolide != null %} {% if consolide.blIncoInd212 == 1 or consolide.blIncoInd212 == null %} A saisir {% elseif consolide.blIncoInd212 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd212 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd212 == 4 %}{% if totalInd212 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd212 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle212" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind212" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+            {% if questionCollectiviteConsolide.q5 == true  %}
+                <!--  Tab 2.1.3 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            2.1.3 - Nombre de CONTRACTUELS SUR EMPLOI NON PERMANENT ayant été absents au moins un jour dans l'année,
+                            par motif (hors formations, journées de grève et absences syndicales) présents au 31/12/{{ anneeCampagneEnCours }}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb213" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd213 == 1 %} {% elseif consolide.blIncoInd213 == 2 %} blue {% elseif consolide.blIncoInd213 == 3 %} orange {% elseif consolide.blIncoInd213 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd213 }}%{% endif %};">
+                                    <span class="sr-only ind213-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb213-value status">{% if consolide != null %} {% if consolide.blIncoInd213 == 1 or consolide.blIncoInd213 == null%} A saisir {% elseif consolide.blIncoInd213 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd213 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd213 == 4 %}{% if totalInd213 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd213 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle213" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind213" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true  %}
+                <!--  Tab 2.1.4 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                        2.1.4 - Congés paternité et d'accueil de l'enfant des agents TITULAIRES ET CONTRACTUELS,
+                            par catégorie hiérarchique
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb214" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd214 == 1 %} {% elseif consolide.blIncoInd214 == 2 %} blue {% elseif consolide.blIncoInd214 == 3 %} orange {% elseif consolide.blIncoInd214 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd214 }}%{% endif %};">
+                                    <span class="sr-only ind214-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb214-value status">{% if consolide != null %} {% if consolide.blIncoInd214 == 1 or consolide.blIncoInd214 == null%} A saisir {% elseif consolide.blIncoInd214 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd214 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd214 == 4 %}{% if totalInd214 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd214 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle214" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind214" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true  %}
+                <!--  Tab 2.1.5 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            2.1.5 - Congés de présence parentale des FONCTIONNAIRES ET CONTRACTUELS,
+                            par catégorie hiérarchique
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb215" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd215 == 1 %} {% elseif consolide.blIncoInd215 == 2 %} blue {% elseif consolide.blIncoInd215 == 3 %} orange {% elseif consolide.blIncoInd215 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd215 }}%{% endif %};">
+                                    <span class="sr-only ind215-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb215-value status">{% if consolide != null %} {% if consolide.blIncoInd215 == 1 or consolide.blIncoInd215 == null%} A saisir {% elseif consolide.blIncoInd215 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd215 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd215 == 4 %}{% if totalInd215 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd215 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle215" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body" id="ind215" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true  %}
+                <!--  Tab 2.1.6 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            2.1.6 - Congés de solidarité familiale des agents FONCTIONNAIRES ET CONTRACTUELS,
+                            par catégorie hiérarchique
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb216" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd216 == 1 %} {% elseif consolide.blIncoInd216 == 2 %} blue {% elseif consolide.blIncoInd216 == 3 %} orange {% elseif consolide.blIncoInd216 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd216 }}%{% endif %};">
+                                    <span class="sr-only ind216-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb216-value status">{% if consolide != null %} {% if consolide.blIncoInd216 == 1 or consolide.blIncoInd216 == null%} A saisir {% elseif consolide.blIncoInd216 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd216 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd216 == 4 %}{% if totalInd216 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd216 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle216" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body" id="ind216" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+            {% if (questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true) or questionCollectiviteConsolide.q5 == true  %}
+                <!--  Tab 2.1.7 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            2.1.7 - Entretiens avant et après des congés de 6 mois ou plus
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb217" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd217 == 1 %} {% elseif consolide.blIncoInd217 == 2 %} blue {% elseif consolide.blIncoInd217 == 3 %} orange {% elseif consolide.blIncoInd217 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd217 }}%{% endif %};">
+                                    <span class="sr-only ind217-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb217-value status">{% if consolide != null %} {% if consolide.blIncoInd217 == 1 or consolide.blIncoInd217 == null%} A saisir {% elseif consolide.blIncoInd217 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd217 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd217 == 4 %} Saisie cohérente{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-217" title="Fiche 2.1.7" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle217" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body" id="ind217" style="display: none;">
+
+                </div>
+
+            {% endif %}
+        {% endif %}
+
+
+        {% if (questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true) and EnqueteCollectiviteparam.blBilaSoci == true %}
+            <!--  Tab 2.2.1 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        2.2.1 - Modalités d'organisation du temps de travail
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb221" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd221 == 1 %} {% elseif consolide.blIncoInd221 == 2 %} blue {% elseif consolide.blIncoInd221 == 3 %} orange {% elseif consolide.blIncoInd221 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd221 }}%{% endif %};">
+                                <span class="sr-only ind221-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb221-value status">{% if consolide != null %} {% if consolide.blIncoInd221 == 1 or consolide.blIncoInd221 == null%} A saisir {% elseif consolide.blIncoInd221 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd221 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd221 == 4 %}{% if totalInd221 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd221 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-221" title="Fiche 2.2.1" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle221" title="Agrandir" ></span>
+
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind221" style="display: none;">
+
+            </div>
+
+        {% endif %}
+
+        {% if (questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true) and EnqueteCollectiviteparam.blBilaSoci == true %}
+            <!--  Tab 2.2.2 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        2.2.2 - Contraintes particulières concernant le temps de travail
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb222" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd222 == 1 %} {% elseif consolide.blIncoInd222 == 2 %} blue {% elseif consolide.blIncoInd222 == 3 %} orange {% elseif consolide.blIncoInd222 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd222 }}%{% endif %};">
+                                <span class="sr-only ind222-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb222-value status">{% if consolide != null %} {% if consolide.blIncoInd222 == 1 or consolide.blIncoInd222 == null %} A saisir {% elseif consolide.blIncoInd222 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd222 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd222 == 4 %}{% if totalInd222 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd222 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-222" title="Fiche 2.2.2" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle222" title="Agrandir" ></span>
+
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind222" style="display: none;">
+
+            </div>
+
+        {% endif %}
+
+        {% if (questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true)  and EnqueteCollectiviteparam.blBilaSoci == true %}
+            <!--  Tab 2.2.3 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        2.2.3 - Compte épargne-temps
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb223" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd223 == 1 %} {% elseif consolide.blIncoInd223 == 2 %} blue {% elseif consolide.blIncoInd223 == 3 %} orange {% elseif consolide.blIncoInd223 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd223 }}%{% endif %};">
+                                <span class="sr-only ind223-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb223-value status">{% if consolide != null %} {% if consolide.blIncoInd223 == 1 or consolide.blIncoInd223 == null %} A saisir {% elseif consolide.blIncoInd223 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd223 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd223 == 4 %} {% if totalInd223 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd223 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-223" title="Fiche 2.2.3" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle223" title="Agrandir" ></span>
+
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind223" style="display: none;">
+
+            </div>
+
+        {% endif %}
+
+        {% if (questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true ) and EnqueteCollectiviteparam.blBilaSoci == true %}
+            <!--  Tab 2.2.4 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        2.2.4 - Télétravail
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb224" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd224 == 1 %} {% elseif consolide.blIncoInd224 == 2 %} blue {% elseif consolide.blIncoInd224 == 3 %} orange {% elseif consolide.blIncoInd224 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd224 }}%{% endif %};">
+                                <span class="sr-only ind224-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb224-value status">{% if consolide != null %} {% if consolide.blIncoInd224 == 1 or consolide.blIncoInd224 == null %} A saisir {% elseif consolide.blIncoInd224 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd224 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd224 == 4 %} {% if totalInd224 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd224 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%}</span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-224" title="Fiche 2.2.4" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle224" title="Agrandir" ></span>
+
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind224" style="display: none;">
+
+            </div>
+
+        {% endif %}
+
+        {% if EnqueteCollectiviteparam.blBilaSoci == true or ( EnqueteCollectiviteparam.blBilaSoci == false and EnqueteCollectiviteparam.blRast == true ) %}
+            <!--  Tab 2.2.5 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        2.2.5 - Charte du temps
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb225" class="progress-bar tpstrav {% if consolide != null %}{% if consolide.blIncoInd225 == 1 %} {% elseif consolide.blIncoInd225 == 2 %} blue {% elseif consolide.blIncoInd225 == 3 %} orange {% elseif consolide.blIncoInd225 == 4 %} green {% endif %}{% endif %}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd225 }}% {% endif %}" >
+                                <span class="sr-only ind225-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb225-value status">{% if consolide != null %}{% if consolide.moyenneInd225 == 0 %} A saisir {% elseif consolide.moyenneInd225 == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-225" title="Fiche 2.2.5" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle225" title="Agrandir" ></span>
+
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind225" style="display: none;">
+
+            </div>
+        {% endif %}
+
+        <!--  Tab 2.2.6 -->
+        <div class="panel-heading">
+            <div class="col-xs-12">
+                <div class="col-xs-8">
+                    2.2.6 - Nombre de jours de carence par sexe, par catégorie hiérarchique et montant des sommes brutes retenues
+                </div>
+                <div class="col-xs-3">
+                    <div class="progress">
+                        <div id="pb226" class="progress-bar tpstrav" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd210 }}% {% endif %}" >
+                            <span class="sr-only ind226-value">0%</span>
+                        </div>
+
+                    </div>
+                    <span class="pb226-value status">
+                            {% if consolide != null %}{% if consolide.moyenneInd226 == 0 %} A saisir
+                            {% elseif consolide.moyenneInd226 == 100 %}{% if totalInd226 == 0.0 %} Saisie cohérente (données à 0)
+                            {% elseif totalInd226 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%}
+                        </span>
+                </div>
+                <div class="col-xs-1 information">
+                    <span class="buttonplus" id="toggle226" title="Agrandir" ></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body" id="ind226" style="display: none;">
+
+        </div>
+
+
+
+        <!--  Tab 2.2.7 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        2.2.7 - Modalités de contrôle des arrêts maladie
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb227" class="progress-bar tpstrav" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd227 }}% {% endif %}" >
+                                <span class="sr-only ind227-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb227-value status">
+                            {% if consolide != null %}
+                                {% if consolide.moyenneInd227 == 0 %}
+                                    A saisir
+                                {% elseif consolide.moyenneInd227 == 100.0 %}
+                                    Saisie cohérente
+                                {%endif%}
+                            {%endif%}
+                        </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle227" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind227" style="display: none;">
+
+            </div>
+
+
+        {% if EnqueteCollectiviteparam.blBilaSoci == true or ( EnqueteCollectiviteparam.blBilaSoci == false and (EnqueteCollectiviteparam.blGepe == true or EnqueteCollectiviteparam.blRast == true or EnqueteCollectiviteparam.blHand == true) ) %}
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true %}
+                <!--  Tab 2.3.1 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            2.3.1 Informations relatives au temps partiel prévu par l'article 60 de la loi n° 84-53 du 26 janvier 1984
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb231" class="progress-bar tpstrav" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd231 }}% {% endif %}" >
+                                    <span class="sr-only ind231-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb231-value status">{% if consolide != null %}{% if consolide.moyenneInd231 == 0 %} A saisir {% elseif consolide.moyenneInd231 == 100 %} {% if totalInd231 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd231 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle231" title="Agrandir" ></span>
+
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body" id="ind231" style="display: none;">
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!--  Modale Fiche 2.2.1 -->
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4  %}
+            <div id="dialog-fiche-221" title="Fiche 2.2.1" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    L'indicateur 2.2.1. recense les effectifs en nombre de personnes physiques (1 personne = 1 unité).<br/>
+                    <br/>
+                    Les cellules grisées (pré remplies par un zéro) font l’objet de calculs automatiques.<br/>
+                    <br/>
+                    <br/>
+                    Quels sont les agents à recenser ?<br/>
+                    *      les fonctionnaires stagiaires et titulaires recensés aux indicateurs 1.1.2(1) et 1.1.2(2)<br/>
+                    *      les contractuels occupant un emploi permanent recensés à l’indicateur 1.2.1<br/>
+                    *     rémunérés au 31/12/{{AnneeCamp}}<br/>
+                    <br/>
+                    <br/>
+                    Comment sont-ils recensés ?<br/>
+                    Remarque : un agent n'est compté qu'une seule fois.<br/>
+                    *      selon le cycle de travail qui leur est applicable en référence à la délibération prise pour l’application du décret n° 2001-623 du 12 juillet 2001 relatif à l’aménagement et à la réduction du temps de travail dans la Fonction Publique Territoriale.<br/>
+                    -          cycle hebdomadaire<br/>
+                            Les agents travaillant sur la base d'un nombre fixe d'heures par semaine sans prendre en compte la RTT.<br/>
+                            Exemple : pour un agent travaillant 38 h hebdomadaires et bénéficiant de 20 jours RTT dans l'année, prendre en compte 38 heures.<br/>
+                    <br/>
+                    -          autres cycles<br/>
+                           Des agents (à temps complet et temps plein) peuvent également travailler :<br/>
+                     - Sur une base annuelle (annualisation du temps de travail). Exemple : ATSEM ou animateurs travaillant sur la base de l'année scolaire : les jours non travaillés correspondent au calendrier scolaire, ils sont posés pendant les vacances ;<br/>
+                     - Sur une base saisonnière : le nombre de jours de RTT est calculé par saison. Exemple : certains agents des espaces verts ;<br/>
+                     - Sur une base mensuelle (exemple : agents des espaces verts) : le nombre de jours de RTT est calculé chaque mois ;<br/>
+                     - Selon d'autres cycles, spécifiques à leur activité : horaires décalés, alternance horaire, travail de nuit ou le week-end. Exemple : policiers municipaux travaillant de nuit ou en alternance (soirée, nuit, jour), horaires décalés ou liés à l'ouverture de leur établissement (crèches, maisons de retraite, équipes de nuit...) , cycle bi-hebdomadaire (2 semaines) ;<br/>
+                     - Au forfait : équipes de direction, cadres ou personnels itinérants ayant un forfait de jours de RTT sans décompte horaire."						<br/>
+
+                </p>
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 2.2.2 -->
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4  %}
+            <div id="dialog-fiche-222" title="Fiche 2.2.2" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    <b>L’indicateur 2.2.2. fait le point sur les contraintes particulières concernant l'organisation du travail.</b><br /><br />
+                    Ces informations sont notamment utiles pour comparer la situation respective des femmes et des hommes au sein de la collectivité,
+                    conformément au socle commun d'indicateurs défini au procotole du 8 mars 2013 sur l'égalité professionnelle entre les femmes et les hommes.
+                </p>
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 2.2.3 -->
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4  %}
+            <div id="dialog-fiche-223" title="Fiche 2.2.3" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    <b>L’indicateur 2.2.3. fait le point sur le nombre de comptes épargne temps (CET), dont les comptes ouverts au cours de l’année {{AnneeCamp}}.</b><br /><br />
+                    Le compte épargne-temps a été institué par le décret n°2004-878 du 26 août 2004, modifié par le décret n°2010-531.
+                    Il permet aux agents occupant un emploi permanent (titulaires ou non, à temps complet ou non) d'accumuler des droits à congés rémunérés.
+                    Il est ouvert à la demande de l'agent et est de droit dès lors que l'agent en fait la demande écrite.<br /><br />
+
+                    L'agent titulaire d'un compte peut épargner le nombre de jours souhaité à condition que le nombre de jours de congés pris dans l'année ne soit pas inférieur à 20.<br /><br />
+
+                    Tous ces tableaux sont renseignés par catégorie hiérarchique et par sexe.<br /><br />
+
+                    <b>2.2.3.1 - Nombre de comptes épargne temps ouverts</b><br />
+                    Ce tableau compte le nombre de CET ouverts depuis le décret du 26 août 2004 pour les agents présents dans la collectivité locale du 31/12/{{AnneeCamp}} dont ceux ouverts dans l'année {{AnneeCamp}}.<br /><br />
+
+                    <b>2.2.3.2 - Nombre de jours accumulés</b><br />
+                    Ce tableau compte :<br />
+                    - d'une part,  le nombre de jours accumulés au 31/12/{{AnneeCamp}} hors jours versés au titre de l'annéee {{AnneeCamp}} pour les agents présents dans la collectivité locale au 31/12/{{AnneeCamp}}<br />
+                    - d'autre part,  le nombre de jours versés au titre de l'année {{AnneeCamp}} pour les agents présents dans la collectivité locale au 31/12/{{AnneeCamp}}<br /><br />
+
+                    <b>2.2.3.3 - Nombre de jours consommés</b><br />
+                    Ce tableau compte le nombre de jours consommés en {{AnneeCamp}} par type de consommation prévu par le décret n° 2010-531 du 20 mai 2010,
+                    pour les agents étant passés par la collectivité locale même s'ils n'y sont plus au 31/12/{{AnneeCamp}}<br />
+                    Les jours accumulés sur le compte épargne temps peuvent :<br />
+                    - être utilisés sous forme de jours de congés<br />
+                    - indemnisés<br />
+                    - versés au régime de retraite additionnel dans la fonction publique (Rafp)
+                </p>
+            </div>
+        {% endif %}
+
+        <!-- Modale Fiche 2.1.7 -->
+       {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true  %}
+            <div id="dialog-fiche-217" title="Fiche 2.1.7" class="displayNone" style="overflow:hidden;">
+                <p>
+                    6 semaines au moins avant la réintégration de l’agent, celui-ci bénéficie d’un entretien avec, en fonction de son souhait de réintégration, le responsable des RH de son administration d’origine ou de détachement afin d’examiner les modalités de la reprise. Ce dispositif est en application depuis le 1er octobre 2012.
+                </p>
+            </div>
+        {% endif %}
+        <!--  Modale Fiche 2.2.4 -->
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 or questionCollectiviteConsolide.q6  %}
+            <div id="dialog-fiche-224" title="Fiche 2.2.4" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    <b>L’indicateur 2.2.4 recense le nombre d’agents ayant exercé leurs fonctions dans le cadre du télétravail au cours de l’année {{AnneeCamp}} par sexe et catégorie hiérarchique.</b><br /><br />
+                    Les fonctionnaires relevant de la loi n° 83-634 du 13 juillet 1983 portant droits et obligations des fonctionnaires pourront exercer leurs fonctions dans le cadre
+                    du télétravail tel qu'il est défini au premier alinéa de l'article L. 1222-9 du Code du travail (loi 2012-347 du 12 mars 2012, article 133). Ce texte n'est pas encore
+                    en application en l'absence du décret en Conseil d'Etat qu'il prévoit. Il peut cependant être utilisé pour la définition du télétravail dont la pratique est admise pour
+                    la fonction publique (guide DGAFP de 2008).<br /><br />
+                    <b>
+                        Définition<br />
+                        Article L. 1222-9 du Code du travail :<br />
+                        Sans préjudice de l'application, s'il y a lieu, des dispositions du présent code protégeant les travailleurs à domicile,
+                        le télétravail désigne toute forme d'organisation du travail dans laquelle un travail qui aurait également pu être exécuté dans les locaux de
+                        l'employeur est effectué par un salarié hors de ces locaux de façon régulière et volontaire en utilisant les technologies de l'information et
+                        de la communication dans le cadre d'un contrat de travail ou d'un avenant à celui-ci.
+                    </b><br />
+                    Article 133 de la loi du 12 mars 2012<br />
+                    Les fonctionnaires relevant de la loi n° 83-634 du 13 juillet 1983 portant droits et obligations des fonctionnaires peuvent exercer leurs fonctions dans le cadre du télétravail tel qu'il est défini au premier alinéa de l'article L. 1222-9 du code du travail. L'exercice des fonctions en télétravail est accordé à la demande du fonctionnaire et après accord du chef de service. Il peut y être mis fin à tout moment, sous réserve d'un délai de prévenance. Les fonctionnaires télétravailleurs bénéficient des droits prévus par la législation et la réglementation applicables aux agents exerçant leurs fonctions dans les locaux de leur employeur public.
+                    Le présent article est applicable aux agents publics non fonctionnaires et aux magistrats.
+                    Un décret en Conseil d'Etat fixe, après concertation avec les organisations syndicales représentatives de la fonction publique, les conditions d'application du présent article, notamment en ce qui concerne les modalités d'organisation du télétravail.
+
+                </p>
+            </div>
+        {% endif %}
+
+        <!--  Modale Fiche 2.2.5 -->
+        <div id="dialog-fiche-225" title="Fiche 2.2.5" class="displayNone" style="overflow:hidden;">
+            <p style="overflow-y: scroll; height: 400px;">
+                <b>
+                    L'indicateur 2.2.5 recense l'existence de charte(s) du temps au sein de la collectivité. Une charte du temps  vise à une meilleure articulation entre
+                    vie personnelle et professionnelle. Elle décrit les modalités d’organisation du travail au sein de la collectivité en prenant en compte les nécessités
+                    d'organisation du travail et les souhaits des personnels en concertation avec les représentants du personnels et l’encadrement (cf circulaire du 8 juillet 2013
+                    relative à la mise en œuvre du protocole d'accord du 8 mars 2013 sur l'égalité professionnelle entre les femmes et les hommes).
+                </b>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {% set NumForm = '3' %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        // Attention à vérifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var numForm = '3';
+        var nomForm = 'tpstrav';
+        var nbInd = {{ nombreQuestion.nmquestion.tempsDeTravail }};
+
+        function initTab() {
+            if (currentTab != "") saveTab();
+            $('#content').html("");
+            $('#content').load('{{ path('bilan_conso_tpstrav_edit') }}', function () { });
+            currentTab = "0";
+        }
+
+
+        $.ajaxSetup({cache: false});
+        initTab();
+
+
+
+        var idToggleCurr = "";
+        var idDivCurr = "";
+
+        $(document).ready(function ()
+        {
+
+            $('#HideShowIncoh').on('click', function() {
+                var incohHeight = $('#incoh').height();
+                $("#incoh_wrapper").css('height', incohHeight);
+                $("#incoh").affix({
+                    offset: {
+                      top: distance
+                    }
+                });
+            });
+
+            // TABLEAU 210
+            addToggle("toggle210", "ind210");
+
+            // TABLEAU 211
+            {% if questionCollectiviteConsolide.q1 == true  %}
+
+                addToggle("toggle211", "ind211");
+
+            {% endif %}
+
+            // TABLEAU 212
+            {% if questionCollectiviteConsolide.q3 == true  %}
+
+                addToggle("toggle212", "ind212");
+
+            {% endif %}
+
+            // TABLEAU 213
+            {% if questionCollectiviteConsolide.q5 == true  %}
+
+                addToggle("toggle213", "ind213");
+
+            {% endif %}
+
+            // TABLEAU 214
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true  %}
+
+                addToggle("toggle214", "ind214");
+
+            {% endif %}
+
+            // TABLEAU 215
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true  %}
+
+            addToggle("toggle215", "ind215");
+
+            {% endif %}
+
+            // TABLEAU 216
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true  %}
+
+            addToggle("toggle216", "ind216");
+
+            {% endif %}
+
+            // TABLEAU 217
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true  %}
+
+                addToggle("toggle217", "ind217");
+                $("#open-fiche-217").on("click", function () {
+                    $("#dialog-fiche-217").removeClass("displayNone");
+                    dialogFiche217.dialog("open");
+                });
+
+            {% endif %}
+
+            // TABLEAU 221
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true  %}
+
+                addToggle("toggle221", "ind221");
+                $("#open-fiche-221").on("click", function () {
+                    $("#dialog-fiche-221").removeClass("displayNone");
+                    dialogFiche221.dialog("open");
+                });
+            {% endif %}
+
+            // TABLEAU 222
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true  %}
+
+                addToggle("toggle222", "ind222");
+                $("#open-fiche-222").on("click", function () {
+                    $("#dialog-fiche-222").removeClass("displayNone");
+                    dialogFiche222.dialog("open");
+                });
+            {% endif %}
+
+            // TABLEAU 223
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true  %}
+
+                addToggle("toggle223", "ind223");
+                $("#open-fiche-223").on("click", function () {
+                    $("#dialog-fiche-223").removeClass("displayNone");
+                    dialogFiche223.dialog("open");
+                });
+
+            {% endif %}
+
+            // TABLEAU 224
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true %}
+
+                addToggle("toggle224", "ind224");
+                $("#open-fiche-224").on("click", function () {
+                    $("#dialog-fiche-224").removeClass("displayNone");
+                    dialogFiche224.dialog("open");
+                });
+
+            {% endif %}
+
+            // TABLEAU 225
+            addToggle("toggle225", "ind225");
+            $("#open-fiche-225").on("click", function () {
+                $("#dialog-fiche-225").removeClass("displayNone");
+                dialogFiche225.dialog("open");
+            });
+
+            //TABLEAU 226
+            addToggle("toggle226", "ind226");
+
+            // TABLEAU 227
+            addToggle("toggle227", "ind227");
+
+            // TABLEAU 231
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true  %}
+
+                addToggle("toggle231", "ind231");
+
+            {% endif %}
+
+            initCount(numForm);
+
+        });
+
+        /*
+         * METHODES GENERALES
+         */
+
+        function initDiv(idDiv) {
+            if (idDiv == undefined || idDiv == "null" || idDiv == "") {
+            } else {
+                if (idDiv == "ind210") {
+                    $('#ind210').load('{{ path('bilan_conso_tpstrav_ind210_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+
+                else if (idDiv == "ind227") {
+                    $('#ind227').load('{{ path('bilan_conso_tpstrav_ind227_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind211") {
+                    $('#ind211').load('{{ path('bilan_conso_tpstrav_ind211_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind212") {
+                    $('#ind212').load('{{ path('bilan_conso_tpstrav_ind212_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind213") {
+                    $('#ind213').load('{{ path('bilan_conso_tpstrav_ind213_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind214") {
+                    $('#ind214').load('{{ path('bilan_conso_tpstrav_ind214_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind215") {
+                    $('#ind215').load('{{ path('bilan_conso_tpstrav_ind215_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+                else if (idDiv == "ind216") {
+                    $('#ind216').load('{{ path('bilan_conso_tpstrav_ind216_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+                else if (idDiv == "ind217") {
+                    $('#ind217').load('{{ path('bilan_conso_tpstrav_ind217_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind221") {
+                    $('#ind221').load('{{ path('bilan_conso_tpstrav_ind221_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+                else if (idDiv == "ind222") {
+                    $('#ind222').load('{{ path('bilan_conso_tpstrav_ind222_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+                else if (idDiv == "ind223") {
+                    $('#ind223').load('{{ path('bilan_conso_tpstrav_ind223_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+                else if (idDiv == "ind224") {
+                    $('#ind224').load('{{ path('bilan_conso_tpstrav_ind224_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+                else if (idDiv == "ind225") {
+                    $('#ind225').load('{{ path('bilan_conso_tpstrav_ind225_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+                else if (idDiv == "ind226") {
+                    $('#ind226').load('{{ path('bilan_conso_tpstrav_ind226_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+                else if (idDiv == "ind231") {
+                    $('#ind231').load('{{ path('bilan_conso_tpstrav_ind231_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight();
+                        disabled();
+                    });
+                }
+            }
+        }
+
+
+        $('#HideShowIncoh').click(function () {
+            HideShowIncoh();
+        });
+
+        function setIncoherenceTable(responsejson) {
+            incoherenceList = responsejson.list.tempstravail;
+            /*console.log(incoherenceList);*/
+            var table = document.getElementById('incoherenceTable');
+
+            var tbody = $(table).find('tbody');
+
+            var html_table_incoh = '';
+            $.each(incoherenceList, function() {
+                // console.log(this);
+                html_table_incoh += '<tr>';
+                html_table_incoh += '<td>'+"<a href=\"#\" onclick=\"openError('" + this.idToggle1 + "', '" + this.idToggle2 + "', '" + this.field + "')\">" + this.tableNum + "</a></td>";
+                html_table_incoh += '<td>'+ this.message +'</td>';
+                html_table_incoh += '</tr>';
+            });
+            $(tbody).html(html_table_incoh);
+
+            setIncoherenceLight(numForm);
+
+            $.each(responsejson.tempstravail.pgInd, function() {
+                setPgInd(this.ind, this.blinco, this.moyenne, nomForm);
+            });
+
+            getMoyenneTpsTrav(responsejson);
+            setPgMenu('TpsTrav','tempstravail', responsejson);
+        }
+
+
+
+
+        var getMoyenneTpsTrav = function (response)
+        {
+            var total = Math.ceil(Math.ceil(response.pc.pcTempsdetravail) / nbInd);
+            $('#ValTpsTrav').html(total + "%");
+            $('#pbTpsTrav').css('width', total + "%");
+        }
+
+        var dialogFiche217 = $("#dialog-fiche-217").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche217.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 %}
+
+            var dialogFiche221 = $("#dialog-fiche-221").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche221.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+
+            var dialogFiche222 = $("#dialog-fiche-222").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche222.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+            var dialogFiche223 = $("#dialog-fiche-223").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche223.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+        {% endif %}
+
+
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 or questionCollectiviteConsolide.q6 %}
+
+            var dialogFiche224 = $("#dialog-fiche-224").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche224.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+    {% endif %}
+
+        var dialogFiche225 = $("#dialog-fiche-225").dialog({
+            autoOpen: false,
+            resizable: true,
+            height: "auto",
+            width: 800,
+            modal: true,
+            buttons: {
+                "OK": function () {
+                    dialogFiche225.dialog("close");
+                }
+            },
+            close: function () {
+            }
+        });
+
+
+    </script>
+
+{% endblock %}

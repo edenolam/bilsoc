@@ -1,0 +1,45 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('reftempsnoncomplet_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refTempsNonComplet.cdTempnoncomp }}</td>
+                </tr>
+                <tr>
+                    <th>libellé</th>
+                    <td>{{ refTempsNonComplet.lbTempnoncomp }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre minutes borne min</th>
+                    <td>{{ refTempsNonComplet.nbMinuteBorneMin }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre minutes borne max</th>
+                    <td>{{ refTempsNonComplet.nbMinuteBorneMax }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refTempsNonComplet.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refTempsNonComplet} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('reftempsnoncomplet_edit', { 'idTempnoncomp': refTempsNonComplet.idTempnoncomp }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+        </ul>
+    {% endblock %}
+

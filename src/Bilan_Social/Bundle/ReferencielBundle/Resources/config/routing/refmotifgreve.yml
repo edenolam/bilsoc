@@ -1,0 +1,28 @@
+refmotifgreve_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMotifGreve:index" }
+    methods:  GET
+
+refmotifgreve_show:
+    path:     /{idMotigrev}/show
+    defaults: { _controller: "ReferencielBundle:RefMotifGreve:show" }
+    methods:  GET
+
+refmotifgreve_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMotifGreve:new" }
+    methods:  [GET, POST]
+
+refmotifgreve_edit:
+    path:     /{idMotigrev}/edit
+    defaults: { _controller: "ReferencielBundle:RefMotifGreve:edit" }
+    methods:  [GET, POST]
+
+refmotifgreve_delete:
+    path:     /{idMotigrev}/delete
+    defaults: { _controller: "ReferencielBundle:RefMotifGreve:delete" }
+    methods:  DELETE
+
+csv_export_refmotifgreve:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMotifGreve:generateCsv" }

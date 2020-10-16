@@ -1,0 +1,4 @@
+services:
+    referenciel.ReferencielExporter:
+        class: 'Bilan_Social\Bundle\ReferencielBundle\Services\ReferencielExporter'
+        arguments: [ '@doctrine.orm.entity_manager', '@service_container' ]

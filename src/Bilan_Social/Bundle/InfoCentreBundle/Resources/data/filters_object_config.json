@@ -1,0 +1,744 @@
+[
+    {
+        "name":"affiColl",
+        "value":"",
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.affi_coll.label",
+            "expanded":true,
+            "multiple":false,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_inline child_box_border_tinyround child_box_border_slim",
+                "data-form-group-extra-attr":"{\"class\":\"form_inline_child_block\"}"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"YES_NO_DATA_SRC"
+    },{
+        "name":"chsctColl",
+        "value":"",
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.chsct_coll.label",
+            "expanded":true,
+            "multiple":false,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_inline child_box_border_tinyround child_box_border_slim",
+                "data-form-group-extra-attr":"{\"class\":\"form_inline_child_block\"}"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"YES_NO_DATA_SRC"
+    },{
+        "name":"attachCtColl",
+        "value":"",
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.attach_ct_coll.label",
+            "expanded":true,
+            "multiple":false,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_inline child_box_border_tinyround child_box_border_slim",
+                "data-form-group-extra-attr":"{\"class\":\"form_inline_child_block\"}"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"YES_NO_DATA_SRC"
+    },{
+        "name":"dateLastCoMin",
+        "value":null,
+        "data_type":"date",
+        "form_type":"date",
+        "form_options":{
+            "label":"infocentre.filter_form.date_last_co_range.label",
+            "widget":"single_text",
+            "attr":{
+                "class":"range_part",
+                "data-low-than":"#infocentre_filter_form_dateLastCoMax"
+            }
+        }
+    },{
+        "name":"dateLastCoMax",
+        "value":null,
+        "data_type":"date",
+        "form_type":"date",
+        "form_options":{
+            "label":false,
+            "widget":"single_text",
+            "attr":{
+                "class":"range_part",
+                "data-sup-of":"#infocentre_filter_form_dateLastCoMin"
+            }
+        }
+    },{
+        "name":"nomColl",
+        "value":"",
+        "form_options":{
+            "label":"infocentre.filter_form.nom_coll.label",
+            "attr":{
+                "class":"autocomplete",
+                "data-autocomplete-field-target":"nomColl"
+            }
+        }
+    },{
+        "name"  : "siretColl",
+        "value"        : "",
+        "form_options" : {
+            "label" : "infocentre.filter_form.siret_coll.label",
+            "attr":{
+                "maxlength":14,
+                "pattern":"\\d{1,14}",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"14 chiffres maximum"
+            }
+        }
+    },{
+        "name"  : "sirenRattachColl",
+        "value"        : [""],
+        "form_type":"collection",
+        "form_options" : {
+            "label" : "infocentre.filter_form.siren_rattach_coll.label",
+            "entry_type" : "Bilan_Social\\Bundle\\CoreBundle\\Form\\PurifiedTextType",
+            "entry_options" : {
+                "attr":{
+                    "maxlength":9,
+                    "pattern":"\\d{1,9}",
+                    "data-replace-pattern":"((?!\\d|\\.).)",
+                    "data-replace-pattern-indicateur":"g",
+                    "title":"9 chiffres maximum",
+                    "class":"col-md-2"
+                },
+                "label":false
+            },
+            "allow_add":true,
+            "prototype":true
+        }
+    },{
+        "name":"adresseColl",
+        "value":"",
+        "form_options":{
+            "label":"infocentre.filter_form.adresse_coll.label"
+        }
+    },{
+        "name":"codePostalColl",
+        "value":"",
+        "form_options":{
+            "label":"infocentre.filter_form.code_postalcoll.label",
+            "attr":{
+                "maxlength":5,
+                "pattern":"\\d{1,5}",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"5 chiffres maximum"
+            }
+        }
+    },{
+        "name":"villeColl",
+        "value":"",
+        "form_options":{
+            "label":"infocentre.filter_form.ville_coll.label",
+            "attr":{
+                "class":"autocomplete",
+                "data-autocomplete-field-target":"villeColl"
+            }
+        }
+    },{
+        "name":"codeInseeColl",
+        "value":"",
+        "form_options":{
+            "label":"infocentre.filter_form.code_insee_coll.label",
+            "attr":{
+                "maxlength":5,
+                "pattern":"\\d{1,5}",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"5 chiffres maximum"
+            }
+        }
+    },{
+        "name":"typeColl",
+        "value":{},
+        "private":true,
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.type_coll.label",
+            "expanded":true,
+            "multiple":true,
+            "attr":{"class":"form_choices_col_4 form_choices_inline child_box_border_tinyround child_box_border_slim"}
+        },
+        "src_type":"SQL_DATA_SRC",
+        "src":{
+            "table":"typeCollectivite",
+            "map_by_key":"lbTypeColl",
+            "get_values":"idTypeColl"
+        }
+    },{
+        "name":"depaColl",
+        "value":{},
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.depa_coll.label",
+            "expanded":true,
+            "multiple":true,
+            "attr":{"class":"form_choices_col_4 form_choices_inline child_box_border_tinyround child_box_border_slim"}
+        },
+        "src_type":"SQL_DATA_SRC",
+        "src":{
+            "table":"departement",
+            "map_by_key":{
+                "call":"concatRowData",
+                "with_params":["cdDepa"," - ","lbDepa"]
+            },
+            "get_values":"idDepa"
+        }
+    },{
+        "name":"nomContactColl",
+        "value":"",
+        "form_options":{
+            "label":"Nom du contact par défaut"
+        }
+    },{
+        "name":"cdgColl",
+        "value":{},
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.cdg_coll.label",
+            "expanded":true,
+            "multiple":true,
+            "attr":{"class":"form_choices_col_4 form_choices_inline child_box_border_tinyround child_box_border_slim"}
+        },
+        "src_type":"SQL_DATA_SRC",
+        "src":{
+            "table":"cdg",
+            "map_by_key":"lbCdg",
+            "get_values":"idCdg"
+        }
+    },{
+        "name":"typeSurclDemoColl",
+        "value":{},
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.type_surcl_demo_coll.label",
+            "expanded":true,
+            "multiple":true,
+            "attr":{"class":"form_choices_col_4 form_choices_inline child_box_border_tinyround child_box_border_slim"}
+        },
+        "src_type":"SQL_DATA_SRC",
+        "src":{
+            "table":"typeSurclassementDemo",
+            "map_by_key":"strateTypeSurclDemo",
+            "get_values":"idTypeSurclDemo"
+        }
+    },{
+        "name":"zoneEmploiColl",
+        "value":{},
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.zone_emploi_coll.label",
+            "expanded":true,
+            "multiple":true,
+            "attr":{"class":"form_choices_col_4 form_choices_inline child_box_border_tinyround child_box_border_slim"}
+        },
+        "src_type":"SQL_DATA_SRC",
+        "src":{
+            "table":"collectivite",
+            "map_by_key":"zoneEmploiColl",
+            "get_values":"zoneEmploiColl",
+            "oder_by":"ASC"
+        }
+    },{
+        "name":"anneeCampPuitDeDonnee",
+        "value":{},
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.annee_camp.label",
+            "expanded":true,
+            "multiple":true,
+            "attr":{"class":"form_choices_inline child_box_border_tinyround child_box_border_slim"}
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"ANNEE_CAMP_PUIT_DE_DONNEE_DATA_SRC"
+    },{
+        "name":"saisieApa",
+        "value":"",
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.saisie_apa.label",
+            "expanded":true,
+            "multiple":false,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_inline child_box_border_tinyround child_box_border_slim",
+                "data-form-group-extra-attr":"{\"class\":\"form_inline_child_block\"}"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"YES_NO_DATA_SRC"
+    },{
+        "name":"echantillonDgcl",
+        "value":"",
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.echantillon_dgcl.label",
+            "expanded":true,
+            "multiple":false,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_inline child_box_border_tinyround child_box_border_slim",
+                "data-form-group-extra-attr":"{\"class\":\"form_inline_child_block\"}"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"YES_NO_DATA_SRC"
+    },{
+        "name":"cdgAccesBilan",
+        "value":"",
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.cdg_acces_bilan.label",
+            "expanded":true,
+            "multiple":false,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_inline child_box_border_tinyround child_box_border_slim",
+                "data-form-group-extra-attr":"{\"class\":\"form_inline_child_block\"}"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"YES_NO_DATA_SRC"
+    },{
+        "name":"nbIncoherenceBilanMin",
+        "value":null,
+        "data_type":"number",
+        "form_type":"number",
+        "form_options":{
+            "label":"infocentre.filter_form.nb_incoherence_bilan_range.label",
+            "attr":{
+                "class":"range_part",
+                "data-low-than":"#infocentre_filter_form_nbIncoherenceBilanMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"nbIncoherenceBilanMax",
+        "value":null,
+        "data_type":"number",
+        "form_type":"number",
+        "form_options":{
+            "label":false,
+            "attr":{
+                "class":"range_part",
+                "data-sup-than":"#infocentre_filter_form_nbIncoherenceBilanMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"nbPopulationMin",
+        "value":null,
+        "data_type":"number",
+        "form_type":"number",
+        "form_options":{
+            "label":"infocentre.filter_form.nb_population_range.label",
+            "attr":{
+                "class":"range_part",
+                "data-low-than":"#infocentre_filter_form_nbPopulationMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"nbPopulationMax",
+        "value":null,
+        "data_type":"number",
+        "form_type":"number",
+        "form_options":{
+            "label":false,
+            "attr":{
+                "class":"range_part",
+                "data-sup-than":"#infocentre_filter_form_nbPopulationMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "active":true,
+        "name":"statutBilan",
+        "value":[],
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.statut_bilan.label",
+            "expanded":true,
+            "multiple":true,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_col_4 form_choices_inline child_box_border_tinyround child_box_border_slim"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"STATUT_BILAN_DATA_SRC"
+    },{
+        "name":"typeInitBilan",
+        "value":[],
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.type_init_bilan.label",
+            "expanded":true,
+            "multiple":true,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_inline child_box_border_tinyround child_box_border_slim",
+                "data-form-group-extra-attr":"{\"class\":\"form_inline_child_block\"}"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"TYPE_INIT_BILAN_DATA_SRC"
+    },{
+        "name":"paramEnquCol",
+        "value":[],
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":"infocentre.filter_form.param_enqu_col.label",
+            "expanded":true,
+            "multiple":true,
+            "placeholder" : false,
+            "attr":{
+                "class":"form_choices_inline child_box_border_tinyround child_box_border_slim",
+                "data-form-group-extra-attr":"{\"class\":\"form_inline_child_block\"}"
+            }
+        },
+        "src_type":"BUILD_IN_DATA_SRC",
+        "src":"TYPE_ENQU_COLL_DATA_SRC"
+    },{
+        "active":true,
+        "name":"nbAgentMin",
+        "value":null,
+        "data_type":"number",
+        "form_type":"number",
+        "form_options":{
+            "label":"infocentre.filter_form.nb_agent_range.label",
+            "attr":{
+                "class":"range_part",
+                "data-low-than":"#infocentre_filter_form_nbAgentMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "active":true,
+        "name":"nbAgentMax",
+        "value":null,
+        "data_type":"number",
+        "form_type":"number",
+        "form_options":{
+            "label":false,
+            "attr":{
+                "class":"range_part",
+                "data-sup-of":"#infocentre_filter_form_nbAgentMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "active":true,
+        "name":"statutRangeNbAgent",
+        "value":{},
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":false,
+            "expanded":true,
+            "multiple":true,
+            "attr":{"class":"form_choices_inline child_box_border_tinyround child_box_border_slim"}
+        },
+        "src_type":"SQL_DATA_SRC",
+        "src":{
+            "table":"refStatut",
+            "map_by_key":"lbRefStatut",
+            "get_values":"idRefStatut"
+        }
+    },{
+        "active":true,
+        "name":"nbAgentEtprMin",
+        "value":null,
+        "form_options":{
+            "label":"infocentre.filter_form.nb_agent_etpr_range.label",
+            "attr":{
+                "class":"range_part textNumberRange positiveFloat001Rounded",
+                "data-low-than":"#infocentre_filter_form_nbAgentMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "active":true,
+        "name":"nbAgentEtprMax",
+        "value":null,
+        "form_options":{
+            "label":false,
+            "attr":{
+                "class":"range_part textNumberRange positiveFloat001Rounded",
+                "data-sup-of":"#infocentre_filter_form_nbAgentMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "active":true,
+        "name":"statutRangeNbAgentEtpr",
+        "value":{},
+        "data_type":"choices",
+        "form_type":"choices",
+        "form_options":{
+            "label":false,
+            "expanded":true,
+            "multiple":true,
+            "attr":{"class":"form_choices_inline child_box_border_tinyround child_box_border_slim"}
+        },
+        "src_type":"SQL_DATA_SRC",
+        "src":{
+            "table":"refStatut",
+            "map_by_key":"lbRefStatut",
+            "get_values":"idRefStatut"
+        }
+    },{
+        "name":"pourcentHanditorialMin",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":"infocentre.filter_form.pourcent_handi_range.label",
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "0",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-low-than":"#infocentre_filter_form_pourcentHanditorialMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentHanditorialMax",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":false,
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "100",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-sup-than":"#infocentre_filter_form_pourentHanditorialMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentRassctMin",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":"infocentre.filter_form.pourcent_rassct_range.label",
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "0",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-low-than":"#infocentre_filter_form_pourcentRassctMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentRassctMax",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":false,
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "100",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-sup-than":"#infocentre_filter_form_pourcentRassctMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentGpeecMin",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":"infocentre.filter_form.pourcent_rassct_range.label",
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "0",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-low-than":"#infocentre_filter_form_pourcentGpeecMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentGpeecMax",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":false,
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "100",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-sup-than":"#infocentre_filter_form_pourcentGpeecMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentGpeecPlusMin",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":"infocentre.filter_form.pourcent_rassct_range.label",
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "0",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-low-than":"#infocentre_filter_form_pourcentGpeecMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentGpeecPlusMax",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":false,
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "100",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-sup-than":"#infocentre_filter_form_pourcentGpeecPlusMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentBilanSocialConsoMin",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":"infocentre.filter_form.pourcent_bsc_range.label",
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "0",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-low-than":"#infocentre_filter_form_pourcentBilanSocialConsoMin",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    },{
+        "name":"pourcentBilanSocialConsoMax",
+        "value":null,
+        "data_type":"range",
+        "form_type":"range",
+        "form_options":{
+            "label":false,
+            "attr":{
+                "min" : "0",
+                "max" : "100",
+                "value" : "100",
+                "class":"range_part",
+                "disabled" : "disabled",
+                "data-sup-than":"#infocentre_filter_form_pourcentBilanSocialConsoMax",
+                "pattern":"\\d*",
+                "data-replace-pattern":"((?!\\d).)",
+                "data-replace-pattern-indicateur":"g",
+                "title":"seuls les chiffres sont autorisés"
+            }
+        }
+    }
+
+
+
+]

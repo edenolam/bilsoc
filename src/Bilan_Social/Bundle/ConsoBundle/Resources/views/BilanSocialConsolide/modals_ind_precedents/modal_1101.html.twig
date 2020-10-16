@@ -1,0 +1,109 @@
+<div class="modal fade" id="1101" tabindex="-1" role="dialog" aria-labelledby="1101" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="1101">Indicateur 110_1 de l'année {{ indicateur_precedent.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #efefef">
+                {% if indicateur_precedent.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.annee }}
+                {% else %}
+                    <table width="100%" id="ind1101Table" class="table table-striped table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="th-tableau-ind" rowspan="3">Emplois fonctionnels</th>
+                            <th colspan="10" style="text-align: center">Fonctionnaires de la fonction publique territoriale</th>
+                            <th rowspan="3" style="text-align: center">Total</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align: center">Administrateurs</th>
+                            <th colspan="2" style="text-align: center">Attachés</th>
+                            <th colspan="2" style="text-align: center">Ingénieurs en chef</th>
+                            <th colspan="2" style="text-align: center">Ingénieurs</th>
+                            <th colspan="2" style="text-align: center">Autres</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center">Hommes</th>
+                            <th style="text-align: center">Femmes</th>
+                            <th style="text-align: center">Hommes</th>
+                            <th style="text-align: center">Femmes</th>
+                            <th style="text-align: center">Hommes</th>
+                            <th style="text-align: center">Femmes</th>
+                            <th style="text-align: center">Hommes</th>
+                            <th style="text-align: center">Femmes</th>
+                            <th style="text-align: center">Hommes</th>
+                            <th style="text-align: center">Femmes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set total1 = 0%}
+                        {% set total2 = 0%}
+                        {% set total3 = 0%}
+                        {% set total4 = 0%}
+                        {% set total5 = 0%}
+                        {% set total6 = 0%}
+                        {% set total7 = 0%}
+                        {% set total8 = 0%}
+                        {% set total9 = 0%}
+                        {% set total10 = 0%}
+                        {% set total11 = 0%}
+                        {% set totalGlo = 0%}
+
+                        {% for tag in indicateur_precedent.indicateur %}
+                            {% set total1 = total1 + tag.R_1101 %}
+                            {% set total2 = total2 + tag.R_1102 %}
+                            {% set total3 = total3 + tag.R_1103 %}
+                            {% set total4 = total4 + tag.R_1104 %}
+                            {% set total5 = total5 + tag.R_1105 %}
+                            {% set total6 = total6 + tag.R_1106 %}
+                            {% set total7 = total7 + tag.R_1107 %}
+                            {% set total8 = total8 + tag.R_1108 %}
+                            {% set total9 = total9 + tag.R_1109 %}
+                            {% set total10 = total10 + tag.R_1110 %}
+                            {% set total11 =  tag.R_1101 + tag.R_1102 + tag.R_1103 + tag.R_1104 + tag.R_1105 + tag.R_1106 + tag.R_1107 + tag.R_1108 + tag.R_1109 + tag.R_1110 %}
+                            {% set totalGlo = totalGlo + total11 %}
+                            {% set ref_exclude = (tag.BL_EXCLUTOTAL == true) %}
+                            <tr {{ ref_exclude == true ? 'data-exclude-from-total="true"' : '' }}>
+                                <td style="min-width: 400px">
+                                    {{ tag.LB_EMPLFONC }}
+                                </td>
+                                <td id="r1101" style="text-align: center">{{ tag.R_1101 }}</td>
+                                <td id="r1102" style="text-align: center">{{ tag.R_1102 }}</td>
+                                <td id="r1103" style="text-align: center">{{ tag.R_1103 }}</td>
+                                <td id="r1104" style="text-align: center">{{ tag.R_1104 }}</td>
+                                <td id="r1105" style="text-align: center">{{ tag.R_1105 }}</td>
+                                <td id="r1106" style="text-align: center">{{ tag.R_1106 }}</td>
+                                <td id="r1107" style="text-align: center">{{ tag.R_1107 }}</td>
+                                <td id="r1108" style="text-align: center">{{ tag.R_1108 }}</td>
+                                <td id="r1109" style="text-align: center">{{ tag.R_1109 }}</td>
+                                <td id="r1110" style="text-align: center">{{ tag.R_1110 }}</td>
+                                <td id="lineTot1" style="text-align: center">{{ ref_exclude ? '(0)' : total11 }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        {% if indicateur_precedent.indicateur|length > 0  %}
+                            <tr id="total1101">
+                                <td style="min-width: 400px"><b>TOTAL EMPLOIS FONCTIONNELS</b></td>
+                                <td style="text-align: center">{{ total1 }}</td>
+                                <td style="text-align: center">{{ total2 }}</td>
+                                <td style="text-align: center">{{ total3 }}</td>
+                                <td style="text-align: center">{{ total4 }}</td>
+                                <td style="text-align: center">{{ total5 }}</td>
+                                <td style="text-align: center">{{ total6 }}</td>
+                                <td style="text-align: center">{{ total7 }}</td>
+                                <td style="text-align: center">{{ total8 }}</td>
+                                <td style="text-align: center">{{ total9 }}</td>
+                                <td style="text-align: center">{{ total10 }}</td>
+                                <td style="text-align: center">{{ totalGlo }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

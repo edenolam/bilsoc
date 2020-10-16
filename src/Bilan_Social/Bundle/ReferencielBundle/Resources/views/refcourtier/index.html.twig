@@ -1,0 +1,44 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+<div class="col-lg-9" >
+    <h1>Liste des courtiers</h1>
+    <div class="clearfix">
+        <a class="btn button pull-right margin10" href="{{ path('refcourtier_new') }}">Ajouter une donnée au référentiel</a>
+        <a class="btn button pull-right margin10" href="{{ path('csv_export_refcourtier') }}">export csv</a>
+        <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+    </div>
+    <table class="table table-striped" id="index">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Libellé</th>
+                <th>Archivé</th>
+                {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for refCourtier in refCourtiers %}
+            <tr>
+                <td><a href="{{ path('refcourtier_show', { 'id': refCourtier.id }) }}">{{ refCourtier.code }}</a></td>
+                <td>{{ refCourtier.libelle }}</td>
+                <td>{% if refCourtier.blVali %}Oui{% else %}Non{% endif %}</td>
+                {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refCourtier} %}
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('refcourtier_show', { 'id': refCourtier.id }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ path('refcourtier_edit', { 'id': refCourtier.id }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind321" table="ind_321">
+        <indexes>
+            <index name="FK_321_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_321_CATEGORIE" columns="ID_CATE"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_CATE,ID_FILI" name="IDXU1_IND_321"/>
+		</unique-constraints>
+        <id name="id321" type="integer" column="ID_321">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind321s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere">
+            <join-column name="ID_FILI" referenced-column-name="ID_FILI" nullable="false"/>
+        </many-to-one>
+
+        <field name="r3211" type="decimal" precision="10" scale="2" column="R_3211" nullable="true" />
+        <field name="r3212" type="decimal" precision="10" scale="2" column="R_3212" nullable="true"/>
+        <field name="r3213" type="decimal" precision="10" scale="2" column="R_3213" nullable="true"/>
+        <field name="r3214" type="decimal" precision="10" scale="2" column="R_3214" nullable="true"/>
+        <field name="r3215" type="decimal" precision="10" scale="2" column="R_3215" nullable="true"/>
+        <field name="r3216" type="decimal" precision="10" scale="2" column="R_3216" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,136 @@
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+
+    {% if formRemuneration342 is defined %}
+
+        {{ form_start(formRemuneration342) }}
+
+        Pour la gestion de l'indemnisation du chômage de vos anciens contractuels :<br/>
+
+        {{ form_row(formRemuneration342.q3421, {'attr': {'class': 'required'}}) }}
+        {{ form_row(formRemuneration342.q3422, {'attr': {'class': 'required'}}) }}
+        {{ form_row(formRemuneration342.q3423, {'attr': {'class': 'required'}}) }}
+
+        <br/>
+
+        <table width="100%" id="ind342Table" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center"></th>
+                    <th style="text-align: center">Nombre d'allocataires dans l'année {{AnneeCamp}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="min-width: 200px">Anciens contractuels</td>
+                    <td>{{ form_widget(formRemuneration342.r342) }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formRemuneration342) }}
+
+        <script type="text/javascript">
+
+                $(document).ready(function ()
+                {
+                    changeDetect = false;
+                    function initForm342() {
+                        var q3422Res = $('input[name="bscForm342[q3422]"]').filter(':checked').val();
+                        var q3421Res = $('input[name="bscForm342[q3421]"]').filter(':checked').val();
+
+                        if (q3422Res == "1" || q3421Res == "1") {
+                            $('#ind342Table').show();
+                        } else {
+                            $('#ind342Table').hide();
+                        }
+                    }
+                    initForm342();
+                    $("#bscForm342_q3422").on("click", function () {
+                        initForm342();
+                    });
+                    $("#bscForm342_q3421").on("click", function () {
+                        initForm342();
+                    });
+                    $(document).change();
+
+                });
+
+                /*
+                 * METHODE AJAX SUBMIT
+                 */
+                $(function () {
+                    // Enregistrement en ajax
+                    $('form').on('submit', function (e) {
+                        var $this = $(this).closest('div');
+                        var btn = $(this).find("input[type=submit]:focus");
+                        var value_valide = $(btn).data('valide');
+                        $('#bscForm342_valide').val(value_valide);
+                        // Submit en ajax pour le fonctionnement d'appel par onglet
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ path('bilan_conso_remuneration_ind342_edit') }}',
+                            data: $('form').serialize(),
+                            success: function (responsejson) {
+
+                                if (responsejson.data == 1) {
+                                    if (recordAuto) {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement automatique réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+                                    } else {
+                                        $('#ind342').load('{{ path('bilan_conso_remuneration_ind342_edit') }}', function () {
+                                            $('#progImg').hide();
+                                            $('#messageJS').html("Enregistrement réussi");
+                                            messageJS.dialog("open");
+                                            setIncoherenceTable(responsejson);
+
+                                            var next = $($this).next('.panel-heading');
+                                            if(next.length == 0) {
+                                                window.location.href = '{{ path('bilan_conso_conditions_edit') }}';
+                                            }
+                                        });
+
+                                    }
+                                } else if (responsejson.data == "-3") {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                    messageJS.dialog("open");
+                                } else {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                    messageJS.dialog("open");
+                                }
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(xhr);
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                                messageJS.dialog("open");
+                            }
+
+                        });
+
+                    });
+
+                });
+
+        </script>
+    {% endif %}

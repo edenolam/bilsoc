@@ -1,0 +1,33 @@
+{% extends '@Faq/layout.html.twig' %}
+
+
+{% block body %}
+    {{ parent() }}
+
+
+    <div class="col-xs-9">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}<br/>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}<br/>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h1>Poser une question</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn pull-right" type="submit" value="Envoyer" />
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}

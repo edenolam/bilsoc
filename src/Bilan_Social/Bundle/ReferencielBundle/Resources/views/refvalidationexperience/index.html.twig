@@ -1,0 +1,46 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des validations d'expérience</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refvalidationexperience_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refvalidationexperience') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refValidationExperience in refValidationExperiences %}
+                    <tr>
+                        <td><a href="{{ path('refvalidationexperience_show', { 'idEbcf': refValidationExperience.idEbcf }) }}">{{ refValidationExperience.cdEbcf }}</a></td>
+                        <td>{{ refValidationExperience.lbEbcf }}</td>
+                        <td>{% if refValidationExperience.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refValidationExperience} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refvalidationexperience_show', { 'idEbcf': refValidationExperience.idEbcf }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refvalidationexperience_edit', { 'idEbcf': refValidationExperience.idEbcf }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+

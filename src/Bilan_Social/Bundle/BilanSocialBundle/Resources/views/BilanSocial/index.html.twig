@@ -1,0 +1,1235 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/initialisationBilanSocial.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+ {#{{ dump() }}#}
+    <div id="messageJS" class="alert alert-danger fade in col-md-9" style="display:none"></div>
+    <style>
+        .cigbs-initbs-box {
+            background-color: #e7e7e7;/*lightgray;*/
+            border: 1px solid darkgray;
+            padding: 5px;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            border-radius: 20px;
+        }
+        /*.last:hover{
+            background-color: #0f74a8;
+            color:red;
+        }*/
+
+        .cigbs-initbs-box.cigbs-active {
+            background-color: white;
+            border: 1px solid #8cc63f;
+        }
+
+        .btn.cigbs-active {
+            background-color: #8cc63f;
+            border: 1px solid #8cc63f;
+            color: white;
+        }
+
+        i.cigbs-active {
+            color: #8cc63f;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+        {% if data.blLock is defined and data.blLock == 1 %}
+        .cigbs-custom-file-upload {
+            /*border: 1px solid #ccc;*/
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: not-allowed;
+        }
+        {% else %}
+        .cigbs-custom-file-upload {
+            /*border: 1px solid #ccc;*/
+            display: inline-block;
+           /* padding: 6px 12px;*/
+            cursor: pointer;
+            height: 100%;
+            width: 100%;
+        }
+        {% endif %}
+        .modal-footer {
+            background-color: whitesmoke;
+        }
+
+        .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+            outline: none;
+        }
+
+        .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+            opacity: 0.25;
+        }
+        .filename{
+            word-wrap: break-word;
+        }
+
+    </style>
+
+<div class="col-xs-9" style="height: 674px">
+    <div class='row'>
+        {% include '@BilanSocial/btn_retour_cdg_suivi_enq.html.twig'  %}
+    {% if(data.idInitBs is not null)  %}
+        {% if bilanConso is defined and bilanConso is not null%}
+            {% if bilanConso.fgStat != 1 and bilanConso.fgStat != 2   %}
+                {% include '@BilanSocial/btn_reinit_bs.html.twig'  %}
+            {%  endif %}
+        {% else  %}
+            {% include '@BilanSocial/btn_reinit_bs.html.twig'  %}
+        {%  endif %}
+    {%  endif %}
+    </div>
+    <div id="etape_container" class="col-xs-1" style="height: inherit">
+
+        {# etape_active #}
+        {# etape_valide #}
+        {# etape_hide #}
+        {# etape_waiting #}
+        {% if params.blapa == true or params.bln4ds == true  or params.blbasecarr == true or params.blcons == true or params.bldgcl == true or params.blbilasocivide == true%}
+        <div id="etape1" class="etape etape_active">
+            1
+        </div>
+        {% endif %}
+        {% if params.blapa == true or params.bln4ds == true  or params.blbasecarr == true or params.blcons == true or params.bldgcl == true%}
+        <div id="etape2" class="etape etape_waiting" >
+            2
+        </div>
+        {% endif %}
+        {% if params.blapa == true or params.bln4ds == true  or params.blbasecarr == true or params.blcons == true %}
+        <div id="etape3" class="etape etape_waiting">
+            3
+        </div>
+        {% endif %}
+        {% if params.blapa == true or params.bln4ds == true  or params.blbasecarr == true %}
+        <div id="etape4" class="etape etape_waiting" >
+            4
+        </div>
+        {% endif %}
+    </div>
+
+    <div style="height: inherit" class='col-xs-11 container_init'
+         data-idinitbs="{{ data.idInitBs }}"
+        {% if data is defined and data.idInitBs is not null %}
+
+
+            data-initsource="{% if  data.initSource is null or  data.initSource == false %}0{% else %}{{ data.initSource }}{% endif %}"
+            data-blapa="{% if  data.blApa is null or  data.blApa == false %}0{% else %}{{ data.blApa }}{% endif %}"
+            data-blbsexis="{% if  data.blBsExis is null or  data.blBsExis == false %}0{% else %}{{ data.blBsExis }}{% endif %}"
+            data-bldeclagen="{% if  data.blDeclAgen is null or  data.blDeclAgen == false %}0{% else %}{{ data.blDeclAgen }}{% endif %}"
+        {% endif %} >
+
+        {% include '@BilanSocial/block_init.html.twig' with {"config_init": config_init } %}
+
+    </div>
+
+
+
+
+
+        <input type="hidden" name="decla-agent" id="decla-agent" value="" />
+        <input type="hidden" name="decla-bs" id="decla-bs" value="" />
+        <input type="hidden" name="isBsTypeAPA" id="isBsTypeAPA" value="" />
+        <input type="hidden" name="bs-init-source" id="bs-init-source" value="" />
+
+</div>
+               {#<div class='row'>
+            <div class="col-lg-12">
+                <div id="id-blDeclAgen" class="cigbs-initbs-box cigbs-active">
+                    <p>En {{ currentCampagne.nmAnne }}, votre collectivité a rémunéré...</p>
+                </div>
+            </div>
+        </div>
+        {% if params.blBilasocivide %}
+
+        <div class='row'>
+            <div id="id-blBsExis-to" class='col-xs-6' style="height: 100px">
+
+                <div class="col-xs-12">
+                    <div class="top left">
+                        <span> Au moins un agent ?  </span>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="col-xs-6" ></div>
+                    <div class="col-xs-6 bottom left" >
+                        <div class="triangle_left"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="id-bsVide-to" class='col-xs-6' style="height: 100px">
+                <div class="col-xs-12">
+                    <div class="top right">
+                        <span> Aucun agent ?  </span>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="col-xs-6 bottom right" >
+                        <div class="triangle_right"></div>
+                    </div>
+                    <div class="col-xs-6" ></div>
+                </div>
+            </div>
+        </div>
+            <div class="clearfix"></div>
+      {% endif %}#}
+
+      {#  <div class="row">
+            <div class='{% if params.blBilasocivide %}col-xs-8{% else %}col-xs-12{% endif %}'>
+                <div id="id-blBsExis-to" class='col-xs-6' style="height: 100px">
+
+                    <div class="col-xs-12">
+                        <div class="top left">
+                            <span> Au moins un agent ?  </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-xs-6" ></div>
+                        <div class="col-xs-6 bottom left" >
+                            <div class="triangle_left"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="id-bsVide-to" class='col-xs-6' style="height: 100px">
+                    <div class="col-xs-12">
+                        <div class="top right">
+                            <span> Aucun agent ?  </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-xs-6 bottom right" >
+                            <div class="triangle_right"></div>
+                        </div>
+                        <div class="col-xs-6" ></div>
+                    </div>
+                </div>
+            </div>
+            {% if params.blBilasocivide %}
+            <div id="id-bsVide-to" class='col-xs-4' style="height: 100px">
+                <div >
+                    <span> FORM BS VIDE </span>
+                </div>
+            </div>
+            {% endif %}
+
+            </div>
+        </div>#}
+
+    {#<div id="container" class="noPadding">
+            <fieldset id="id-fieldset-beforeonready" disabled="true" class='text-center'>
+                <!--
+                    Question rénunération si possibilité de partir d'un Bilan Social vide
+                -->
+                {% if params.blBilasocivide %}
+                    <div class='row'>
+                        <div class="col-lg-12">
+                            <div id="id-blDeclAgen" class="cigbs-initbs-box cigbs-active">
+                                <p>Avez-vous rémunéré au moins un agent au moins une heure dans
+                                    l'année {{ currentCampagne.nmAnne }} quel que soit son statut ?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-xs-8 btn-group' data-toggle="buttons">
+                            <button type="button" class="btn btn-oui btn-100" id="btn-blDeclAgen-oui"
+                                    disabled
+                                    onclick="doOnDeclareAgentChanged(1)">
+                                Oui
+                            </button>
+                        </div>
+                        <div class='col-xs-4 btn-group' data-toggle="buttons">
+                            <button type="button" class="btn btn-non btn-100" id="btn-blDeclAgen-non"
+                                    disabled
+                                    onclick="doOnDeclareAgentChanged(0)">
+                                Non
+                            </button>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-xs-8'>
+                            <i id="id-blBsExis-to" class="glyphicon glyphicon-arrow-down"></i>
+                        </div>
+                        <div class='col-xs-4'>
+                            <i id="id-bsVide-to" class="glyphicon glyphicon-arrow-down"></i>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class='{% if params.blBilasocivide %}col-xs-8{% else %}col-xs-12{% endif %}'>
+                        <div class='row'>
+                            <div class="col-xs-12">
+                                <div id='id-blBsExis' class="cigbs-initbs-box">
+                                    <p>Avez-vous déjà réalisé votre bilan social {{ currentCampagne.nmAnne }} ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-xs-4' data-toggle="buttons"
+                                 {% if not params.blBilasocivide %}style="width: 22.22%"{% endif %}>
+                                <button type="button" class="btn btn-oui btn-100" id="btn-blBsExis-oui"
+                                        disabled
+                                        onclick="doOnBsExistChanged(1)">
+                                    Oui
+                                </button>
+                            </div>
+                            <div class='col-xs-8' data-toggle="buttons"
+                                 {% if not params.blBilasocivide %}style="width: 77.78%"{% endif %}>
+                                <button type="button" class="btn btn-non btn-100" id="btn-blBsExis-non"
+                                        disabled
+                                        onclick="doOnBsExistChanged(0)">
+                                    Non
+                                </button>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-xs-4' {% if not params.blBilasocivide %}style="width: 22.22%"{% endif %}>
+                                <i id="id-import-DGCL-to" class="glyphicon glyphicon-arrow-down"></i>
+                            </div>
+                            <div class='col-xs-8' {% if not params.blBilasocivide %}style="width: 77.78%"{% endif %}>
+                                <i id="id-bsInitType-to" class="glyphicon glyphicon-arrow-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    {% if params.blBilasocivide %}
+                        <div class='col-xs-4'>
+                            <div id='id-bsVide' class='cigbs-initbs-box'>
+                                <p>Générer un bilan social vide.</p>
+                                <button class='btn btn-classic' id='btn-gene-bsVide'  onclick="doOnGenerateEmptyBSClick()" >Générer</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <!--
+                    Bilan Social pour au moins un agent rémunéré
+                -->
+                <div class="row">
+                    <div class='col-xs-3' style="width: 22.22%">
+                        <div id='id-import-DGCL' class="cigbs-initbs-box">
+                            <p>Import du fichier DGCL</p>
+                            <label for="file-dgcl" class="cigbs-custom-file-upload" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}>
+                                <i class="fa fa-cloud-upload"></i> Sélectionner un fichier...
+                            </label>
+                            <input type="file" id="file-dgcl" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}/>
+                            <p class="file-dgcl"></p>
+                            <button class='btn btn-classic' id='btn-import-DGCL'
+                                    onclick="doOnDGCLActionClick(event)">Importer
+                            </button>
+                        </div>
+                    </div>
+                    <div class='col-xs-9' style="width: 77.78%">
+                        <div class='row'>
+                            <div class="col-xs-12">
+                                <div id="id-bsInitType" class="cigbs-initbs-box">
+                                    <p>Quel est le niveau de précision souhaité ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <!--
+                                Agent par agent
+                            -->
+                            {% if params.blApa %}
+                                <div class='{% if params.blCons %}col-xs-6{% else %}col-xs-12{% endif %}'>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <button type="button" class="btn btn-oui btn-100"
+                                                    disabled
+                                                    id="btn-bsInitType-apa" onclick="doOnBsInitTypeIsAPAChanged(1)">
+                                                Agent par agent
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <i id="id-bsInitType-apa-to" class="glyphicon glyphicon-arrow-down"></i>
+                                        </div>
+                                    </div>
+                                    <!--
+                                        Choix possible de la source
+                                    -->
+                                    <div class='row'>
+                                        <div class="col-xs-12">
+                                            <div id="id-bsApaSource" class="cigbs-initbs-box"
+                                                 style="min-height: 85px;">
+                                                <p>Quel est la source de données ?</p>
+                                                {% if params.blN4ds %}
+                                                    <p class="small"><i class="fa fa-warning text-danger"
+                                                                        aria-hidden="true"></i> Tout fichier <b>N4DS</b> sera
+                                                        purgé de toutes ses <b>données sensibles</b> sur <b>ce poste de
+                                                            travail</b> avant d'être envoyés au serveur pour intégration.</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='row'>
+                                        {% if params.blN4ds and params.blBasecarr %}
+                                            <div class='col-xs-4'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-apa-manu"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('apa', 'manu')">
+                                                    Manuelle
+                                                </button>
+                                            </div>
+                                            <div class='col-xs-4'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-apa-n4ds"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('apa', 'n4ds')">
+                                                    N4DS
+                                                </button>
+                                            </div>
+                                            <div class='col-xs-4'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-apa-basecarr"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('apa', 'basecarr')">
+                                                    Base Carrière
+                                                </button>
+                                            </div>
+                                        {% elseif params.blN4ds %}
+                                            <div class='col-xs-6'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-apa-manu"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('apa', 'manu')">
+                                                    Manuelle
+                                                </button>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-apa-n4ds"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('apa', 'n4ds')">
+                                                    N4DS
+                                                </button>
+                                            </div>
+                                        {% elseif params.blBasecarr %}
+                                            <div class='col-xs-6'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-apa-manu"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('apa', 'manu')">
+                                                    Manuelle
+                                                </button>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-apa-basecarr"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('apa', 'basecarr')">
+                                                    Base Carrière
+                                                </button>
+                                            </div>
+                                        {% else %}
+                                            <div class='col-xs-12'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-apa-manu"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('apa', 'manu')">
+                                                    Manuelle
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        {% if params.blN4ds and params.blBasecarr %}
+                                            <div class="col-xs-4">
+                                                <i id="id-bsInitSource-apa-manu-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <i id="id-bsInitSource-apa-n4ds-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <i id="id-bsInitSource-apa-basecarr-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                        {% elseif params.blN4ds %}
+                                            <div class="col-xs-6">
+                                                <i id="id-bsInitSource-apa-manu-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <i id="id-bsInitSource-apa-n4ds-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                        {% elseif params.blBasecarr %}
+                                            <div class="col-xs-6">
+                                                <i id="id-bsInitSource-apa-manu-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <i id="id-bsInitSource-apa-basecarr-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                        {% else %}
+                                            <div class="col-xs-12">
+                                                <i id="id-bsInitSource-apa-manu-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        {% if params.blN4ds and params.blBasecarr %}
+                                            <div class="col-xs-4">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-apa-manu" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-apa-manu-action'
+                                                                disabled
+                                                                onclick="doOnManuActionClick('apa')"
+                                                                >Saisir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-apa-n4ds" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <label for="file-n4ds-apa" class="cigbs-custom-file-upload" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}>
+                                                            <i class="fa fa-cloud-upload"></i> Sélectionner un fichier...
+                                                        </label>
+                                                        <input type="file" id="file-n4ds-apa" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}/>
+                                                        <p class="file-n4ds-apa"></p>
+                                                        <button class='btn btn-classic' id='btn-bsInitSource-apa-n4ds-action'
+                                                                onclick="doOnN4DSActionClick('apa')"
+                                                                >Importer
+                                                        </button>
+                                                        <img id="progImg" src="{{ asset('img/progress.gif') }}"
+                                                             style="display:none"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-apa-basecarr" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-apa-basecarr-action'
+                                                                disabled
+                                                                onclick="doOnBaseCarrActionClick('apa')"
+                                                                >Charger
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% elseif params.blN4ds %}
+                                            <div class="col-xs-6">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-apa-manu" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-apa-manu-action'
+                                                                disabled
+                                                                onclick="doOnManuActionClick('apa')"
+                                                                >Saisir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-apa-n4ds" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <label for="file-n4ds-apa" class="cigbs-custom-file-upload" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}>
+                                                            <i class="fa fa-cloud-upload"></i> Sélectionner un fichier...
+                                                        </label>
+                                                        <input type="file" id="file-n4ds-apa" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}/>
+                                                        <p class="file-n4ds-apa"></p>
+                                                        <button class='btn btn-classic' id='btn-bsInitSource-apa-n4ds-action'
+                                                                onclick="doOnN4DSActionClick('apa')"
+                                                                >Importer
+                                                        </button>
+                                                        <img id="progImg" src="{{ asset('img/progress.gif') }}"
+                                                             style="display:none"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% elseif params.blBasecarr %}
+                                            <div class="col-xs-6">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-apa-manu" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-apa-manu-action'
+                                                                disabled
+                                                                onclick="doOnManuActionClick('apa')"
+                                                                >Saisir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-apa-basecarr" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-apa-basecarr-action'
+                                                                disabled
+                                                                onclick="doOnBaseCarrActionClick('apa')"
+                                                                >Charger
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="col-xs-12">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-apa-manu" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-apa-manu-action'
+                                                                disabled
+                                                                onclick="doOnManuActionClick('apa')"
+                                                                >Saisir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <!--
+                                Consolidé
+                            -->
+                            {% if params.blCons %}
+                                <div class='{% if params.blApa %}col-xs-6{% else %}col-xs-12{% endif %}'>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <button type="button" class="btn btn-non btn-100"
+                                                    id="btn-bsInitType-cons"
+                                                    disabled
+                                                    onclick="doOnBsInitTypeIsAPAChanged(0)">
+                                                Consolidé
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <i id="id-bsInitType-cons-to" class="glyphicon glyphicon-arrow-down"></i>
+                                        </div>
+                                    </div>
+                                    <!--
+                                        Choix possible de la source
+                                    -->
+                                    <div class='row'>
+                                        <div class="col-xs-12">
+                                            <div id="id-bsConsSource" class="cigbs-initbs-box"
+                                                 style="min-height: 85px;">
+                                                <p>Quel est la source de données ?</p>
+                                                {% if params.blN4ds %}
+                                                    <p class="small"><i class="fa fa-warning text-danger"
+                                                                        aria-hidden="true"></i> Tout fichier <b>N4DS</b> sera
+                                                        purgé de toutes ses <b>données sensibles</b> sur <b>ce poste de
+                                                            travail</b> avant d'être envoyés au serveur pour intégration.</p>
+                                                {% endif %}
+                                                <p class="small"><i class="fa fa-warning text-danger"
+                                                                    aria-hidden="true"></i> A l’issue de
+                                                    l’importation du fichier, les données seront consolidées.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='row'>
+                                        {% if params.blN4ds and params.blBasecarr %}
+                                            <div class='col-xs-4'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-cons-manu"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('cons', 'manu')">
+                                                    Manuelle
+                                                </button>
+                                            </div>
+                                            <div class='col-xs-4'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-cons-n4ds"
+
+                                                        onclick="doOnBsInitSourceChanged('cons', 'n4ds')">
+                                                    N4DS
+                                                </button>
+                                            </div>
+                                            <div class='col-xs-4'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-cons-basecarr"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('cons', 'basecarr')">
+                                                    Base Carrière
+                                                </button>
+                                            </div>
+                                        {% elseif params.blN4ds %}
+                                            <div class='col-xs-6'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-cons-manu"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('cons', 'manu')">
+                                                    Manuelle
+                                                </button>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-cons-n4ds"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('cons', 'n4ds')">
+                                                    N4DS
+                                                </button>
+                                            </div>
+                                        {% elseif params.blBasecarr %}
+                                            <div class='col-xs-6'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-cons-manu"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('cons', 'manu')">
+                                                    Manuelle
+                                                </button>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-cons-basecarr"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('cons', 'basecarr')">
+                                                    Base Carrière
+                                                </button>
+                                            </div>
+                                        {% else %}
+                                            <div class='col-xs-12'>
+                                                <button type="button" class="btn btn-oui btn-100"
+                                                        id="btn-bsInitSource-cons-manu"
+                                                        disabled
+                                                        onclick="doOnBsInitSourceChanged('cons', 'manu')">
+                                                    Manuelle
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        {% if params.blN4ds and params.blBasecarr %}
+                                            <div class="col-xs-4">
+                                                <i id="id-bsInitSource-cons-manu-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <i id="id-bsInitSource-cons-n4ds-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <i id="id-bsInitSource-cons-basecarr-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                        {% elseif params.blN4ds %}
+                                            <div class="col-xs-6">
+                                                <i id="id-bsInitSource-cons-manu-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <i id="id-bsInitSource-cons-n4ds-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                        {% elseif params.blBasecarr %}
+                                            <div class="col-xs-6">
+                                                <i id="id-bsInitSource-cons-manu-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <i id="id-bsInitSource-cons-basecarr-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                        {% else %}
+                                            <div class="col-xs-12">
+                                                <i id="id-bsInitSource-cons-manu-to" class="glyphicon glyphicon-arrow-down"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        {% if params.blN4ds and params.blBasecarr %}
+                                            <div class="col-xs-4">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-cons-manu" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-cons-manu-action'
+                                                                disabled
+                                                                onclick="doOnManuActionClick('cons')"
+                                                                >Saisir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-cons-n4ds" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <label for="file-n4ds-cons" class="cigbs-custom-file-upload" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}>
+                                                            <i class="fa fa-cloud-upload"></i> Sélectionner un fichier...
+                                                        </label>
+                                                        <input type="file" id="file-n4ds-cons" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}/>
+                                                        <p class="file-n4ds-cons"></p>
+                                                        <button class='btn btn-classic' id='btn-bsInitSource-cons-n4ds-action'
+                                                                onclick="doOnN4DSActionClick('cons')"
+                                                                >Importer
+                                                        </button>
+                                                        <img id="progImg" src="{{ asset('img/progress.gif') }}"
+                                                             style="display:none"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-cons-basecarr" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-cons-basecarr-action'
+                                                                disabled
+                                                                onclick="doOnBaseCarrActionClick('cons')"
+                                                                >Charger
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% elseif params.blN4ds %}
+                                            <div class="col-xs-6">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-cons-manu" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-cons-manu-action'
+                                                                disabled
+                                                                onclick="doOnManuActionClick('cons')"
+                                                                >Saisir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-cons-n4ds" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <label for="file-n4ds-cons" class="cigbs-custom-file-upload" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}>
+                                                            <i class="fa fa-cloud-upload"></i> Sélectionner un fichier...
+                                                        </label>
+                                                        <input type="file" id="file-n4ds-cons" {% if data.blLock is defined and data.blLock == 1 %}disabled{% endif %}/>
+                                                        <p class="file-n4ds-cons"></p>
+                                                        <button class='btn btn-classic' id='btn-bsInitSource-cons-n4ds-action'
+                                                                onclick="doOnN4DSActionClick('cons')"
+                                                                >Importer
+                                                        </button>
+                                                        <img id="progImg" src="{{ asset('img/progress.gif') }}"
+                                                             style="display:none"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% elseif params.blBasecarr %}
+                                            <div class="col-xs-6">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-cons-manu" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-cons-manu-action'
+                                                                disabled
+                                                                onclick="doOnManuActionClick('cons')"
+                                                                >Saisir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-cons-basecarr" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-cons-basecarr-action'
+                                                                disabled
+                                                                onclick="doOnBaseCarrActionClick('cons')"
+                                                                >Charger
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="col-xs-12">
+                                                <div class='row white-wrapper'>
+                                                    <div id="id-bsInitSource-cons-manu" class='cigbs-initbs-box' style="min-height: 65px;">
+                                                        <button class='btn btn-classic'
+                                                                id='btn-bsInitSource-cons-manu-action'
+                                                                disabled
+                                                                onclick="doOnManuActionClick('cons')"
+                                                                >Saisir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+                       
+            {% if (existingBSAccessUrl != null) %}
+                <!--
+                    Boutons actions
+                -->
+                <div class='row'>
+                    <div class='col-lg-12'>
+                        <a type='button' class='btn btn-oui btn-100 btn-submit' id="charge-bs"
+                               href="{{ existingBSAccessUrl }}" disabled>Charger le bilan social</a>
+                    </div>
+                </div>
+                <div class='row {% if bilanConso is not null %}{% if bilanConso.fgstat == 2 or bilanConso.fgstat == 1%}hidden {% endif %}{% endif %}'>
+                    <div class='col-lg-12'>
+                        <input type='button' class='btn btn-classic btn-100 btn-submit' data-toggle="modal"
+                               data-target="#confirm-submit-reinit" value='Réinitialiser le mode de saisie'>
+                    </div>
+                </div>
+            {% endif %}#}
+{#
+            <input type="hidden" name="decla-agent" id="decla-agent" value="" />
+            <input type="hidden" name="decla-bs" id="decla-bs" value="" />
+            <input type="hidden" name="isBsTypeAPA" id="isBsTypeAPA" value="" />
+            <input type="hidden" name="bs-init-source" id="bs-init-source" value="" />
+
+            <div class="modal fade" id='modal-n4ds-action' tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h3>Nettoyage et envoi du fichier N4DS</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-4">Fichier</div>
+                                <div class="col-xs-8" id="modal-n4ds-action-filename"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">Taille</div>
+                                <div class="col-xs-8" id="modal-n4ds-action-size"></div>
+                            </div>
+                            <div class="row">
+                                <h4 class="col-xs-12">Informations du fichier</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">Siret</div>
+                                <div class="col-xs-8" id="modal-n4ds-action-siret">...</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">Date de début</div>
+                                <div class="col-xs-8" id="modal-n4ds-action-dtdebut">...</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">Date de fin</div>
+                                <div class="col-xs-8" id="modal-n4ds-action-dtfin">...</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">Nombre d'agent</div>
+                                <div class="col-xs-8" id="modal-n4ds-action-nbagent">...</div>
+                            </div>
+                            <div class="row">
+                                &nbsp;
+                            </div>
+                            <div class="row">
+                                <h5 class="col-xs-12" id="modal-n4ds-action-label"></h5>
+                                <div class="col-xs-12">
+                                    <div class="progress" style="height:20px;width:100%">
+                                        <div id="modal-n4ds-action-slider" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                            60%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-xs-10" >
+                                    <div id="importMsg" class="alert fade in" style="display:none;margin-bottom: 0;padding: 5px"></div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <button id="modal-n4ds-action-btn-close" type="button" class="btn btn-primary pull-right" data-dismiss="modal" disabled>Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id='modal-base-carriere-action' tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h3>Chargement de la base carrière</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                &nbsp;
+                            </div>
+                            <div class="row">
+                                <h5 class="col-xs-12" id="modal-base-carriere-action-label"></h5>
+                                <div class="col-xs-12">
+                                    <div class="progress" style="height:20px;width:100%">
+                                        <div id="modal-base-carriere-action-slider" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                            60%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-xs-10" >
+                                    <div id="importBaseCarriereMsg" class="alert fade in" style="display:none;margin-bottom: 0;padding: 5px"></div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <button id="modal-base-carriere-btn-close" type="button" class="btn btn-primary pull-right" data-dismiss="modal" disabled>Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>#}
+    <div class="modal fade" id='modal-base-carriere-action' tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h3>Chargement de la base carrière</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                    <div class="row">
+                        <h5 class="col-xs-12" id="modal-base-carriere-action-label"></h5>
+                        <div class="col-xs-12">
+                            <div class="progress" style="height:20px;width:100%">
+                                <div id="modal-base-carriere-action-slider" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                    60%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-xs-10" >
+                            <div id="importBaseCarriereMsg" class="alert fade in" style="display:none;margin-bottom: 0;padding: 5px"></div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button id="modal-base-carriere-btn-close" type="button" class="btn btn-primary pull-right" data-dismiss="modal" disabled>Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="modal fade" id='confirm-submit-reinit'>
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4><i class="fa fa-warning text-danger" aria-hidden="true"></i> Réinitialisation du mode de saisie</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Attention, vous allez réinitialiser votre enquête et toutes vos données seront perdues.<br><br>
+                                Souhaitez-vous continuer ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id='submit-reinit' class="btn btn-primary pull-right"
+                                onclick="doOnReinitBSClick()">Oui, j'ai compris</button>
+                            <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Non</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id='modal-n4ds-annee-n' tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h3>Import du fichier N4ds de l'année {{currentCampagne.nmAnne}} </h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="padding: 10px;">
+                                <p> Vous avez importé le fichier N4DS de l'année {{currentCampagne.nmAnne}} avec succès. </p>
+                            </div>
+                            <div class="row" style="padding: 10px;">
+                                <p>Souhaitez vous importer le fichier N4DS de l'année {{currentCampagne.nmAnne - 1 }} ? </p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row" style="padding: 10px;">
+
+                                    <button id="modal-n4ds-annee-n-btn-close" type="button" class="btn btn-primary pull-left" data-dismiss="modal">Non</button>
+                                    <button id="modal-n4ds-annee-n-btn-confirm" type="button" class="btn btn-primary pull-right" data-dismiss="modal">Oui</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id='modal-apa-get-old-saved-data' tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h3>Récupération de données GPEEC (métiers, diplômes) et BOETH de l'année {{currentCampagne.nmAnne - 1}} </h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="padding: 10px;">
+                                <p> Vous avez importé le fichier N4DS de l'année {{currentCampagne.nmAnne}} avec succès. </p>
+                            </div>
+                            <div class="row" style="padding: 10px;">
+                                <p>Souhaitez vous récupérer les données GPEEC (métiers, diplômes) et BOETH de l'année {{currentCampagne.nmAnne - 1}} ? </p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row" style="padding: 10px;">
+
+                                    <button id="modal-apa-get-old-saved-data-btn-close" type="button" class="btn btn-primary pull-left" data-dismiss="modal">Non</button>
+                                    <button id="modal-apa-get-old-saved-data-btn-confirm" type="button" class="btn btn-primary pull-right">Oui</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id='modal-apa-redirect-info' tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h3>Import d'un fichier en consolidé </h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="padding: 10px;">
+                                <p>Suite à l'import d'un fichier en consolidé vous allez être redirigé vers l'agent par agent afin de contrôler les données importées.</p>
+
+                                <p>Vous pourrez générer un consolidé une fois tous les agents validés.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-xs-10" >
+                                    <div id="" class="alert fade in" style="display:none;margin-bottom: 0;padding: 5px"></div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <button id="modal-confirm-redirect-apa-btn-close" type="button" class="btn btn-primary pull-right" data-dismiss="modal" >Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id='modal-bilan-social-vide-action' tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h3>Génération d'un bilan social à vide</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                &nbsp;
+                            </div>
+                            <div class="row">
+                                <h5 class="col-xs-12" id="modal-bilan-social-vide-action-label"></h5>
+                                <div class="col-xs-12">
+                                    <div class="progress" style="height:20px;width:100%">
+                                        <div id="modal-bilan-social-vide-action-slider" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                            60%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-xs-10" >
+                                    <div id="BilanSocialVideMsg" class="alert fade in" style="display:none;margin-bottom: 0;padding: 5px"></div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <button id="modal-bilan-social-vide-btn-close" type="button" class="btn btn-primary pull-right" data-dismiss="modal" disabled>Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id='modal-bilan-social-n4ds-guide' tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h3>Importation des fichiers n4ds</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <p class="margin10">Pour pré-compléter votre enquête, sélectionner votre fichier N4DS {{ currentCampagne.nmAnne }}.</p>
+                            </div>
+                            <div class="row">
+                                <h5 class="col-xs-12" id="modal-bilan-social-n4ds-guide-label"></h5>
+
+                                <div class="col-xs-12">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-xs-10" >
+                                    <div id="BilanSocialVideMsg" class="alert fade in" style="display:none;margin-bottom: 0;padding: 5px"></div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <button id="modal-bilan-social-vide-btn-close" type="button" class="btn btn-primary pull-right" data-dismiss="modal" >Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <div class="modal fade" id='modal-n4ds-action' tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h3>Nettoyage et envoi du fichier N4DS</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-4">Fichier</div>
+                        <div class="col-xs-8" id="modal-n4ds-action-filename"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">Taille</div>
+                        <div class="col-xs-8" id="modal-n4ds-action-size"></div>
+                    </div>
+                    <div class="row">
+                        <h4 class="col-xs-12">Informations du fichier</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">Siret</div>
+                        <div class="col-xs-8" id="modal-n4ds-action-siret">...</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">Date de début</div>
+                        <div class="col-xs-8" id="modal-n4ds-action-dtdebut">...</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">Date de fin</div>
+                        <div class="col-xs-8" id="modal-n4ds-action-dtfin">...</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">Nombre d'agent</div>
+                        <div class="col-xs-8" id="modal-n4ds-action-nbagent">...</div>
+                    </div>
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                    <div class="row">
+                        <h5 class="col-xs-12" id="modal-n4ds-action-label"></h5>
+                        <div class="col-xs-12">
+                            <div class="progress" style="height:20px;width:100%">
+                                <div id="modal-n4ds-action-slider" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                    60%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-xs-10" >
+                            <div id="importMsg" class="alert fade in" style="display:none;margin-bottom: 0;padding: 5px"></div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button id="modal-n4ds-action-btn-close" type="button" class="btn btn-primary pull-right" data-dismiss="modal" disabled>Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('node_modules/async/dist/async.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/BilanSocialBundle/bilansocial.js') }}"></script>
+
+
+
+{% endblock %}

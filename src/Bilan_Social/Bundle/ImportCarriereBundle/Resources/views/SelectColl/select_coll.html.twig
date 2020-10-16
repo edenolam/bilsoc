@@ -1,0 +1,72 @@
+{# src/BilanSocial/Bundle/ImportCarriereBundle/Ressources/views/selectColl/select_coll.html.twig #}
+<div id='meta_data_coll_import_carriere'>
+	<input id="hidden_algo_import_carriere_type" type="hidden" name="algo_import_carriere_type" value="{{ algo_import_type }}" />
+</div>
+<div>
+	<p class='bold'>Collectivitées sélectionnable</p>
+
+	<table class='table table-hover dataTable align-center no-footer'>
+		<thead>
+			<tr>
+				<th>Siret</th>
+				<th>Libellé</th>
+				<th>Département</th>
+				<th><input type='checkbox' class='select_all_coll'/></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for coll in tab_coll_ok %}
+
+				<tr>
+					<td>{{coll['NM_SIRE'] }}</td>
+					<td>{{coll['LB_COLL'] }}</td>
+					<td>{{coll['CD_DEPA'] }}</td>
+					<td><input type='checkbox' name='coll_selected[]' value="{{coll['NM_SIRE'] }}" checked="{{ coll['can_import']==1 }}"></td>
+				</tr>	
+			{% endfor %}
+		</tbody>
+	</table>
+	<button id='select_coll_btn' class='btn button-tableau'>Valider</button>
+</div>
+<div>
+	<p class='bold'>Collectivitées présentent uniquement dans le fichier xml d'import</p>
+	<table class='table table-hover dataTable align-center no-footer '>
+		<thead>
+			<tr>
+				<th>Siret</th>
+				<th>Libellé</th>
+				<th>Département</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for coll in tab_coll_left %}
+				<tr>
+					<td>{{coll['siret'] }}</td>
+					<td>{{coll['libelle_collectivite'] }}</td>
+					<td>{{ coll['departement'] is defined ? coll['departement'] : "" }}</td>
+				</tr>	
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<div>
+	<p class='bold'>Collectivitées présentent uniquement dans la base bilan social</p>
+	<table class='table table-hover dataTable align-center no-footer'>
+		<thead>
+			<tr>
+				<th>Siret</th>
+				<th>Libellé</th>
+				<th>Département</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for coll in tab_coll_right %}
+				<tr>
+					<td>{{coll['NM_SIRE'] }}</td>
+					<td>{{coll['LB_COLL'] }}</td>
+					<td>{{coll['CD_DEPA'] }}</td>
+				</tr>	
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

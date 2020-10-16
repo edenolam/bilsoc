@@ -1,0 +1,162 @@
+{% extends '@Actualite/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+<div class="col-lg-9">
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        <div class="alert alert-success">
+            <strong>{{ flash_message }}</strong>
+        </div>
+    {% endfor %}
+    <h1>Listes des actualités</h1>
+    <a href="{{ path('actualite_new') }}" class="btn button-tableau pull-right margin10" role="button">Ajouter une actualité</a>
+    <div class="clearfix"></div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Actualités en cours</div>
+        <div class="panel-body">
+            <table class="table table-striped" id="table-actualite-en-cours">
+                <thead>
+                <tr>
+                    <th style="width: 280px">Titre</th>
+{#                    <th>Texte</th>#}
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Document téléchargeable</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for actualite in actualites %}
+                    {% if actualite.blPublish %}
+                        {% if ( actualite.DtDebut|date('Ymd') <= "now"|date('Ymd') and ( actualite.DtFin == null or actualite.DtFin|date('Ymd') >= "now"|date('Ymd')  )   ) %}
+
+                            <tr>
+                                <td>{{ actualite.titreActu|truncate(20, true, '...') }}</td>
+{#                                <td>{{ actualite.texteActu|truncate(20, true, '...') }}</td>#}
+                                <td>{{ date(actualite.DtDebut)|date('d/m/Y') }}</td>
+                                <td>{% if (actualite.DtFin is not null and date(actualite.DtFin) != date('00-00-0000') ) %} {{ date(actualite.DtFin)|date('d/m/Y') }} {% else %} Pas de date de fin{% endif %}</td>
+                                <td>{% if actualite.document is not null %}Oui{% else %}Non{% endif %}</td>
+                                <td>
+                                    <a href="{{ path('actualite_show_admin_cdg', { 'id': actualite.id }) }}" class="btn button-tableau" role="button">Aperçu</a>
+                                    <a href="{{ path('actualite_edit', { 'id': actualite.id }) }}" class="btn button-tableau" role="button">Editer</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Actualités à venir</div>
+        <div class="panel-body">
+            <table class="table table-striped" id="table-actualite-futur">
+                <thead>
+                <tr>
+                    <th style="width: 280px">Titre</th>
+{#                    <th>Texte</th>#}
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Document téléchargeable</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for actualite in actualites %}
+                    {% if actualite.blPublish %}
+                        {% if(actualite.DtDebut|date('Ymd') > "now"|date('Ymd') ) %}
+                            <tr>
+                                <td>{{ actualite.titreActu|truncate(20, true, '...')}}</td>
+{#                                <td>{{ actualite.texteActu|truncate(20, true, '...')|raw }}</td>#}
+                                <td>{{ date(actualite.DtDebut)|date('d/m/Y') }}</td>
+                                <td>{% if (actualite.DtFin is not null and date(actualite.DtFin) != date('00-00-0000') ) %} {{ date(actualite.DtFin)|date('d/m/Y') }} {% else %} Pas de date de fin{% endif %}</td>
+                                <td>{% if actualite.document is not null %}Oui{% else %}Non{% endif %}</td>
+                                <td>
+                                    <a href="{{ path('actualite_show_admin_cdg', { 'id': actualite.id }) }}" class="btn button-tableau" role="button">Aperçu</a>
+                                    <a href="{{ path('actualite_edit', { 'id': actualite.id }) }}" class="btn button-tableau" role="button">Editer</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Actualités passées</div>
+
+        <div class="panel-body">
+            <table class="table table-striped" id="table-actualite-passe">
+                <thead>
+                <tr>
+                    <th style="width: 280px">Titre</th>
+{#                    <th>Texte</th>#}
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Document téléchargeable</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for actualite in actualites %}
+                    {% if actualite.blPublish %}
+                        {% if(actualite.DtFin|date('Ymd') < "now"|date('Ymd') and date(actualite.DtFin) != date('00-00-0000')) %}
+                            <tr>
+                                <td>{{ actualite.titreActu|truncate(20, true, '...') }}</td>
+{#                                <td>{{ actualite.texteActu|truncate(20, true, '...')|raw }}</td>#}
+                                <td>{{ date(actualite.DtDebut)|date('d/m/Y') }}</td>
+                                <td>{% if (actualite.DtFin is not null and date(actualite.DtFin) != date('00-00-0000') ) %} {{ date(actualite.DtFin)|date('d/m/Y') }} {% else %} Pas de date de fin{% endif %}</td>
+                                <td>{% if actualite.document is not null %}Oui{% else %}Non{% endif %}</td>
+                                <td>
+                                    <a href="{{ path('actualite_show_admin_cdg', { 'id': actualite.id }) }}" class="btn button-tableau" role="button">Aperçu</a>
+                                    <a href="{{ path('actualite_edit', { 'id': actualite.id }) }}" class="btn button-tableau" role="button">Editer</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Actualités non publiées</div>
+
+        <div class="panel-body">
+            <table class="table table-striped" id="table-actualite-passe">
+                <thead>
+                <tr>
+                    <th style="width: 280px">Titre</th>
+{#                    <th>Texte</th>#}
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Document téléchargeable</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for actualite in actualites %}
+                    {% if not actualite.blPublish %}
+                        <tr>
+                            <td>{{ actualite.titreActu|truncate(20, true, '...') }}</td>
+{#                            <td>{{ actualite.texteActu|truncate(20, true, '...')|raw }}</td>#}
+                            <td>{{ date(actualite.DtDebut)|date('d/m/Y') }}</td>
+                            <td>{% if (actualite.DtFin is not null and date(actualite.DtFin) != date('00-00-0000') ) %} {{ date(actualite.DtFin)|date('d/m/Y') }} {% else %} Pas de date de fin{% endif %}</td>
+                            <td>{% if actualite.document is not null %}Oui{% else %}Non{% endif %}</td>
+                            <td>
+                                <a href="{{ path('actualite_show_admin_cdg', { 'id': actualite.id }) }}" class="btn button-tableau" role="button">Aperçu</a>
+                                <a href="{{ path('actualite_edit', { 'id': actualite.id }) }}" class="btn button-tableau" role="button">Editer</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

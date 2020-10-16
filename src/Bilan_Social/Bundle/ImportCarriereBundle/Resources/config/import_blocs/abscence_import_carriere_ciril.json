@@ -1,0 +1,7 @@
+{
+	"to_entity" : "Bilan_Social\\Bundle\\ApaBundle\\Entity\\AbsenceArretAgent",
+	"bloc_name" : "abscenses_ciril",
+	"fields":{
+		
+	}
+}

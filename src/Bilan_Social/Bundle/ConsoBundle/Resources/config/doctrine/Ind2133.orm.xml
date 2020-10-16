@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2133" table="ind_213_3">
+    <indexes>
+      <index name="FK_2133_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+      <index name="FK_2133_MOTIFABSENCE" columns="ID_MOTIABSE"/>
+    </indexes>
+	<unique-constraints>
+		<unique-constraint columns="ID_BILASOCICONS,ID_MOTIABSE" name="IDXU1_IND_2133"/>
+	</unique-constraints>
+    <id name="id2133" type="integer" column="ID_2133">
+      <generator strategy="IDENTITY"/>
+    </id>
+
+    <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind2133s">
+        <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+    </many-to-one>
+
+    <many-to-one field="refMotifAbsence" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifAbsence">
+        <join-column name="ID_MOTIABSE" referenced-column-name="ID_MOTIABSE" nullable="false"/>
+    </many-to-one>
+
+    <field name="r21331" type="decimal" precision="10" scale="2" column="R_21331" nullable="true"/>
+    <field name="r21332" type="decimal" precision="10" scale="2" column="R_21332" nullable="true"/>
+    <field name="r21333" type="decimal" precision="10" scale="2" column="R_21333" nullable="true"/>
+    <field name="r21334" type="decimal" precision="10" scale="2" column="R_21334" nullable="true"/>
+    <field name="r21335" type="decimal" precision="10" scale="2" column="R_21335" nullable="true"/>
+    <field name="r21336" type="decimal" precision="10" scale="2" column="R_21336" nullable="true"/>
+    <field name="r21337" type="decimal" precision="10" scale="2" column="R_21337" nullable="true"/>
+    <field name="r21338" type="decimal" precision="10" scale="2" column="R_21338" nullable="true"/>
+    <field name="r21339" type="decimal" precision="10" scale="2" column="R_21339" nullable="true"/>
+    <field name="r213310" type="decimal" precision="10" scale="2" column="R_213310" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

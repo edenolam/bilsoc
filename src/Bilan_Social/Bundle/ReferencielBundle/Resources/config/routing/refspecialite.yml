@@ -1,0 +1,28 @@
+refspecialite_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefSpecialite:index" }
+    methods:  GET
+
+refspecialite_show:
+    path:     /{idSpecialite}/show
+    defaults: { _controller: "ReferencielBundle:RefSpecialite:show" }
+    methods:  GET
+
+refspecialite_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefSpecialite:new" }
+    methods:  [GET, POST]
+
+refspecialite_edit:
+    path:     /{idSpecialite}/edit
+    defaults: { _controller: "ReferencielBundle:RefSpecialite:edit" }
+    methods:  [GET, POST]
+
+refspecialite_delete:
+    path:     /{idSpecialite}/delete
+    defaults: { _controller: "ReferencielBundle:RefSpecialite:delete" }
+    methods:  DELETE
+
+csv_export_refspecialite:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefSpecialite:generateCsv" }

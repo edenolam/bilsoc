@@ -1,0 +1,32 @@
+ <li>
+    <a href="{{ path('informationcolectiviteagent_edit', { 'idInfocollagen': InformationCollectiviteExist.idInfocollagen }) }}">
+        
+        {% if pcInfoColl == 100 %}
+        <div class="col-xs-12 menu-div  unlock ColorWhite" style="display: flex ">
+            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                <i class="ColorWhite fa fa-unlock-alt fa-3x" aria-hidden="true"></i>
+            </div>
+        {% else %}
+        <div class="col-xs-12 menu-div lock ColorWhite" style="display: flex ">
+            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                <i class="ColorWhite fa fa-lock fa-3x" aria-hidden="true"></i>
+            </div>
+        {% endif %}
+
+            <div class="col-xs-9">
+                <div>
+                    <span>Informations Collectivité</span>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-white" role="progressbar" aria-valuenow=" {{pcInfoColl}}" aria-valuemin="0" aria-valuemax="100"
+                             style="width: {{pcInfoColl}}%;">
+                        </div>
+                    </div>
+                    <span class="progress-completed">{{pcInfoColl|round}}%</span>
+                    <p class="noMargin">
+                        Saisie
+                    </p>
+                </div>
+            </div>
+        </div>
+    </a>
+</li>

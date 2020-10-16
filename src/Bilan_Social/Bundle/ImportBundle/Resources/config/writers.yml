@@ -1,0 +1,5 @@
+services:
+    bs.import.orm.writer:
+        class: Bilan_Social\Bundle\ImportBundle\Writer\ORM\Writer
+        arguments:
+            - '@doctrine.orm.entity_manager'

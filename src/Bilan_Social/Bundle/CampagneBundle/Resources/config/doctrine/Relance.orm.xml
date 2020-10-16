@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\CampagneBundle\Entity\Relance" repository-class="Bilan_Social\Bundle\CampagneBundle\Repository\RelanceRepository" table="relance">
+    <indexes>
+      <index name="FK_RELANCE_CDG" columns="ID_CDG"/>
+      <index name="FK_RELANCE_CAMPAGNE" columns="ID_CAMP"/>
+      <index name="FK_RELANCE_COLLECTIVITE" columns="ID_COLL"/>
+      <index name="FK_RELANCE_ENQUETE" columns="ID_ENQU"/>
+    </indexes>
+    <id name="idRela" type="integer" column="ID_RELA">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="campagne" target-entity="Bilan_Social\Bundle\CampagneBundle\Entity\Campagne">
+        <join-column name="ID_CAMP" referenced-column-name="ID_CAMP" nullable="true"/>
+    </many-to-one>
+
+        <many-to-one field="cdg" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Cdg">
+            <join-column name="ID_CDG" referenced-column-name="ID_CDG" nullable="true"/>
+        </many-to-one>
+    <many-to-one field="enquete" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+        <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" nullable="true"/>
+    </many-to-one>
+
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" nullable="true"/>
+        </many-to-one>
+
+        <field name="dtDernrela" type="datetime" column="DT_DERNRELA" nullable="false"/>
+
+        <field name="lbMessrela" type="text" length="65535" column="LB_MESSRELA" nullable="true"/>
+    </entity>
+</doctrine-mapping>

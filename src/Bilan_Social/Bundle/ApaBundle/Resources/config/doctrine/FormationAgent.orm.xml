@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\FormationAgent" table="formation_agent">
+        <indexes>
+            <index name="FK_FORMATIONAGENT_BILANSOCIALAGENT" columns="ID_BILASOCIAGEN"/>
+            <index name="FK_FORMATIONAGENT_FORMATION" columns="ID_FORM"/>
+            <index name="FK_FORMATIONAGENT_ORGANISMEFORMATION" columns="ID_ORGAFORM"/>
+        </indexes>
+        <id name="idFormagen" type="integer" column="ID_FORMAGEN">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="BilanSocialAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" inversed-by="FormationAgents">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN" />
+        </many-to-one>
+
+        <many-to-one field="refOrganismeFormation" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefOrganismeFormation" inversed-by="FormationAgents">
+            <join-column name="ID_ORGAFORM" referenced-column-name="ID_ORGAFORM" />
+        </many-to-one>
+        <many-to-one field="refFormation" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFormation" inversed-by="FormationAgents">
+            <join-column name="ID_FORM" referenced-column-name="ID_FORM" />
+        </many-to-one>
+
+        <field name="blCpf" type="boolean" column="BL_CPF" nullable="true"/>
+        <field name="nbjourForm" type="integer" column="NB_JOUR_FORM" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

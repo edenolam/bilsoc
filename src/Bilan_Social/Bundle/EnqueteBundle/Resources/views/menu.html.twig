@@ -1,0 +1,120 @@
+<div id="wrapper" class="col-md-3">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="clearfix">
+        <div class="menu-header noPadding consolideHeader">
+            {% if app.user.username is defined %}
+                  
+                <div class="align-center">
+                {% if(is_granted("ROLE_CDG")) %}
+                    {% set cdg = user_cdg.findCDGByUtilisateur(app.user) %}
+                      <img src="{{ asset(cdg.pathLogo) }}" alt="{{ cdg.nameLogo }}" class="logo_cdg img-responsive center-block"/>
+                    {% elseif(is_granted("ROLE_COLLECTIVITY")) %}
+                        {% set cdg = user_cdg.findCdgByCollectivite(app.user) %}
+                       
+                          <img src="{{ asset(cdg.pathLogo) }}" alt="{{ cdg.nameLogo }}" class="logo_cdg img-responsive center-block"/>
+                        
+                    {% elseif(is_granted("ROLE_ADMIN")) %}
+                     
+                  
+                {% endif %}
+                </div>
+
+                <label class="raisonSociale"> <strong>Raison sociale :
+                        {% if (is_granted("ROLE_COLLECTIVITY")) %}
+                            {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+                                {{ collectiviteinfo.lbColl }}
+                            {% endfor %}
+                        {% elseif(is_granted("ROLE_CDG")) %}
+                            {% for cdginfo in user_cdg.findOneByCdgByUtilisateur(app.user) %}
+                                {{ cdginfo.lbCdg }}
+                            {% endfor %}
+                            {% if app.session.get('user_siret') is defined and app.session.get('user_siret') is not null %}
+                                <p>Connecté en tant que {{ app.session.get('user_siret') }}</p>
+                                 {% if contactPrincipalCollectivite is not null %}
+                                    <p>Nom : {{ contactPrincipalCollectivite.lbNom }}</p>
+                                    <p>Téléphone : {{ contactPrincipalCollectivite.lbTele }}</p>
+                                    <p>Email : {{ contactPrincipalCollectivite.lbMail }}</p>
+                                {% endif%}
+                                <a href="{{ path('remove_cdg_session') }}">Se déconnecter</a>
+                            {% endif %}
+                        {% elseif (is_granted("ROLE_ADMIN")) %}
+                            ADMIN
+                        {% endif %}
+                    </strong>
+                </label>
+                {% if is_granted("ROLE_COLLECTIVITY") %}
+                    <label>Siret : {{ app.user.username }}</label>
+                    <br>
+                    <label>Identifiant : {{ app.user.username }}</label>
+                    <br>
+                    <label>Dernière connexion le {{app.user.dtlastconn|date('d M Y')}} <br> à {{app.user.dtlastconn|date('H:i:s')}}</label>
+
+                {% endif %}
+
+                <div>
+                    
+                        <a href="{{ path('logout') }}" class='logout'><span class="glyphicon glyphicon-off" aria-hidden="true"></span>Déconnexion</a>
+                    
+                </div>
+
+
+            {% endif %}
+        </div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand menu-li" >
+
+                <div class="col-xs-12 menu-div menu-accueil"  style="display: flex;">
+                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                        <img src="{{ asset("img/icone/DescriptionSite-01.png") }}" class="icone-menu"/>
+                    </div>
+                    <div class="col-xs-9">
+                        <div>
+                            <a class="lien-menu" href="{{ path('homepage') }}"><span>Accueil</span> </a>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+
+
+            {#  <li class="sidebar-brand menu-li">
+
+                  <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                      <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                          <img src="{{ asset("img/icone/DescriptionSite-25.png") }}" class="icone-menu"/>
+                      </div>
+                      <div class="col-xs-9">
+                          <div>
+                              <span class="titre-menu-accueil">Analyses</span>
+                              <div class="sous-menu-accueil">
+                                  <a class="lien-menu" href="#"><span>#########</span> </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+              </li>
+
+              <li class="sidebar-brand menu-li">
+
+                  <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                      <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                          <img src="{{ asset("img/icone/DescriptionSite-26.png") }}" class="icone-menu"/>
+                      </div>
+                      <div class="col-xs-9">
+                          <div>
+                              <span class="titre-menu-accueil">modèles de vues</span>
+                              <div class="sous-menu-accueil">
+                                  <a class="lien-menu" href="#"><span>#########</span> </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+              </li>#}
+
+
+        </ul>
+    </div>
+
+</div>

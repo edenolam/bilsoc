@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifDepart" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefMotifDepartRepository" table="ref_motif_depart">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <indexes>
+            <index name="FK_STATUT_MOTIFDEPART" columns="ID_STAT"/>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint columns="CD_MOTIDEPA" name="cdMotidepa"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idMotidepa" type="integer" column="ID_MOTIDEPA">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="idStat" type="integer" column="ID_STAT" nullable="true"/>
+        <field name="cdMotidepa" type="string" column="CD_MOTIDEPA" length="50" nullable="true"/>
+        <field name="lbMotidepa" type="string" column="LB_MOTIDEPA" length="255" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="blFonc" type="boolean" column="BL_FONC" nullable="true"/>
+        <field name="blContperm" type="boolean" column="BL_CONTPERM" nullable="true"/>
+        <field name="blDepatemp" type="boolean" column="BL_DEPATEMP" nullable="true"/>
+        <field name="blDepatempRemu" type="boolean" column="BL_DEPATEMPREMU" nullable="true"/>
+        <field name="blDepadefi" type="boolean" column="BL_DEPADEFI" nullable="true"/>
+        <field name="cdMotiN4ds" type="string" column="CD_MOTI_N4DS" length="255" nullable="true"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refMotifDepart"/>
+        <many-to-many field="statutMotifDeparts" inversed-by="refMotifDepart" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStatut">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+            <join-table name="statut_Motif_Depart">
+                <join-columns>
+                    <join-column name="motif_depart_id" referenced-column-name="ID_MOTIDEPA" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="status_id" referenced-column-name="ID_STAT" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,3 @@
+importcarrirer_importcarrirer:
+    resource: "@ImportCarriereBundle/Resources/config/routing/import_carriere.yml"
+    prefix:   /import_carriere

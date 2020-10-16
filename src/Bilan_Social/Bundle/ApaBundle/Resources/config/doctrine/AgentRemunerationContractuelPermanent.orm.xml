@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\AgentRemunerationContractuelPermanent" table="Agent_Remuneration_Contractuel_Permanent">
+        <indexes>
+            <index name="FK_AGENT_REMUNERATION_CONTRACTUEL_PERMANENT_CATEGORIE" columns="ID_CATE"/>
+            <index name="FK_AGENT_REMUNERATION_CONTRACTUEL_PERMANENT_INFOGENE" columns="ID_INFOGENE"/>
+        </indexes>
+        <id name="idAgentRemunerationContratuelPermanent" type="integer" column="ID_AGENT_REMUNERATION_CONTRACTUEL_PERMANENT">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="idInfoGene" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationGenerale" inversed-by="agentremucontperm">
+            <join-column name="ID_INFOGENE" referenced-column-name="ID_INFOGENE" />
+        </many-to-one>
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie" inversed-by="agentremucontperm_categorie">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE"/>
+        </many-to-one>
+        <field name="r321h" type="integer" column="R321h" nullable="true"/>
+        <field name="r321f" type="integer" column="R321f" nullable="true"/>
+        <field name="r3211h" type="integer" column="R3211h" nullable="true"/>
+        <field name="r3211f" type="integer" column="R3211f" nullable="true"/>
+        <field name="r3114h" type="integer" column="R3114h" nullable="true"/>
+        <field name="r3114f" type="integer" column="R3114f" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

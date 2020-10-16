@@ -1,0 +1,49 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-lg-9">
+        <a class="btn button pull-right margin10" href="{{ path('refmetier_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th>Cdmetier</th>
+                <td>{{ refMetier.cdMetier }}</td>
+            </tr>
+            <tr>
+                <th>Lbmetier</th>
+                <td>{{ refMetier.lbMetier }}</td>
+            </tr>
+            <tr>
+                <th>Lbautappcoll</th>
+                <td>{{ refMetier.lbAutAppColl }}</td>
+            </tr>
+            <tr>
+                <th>Cdn4ds</th>
+                <td>{{ refMetier.cdN4ds }}</td>
+            </tr>
+            <tr>
+                <th>Blmetiprinc</th>
+                <td>{% if refMetier.blMetiPrinc %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blcons</th>
+                <td>{% if refMetier.blCons %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Famille métier</th>
+                <td>{{ refMetier.RefFamilleMetier.lbFamilleMetier }}</td>
+            </tr>
+            <tr>
+                <th>Archivé</th>
+                <td>{% if refMetier.blVali %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refMetier} %}
+            </tbody>
+        </table>
+
+        <a class="btn button pull-right margin10" href="{{ path('refmetier_edit', { 'idMetier': refMetier.idMetier }) }}">Modifier</a>
+
+    </div>
+{% endblock %}

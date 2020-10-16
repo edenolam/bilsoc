@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2132" table="ind_213_2">
+    <indexes>
+      <index name="FK_2132_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+      <index name="FK_2132_MOTIFABSENCE" columns="ID_MOTIABSE"/>
+    </indexes>
+	<unique-constraints>
+		<unique-constraint columns="ID_BILASOCICONS,ID_MOTIABSE" name="IDXU1_IND_2132"/>
+	</unique-constraints>
+    <id name="id2132" type="integer" column="ID_2132">
+      <generator strategy="IDENTITY"/>
+    </id>
+
+    <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind2132s">
+        <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+    </many-to-one>
+
+    <many-to-one field="refMotifAbsence" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifAbsence">
+        <join-column name="ID_MOTIABSE" referenced-column-name="ID_MOTIABSE" nullable="false"/>
+    </many-to-one>
+
+    <field name="r21321" type="integer" column="R_21321" nullable="true"/>
+    <field name="r21322" type="integer" column="R_21322" nullable="true"/>
+    <field name="r21323" type="integer" column="R_21323" nullable="true"/>
+    <field name="r21324" type="integer" column="R_21324" nullable="true"/>
+    <field name="r21325" type="integer" column="R_21325" nullable="true"/>
+    <field name="r21326" type="integer" column="R_21326" nullable="true"/>
+    <field name="r21327" type="integer" column="R_21327" nullable="true"/>
+    <field name="r21328" type="integer" column="R_21328" nullable="true"/>
+    <field name="r21329" type="integer" column="R_21329" nullable="true"/>
+    <field name="r213210" type="integer" column="R_213210" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,112 @@
+{
+	"data":[
+		{
+			"code":-1,
+			"lbl":"Non communiqué",
+			"cd_moda_entre_coll":null,
+			"lbl_moda_entre_coll":null
+		},
+		{
+			"code":1,
+			"lbl":"Concours externe",
+			"cd_moda_entre_coll":"MA003",
+			"lbl_moda_entre_coll":"Voie de concours, sélection pro, examen pro - Lauréat nouvel arrivant dans la collectivité"
+		},
+		{
+			"code":10,
+			"lbl":"Détachement d'une autre Fonction Publique (hors concours)",
+			"cd_moda_entre_coll":"MA008",
+			"lbl_moda_entre_coll":"Par voie de détachement d'agents de la FPE"
+		},
+		{
+			"code":11,
+			"lbl":"Détachement pour stage (hors promotion interne et hors concours)",
+			"cd_moda_entre_coll":"MA008",
+			"lbl_moda_entre_coll":"Par voie de détachement d'agents de la FPE"
+		},
+		{
+			"code":12,
+			"lbl":"Promotion interne (avec ou sans stage)",
+			"cd_moda_entre_coll":null,
+			"lbl_moda_entre_coll":null
+		},
+		{
+			"code":13,
+			"lbl":"Prise en charge par le Centre de Gestion ou le CNFPT",
+			"cd_moda_entre_coll":null,
+			"lbl_moda_entre_coll":null
+		},
+		{
+			"code":14,
+			"lbl":"Intégration directe",
+			"cd_moda_entre_coll":"MA006",
+			"lbl_moda_entre_coll":"Intégration directe"
+		},
+		{
+			"code":15,
+			"lbl":"Par recrutement sans concours pour les agents de cat C",
+			"cd_moda_entre_coll":"MA001",
+			"lbl_moda_entre_coll":"Recrutement direct - Lauréat nouvel arrivant dans la collectivité"
+		},
+		{
+			"code":16,
+			"lbl":"Sélection professionnelle",
+			"cd_moda_entre_coll":"MA004",
+			"lbl_moda_entre_coll":"Voie de concours, sélection pro, examen pro, loi Sauvadet - Lauréat déjà présent en tant que contractuel"
+		},
+		{
+			"code":-2,
+			"lbl":"Non connu",
+			"cd_moda_entre_coll":null,
+			"lbl_moda_entre_coll":null
+		},
+		{
+			"code":2,
+			"lbl":"Concours interne",
+			"cd_moda_entre_coll":"MA004",
+			"lbl_moda_entre_coll":"Voie de concours, sélection pro, examen pro, loi Sauvadet - Lauréat déjà présent en tant que contractuel"
+		},
+		{
+			"code":3,
+			"lbl":"Concours de 3ème voie",
+			"cd_moda_entre_coll":"MA003",
+			"lbl_moda_entre_coll":"Voie de concours, sélection pro, examen pro - Lauréat nouvel arrivant dans la collectivité"
+		},
+		{
+			"code":4,
+			"lbl":"Concours réservé (dispositif de résorption de l'emploi précaire)",
+			"cd_moda_entre_coll":"MA004",
+			"lbl_moda_entre_coll":"Voie de concours, sélection pro, examen pro, loi Sauvadet - Lauréat déjà présent en tant que contractuel"
+		},
+		{
+			"code":5,
+			"lbl":"Recrutement direct sauf emplois spécifiques (comme stagiaire ou titulaire)",
+			"cd_moda_entre_coll":"MA001",
+			"lbl_moda_entre_coll":"Recrutement direct - Lauréat nouvel arrivant dans la collectivité"
+		},
+		{
+			"code":6,
+			"lbl":"Recrutement d'un non-titulaire (tous les cas)",
+			"cd_moda_entre_coll":"MA019",
+			"lbl_moda_entre_coll":"Article 3"
+		},
+		{
+			"code":7,
+			"lbl":"Emploi spécifique (anciens 'emplois communaux')",
+			"cd_moda_entre_coll":null ,
+			"lbl_moda_entre_coll":null
+		},
+		{
+			"code":8,
+			"lbl":"Mutation d'une autre collectivité",
+			"cd_moda_entre_coll":"MA007",
+			"lbl_moda_entre_coll":"Voie de mutation"
+		},
+		{
+			"code":9,
+			"lbl":"Détachement d'une autre collectivité (hors promotion interne et hors concours)",
+			"cd_moda_entre_coll":"MA010",
+			"lbl_moda_entre_coll":"Par voie de détachement d'agents d'autres collectivités territoriales"
+		}
+	]
+}

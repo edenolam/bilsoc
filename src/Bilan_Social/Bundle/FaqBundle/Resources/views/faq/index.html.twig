@@ -1,0 +1,194 @@
+{% extends '@Faq/layout.html.twig' %}
+
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+         <div class="row">
+            <div class="col-xs-12">
+                <h1>Foire aux questions</h1>
+            </div>
+            <div class="col-xs-12">
+            
+                <div class="pull-left text-center">
+                    <a target="_blank" href="{{ asset("FAQ/guide_utilisateur.pdf") }}"> <img data-toggle="tooltip" data-placement="bottom" title="Guide utilisateur" class="pull-left img-pdf" src="{{ asset("img/icone/logo_guide_utilisateur.jpg") }}"/><p>Télécharger la FAQ</p> </a>
+                </div>
+                
+                    
+                <div class="pull-right text-right">
+                     <div class="input-group">
+                         <div class="form-group search-panel">
+                             <form class="navbar-form navbar-left" method="POST" action="{{ path('faq_search_client') }}">
+                                 <div class="form-group">
+                                     <select name="filter" class="form-control" id="searchSelect">
+                                         <option value="0">Filtrer par</option>
+                                         <option value="1">Contient</option>
+                                         <option value="2">est égal</option>
+                                     </select>
+                                     <input name="value" id="inputSearch" type="text" class="form-control" placeholder="Recherche">
+                                 </div>
+                                 <button type="submit" class="btn btn-default">Filtrer</button>
+                             </form>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class='pull-right' style='margin: 0 12px 12px 0'>
+                <button type="button" class="btn button-tableau" data-toggle="modal" data-target="#modal_import_excel_faq">Importer une FAQ</button>
+                <a href="{{ path('export_excel_faq', {'_format': 'xlsx'} ) }}" class='btn button-tableau'>
+                    Exporter la FAQ
+                </a>
+            </div>
+            
+        </div>
+      {# <div class="pull-left text-center">
+                    <a target="_blank" href="{{ asset("FAQ/guide_utilisateur.pdf") }}"> <img data-toggle="tooltip" data-placement="bottom" title="Guide utilisateur" class="pull-left img-pdf" src="{{ asset("img/icone/logo_guide_utilisateur.jpg") }}"/><p>Télécharger la FAQ</p> </a>
+        </div>
+        <div class="input-group">
+            <div class="form-group search-panel">
+                <form class="navbar-form navbar-left" method="POST" action="{{ path('faq_search_client') }}">
+                    <div class="form-group">
+                        <select name="filter" class="form-control" id="searchSelect">
+                            <option value="0">Filtrer par</option>
+                            <option value="1">Contient</option>
+                            <option value="2">est égal</option>
+                        </select>
+                        <input name="value" id="inputSearch" type="text" class="form-control" placeholder="Recherche">
+                    </div>
+                    <button type="submit" class="btn btn-default">Filtrer</button>
+                    <a target="_blank" href="{{ asset("FAQ/guide_utilisateur.pdf") }}"><button type="button" class="btn btn-primary pull-right">Guide</button></a>
+                </form>
+                {# <select class="form-control" id="sel1">
+                     <option>1</option>
+                 </select>
+                 <input id="inputsearch" type="text" class="form-control" name="x" placeholder="recherche FAQ...">
+
+                 <button id="searchfaq" class="form-control btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+#}
+          {#  </div>
+        </div>#}
+
+        <div class="modal fade align-center" id='modal_import_excel_faq'>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Import d'une FAQ existante  
+                    </div>
+                    {% if importForm is defined %}
+                        {{ form_start(importForm) }}
+                        <div class="modal-body">
+                            Veuilles sélectionner un fichier au format XLSX afin d'effectuer un import.
+                            {{ form_row(importForm.document) }}
+                        </div>
+                        <div class="modal-footer">
+                            <button disabled type="submit" id="bilan_social_bundle_faqbundle_import_excel_faq_importer" name="bilan_social_bundle_faqbundle_import_excel_faq[importer]" class="btn-primary btn">Importer</button>
+                            <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Annuler</button>
+                        </div>
+                        {{ form_row(importForm._token) }}
+                        {{ form_end(importForm, {'render_rest': false}) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+          
+        {% if tableau.collectivite is not null %}
+            <div class="panel panel-default">
+                <div class="panel-heading">FAQs Collectivite</div>
+                <div class="panel-body">
+                    {% for categorie, faqs in tableau.collectivite%}
+
+                        <h2>{{ categorie}}</h2>
+                        {% for faqs in faqs%}
+                            <div class="panel-group" id="col{{ categorie }}">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+
+                                            <a data-toggle="collapse" data-parent="#col{{ categorie|replace({' ':''}) }}" href="#col{{ categorie|replace({' ':''})  ~ loop.index }}">{{faqs.question}}</a>
+                                            <div class="pull-right">
+                                                <a href="{{ path('faq_edit', { 'id': faqs.id }) }}">Modifier</a>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="col{{ categorie|replace({' ':''}) ~ loop.index }}" class="panel-collapse collapse">
+                                        <div class="panel-body">{{faqs.reponse|raw}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if tableau.cdg is not null %}
+            <div class="panel panel-default">
+                <div class="panel-heading">FAQs Centre de gestion</div>
+                <div class="panel-body">
+                    {% for categorie, faqs in tableau.cdg%}
+                        <h2>{{ categorie}}</h2>
+                        {% for faqs in faqs%}
+                            <div class="panel-group" id="cdg{{ categorie }}">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+
+                                            <a data-toggle="collapse" data-parent="#cdg{{ categorie|replace({' ':''}) }}" href="#cdg{{ categorie|replace({' ':''})  ~ loop.index }}">{{faqs.question}}</a>
+                                            <div class="pull-right">
+                                                <a href="{{ path('faq_edit', { 'id': faqs.id }) }}">Modifier</a>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="cdg{{ categorie|replace({' ':''}) ~ loop.index }}" class="panel-collapse collapse">
+                                        <div class="panel-body">{{faqs.reponse|raw}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if tableau.all is not null %}
+            <div class="panel panel-default">
+                <div class="panel-heading">FAQs communes aux profils CDG et Collectivité</div>
+                <div class="panel-body">
+                    {% for categorie, faqs in tableau.all%}
+                        <h2>{{ categorie}}</h2>
+                        {% for faqs in faqs%}
+                            <div class="panel-group" id="all{{ categorie }}">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+
+                                            <a data-toggle="collapse" data-parent="#all{{ categorie|replace({' ':''}) }}" href="#all{{ categorie|replace({' ':''})  ~ loop.index }}">{{faqs.question}}</a>
+                                            <div class="pull-right">
+                                                <a href="{{ path('faq_edit', { 'id': faqs.id }) }}">Modifier</a>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div id="all{{ categorie|replace({' ':''}) ~ loop.index|replace({' ':''}) }}" class="panel-collapse collapse">
+                                        <div class="panel-body">{{faqs.reponse|raw}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

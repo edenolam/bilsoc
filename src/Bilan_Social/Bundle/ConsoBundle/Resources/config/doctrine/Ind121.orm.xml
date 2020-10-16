@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind121" table="ind_121" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind121Repository">
+    <indexes>
+      <index name="FK_121_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+      <index name="FK_121_CADREEMPLOI" columns="ID_CADREMPL"/>
+    </indexes>
+	<unique-constraints>
+		<unique-constraint columns="ID_BILASOCICONS,ID_CADREMPL" name="IDXU1_IND_121"/>
+	</unique-constraints>
+    <id name="id121" type="integer" column="ID_121">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind121s">
+        <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+    </many-to-one>
+
+    <many-to-one field="refCadreEmploi" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCadreEmploi">
+        <join-column name="ID_CADREMPL" referenced-column-name="ID_CADREMPL" nullable="false"/>
+    </many-to-one>
+
+    <field name="r1211" type="integer" column="R_1211" nullable="true"/>
+    <field name="r1212" type="integer" column="R_1212" nullable="true"/>
+    <field name="r1213" type="integer" column="R_1213" nullable="true"/>
+    <field name="r1214" type="integer" column="R_1214" nullable="true"/>
+    <field name="r1215" type="integer" column="R_1215" nullable="true"/>
+    <field name="r1216" type="integer" column="R_1216" nullable="true"/>
+    <field name="r1217" type="integer" column="R_1217" nullable="true"/>
+    <field name="r1218" type="integer" column="R_1218" nullable="true"/>
+    <field name="r1219" type="integer" column="R_1219" nullable="true"/>
+    <field name="r12110" type="integer" column="R_12110" nullable="true"/>
+    <field name="r12111" type="integer" column="R_12111" nullable="true"/>
+    <field name="r12112" type="integer" column="R_12112" nullable="true"/>
+    <field name="r12113" type="integer" column="R_12113" nullable="true"/>
+    <field name="r12114" type="integer" column="R_12114" nullable="true"/>
+    <field name="r12115" type="integer" column="R_12115" nullable="true"/>
+    <field name="r12116" type="integer" column="R_12116" nullable="true"/>
+    <field name="r12117" type="integer" column="R_12117" nullable="true"/>
+    <field name="r12118" type="integer" column="R_12118" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,697 @@
+#--------------------------------------------------------#
+# Informations générales dans la partie Agent par Agent
+#--------------------------------------------------------#
+info_gen_apa.q2infogene: "Cocher oui, si dans votre collectivité, au moins un agent a un cycle de travail spécifique: Cycle annuel, saisonnier, mensuel..."
+info_gen_apa.q3: "<p> Selon l'article L. 5212-13 du Code du Travail, entrent dans le calcul des BOETH (bénéficiaires de l’obligation d’emploi de travailleurs handicapés) les catégories ci-dessous : </p>
+            <ul>
+                <li>
+                    <p>Travailleurs reconnus handicapés par la commission des droits et de l’autonomie des personnes handicapées (CDAPH), ex Cotorep</p>
+                </li>
+                <li>
+                    <p>Agents bénéficiant d’une allocation temporaire d’invalidité ou  d’une ATIACL</p>
+                </li>
+                <li>
+                    <p>Agents reclassés</p>
+                </li>
+                <li>
+                    <p>Titulaires de l’allocation adulte handicapé (AAH)</p>
+                </li>
+                <li>
+                    <p>Titulaires 'rente' d’accidents du travail ou maladies professionnelles si incapacité permanente supérieure à 10%</p>
+                </li>
+                <li>
+                    <p>Orphelins de guerre de - de 21 ans et mères veuves</p>
+                </li>
+                <li>
+                    <p>Sapeurs-pompiers volontaires titulaires d’une allocation/rente</p>
+                </li>
+                <li>
+                    <p>Titulaires de la carte d’invalidité</p>
+                </li>
+                <li>
+                    <p>Titulaires d’un emploi réservé</p>
+                </li>
+                <li>
+                    <p>Titulaires d’une pension d’invalidité si l’invalidité réduit d’au moins 2/3 la capacité de gain ou de travail</p>
+                </li>
+                <li>
+                    <p>Titulaires d’une pension militaire d’invalidité</p>
+                </li>
+                <li>
+                    <p>Veuves de guerre</p>
+                </li>
+            </ul>"
+info_gen_apa.q4: "<p> La collectivité peut organiser des entretiens spécifiques à destination des agents souhaitant bénéficier d'un congé familial (congé parental, disponibilité pour élever un enfant de – de 8 ans, …) de 6 mois ou plus afin de les informer (avant le départ et/ou à leur retour) des règles et des effets de ces congés en termes de carrière. </p>
+            <p>Vous devez donc indiquer s’il existe dans votre collectivité un dispositif d’entretiens spécifiques pour les congés de 6 mois et plus :</p>
+            <ul>
+                <li>
+                    <p>Avant le départ ?</p>
+                </li>
+                <li>
+                    <p>Au retour de congés ?</p>
+                </li>
+            </ul>"
+info_gen_apa.q6: "<p> Prévu par le décret n°2004-878 du 26 août 2004 modifié, le compte épargne-temps permet à son titulaire d’accumuler des droits à congés. Les agents titulaires et contractuels occupant un emploi à temps complet ou à temps non complet, employés de manière continue et ayant accompli au minimum une année de services, peuvent solliciter l’ouverture d’un compte épargne-temps.</p>"
+info_gen_apa.q7: "<p> D’après l’article 2 du décret n°2016-151 du 11 février 2016, «le télétravail désigne toute forme d’organisation du travail dans laquelle un travail qui aurait également pu être exécuté par un agent dans les locaux de l’employeur est effectué hors de ces locaux de façon régulière et volontaire en utilisant les technologies de l’information et de la communication.»</p>"
+
+#----------------------------------------------------------#
+# Informations collectivité dans la partie Agent par Agent
+#----------------------------------------------------------#
+info_coll_apa.q114: "<p>Comment renseigner le nombre d’agents en équivalent temps plein rémunéré (ETPR) ? </p>
+                <p>Attention, ici il s’agit de compléter les ETPR pour l’année 2016</p>
+                <ul>
+                    <li>Pour les agents à temps complet sur une année pleine, une personne est égale à une unité.</li>
+                    <ul>
+                        <li>
+                            Exemple : 1 agent ayant travaillé une année complète à temps complet = 1 ETPR
+                        </li>
+                        <li>
+                            Exemple : 1 agent ayant travaillé 6 mois à temps complet  = 0,5 ETPR
+                        </li>
+                    </ul>
+                    <li>
+                        Pour les agents à temps partiel :
+                    </li>
+                    <p>L’ETPR décompte les effectifs en intégrant la sur-rémunération dont bénéficient les agents exerçant à temps partiel. Il convient par ailleurs de ramener l’ETPR au temps de présence de l’agent sur l’année.</p>
+                    <ul>
+                        <li>
+                            Exemple : 1 agent employé toute l’année à 80% perçoit 86% de la rémunération d’un temps plein, ce qui correspond à  0,80 en ETP et 0,86 en ETPR.
+                        </li>
+                        <li>
+                            Exemple : 1 agent employé sur 6 mois à 80% perçoit 86% de la rémunération d’un temps plein = 0,86 x 6/12 = 0,43 ETPR.
+                        </li>
+                        <li>
+                            Exemple : 1 agent employé sur 6 mois à 80% et 6 mois à temps complet = (0,86 x 6/12) + (1 x 6/12)= 0,93 ETPR.
+                        </li>
+                    </ul>
+                    <li>
+                        Pour les agents à temps non complet, il s’agit de diviser le nombre d’heures de l’emploi concerné par le nombre d’heures d’un temps complet (35 heures pour la semaine, 140 heures pour le mois), en calculant son temps de présence sur l’année.
+                    </li>
+                    <ul>
+                        <li>
+                            Exemple : 1 agent ayant travaillé une année complète à raison de 16 heures par semaine: 16 / 35 = 0,46  ETPR.
+                        </li>
+                        <li>
+                            Exemple : 1 agent ayant travaillé 8 mois au total sur l’année à raison de 16 heures par semaine : (16/35) x 8/12 = 0,30 ETPR.
+                        </li>
+                    </ul>
+                    <p>Il conviendra ensuite d’additionner l’ensemble des ETPR de votre collectivité sur l’année 2017.</p>
+                    <ul>
+                        <li>
+                            Exemple : 1 agent à temps complet (1 ETPR) + 2 agents à temps partiel à 80 % (2 x 0,86 = 1,72 ETPR) + 1 agent travaillant 16 heures par semaine (16 / 35 = 0,46), tous sur une année complète = 3,18 ETPR
+                        </li>
+                    </ul>
+                    <p>Si vous utilisez l’extraction issue de la Norme 4DS (DADSU), cette information est pré-remplie automatiquement. A défaut, elle peut être extraite directement du logiciel de paie.</p>
+                </ul>"
+info_coll_apa.q124: "<p>Comment renseigner le nombre d’agents en équivalent temps plein rémunéré (ETPR) ? </p>
+                <p>Attention, ici il s’agit de compléter les ETPR pour l’année 2016</p>
+                <p>Pour les agents à temps complet sur une année pleine, une personne est égale à une unité.</p>
+                <ul>
+                    <li>
+                        Exemple : 1 agent ayant travaillé une année complète à temps complet = 1 ETPR
+                    </li>
+                    <li>
+                        Exemple : 1 agent ayant travaillé 6 mois à temps complet  = 0,5 ETPR
+                    </li>
+                </ul>
+                <p>Pour les agents à temps partiel :</p>
+                <p>L’ETPR décompte les effectifs en intégrant la sur-rémunération dont bénéficient les agents exerçant à temps partiel. Il convient par ailleurs de ramener l’ETPR au temps de présence de l’agent sur l’année.</p>
+                <ul>
+                    <li>
+                        Exemple : 1 agent employé toute l’année à 80% perçoit 86% de la rémunération d’un temps plein, ce qui correspond à  0,80 en ETP et 0,86 en ETPR.
+                    </li>
+
+                    <li>
+                        Exemple : 1 agent employé sur 6 mois à 80% perçoit 86% de la rémunération d’un temps plein = 0,86 x 6/12 = 0,43 ETPR.
+                    </li>
+                    <li>
+                        Exemple : 1 agent employé sur 6 mois à 80% et 6 mois à temps complet = (0,86 x 6/12) + (1 x 6/12)= 0,93 ETPR.
+                    </li>
+                </ul>
+                <p>Pour les agents à temps non complet, il s’agit de diviser le nombre d’heures de l’emploi concerné par le nombre d’heures d’un temps complet (35 heures pour la semaine, 140 heures pour le mois), en calculant son temps de présence sur l’année.</p>
+                <ul>
+                    <li>
+                        Exemple : 1 agent ayant travaillé une année complète à raison de 16 heures par semaine: 16 / 35 = 0,46  ETPR.
+                    </li>
+                    <li>
+                        Exemple : 1 agent ayant travaillé 8 mois au total sur l’année à raison de 16 heures par semaine : (16/35) x 8/12 = 0,30 ETPR.
+                    </li>
+                </ul>
+                <p>Il conviendra ensuite d’additionner l’ensemble des ETPR de votre collectivité sur l’année 2017.</p>
+
+                <ul>
+                    <li>
+                        Exemple : 1 agent à temps complet (1 ETPR) + 2 agents à temps partiel à 80 % (2 x 0,86 = 1,72 ETPR) + 1 agent travaillant 16 heures par semaine (16 / 35 = 0,46), tous sur une année complète = 3,18 ETPR
+                    </li>
+                </ul>
+                <p>Si vous utilisez l’extraction issue de la Norme 4DS (DADSU), cette information est pré-remplie automatiquement. A défaut, elle peut être extraite directement du logiciel de paie.</p>"
+info_coll_apa.q131: "<p>Comment renseigner le nombre d’agents en équivalent temps plein rémunéré (ETPR) ? </p>
+                <p>Attention, ici il s’agit de compléter les ETPR pour l’année 2016</p>
+                <p>Pour les agents à temps complet sur une année pleine, une personne est égale à une unité.</p>
+                <ul>
+                    <li>
+                        Exemple : 1 agent ayant travaillé une année complète à temps complet = 1 ETPR
+                    </li>
+                    <li>
+                        Exemple : 1 agent ayant travaillé 6 mois à temps complet  = 0,5 ETPR
+                    </li>
+                </ul>
+                <p>Pour les agents à temps partiel :</p>
+                <p>L’ETPR décompte les effectifs en intégrant la sur-rémunération dont bénéficient les agents exerçant à temps partiel. Il convient par ailleurs de ramener l’ETPR au temps de présence de l’agent sur l’année.</p>
+                <ul>
+                    <li>
+                        Exemple : 1 agent employé toute l’année à 80% perçoit 86% de la rémunération d’un temps plein, ce qui correspond à  0,80 en ETP et 0,86 en ETPR.
+                    </li>
+                    <li>
+                        Exemple : 1 agent employé sur 6 mois à 80% perçoit 86% de la rémunération d’un temps plein = 0,86 x 6/12 = 0,43 ETPR.
+                    </li>
+                    <li>
+                        Exemple : 1 agent employé sur 6 mois à 80% et 6 mois à temps complet = (0,86 x 6/12) + (1 x 6/12)= 0,93 ETPR.
+                    </li>
+                </ul>
+                <p>Pour les agents à temps non complet, il s’agit de diviser le nombre d’heures de l’emploi concerné par le nombre d’heures d’un temps complet (35 heures pour la semaine, 140 heures pour le mois), en calculant son temps de présence sur l’année.</p>
+                <ul>
+                    <li>
+                        Exemple : 1 agent ayant travaillé une année complète à raison de 16 heures par semaine: 16 / 35 = 0,46  ETPR.
+                    </li>
+                    <li>
+                        Exemple : 1 agent ayant travaillé 8 mois au total sur l’année à raison de 16 heures par semaine : (16/35) x 8/12 = 0,30 ETPR.
+                    </li>
+                </ul>
+                <p>Il conviendra ensuite d’additionner l’ensemble des ETPR de votre collectivité sur l’année 2017.</p>
+                <ul>
+                    <li>
+                        Exemple : 1 agent à temps complet (1 ETPR) + 2 agents à temps partiel à 80 % (2 x 0,86 = 1,72 ETPR) + 1 agent travaillant 16 heures par semaine (16 / 35 = 0,46), tous sur une année complète = 3,18 ETPR
+                    </li>
+                </ul>
+                <p>Si vous utilisez l’extraction issue de la Norme 4DS (DADSU), cette information est pré-remplie automatiquement. A défaut, elle peut être extraite directement du logiciel de paie.</p>"
+info_coll_apa.q132: "<p>Il faut par exemple comptabiliser ici les agents du centre de gestion en mission remplacement.</p>
+                <p> Si une personne a exercé au cours de plusieurs périodes distinctes, ne la compter qu’une seule fois.</p>"
+info_coll_apa.mtDepetota: "<p>Ce sont par exemple des contrats de fournitures, de sous-traitance, ou de prestations de services avec des ateliers protégés, centres d'aide par le travail, centres de distribution de travail à domicile.</p>"
+info_coll_apa.mtDepeinsepershand: "<p> Il faut comptabiliser ici : </p>
+                <ul>
+                    <li>
+                        Les aménagements des postes de travail et les études y afférentes avec le concours du médecin chargé de la prévention ou du médecin du travail et des instances compétentes en matière d'hygiène, de sécurité et de conditions de travail
+                    </li>
+                    <li>
+                        La réalisation, dans les locaux de l'employeur, de travaux destinés à faciliter l'accès des personnes handicapées
+                    </li>
+                    <li>
+                        Les rémunérations versées aux agents chargés d'accompagner une personne handicapée dans l'exercice de ses fonctions professionnelles ou les prestations équivalentes servies par des organismes de droit privé
+                    </li>
+                    <li>
+                        La mise en place de moyens de transport individuels et de communication adaptés en fonction de l'aptitude physique de chaque travailleur handicapé lorsque leur prise en charge n'est pas assurée par la prestation de compensation prévue par le code de l'action sociale et des familles
+                    </li>
+                    <li>
+                        Les aides versées par les employeurs publics afin d'améliorer les conditions de vie des travailleurs handicapés qu'ils emploient et destinées à faciliter leur insertion professionnelle
+                    </li>
+                    <li>
+                        Les aides que les employeurs publics versent à des organismes contribuant, par leur action, à l'insertion professionnelle des personnes handicapées dans la fonction publique
+                    </li>
+                    <li>
+                        La conception de matériels ou d'aides techniques pour les travailleurs handicapés
+                    </li>
+                    <li>
+                        La formation et la sensibilisation à la question de l'intégration professionnelle des travailleurs handicapés des personnels susceptibles d'être en relation avec eux
+                    </li>
+                    <li>
+                        Les formations destinées à compenser les conséquences du handicap au travail ou celles adaptées aux besoins professionnels particuliers des travailleurs handicapés
+                    </li>
+                    <li>
+                        L'accueil des personnes handicapées pour des périodes de mise en situation professionnelle d’une durée égale ou supérieure à 35 heures (ajouté par le Décret n°2017-60 du 28 janvier 2017. JO du 31 janvier 2017)
+                    </li>
+                </ul>"
+info_coll_apa.mtRealemplpershand: "<p>Il n'existe pas de procédure de reconnaissance de la qualité de lourdement handicapé dans la Fonction Publique. </p>
+                <p>Néanmoins, dès lors qu'elles dépassent, pour l'agent concerné, 35 % du traitement brut annuel minimum versé à un agent occupant à temps complet un emploi public au 31 décembre de l'année écoulée, les dépenses précitées peuvent être comptabilisées dans cet indicateur en doublant leur montant</p>"
+info_coll_apa.mtDepeamentrav: "<p>Il faut aussi prendre en compte pour réduire le nombre d'unités manquantes les aménagements des postes de travail effectués pour maintenir dans leur emploi les agents reconnus inaptes à l'exercice de leurs fonctions s’ils n’ont pas été reconnus BOETH.</p>
+                <p>Chaque aménagement est uniquement pris en compte lorsqu'il est entrepris sur la base d'un avis médical.</p>
+                <p> Son coût doit également excéder 10 % du traitement brut annuel minimum versé à un agent occupant à temps complet un emploi public au 31 décembre de l'année écoulée.</p>"
+info_coll_apa.q162: "<p>Converties en équivalent bénéficiaires, les sommes à indiquer ci-dessous sont incluses sous forme de dépense dans le calcul du taux de travailleurs handicapés (la dépense accordée ne peut être supérieure à la moitié du nombre total de bénéficiaires).</p>"
+info_coll_apa.r2102: "<p>L’article 7-1 de la loi du 26 janvier 1984 permet de conserver les régimes de travail mis en place antérieurement à l’entrée en vigueur de la loi n°2001-2 du 3 janvier 2001. Il s’agit ici des jours chômés par les agents conservés dans ce cadre. Le maintien de cette dérogation suppose toutefois l’existence d’une délibération express de la collectivité.</p>"
+info_coll_apa.q225: "<p>Il s’agit d’un outil facultatif qui détermine les modalités de gestion, de contrôle et d’organisation du temps de travail des agents (horaires, cycles, …) afin de mieux concilier le temps professionnel et le temps personnel (cf. Protocole d’accord relatif à l’égalité professionnelle entre les femmes et les hommes dans la fonction publique du 8 mars 2013).</p>"
+info_coll_apa.q341: "<p>Cas de l'auto-assurance :</p>
+                <ul>
+                    <li>
+                        Sans convention de gestion avec Pôle Emploi : la collectivité assume la gestion administrative de l'allocation et le risque financier en versant si nécessaire des indemnités directement aux bénéficiaires.
+                    </li>
+                    <li>
+                        Avec convention de gestion avec Pôle Emploi : la collectivité assume le risque financier en versant si nécessaire des indemnités directement aux bénéficiaires mais délègue la gestion administrative de l'allocation.
+                    </li>
+                </ul>
+                <p>PRÉCISIONS : Le système de l'auto-assurance est obligatoire concernant les fonctionnaires</p>"
+info_coll_apa.q342: "<p>Cas de l'auto-assurance :</p>
+                <ul>
+                    <li>
+                        sans convention de gestion avec Pôle Emploi : la collectivité assume la gestion administrative de l'allocation et le risque financier en versant si nécessaire des indemnités directement aux bénéficiaires.
+                    </li>
+                    <li>
+                        avec convention de gestion avec Pôle Emploi : la collectivité assume le risque financier en versant si nécessaire des indemnités directement aux bénéficiaires mais délègue la gestion administrative de l'allocation.
+                    </li>
+                </ul>
+                <p>L‘adhésion au régime d'assurance chômage pour les contractuels :</p>
+                 <ul>
+                    <li>
+                        dans ce cas, c'est l'UNEDIC qui sera en charge du versement des indemnités chômage et de la gestion administrative.
+                    </li>
+                </ul>"
+info_coll_apa.q343: "<p>Les heures complémentaires sont les heures que l'employeur peut demander d'effectuer aux agents à temps non complet en plus de leur temps de travail habituel, jusqu’au seuil du temps complet.</p>
+                <p>Les heures supplémentaires sont les heures effectuées au-delà du temps plein correspondant au cycle de travail de l’agent.</p>"
+info_coll_apa.mtCharpers: "<p>Les charges de personnel correspondent aux salaires (traitement et primes) augmentés des charges salariales et patronales dont le montant est indiqué au chapitre 012 du compte administratif.</p>"
+info_coll_apa.mtDepefonccoll: "<p>Il faut renseigner les dépenses réelles du compte administratif.</p>
+                <p>Le compte administratif, établi par l’ordonnateur, rapproche les prévisions ou autorisations inscrites au budget (au niveau du chapitre ou de l’article selon les dispositions arrêtées lors du vote du budget primitif) des réalisations effectives en dépenses (mandats) et en recettes (titres).</p>"
+info_coll_apa.q412: "<p>Les dépenses pouvant être prises en compte en matière de prévention sont : </p>
+                <ul>
+                    <li>
+                        Les dépenses relatives aux interventions en matière de prévention et de sécurité :
+                          <ul>
+                            <li>
+                               travaux recommandés par des agents affectés à la prévention et à la sécurité
+                            </li>
+                            <li>
+                                 réfections de locaux dont l'utilisation comportait des risques en matière de sécurité
+                            </li>
+                            <li>
+                               changements de matériels défectueux et dont l'utilisation pouvait s'avérer dangereuse
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Les dépenses correspondant aux mesures prises dans l’année pour l’amélioration des conditions de travail, à savoir des dépenses liées à l'amélioration de l'environnement de travail, comme :
+                        <ul>
+                            <li>
+                                meilleur éclairage des locaux
+                            </li>
+                            <li>
+                                achats de mobiliers ergonomiques
+                            </li>
+                            <li>
+                                agencement de locaux pour diminuer la pénibilité de certaines tâches
+                            </li>
+                            <li>
+                                remplacement de matériels ou d'outils par des équipements plus modernes et d'utilisation plus aisée…
+                            </li>
+                            <li>
+                                Ne pas y inclure les achats de matériel de bureau s'il s'agit du remplacement total ou partiel d'un parc existant pour suivre les évolutions de la technique (cas des micro-ordinateurs), les travaux de peinture qui correspondent à de l'entretien normal des locaux, et les investissements en matériel lourd (sauf s’ils ont un rapport direct avec la qualité de l’environnement de travail).
+                            </li>
+                        </ul>
+                    </li>
+                </ul>"
+info_coll_apa.q414: "<p>Les employeurs privés ou publics ont l’obligation de transcrire dans un document unique les résultats de l'évaluation des risques professionnels. </p>
+                <p>Il s’agit d’un outil de prévention au profit des agents, des collectivités et des employeurs publics. </p>"
+info_coll_apa.q415: "<p>Dans le cadre de l’élaboration du Document unique d’évaluation des risques professionnels, un diagnostic des RPS ainsi qu’un plan de prévention doivent être élaborés par l’autorité territoriale. </p>
+                <p>Le plan de prévention des RPS s’inscrit dans une démarche à la fois de prévention des risques mais aussi d’amélioration de la qualité de vie au travail. </p>
+                <p>Cf. Accord-cadre du 22 octobre 2013 relatif à la prévention des RPS dans la  fonction publique (obligation pour les employeurs publics d’élaborer un plan d’évaluation et de prévention des RPS avant 2015) </p>"
+info_coll_apa.q416: "<ul>
+                    <li>
+                        <p>Démarche de prévention des troubles musculo-squelettiques (TMS)</p>
+                        <ul>
+                            <li>
+                                Les TMS (Troubles Musculo-Squelettiques) sont des problématiques plurifactorielles qui trouvent leur source dans le travail. Une démarche de prévention des TMS peut permettre d'identifier les mécanismes d'apparition et ainsi de prévoir des solutions adaptées. L’évaluation de ces troubles et la mise en place d’un plan d’actions est obligatoire dans le cadre de l’élaboration du Document unique d’évaluation des risques professionnels.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>Démarche de prévention des risques cancérogènes, mutagènes, toxiques pour la reproduction (CMR) </p>
+                        <ul>
+                            <li>
+                                La prévention du risque d’exposition à des agents chimiques cancérogènes, mutagènes ou toxiques pour la reproduction (CMR) relève du Code du travail et s’inscrit dans la prévention du risque chimique. L’évaluation des risques et la mise en place des mesures de prévention appropriées reposent sur la connaissance du risque CMR. Elle s’appuie sur les classifications réglementaires des agents chimiques dangereux qui permettent notamment de définir les dangers et de les communiquer par le biais de l’étiquetage. Le Code du travail définit les agents chimiques dangereux CMR et les répartit en 3 catégories selon la gravité des effets CMR (article R. 4411-6).
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>Autres démarches de prévention des risques</p>
+                        <ul>
+                            <li>
+                                Exemple : démarches de prévention du risque routier, des addictions, des chutes de hauteur, de la pénibilité, initiation à la mise en œuvre des extincteurs, …
+                            </li>
+                        </ul>
+                    </li>
+                </ul>"
+info_coll_apa.q43: "<p>D’après le guide de prévention et de traitement des situations de violences et de harcèlement dans la fonction publique de la Direction Générale de l’Administration et de la Fonction Publique, les violences physiques englobent les violences qui portent atteinte à l’intégrité physique de l’individu. </p>
+                <p>Il peut s’agir de coups et blessures qui impliquent un contact direct entre l’agresseur et sa victime. </p>
+                <p>Elles se traduisent principalement par une ou des blessures aux conséquences multiples : préjudice esthétique, souffrance, handicap irréversible, voire perte de la vie. </p>                    <p>Sont par ailleurs aussi des violences physiques, les gestes ou agissements destinés à impressionner fortement, intimider, causer un choc émotionnel ou un trouble psychologique.</p>
+                <p>Il n’existe pas de définition officielle connue des violences verbales.</p>"
+info_coll_apa.mtFraidepla: "<p>Il faut comptabiliser ici les frais de trajet, restauration et hébergement que la collectivité a engagés pour la formation de l’agent.</p>"
+info_coll_apa.q611: "<p>Cet indicateur est réservé aux collectivités qui disposent d’un comité technique, d’une CAP et le comité d’hygiène, de sécurité et des conditions de travail propre. </p>
+                <p>Si la CAP de ma collectivité est placée auprès du centre de gestion, ne pas renseigner le nombre de séance.</p>"
+info_coll_apa.nbHeurd: "<p>Une décharge d’activité de service correspond à l’autorisation donnée à un agent d’exercer une activité syndicale pendant ses heures de services ; elle peut être totale ou partielle et elle est cumulable avec les autorisations d’absence pour mandat syndical. </p>
+                <p>Ces décharges sont attribuées annuellement par la collectivité, l’établissement ou le centre de gestion, sous la forme d’un crédit global d’heures, selon un barème appliqué au nombre d’agents employés.</p>"
+info_coll_apa.nbProtacco: "<p>Une décharge d’activité de service correspond à l’autorisation donnée à un agent d’exercer une activité syndicale pendant ses heures de services ; elle peut être totale ou partielle et elle est cumulable avec les autorisations d’absence pour mandat syndical. </p>
+                <p>Ces décharges sont attribuées annuellement par la collectivité, l’établissement ou le centre de gestion, sous la forme d’un crédit global d’heures, selon un barème appliqué au nombre d’agents employés.</p>"
+info_coll_apa.nbjourgreve: "<p>Le nombre de jours de grève doit être indiqué pour les années 2016 et 2017.</p>
+                <p>Pour les arrêts de travail pour grève d'une durée inférieure à une journée, ramener au nombre de journées en se basant sur une journée de travail de 7 heures.</p>
+                <p>Exemples : 2 agents se mettent en grève pendant 3 jours, mentionner (2 X 3) = 6 jours de grève. Si 25 agents effectuent un débrayage de 2 heures; alors : (25 agents x 2 heures) = 50 heures soit (50 heures / 7 heures par jour) > mentionner 7 jours de grève au total</p>"
+info_coll_apa.q714: "<p>Une collectivité peut choisir de participer financièrement aux garanties de protection sociale complémentaire souscrites par leurs  agents. Il existe 2 catégories de risques auxquels les collectivités peuvent participer :</p>
+                <ul>
+                    <li>
+                        Le risque Santé : soins liés à une atteinte à l’intégrité physique de la personne ou liés à la maternité. Ce risque est garanti par la souscription à une complémentaire santé auprès d’une mutuelle notamment.
+                    </li>
+                    <li>
+                        Le risque Prévoyance : perte de salaire liée à l’incapacité de travail et à l’invalidité. Ce risque est garanti par la souscription de contrats de type maintien de salaire.
+                    </li>
+                </ul>
+                <p>La participation ne pouvant être versée qu’aux seuls contrats garantissant la solidarité intergénérationnelle, l’employeur peut choisir soit de faire vérifier cette condition par d’autres organismes (on parle de labellisation) soit de vérifier par lui-même cette condition (on parle de convention de participation).</p>
+                <ul>
+                    <li>
+                        La labellisation : l’employeur participe pour tous les contrats et règlements qui ont reçu un label attestant du respect de la condition de solidarité intergénérationnelle.
+                    </li>
+                    <li>
+                        La convention de participation : L’employeur propose un seul contrat pour lequel la condition de solidarité intergénérationnelle a été vérifiée directement par la collectivité au terme d’une procédure similaire à un marché public. L'agent souhaitant bénéficier de la participation de son employeur ne pourra donc adhérer qu'à ce seul contrat.
+                    </li>
+                </ul>"
+info_coll_apa.qA3Handitorial: "<ul>
+              <li><b>Non titulaire - Remplaçants (Article 3 - 1)</b> : Pour assurer le remplacement temporaire de fonctionnaires ou d'agents contractuels autorisés à exercer leurs fonctions à temps partiel ou indisponibles en raison d'un congé annuel,
+                  d'un congé de maladie, de grave ou de longue maladie, d'un congé de longue durée, d'un congé de maternité ou pour adoption, d'un congé parental ou d'un congé de présence parentale,
+                  d'un congé de solidarité familiale ou de l'accomplissement du service civil ou national, du rappel ou du maintien sous les drapeaux ou de leur participation à des activités dans le cadre des réserves opérationnelle, de sécurité civile ou sanitaire ou en raison de tout autre congé régulièrement octroyé en application des dispositions réglementaires applicables aux agents contractuels.</li>
+              <li><b>Non titulaire - Affectés sur poste vacant (Article 3 - 2)</b> : Pour faire face temporairement et pour une durée maximale de deux ans à la vacance d'un emploi n’ayant pu être immédiatement pourvu par un fonctionnaire.</li>
+              <li><b>Non titulaire - Pas de cadre d’emploi existant (Article 3 - 3, 1°)</b> : Lorsqu'il n'existe pas de cadre d'emplois comportant les fonctions correspondantes.</li>
+              <li><b>Non titulaire - Catégorie A selon les fonctions et pour des besoins de service (Article 3 - 3, 2°)</b> : Lorsque les besoins ou la nature des fonctions le justifient et sous réserve qu'aucun fonctionnaire n'ait pu être recruté.</li>
+              <li><b>Non titulaire - Secrétaire de mairie, communes de moins de 1000 habitants (Article 3 - 3, 3°)</b> : Pour les emplois de secrétaire de mairie des communes de moins de 1 000 habitants et des groupements composés de communes dont la population moyenne est inférieure à ce seuil.</li>
+              <li><b>Non titulaire - Temps non complet des communes de moins de 1000 habitants (Article 3 - 3, 4°)</b> : Pour les emplois à temps non complet des communes de moins de 1 000 habitants et des groupements composés de communes dont la population moyenne est inférieure à ce seuil et si la quotité de temps de travail est inférieure à 50 % .</li>
+              <li><b>Non titulaire - Communes de moins de 2000 habitants (Article 3 - 3, 4°)</b> : Pour les emplois des communes de moins de 2 000 habitants et des groupements de communes de moins de 10 000 habitants dont la création ou la suppression dépend de la décision d'une autorité qui s'impose à la collectivité ou à l'établissement en matière de création, de changement de périmètre ou de suppression d'un service public.</li>
+              <li><b>Non titulaire—Autres. Il peut s’agir par exemple :</b>
+                  <ul>
+                      <li><b>PACTE (article 38 bis)</b> : Parcours d'accès aux carrières de la fonction publique Territoriale, de l'Etat et de l'Hospitalière</li>
+                      <li><b>Non titulaire contractuels handicapés (article 38)</b> : Bénéficiaires de la réglementation relative aux travailleurs handicapés</li>
+                      <li><b>Non titulaire emplois de direction (article 47)</b> : Emplois fonctionnels de direction dans les très grandes collectivités</li>
+                      <li><b>Non titulaire contractuels antérieurs (article 136)</b> : Agents non titulaires maintenus en fonction lors de la publication de la loi</li>
+                      <li><b>Non titulaire - autres</b> : Autres agents non titulaires sur emplois permanents (notamment salariés de droit privé recrutés lors de la reprise d’activités précédemment gérées par une association).</li>
+                  </ul>
+              </li>
+          </ul>
+          <p><u>NE DOIVENT PAS ETRE COMPTABILISES :</u></p>
+          <ul>
+              <li>les agents non titulaires en congé sans traitement de toute nature, y compris les agents en congé de maladie qui n’ont pas ou plus de droit à rémunération</li>
+              <li>les agents non titulaires placés en CFA</li>
+          </ul>"
+info_coll_apa.qA51Handitorial: "<p>Il s'agit d'ici :</p>
+          <ul>
+              <li>Soit une inaptitude constatée par un médecin agréé, le comité médical départemental ou la commission de réforme pour les agents de droit public (fonctionnaires ou agents non titulaires)</li>
+              <li>Soit d'une inaptitude constatée par le médecin du travail pour les agents de droit privé (apprenti, CAE…)</li>
+              <li>Soit d'un avis du médecin de prévention autre qu'avis favorable (toutes restrictions)</li>
+          </ul>"
+info_coll_apa.qA520Handitorial: "<p>
+                <u>Précisions sur les reclassements demandés :</u><br />
+                Il s’agit ici du « vrai » reclassement <u>au sens statutaire</u>, c’est-à-dire une décision prise par l'autorité territoriale par un arrêté.
+            </p>
+            L'agent est soit :
+          <ul>
+              <li>reclassé dans un autre grade du même cadre d’emplois</li>
+              <li>détaché dans un autre cadre d’emplois</li>
+              <li>recruté dans un autre cadre d’emplois</li>
+          </ul>
+            <p>
+                Dans cette partie, vous devez saisir le nombre total de reclassements demandés. Les reclassements demandés à comptabiliser sont ceux ayant fait l'objet d'une demande écrite de la part de l'agent.
+            </p>"
+info_coll_apa.qA521Handitorial: "<p>Par reclassement, il faut entendre les reclassements effectifs c'est-à-dire qui ont donné lieu à une décision de l'autorité territoriale prise par un arrêté.</p>"
+info_coll_apa.qA62Handitorial: "<p>
+                <u>Précisions sur les aménagements de postes ou des conditions de travail :</u><br />
+                Les restrictions liées à l’état de santé de l’agent peuvent contraindre l’employeur à modifier le poste de travail de l’agent de façon temporaire ou permanente.
+                Toute modification du poste de travail interviendra après avis du médecin du service de médecine préventive habilité à proposer des aménagements (Art. 24 du décret n°85-603).
+            </p>
+            Il peut s'agir :
+          <ul>
+              <li>d’allègement des tâches à accomplir</li>
+              <li>d'aménagement des conditions matérielles du poste</li>
+              <li>d'aménagement du temps de travail</li>
+          </ul>
+          <p>Les mesures mises en œuvre sont celles qui sont prises après avis du médecin de prévention tels qu'avis favorable avec aménagement du poste de travail ou avis favorable avec restriction.</p><br/>
+          <p>Il convient de comptabiliser, dans cet espace, le nombre total de mesures mises en œuvre et non pas le nombre d'agents concernés.</p>"
+info_coll_apa.qA72Handitorial: "<p>
+                <u>Précisions sur les mesures de changement d'affectation :</u><br />
+                Un changement d’affectation est prononcé lorsque les nécessités du service ne permettent pas l’aménagement du poste de travail..
+            </p>
+            Un changement d’affectation est prononcé lorsque les nécessités du service ne permettent pas l’aménagement du poste de travail.
+          <ul>
+              <li>affecté dans un autre emploi de son grade adapté à ses aptitudes physiques au sein de la collectivité </li>
+              <li>affecté dans le même emploi mais dans un autre service dans lequel ses fonctions ne comporteront pas les mêmes contraintes physiques.</li>
+          </ul>
+          <p>Les mesures mises en œuvre sont celles qui sont prises après avis du médecin de prévention tels qu'avis favorable avec aménagement du poste de travail ou avis favorable avec restriction.</p>
+          Plusieurs avis préalables sont nécessaires :
+          <ul>
+              <li>le médecin du service de médecine préventive afin de vérifier que les nouvelles fonctions sont compatibles avec l’état de santé de l’agent</li>
+              <li>le comité médical (après un congé de maladie) ou la commission de réforme (après un congé pour accident ou une maladie professionnelle)</li>
+              <li>la commission administrative paritaire donne un avis préalable au changement d’affectation puisque la situation administrative de l’agent change</li>
+          </ul>
+          <p>
+              La demande de l’agent n’est pas nécessaire pour l’affecter dans un autre emploi ou pour modifier ses conditions de travail.
+              L’agent ne peut refuser cette nouvelle affectation dès lors qu’elle est compatible avec son état de santé.
+          </p>"
+info_coll_apa.qA8Handitorial: "<p>
+                <u>Précisions sur les mesures de disponibilité d'office pour inaptitude physique :</u><br />
+                Le fonctionnaire ayant épuisé ses droits à congés de maladie ordinaire, de longue maladie ou de longue durée peut être placé en disponibilité d'office.
+            </p>
+            La mise en disponibilité intervient :
+          <ul>
+              <li>parce que l'état de santé du fonctionnaire ne lui permet pas encore de reprendre son travail</li>
+              <li>ou parce qu'il a été reconnu inapte aux fonctions correspondant à son grade et que son administration ne peut pas immédiatement le reclasser dans un autre emploi.</li>
+          </ul>"
+
+#-------------------------------------------#
+# Informations bilan social Agent par Agent
+#-------------------------------------------#
+#statut
+info_bs_apa.q121: "<p>Il s'agit ici de savoir si l'agent qui est à temps complet effectue un temps plein ou est à temps partiel</p>"
+info_bs_apa.q28_1: "il s'agit du nombre de demandes présentées (Un agent peut avoir déposé deux demandes au cours de la même année.)"
+info_bs_apa.q28_2: "il s'agit du nombre de demandes acceptées (Un agent peut avoir déposé deux demandes au cours de la même année.)"
+info_bs_apa.q28_4: "il s'agit du nombre de modifications présentées par des agents occupant un emploi permanent à temps complet et exerçant leurs fonctions à temps partiel qui, lors de leur demande de renouvellement modifient la quotité du temps de travail par rapport à la période précédente. Ne pas prendre en compte les retours au temps plein."
+info_bs_apa.q28_5: "Indiquez 1 si l'agent occupant un emploi à temps complet et exerçant sa fonction à temps partiel choisi n'a pas renouvelé sa demande de travail à temps partiel."
+info_bs_apa.qTypeCdd: "<ul>
+              <li><b>Non titulaire - Remplaçants (Article 3 - 1)</b> : Pour assurer le remplacement temporaire de fonctionnaires ou d'agents contractuels autorisés à exercer leurs fonctions à temps partiel ou indisponibles en raison d'un congé annuel,
+                  d'un congé de maladie, de grave ou de longue maladie, d'un congé de longue durée, d'un congé de maternité ou pour adoption, d'un congé parental ou d'un congé de présence parentale,
+                  d'un congé de solidarité familiale ou de l'accomplissement du service civil ou national, du rappel ou du maintien sous les drapeaux ou de leur participation à des activités dans le cadre des réserves opérationnelle, de sécurité civile ou sanitaire ou en raison de tout autre congé régulièrement octroyé en application des dispositions réglementaires applicables aux agents contractuels.</li>
+              <li><b>Non titulaire - Affectés sur poste vacant (Article 3 - 2)</b> : Pour faire face temporairement et pour une durée maximale de deux ans à la vacance d'un emploi n’ayant pu être immédiatement pourvu par un fonctionnaire.</li>
+              <li><b>Non titulaire - Pas de cadre d’emploi existant (Article 3 - 3, 1°)</b> : Lorsqu'il n'existe pas de cadre d'emplois comportant les fonctions correspondantes.</li>
+              <li><b>Non titulaire - Catégorie A selon les fonctions et pour des besoins de service (Article 3 - 3, 2°)</b> : Lorsque les besoins ou la nature des fonctions le justifient et sous réserve qu'aucun fonctionnaire n'ait pu être recruté.</li>
+              <li><b>Non titulaire - Secrétaire de mairie, communes de moins de 1000 habitants (Article 3 - 3, 3°)</b> : Pour les emplois de secrétaire de mairie des communes de moins de 1 000 habitants et des groupements composés de communes dont la population moyenne est inférieure à ce seuil.</li>
+              <li><b>Non titulaire - Temps non complet des communes de moins de 1000 habitants (Article 3 - 3, 4°)</b> : Pour les emplois à temps non complet des communes de moins de 1 000 habitants et des groupements composés de communes dont la population moyenne est inférieure à ce seuil et si la quotité de temps de travail est inférieure à 50 % .</li>
+              <li><b>Non titulaire - Communes de moins de 2000 habitants (Article 3 - 3, 4°)</b> : Pour les emplois des communes de moins de 2 000 habitants et des groupements de communes de moins de 10 000 habitants dont la création ou la suppression dépend de la décision d'une autorité qui s'impose à la collectivité ou à l'établissement en matière de création, de changement de périmètre ou de suppression d'un service public.</li>
+              <li><b>Non titulaire—Autres. Il peut s’agir par exemple :</b>
+                  <ul>
+                      <li><b>PACTE (article 38 bis)</b> : Parcours d'accès aux carrières de la fonction publique Territoriale, de l'Etat et de l'Hospitalière</li>
+                      <li><b>Non titulaire contractuels handicapés (article 38)</b> : Bénéficiaires de la réglementation relative aux travailleurs handicapés</li>
+                      <li><b>Non titulaire emplois de direction (article 47)</b> : Emplois fonctionnels de direction dans les très grandes collectivités</li>
+                      <li><b>Non titulaire contractuels antérieurs (article 136)</b> : Agents non titulaires maintenus en fonction lors de la publication de la loi</li>
+                      <li><b>Non titulaire - autres</b> : Autres agents non titulaires sur emplois permanents (notamment salariés de droit privé recrutés lors de la reprise d’activités précédemment gérées par une association).</li>
+                  </ul>
+              </li>
+          </ul>
+          <p><u>NE DOIVENT PAS ETRE COMPTABILISES :</u></p>
+          <ul>
+              <li>les agents non titulaires en congé sans traitement de toute nature, y compris les agents en congé de maladie qui n’ont pas ou plus de droit à rémunération</li>
+              <li>les agents non titulaires placés en CFA</li>
+          </ul>"
+info_bs_apa.q26RefEmpNonPerma: "<ul>
+              <li><b>Les collaborateurs de cabinet</b> (article 110)</li>
+              <li><b>Les collaborateurs de groupes d’élus</b> (article 110-1)</li>
+              <li><b>Les assistants maternels</b> (en charge d’accueillir à domicile des enfants, des adolescents ou des jeunes majeurs)</li>
+              <li><b>Les assistants familiaux</b> (arrêté du 10 juillet 2008), agréé d'avenant n° 305 du 20 mars 2007 relatif aux assistants familiaux, travaillant dans les centres ou services d'accueil familial ou de placement familial spécialisé</li>
+              <li><b>Les accueillants familiaux</b> : article 57 de la loi DALO (mars 2007); décret d’application n°2010-928 d'aout 2010</li>
+              <li><b>Les non titulaires « renfort ou saisonniers »</b> (art 3, 1° et 2°) doivent être comptabilisés quels qu’ils soient</li>
+              <li><b>Les agents en Contrat Unique d’Insertion (CUI)</b> : créé en décembre 2008</li>
+              <li><b>Les Emplois d’Avenir</b> : créés en 2012</li>
+              <li><b>Les agents non-titulaires employés par le Centre de Gestion et mis à disposition des collectivités</b></li>
+              <li><b>Les apprentis</b> (agents bénéficiant de contrats d’apprentissage)</li>
+              <li><b>Les agents employés par recours à l’intérim</b> : personnes employées dans le cadre du recours au service des entreprises mentionnées à l’article L. 1251-1 du code du travail en référence à l’article 3-7 de la loi n° 84-53 du 26 janvier 1984</li>
+              <li><b>D’autres types d’agents</b>, et notamment les jeunes effectuant un service civique et les personnes bénéficiant d’une rémunération accessoire autorisée par la réglementation sur le cumul des emplois (jurys de concours, surveillants)</li>
+          </ul>
+          <p>Si une personne a travaillé à des <b>périodes distinctes, ne la compter qu'une fois.</b></p>"
+info_bs_apa.q122TempsPartiel: "<p><b>Le temps partiel de droit</b> est accordé à un agent (titulaire ou contractuel) à temps complet et temps non complet (article 60 bis de la loi du 26 janvier 1984) :</p>
+          <ul>
+              <li>soit pour <b>raisons familiales</b> :
+                  <ul>
+                      <li>à l'occasion de <b>chaque naissance jusqu'au 3ème anniversaire</b> de l'enfant</li>
+                      <li>à l'occasion de <b>chaque adoption durant trois ans</b> à compter de l'arrivée au foyer de l'enfant</li>
+                      <li>pour donner des <b>soins à son conjoint</b>, à un <b>enfant</b> ou à un <b>ascendant</b> atteint d'un handicap nécessitant la présence d'une tierce personne ou victime d'un accident ou d'une maladie grave</li>
+                  </ul>
+              </li>
+              <li>soit à <b>certains travailleurs handicapés</b> </li>
+              <li><b>soit pour créer une entreprise</b></li>
+          </ul>
+          <p><b>Le temps partiel sur autorisation</b> est accordé aux fonctionnaires et aux contractuels (employés depuis plus d’un an) à temps complet uniquement, <b>sur leur demande et sous réserve des nécessités du service</b>.
+              Il ne peut être inférieur au mi-temps (article 60 de la loi du 26 janvier 1984).</p>"
+info_bs_apa.q270RefPosistat: "<p>Pour les fonctionnaires :</p>
+          <ul>
+              <li>
+                  <b>En disponibilité</b> : de durée variable, la disponibilité n’ouvre pas droit à traitement, avancement et retraite. Elle peut être d'office (après épuisement des droits à congé maladie…), de droit (motif familial, mandat électif…) ou discrétionnaires (exemple : convenances personnelles sous réserve des nécessités de service).
+                  Exception : Si l’agent est en disponibilité pour élever un enfant de moins de 8 ans, né ou adopté à partir du 1er janvier 2004, cette disponibilité sera prise en compte pour le calcul du nombre de trimestre pour la retraite.
+                  Elle est limitée à 3 ans par enfant.
+              </li>
+              <li>
+                  <b>En position hors cadre</b> : lorsqu'il est placé en position hors cadre, l'agent continue d'exercer ses fonctions dans l'administration, l'organisme ou l'entreprise qui l'accueille dans le cadre d'un détachement préalable obligatoire. L'agent cesse de bénéficier de ses droits à l'avancement et à retraite.
+                  Tous les 5 ans, le fonctionnaire peut demander sa réintégration dans son corps d'origine (Durée :Cinq ans maximum, renouvelables.)
+              </li>
+              <li>
+                  <b>En détachement sur emploi fonctionnel dans sa collectivité</b> : sous réserve de conditions statutaires particulières (appartenance à certains cadres d'emplois), de la taille de la collectivité ou des
+                  seuils démographiques (pour les communes : supérieur à 2 000 habitants ; pour les établissements publics : supérieur à 10 000 habitants).
+              </li>
+              <li>
+                  <b>Détachement sur emploi de cabinet dans sa collectivité</b> : un fonctionnaire peut être détaché sur un emploi de cabinet dans sa propre collectivité.
+                  Pour rappel, les collaborateurs de cabinet assistent les autorités territoriales dans leur double responsabilité politique et administrative.
+                  Toutes les collectivités peuvent créer au moins un emploi de cabinet, quelle que soit leur importance.
+                  En revanche, le nombre d’emplois de cabinet est limité en fonction de la taille démographique de la collectivité (cf. article 110 de la loi du 26 janvier 1984).
+              </li>
+              <li><b>Changement de filière</b> : le concours, le détachement et l’intégration directe permettent la mobilité entre filières.</li>
+              <li>
+                  <b>En congé spécial</b> : Le congé spécial peut s'appliquer aux agents sur emploi fonctionnel (rémunéré par la collectivité).
+                  A l'issue du congé spécial, d'une durée maximum de 5 ans, l'agent est admis d'office à la retraite. Sa durée est raccourcie lorsque le fonctionnaire atteint la limite d'âge durant ces 5 ans.
+              </li>
+              <li><b>Congé fin d'activité</b> : n’existe plus, ne pas compléter</li>
+          </ul>
+          <p>Pour les fonctionnaires et les non titulaires :</p>
+          <ul>
+              <li>
+                  <b>Mise à disposition d’une organisation syndicale</b> : les collectivités peuvent mettre des agents à disposition des organisations syndicales représentatives pour exercer un mandat syndical
+                  à l’échelon national sous réserve des nécessités du service et en fonction du nombre d'agent (cf. article 21 du décret 85-397 du 03 avril 1985 modifié).
+              </li>
+              <li><b>Mise à disposition dans une autre structure</b> : dans le cadre d'une convention avec la dite structure. Le fonctionnaire est payé par la collectivité d'origine.</li>
+              <li><b>En congé parental</b> : l’agent n’est pas rémunéré ; ce congé lui permet de s'occuper des enfants jusqu'à leur 3éme anniversaire.</li>
+          </ul>"
+#absence
+info_bs_apa.q201NbJourAbs: "<p>Décompte des jours d’absence :  Le nombre de jours d’absence hors autorisations spéciales doit être mentionné en jours ou en demi-journée. Au delà d’1/2 journée, décompter un jour.
+              De plus, le décompte doit être en jours calendaires (exp. : arrêt du jeudi au mardi inclus, décompter 6 jours). Pour les autorisations spéciales, les décomptes sont à effectuer en jours ouvrés.</p>"
+#formation
+info_bs_apa.q33Formation: "<p>Précisions sur les types de formation :</p>
+          <ul>
+              <li>
+                  Les <b>préparations aux concours et aux examens d'accès</b> à la FPT comportent:
+                  <ul>
+                    <li>les stages de préparation proprement dits</li>
+                    <li>les participations aux préformations, remises à niveau</li>
+                    <li>les préparations aux concours et examens d’accès à la FPT</li>
+                  </ul>
+              </li>
+
+              <li>
+                  Les <b>formations prévues par les statuts particuliers</b> concernent toutes les <b>formations obligatoires</b> :
+                  <ul>
+                    <li>formation d'intégration (suite à une nomination) formation de professionnalisation (ayant pour but de développer les compétences des agents ou d'en acquérir de nouvelles). </li>
+                    <li><b>Rentrent également dans ce cadre, les actions de formation relatives à l'hygiène et à la sécurité</b> qui sont prévues par le décret du 10 juin 1985 pour <b>les assistants de prévention, conseillers de prévention</b> et pour tous les agents.</li>
+                  </ul>
+              </li>
+
+              <li>La <b>formation personnelle</b> comprend les formations à <b>l'initiative de l'agent</b>, à l'exclusion du congé formation. Ne prendre en compte que les journées de formation prises au moyen de la décharge d'activité de service</li>
+          </ul>"
+info_bs_apa.q341Vae: "<p>
+              <b>La validation des acquis et de l’expérience professionnelle (VAE)</b> est un dispositif permettant aux agents pouvant justifier d’une expérience professionnelle de valoriser cette expérience par un diplôme.
+              Pour cela, un dossier doit être constitué et présenté à la commission placée auprès de la structure qui a délivré le diplôme sollicité par l'agent (école, université...).
+          </p>
+          <p>
+              Vos devez préciser si l'agent :
+          </p>
+          <ul>
+              <li><b>a présenté un dossier de VAE</b> en 2016 (indiquer les dossiers dont la collectivité a connaissance, que les démarches soient accompagnées ou non) </li>
+              <li>a un <b>dossier de VAE</b> en cours (quelle que soit l’année de dépôt, dossier dont le résultat n’est pas encore connu) </li>
+              <li>a vu son <b>dossier de VAE accepté</b> (indiquer les validations partielles ou totales)</li>
+          </ul>"
+info_bs_apa.q351BilaComp: "<p>
+              <b>Le bilan de compétence</b> ou bilan professionnel est réalisé en externe par un intervenant ou organisme spécialisé.
+          </p>"
+#autre
+info_bs_apa.q19Boeth: "<p>
+                Selon l'article L. 5212-13 du Code du Travail, entrent dans le calcul des BOETH (bénéficiaires de l’obligation d’emploi de travailleurs handicapés) les catégories ci-dessous :
+            </p>
+          <ul>
+              <li>Travailleurs reconnus handicapés par la commission des droits et de l’autonomie des personnes handicapées (CDAPH), ex Cotorep</li>
+              <li>Agents bénéficiant d’une allocation temporaire d’invalidité ou  d’une ATIACL</li>
+              <li>Agents reclassés</li>
+              <li>Titulaires de l’allocation adulte handicapé (AAH)</li>
+              <li>Titulaires rente d’accidents du travail ou maladies professionnelles si incapacité permanente supérieure à 10%</li>
+              <li>Orphelins de guerre de - de 21 ans et mères veuves</li>
+              <li>Sapeurs-pompiers volontaires titulaires d’une allocation/rente</li>
+              <li>Titulaires de la carte d’invalidité</li>
+              <li>Titulaires d’un emploi réservé</li>
+              <li>Titulaires d’une pension d’invalidité si l’invalidité réduit d’au moins 2/3 la capacité de gain ou de travail</li>
+              <li>Titulaires d’une pension militaire d’invalidité</li>
+              <li>Veuves de guerre</li>
+          </ul>"
+info_bs_apa.qB21bHanditorial: "<p>
+              ATTENTION : VOUS NE POUVEZ PAS EXIGER CETTE INFORMATION DES AGENTS DE VOTRE COLLECTIVITÉ. SANS INFORMATION, MERCI DE RÉPONDRE «NE SAIT PAS».
+          </p>
+            <p>
+                Les différents types de handicap peuvent être définis comme suit :
+            </p>
+          <ul>
+              <li><b>Auditif</b> : La déficience auditive est un handicap de communication et d’accès à l’information sonore.</li>
+              <li><b>Mental</b> : La déficience intellectuelle est une réduction des facultés intellectuelles qui peut être variable.
+                  Elle se caractérise en particulier par une lenteur de compréhension, le faible contrôle de l’affectivité, et des difficultés à se situer dans l’espace et le temps.</li>
+              <li><b>Moteur</b> : Les troubles de la motricité peuvent entraîner une atteinte partielle ou totale de la mobilité, de la préhension et parfois des troubles de la communication, c’est-à-dire des difficultés à conserver ou changer une position (debout ou assise), à se déplacer, à effectuer des gestes pour atteindre, prendre et manipuler ou encore à parler ou à écrire.
+                  (Exemples : lombalgies, hernies discales, malformations congénitales)</li>
+              <li><b>Pathologie chronique évolutive</b> : Les pathologies chroniques évolutives procèdent principalement du handicap invisible et ont des conséquences qui occasionnent une gêne durable dans la vie et au travail.
+                  La loi du 11 février 2005 dans son article 2 fait référence explicitement à la notion de “trouble de santé invalidant”.
+                  Elles sont marquées spécifiquement par leur évolutivité. (Exemples : diabète, cancer, allergies, asthme sévère, hémophilie, maladie reins ou foie).</li>
+              <li><b>Psychique</b> : Le handicap psychique ou handicap dû à la maladie mentale désigne les conséquences durables, en termes de dépendance ou de compétences sociales, des maladies mentales.
+                  Ces maladies sont susceptibles d’avoir un retentissement personnel et social sur les capacités d’autonomie et d’adaptation. (Exemples : maladie mentale, addictions, dépressions, bipolarités, etc.)</li>
+              <li><b>Visuel</b> : La personne aveugle appréhende le monde principalement par les sens du toucher, de l’ouïe, de l’odorat, et sa perception du mouvement, c’est sa façon de voir.
+                  Même si elle ne voit pas, elle entend et sent la présence. Elle a appris à “voir autrement”. La personne malvoyante voit mal, mais c’est une personne voyante.</li>
+          </ul>"
+info_bs_apa.q26Cet: "<p>
+              Prévu par le décret n°2004-878 du 26 août 2004 modifié, le compte épargne-temps permet à son titulaire d’accumuler des droits à congés.
+              Les agents titulaires et contractuels occupant un emploi à temps complet ou à temps non complet,
+              employés de manière continue et ayant accompli au minimum une année de services, peuvent solliciter l’ouverture d’un compte épargne-temps.
+          </p>"
+demandeanalyse.exportdgcl.transmis: "<p><b>Vous allez exporter votre fichier Excel DGCL issu des données saisies dans l'application. Votre bilan social est en cours de validation par votre Centre de gestion.</b></p>
+          <p>
+              Le dossier compressé que vous allez télécharger contient un fichier Excel vierge, au format DGCL et un fichier Txt contenant la totalité des données saisies depuis l'application.
+              Attention, le fichier exporté est un fichier zippé à décompresser (clic droit et extraire...)
+                Après décompression, il faut ouvrir le fichier Excel et cliquer sur le bouton “importer les données à partir d’un fichier texte”. Après avoir sélectionné le fichier Txt joint les données seront automatiquement dans le fichier DGCL. Vous n’aurez plus qu’à le sauvegarder.
+          </p>"
+demandeanalyse.exportdgcl.encours: "<p><b>Vous allez exporter votre fichier Excel DGCL issu des données saisies dans l'application. Vous êtes actuellement en cours de saisie dans l'application. Nous vous rappelons que vous devez impérativement transmettre le Bilan social depuis l'application sur la partie Saisie de l'enquête pour que votre CDG puisse contrôler et transmettre officiellement votre Bilan social à la DGCL.</b></p>
+          <p>
+              Le dossier compressé que vous allez télécharger contient un fichier Excel vierge, au format DGCL et un fichier Txt contenant la totalité des données saisies depuis l'application.
+              Attention, le fichier exporté est un fichier zippé à décompresser (clic droit et extraire...)
+                Après décompression, il faut ouvrir le fichier Excel et cliquer sur le bouton “importer les données à partir d’un fichier texte”. Après avoir sélectionné le fichier Txt joint les données seront automatiquement dans le fichier DGCL. Vous n’aurez plus qu’à le sauvegarder.
+          </p>"
+demandeanalyse.exportdgcl.valide: "<p>
+              Le dossier compressé que vous allez télécharger contient un fichier Excel vierge, au format DGCL et un fichier Txt contenant la totalité des données saisies depuis l'application.
+              Attention, le fichier exporté est un fichier zippé à décompresser (clic droit et extraire...)
+                Après décompression, il faut ouvrir le fichier Excel et cliquer sur le bouton “importer les données à partir d’un fichier texte”. Après avoir sélectionné le fichier Txt joint les données seront automatiquement dans le fichier DGCL. Vous n’aurez plus qu’à le sauvegarder.
+          </p>"
+
+initbilan.import.valide: "Continuer"
+
+initbilan.import.vide_title: "<p>Initialisation d'une enquête vide</p>"
+initbilan.import.vide_text: "<p>
+                                      Vous allez initialiser un bilan social vide <br>
+                                      Cliquez sur continuer pour lancer le processus.
+                                    </p>"
+initbilan.import.conso_title: "<p>Initialisation d'un bilan social tableau par tableau</p>"
+initbilan.import.conso_text: "<p>
+                                    Vous allez initialiser un bilan social tableau par tableau <br>
+                                    Cliquez sur continuer pour lancer le processus.
+                                  </p>"
+
+
+initbilan.import.dgcl_title: "<p>Initialisation d'un import DCGL</p>"
+initbilan.import.dgcl_text: "<p>
+                                Vous avez importé un fichier TXT pour le DGCL <br>
+                                Cliquez sur continuer pour lancer le processus d'import.
+                              </p>"
+
+initbilan.import.n4ds_title: "<p>Initialisation N4DS</p>"
+initbilan.import.n4ds_text: "<p>
+                                  Vous avez importé un fichier TXT pour le N4DS <br>
+                                  Cliquez sur continuer pour lancer le processus d'import.
+                                </p>"
+
+initbilan.import.apa_title: "<p>Initialisation agent par agent sans pré-remplissage</p>"
+initbilan.import.apa_text: "<p>
+                                      Vous allez initialiser un bilan social agent par agent <br>
+                                      Cliquez sur continuer pour lancer le processus.
+                                    </p>"
+initbilan.import.carriere_title: "<p>Initialisation avec les données CDG</p>"
+initbilan.import.carriere_text: "<p>
+                                      Vous allez initialiser un bilan social agent par agent en recupérant les données de votre centre de gestion <br>
+                                      Cliquez sur continuer pour lancer le processus.
+                                    </p>"
+
+historisation.confirme_import: "<p>
+                                 Vous aller importer un fichier Excel pour l'historisation des SIRET <br>
+                                 Cliquez sur continuer pour lancer le processus d'import.
+                               </p>"
+historisation.confirme_traitement: "<p>
+                                 Vous allez lancer les traitements des données importées via le fichier Excel.<br><br><br>
+
+                                 Cliquez sur continuer pour lancer le processus de traitement.
+                               </p>"
+

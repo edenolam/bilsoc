@@ -1,0 +1,5 @@
+services:
+  long_task_manager:
+    class: 'Bilan_Social\Bundle\LongTaskManagerBundle\Services\LongTaskManager'
+    arguments: ['%long_task_manager%','%file_manager%','@file_manager.file_manager',"@doctrine.orm.entity_manager"]
+    public: true

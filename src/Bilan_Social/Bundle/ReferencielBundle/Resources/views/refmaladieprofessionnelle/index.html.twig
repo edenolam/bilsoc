@@ -1,0 +1,44 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1> Listes des maladies professionnelles</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refmaladieprofessionnelle_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refmaladieprofessionnelle') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refMaladieProfessionnelle in refMaladieProfessionnelles %}
+                    <tr>
+                        <td><a href="{{ path('refmaladieprofessionnelle_show', { 'idMaladiepro': refMaladieProfessionnelle.idMaladiepro }) }}">{{ refMaladieProfessionnelle.cdMaladiepro }}</a></td>
+                        <td>{{ refMaladieProfessionnelle.lbMaladiepro }}</td>
+                        <td>{% if refMaladieProfessionnelle.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refMaladieProfessionnelle} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refmaladieprofessionnelle_show', { 'idMaladiepro': refMaladieProfessionnelle.idMaladiepro }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refmaladieprofessionnelle_edit', { 'idMaladiepro': refMaladieProfessionnelle.idMaladiepro }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

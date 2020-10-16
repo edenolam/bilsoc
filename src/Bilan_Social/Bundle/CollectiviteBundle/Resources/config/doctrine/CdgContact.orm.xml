@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\CdgContact" table="cdg_contact">
+        <indexes>
+            <index name="FK_CDG_CONTACT" columns="ID_CDG"/>
+        </indexes>
+        <id name="idCdgContact" type="integer" column="ID_CDG_CONTACT">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="cdg" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Cdg" inversed-by="contacts">
+            <join-column name="ID_CDG" referenced-column-name="ID_CDG" nullable="false"/>
+        </many-to-one>
+        <field name="lbNom" type="string" column="LB_NOM" length="150" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="lbPren" type="string" column="LB_PREN" length="150" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="lbTele" type="string" column="LB_TELE" length="20" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="lbPort" type="string" column="LB_PORT" length="20" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="lbFonc" type="string" column="LB_FONC" length="200" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="lbMail" type="string" column="LB_MAIL" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="blContactPrincipal" type="boolean" column="BL_CONTACT_PRINCIPAL" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    </entity>
+</doctrine-mapping>

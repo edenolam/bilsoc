@@ -1,0 +1,209 @@
+
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+    {% if formEffectif162 is defined %}
+        {{ form_start(formEffectif162) }}
+
+            <table width="100%" id="ind162Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center" colspan="2">1.6.2(1) - Dépenses réalisées couvrant partiellement l'obligation d'emploi</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>Montant total des marchés passés dans l'année *</td>
+                        <td style="text-align: center" id="r16211">{{ form_row(formEffectif162.r16211) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Dépenses affectées à des mesures adoptées en vue de faciliter l'insertion professionnelle des personnes handicapées dans la fonction publique</td>
+                        <td style="text-align: center" id="r16212">{{ form_row(formEffectif162.r16212) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Dépenses réalisées par l'employeur pour accueillir ou maintenir dans l'emploi des personnes lourdements handicapées</td>
+                        <td style="text-align: center" id="r16213">{{ form_row(formEffectif162.r16213) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Dépenses d'aménagement des postes de travail effectuées pour maintenir dans leur emploi les agents reconnus inaptes à l'exercice de leurs fonctions dans les conditions réglementaires applicables à la fonction publique territoriale et qui n'appartiennent pas à l'une des catégories mentionnées à l'article 2 du décret.</td>
+                        <td style="text-align: center" id="r16214">{{ form_row(formEffectif162.r16214) }}</td>
+                    </tr>
+                    <tr id="totalFilGlo" class="filiTable">
+                        <td><b>Unités déductibles</b></td>
+                        <td style="text-align: center"><span id="unitDed">0</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <input type="hidden" id="total111" value="{{total111}}"/>
+            <input type="hidden" id="total121" value="{{total121}}"/>
+            <input type="hidden" id="total161" value="{{total161}}"/>
+
+
+            <table width="100%" id="ind1622Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center" colspan="2">1.6.2(2) - Taux d'emploi (calculé sur le champ des emplois permanents)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nombre de travailleurs en situation de handicap sur emploi permanent employés par la collectivité au 31/12/{{AnneeCamp}}</td>
+                        <td style="text-align: center">{{total161}}</td>
+                    </tr>
+                    <tr>
+{#                        <td>Dépenses affectées à des mesures adoptées en vue de faciliter l'insertion professionnelle des personnes handicapées dans la fonction publique</td>#}
+                        <td>Taux d'emploi direct des travailleurs en situation de handicap</td>
+                        <td style="text-align: center"><span id="mt2">0</span></td>
+                    </tr>
+                    <tr>
+{#                        <td>Dépenses réalisées par l'employeur pour accueillir ou maintenir dans l'emploi des personnes lourdements handicapées</td>#}
+                        <td>Taux d'emploi légal des travailleurs en situation de handicap</td>
+                        <td style="text-align: center"><span id="mt3">0</span></td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+
+
+        <br/>
+
+        {% if indicateur_precedent is not null %}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/btn_modal.html.twig', { 'indicateur_precedent': indicateur_precedent, 'name' : 162 }) }}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/modal_162.html.twig', { 'indicateur_precedent': indicateur_precedent }) }}
+        {% endif %}
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formEffectif162) }}
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            {% if questionCollectiviteConsolide.q2 == true   %}
+
+                $(document).change();
+                update162();
+
+            {% endif %}
+        });
+
+        function changedR162() {
+            update162();
+        }
+
+        function update162(){
+            var mtTot1 = 0;
+
+            if($('#bscForm162_r16211').val()!="") {
+                mtTot1 += parseInt($('#bscForm162_r16211').val());
+            }
+            if($('#bscForm162_r16212').val()!="") {
+                mtTot1 += parseInt($('#bscForm162_r16212').val());
+            }
+            if($('#bscForm162_r16213').val()!="") {
+                mtTot1 += parseInt($('#bscForm162_r16213').val());
+            }
+            if($('#bscForm162_r16214').val()!="") {
+                mtTot1 += parseInt($('#bscForm162_r16214').val());
+            }
+
+            mtTot1 = parseInt(parseFloat(mtTot1)/17490.24 * 100) / 100;
+
+
+            $('#unitDed').html(mtTot1);
+
+            var mtTot2 = parseFloat($('#total161').val()) / (parseFloat($('#total111').val()) + parseFloat($('#total121').val()) ) * 100;
+            mtTot2 = parseInt(mtTot2 * 100) / 100;
+
+            $('#mt2').html(mtTot2);
+
+            var mtTot3 =  ( parseFloat($('#total161').val()) +  mtTot1 )  /
+                                (parseFloat($('#total111').val()) + parseFloat($('#total121').val()) ) * 100;
+
+            mtTot3 = parseInt(mtTot3 * 100) / 100;
+            $('#mt3').html(mtTot3);
+
+
+        }
+
+
+
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm162_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_effectif_ind162_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind162').load('{{ path('bilan_conso_effectif_ind162_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_tpstrav_edit') }}';
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+

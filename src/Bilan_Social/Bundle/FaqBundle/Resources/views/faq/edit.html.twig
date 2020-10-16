@@ -1,0 +1,60 @@
+{% extends '@Faq/layout.html.twig' %}
+
+
+{% block body %}
+    {{ parent() }}
+
+
+    <div class="col-xs-9">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <h1>Modification FAQ</h1>
+        <a  href="{{ path('faq_index_administration') }}"><button class="btn pull-right margin10">Retour à la liste des FAQs</button></a>
+        {{ form_start(edit_form) }}
+        {{ form_row(edit_form.question) }}
+        {{ form_row(edit_form.reponse) }}
+        {{ form_row(edit_form.profil) }}
+        {{ form_row(edit_form.existCategorie) }}
+        {{ form_row(edit_form.categorie, {
+            'attr': {'readonly' : 'true' },
+            'label' : 'Catégorie' })
+        }}
+
+        <div class="categorieExist hidden">
+            {% if categories is not null %}
+                <select id="categoriesSelect" class='form-control'>
+                    <option value="">Choississez une catégorie existante</option>
+                    {% for categorie in categories %}
+                        <option value="{{ categorie }}">{{ categorie }}</option>
+                    {% endfor %}
+                </select>
+
+            {% else %}
+                <p>Il n'y a aucune catégorie éxistante</p>
+            {% endif %}
+        </div>
+        <div class="categoriesInput hidden" >
+            <input id="categoriesInput" class="form-control" placeholder="Vueillez entrer une nouvelle catégorie" type="text">
+        </div>
+
+
+
+        <input type="submit" class="btn pull-right" value="Valider" />
+        {{ form_end(edit_form) }}
+
+
+
+
+        {{ form_start(delete_form) }}
+        <input class="btn" type="submit" value="Supprimer">
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}

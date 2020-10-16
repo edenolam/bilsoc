@@ -1,0 +1,435 @@
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+
+    {% if formRemuneration321 is defined %}
+
+        {% if indicateur_precedent is defined and indicateur_precedent is not null %}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/btn_modal.html.twig', { 'indicateur_precedent': indicateur_precedent, 'name' : 321 }) }}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/modal_321.html.twig', { 'indicateur_precedent': indicateur_precedent }) }}
+        {% endif %}
+        {% set bilan_social_consolide = formRemuneration321.vars.data %}
+        {{ form_start(formRemuneration321) }}
+
+        <label>3.2.1.0 - Agents contractuels - Au 31/12/{{AnneeCamp}}, avez-vous mis en place le RIFSEEP ?</label>
+        {{ form_row(formRemuneration321.rifseepContractuel )}}
+
+        <h5>
+            Champ : le tableau qui suit concerne les contractuels sur un emploi permanent.<br/>
+            <br/>
+            Les rémunérations à prendre en compte sont les rémunérations annuelles des agents ayant travaillé au moins jour durant l'année {{AnneeCamp}}.<br/>
+            Tous les montants doivent être exprimés en  euros (arrondir à l'euro supérieur).<br/>
+            <br/>
+            3.2.1 inclue le traitement brut annuel, les indemnités de résidence, le supplément familial de traitement,
+                les primes ou indemnités de toutes natures.<br/>
+
+        </h5>
+
+        <table width="100%" id="ind321Table" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="3" style="text-align: center">CONTRACTUELS SUR EMPLOIS PERMANENTS</th>
+                    <th colspan="3" style="text-align: center">Montant total des rémunérations annuelles brutes (hors charge patronales)</th>
+                    <th colspan="3" style="text-align: center">dont primes et indemnités</th>
+                    <th colspan="3" style="text-align: center">dont heures supplémentaires ou  complémentaires</th>
+                    <th rowspan="3" style="text-align: center" class="filiTable">Total des "dont"</th>
+                </tr>
+                <tr>
+                    <th colspan="3" style="text-align: center">3.2.1</th>
+                    <th colspan="3" style="text-align: center">3.2.1.1</th>
+                    <th colspan="3" style="text-align: center">3.2.1.2</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center">Hommes</th>
+                    <th style="text-align: center">Femmes</th>
+                    <th style="text-align: center" class="filiTable">Total</th>
+                    <th style="text-align: center">Hommes</th>
+                    <th style="text-align: center">Femmes</th>
+                    <th style="text-align: center" class="filiTable">Total</th>
+                    <th style="text-align: center">Hommes</th>
+                    <th style="text-align: center">Femmes</th>
+                    <th style="text-align: center" class="filiTable">Total</th>
+                </tr>
+            </thead>
+            <tbody class="ind_table_totaux">
+            {% set curentIdFili = null %}
+                {% for tag in formRemuneration321.ind321sTemp %}
+                    {% set tempIdFili = tag.refFiliere.vars.data.idFili %}
+                    {% set row_data = tag.vars.value %}
+                    {% set total_row_rab = row_data.r3211 + row_data.r3212 %}
+                    {% set total_row_prim = row_data.r3213 + row_data.r3214 %}
+                    {% set total_row_hsc = row_data.r3215 + row_data.r3216 %}
+                    {% if tempIdFili != curentIdFili %}
+                        <tr id="321idTr_{{tag.refFiliere.vars.data.idFili}}" idFili="{{tag.refFiliere.vars.data.idFili}}">
+                            <td id="filiereTd_{{tag.refFiliere.vars.data.idFili}}" style="min-width: 200px">
+                                {{ form_widget(tag.refFiliere) }}
+                                {{ tag.refFiliere.vars.data.lbFili}}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% set curentIdFili = tempIdFili %}
+                    {% endif %}
+
+                    <tr idCate="{{ tag.refCategorie.vars.data.idCate }}">
+                        <td id="categorieTd_{{ tag.refCategorie.vars.data.idCate }}" style="min-width: 300px">
+                            {{ form_widget(tag.refCategorie) }}
+                            {{ tag.refCategorie.vars.data.lbCate}}
+                            {{ form_widget(tag.refFiliere) }}
+                        </td>
+                        <td id="r3211_{{tag.refFiliere.vars.data.idFili}}_{{ tag.refCategorie.vars.data.idCate }}" data-col-group='row_rab'>{{ form_widget(tag.r3211) }}</td>
+                        <td id="r3212_{{tag.refFiliere.vars.data.idFili}}_{{ tag.refCategorie.vars.data.idCate }}" data-col-group='row_rab'>{{ form_widget(tag.r3212) }}</td>
+                        <td data-col-id='row_rab'>{{ total_row_rab }}</td>
+                        <td id="r3213_{{tag.refFiliere.vars.data.idFili}}_{{ tag.refCategorie.vars.data.idCate }}" data-col-group='row_prim'>{{ form_widget(tag.r3213) }}</td>
+                        <td id="r3214_{{tag.refFiliere.vars.data.idFili}}_{{ tag.refCategorie.vars.data.idCate }}" data-col-group='row_prim'>{{ form_widget(tag.r3214) }}</td>
+                        <td data-col-id='row_prim' data-col-group='total_row'>{{ total_row_prim }}</td>
+                        <td id="r3215_{{tag.refFiliere.vars.data.idFili}}_{{ tag.refCategorie.vars.data.idCate }}" data-col-group='row_hsc'>{{ form_widget(tag.r3215) }}</td>
+                        <td id="r3216_{{tag.refFiliere.vars.data.idFili}}_{{ tag.refCategorie.vars.data.idCate }}" data-col-group='row_hsc'>{{ form_widget(tag.r3216) }}</td>
+                        <td data-col-id='row_hsc' data-col-group='total_row'>{{ total_row_hsc }}</td>
+                        <td data-col-id='total_row'>{{ total_row_prim + total_row_hsc }}</td>
+
+                    </tr>
+                {% endfor %}
+
+            {% set total_fili = bilan_social_consolide.getIndPileForBy('ind321s', ['refFiliere','cdFili'],['AOTM','H','HH'],{'exclude':true}) %}
+            {% set total_fili_rab = total_fili.r3211 + total_fili.r3212 %}
+            {% set total_fili_prim = total_fili.r3213 + total_fili.r3214 %}
+            {% set total_fili_hsc = total_fili.r3215 + total_fili.r3216 %}
+            <tr class="filiTable row_totaux" id="totalFilGlo">
+                <td><b>TOUTES FILIERES</b></td>
+                <td style="text-align: center" data-col-group='fili_rab'>{{ total_fili.r3211 }}</td>
+                <td style="text-align: center" data-col-group='fili_rab'>{{ total_fili.r3212 }}</td>
+                <td data-col-id='fili_rab'>{{ total_fili_rab }}</td>
+                <td style="text-align: center" data-col-group='fili_prim'>{{ total_fili.r3213 }}</td>
+                <td style="text-align: center" data-col-group='fili_prim'>{{ total_fili.r3214 }}</td>
+                <td data-col-id='fili_prim' data-col-group='tot_fili'>{{ total_fili_prim }}</td>
+                <td style="text-align: center" data-col-group='fili_hsc'>{{ total_fili.r3215 }}</td>
+                <td style="text-align: center" data-col-group='fili_hsc'>{{ total_fili.r3216 }}</td>
+                <td data-col-id='fili_hsc' data-col-group='tot_fili'>{{ total_fili_hsc }}</td>
+                <td data-col-id='tot_fili'>{{ total_fili_prim + total_fili_hsc }}</td>
+            </tr>
+
+            {% for tag in formRemuneration321.ind321AotmsTemp %}
+                {% set total_aotm_fili_rab = tag.vars.value.r3211 + tag.vars.value.r3212 %}
+                {% set total_aotm_fili_prim = tag.vars.value.r3213 + tag.vars.value.r3214 %}
+                {% set total_aotm_fili_hsc = tag.vars.value.r3215 + tag.vars.value.r3216 %}
+                <tr id="321idTr_{{tag.refFiliere.vars.value}}" idFiliAotm="{{tag.refFiliere.vars.value}}">
+                    <td id="filiereTd" style="min-width: 200px">
+                        {{ form_widget(tag.refFiliere) }}
+                        {{ form_widget(tag.refCategorie) }}
+                        {{ tag.refFiliere.vars.data.lbFili}}
+                    </td>
+                    <td id="r3211" data-col-group='aotm_rab'>{{ form_widget(tag.r3211) }}</td>
+                    <td id="r3212" data-col-group='aotm_rab'>{{ form_widget(tag.r3212) }}</td>
+                    <td data-col-id='aotm_rab' >{{ total_aotm_fili_rab }}</td>
+                    <td id="r3213" data-col-group='aotm_prim'>{{ form_widget(tag.r3213) }}</td>
+                    <td id="r3214" data-col-group='aotm_prim'>{{ form_widget(tag.r3214) }}</td>
+                    <td data-col-id='aotm_prim' data-col-group='total_aotm'>{{ total_aotm_fili_prim }}</td>
+                    <td id="r3215" data-col-group='aotm_hsc'>{{ form_widget(tag.r3215) }}</td>
+                    <td id="r3216" data-col-group='aotm_hsc'>{{ form_widget(tag.r3216) }}</td>
+                    <td data-col-id='aotm_hsc' data-col-group='total_aotm'>{{ total_aotm_fili_hsc }}</td>
+                    <td data-col-id='total_aotm'>{{ total_aotm_fili_prim + total_aotm_fili_hsc }}</td>
+                </tr>
+            {% endfor %}
+            {% set total_all = bilan_social_consolide.getIndPileForBy('ind321s',['refFiliere','cdFili'],['H','HH'],{'exclude':true}) %}
+            {% set total_all_rab = total_all.r3211 + total_all.r3212 %}
+            {% set total_all_prim = total_all.r3213 + total_all.r3214 %}
+            {% set total_all_hsc = total_all.r3215 + total_all.r3216 %}
+                {% if formRemuneration321.ind321sTemp.count() > 0  %}
+                    <tr class="filiTable row_totaux" id="totalGlo">
+                        <td><b>Total</b></td>
+                        <td style="text-align: center" data-col-group='tot_rab'>{{ total_all.r3211 }}</td>
+                        <td style="text-align: center" data-col-group='tot_rab'>{{ total_all.r3212 }}</td>
+                        <td style="text-align: center" data-col-id='tot_rab'>{{ total_all_rab }}</td>
+                        <td style="text-align: center" data-col-group='tot_prim'>{{ total_all.r3213 }}</td>
+                        <td style="text-align: center" data-col-group='tot_prim'>{{ total_all.r3214 }}</td>
+                        <td style="text-align: center" data-col-id='tot_prim' data-col-group='tot_all'>{{ total_all_prim }}</td>
+                        <td style="text-align: center" data-col-group='tot_hsc'>{{ total_all.r3215 }}</td>
+                        <td style="text-align: center" data-col-group='tot_hsc'>{{ total_all.r3216 }}</td>
+                        <td style="text-align: center" data-col-id='tot_hsc' data-col-group='tot_all'>{{ total_all_hsc }}</td>
+                        <td style="text-align: center" data-col-id='tot_all'>{{ total_all_prim + total_all_hsc }}</td>
+                    </tr>
+                {% endif %}
+
+            </tbody>
+        </table>
+
+        <br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formRemuneration321) }}
+
+
+
+        <script type="text/javascript">
+
+                $(document).ready(function ()
+                {
+                    changeDetect = false;
+                    $(document).change();
+                    // update321();
+                });
+
+
+                function changedR321(obj) {
+                    // update321();
+                }
+
+
+                function update321() {
+                    var table321 = document.getElementById('ind321Table');
+                    var rowLength321 = table321.rows.length;
+                    var idxRowInput = 0;
+                    var idxRowInputAotm = 0;
+
+                    var mtTot1 = 0;
+                    var mtTot2 = 0;
+                    var mtTot3 = 0;
+                    var mtTot4 = 0;
+                    var mtTot5 = 0;
+                    var mtTot6 = 0;
+
+                    var mtTot1FilGlo = 0;
+                    var mtTot2FilGlo = 0;
+                    var mtTot3FilGlo = 0;
+                    var mtTot4FilGlo = 0;
+                    var mtTot5FilGlo = 0;
+                    var mtTot6FilGlo = 0;
+
+                    var mtTot1Glo = 0;
+                    var mtTot2Glo = 0;
+                    var mtTot3Glo = 0;
+                    var mtTot4Glo = 0;
+                    var mtTot5Glo = 0;
+                    var mtTot6Glo = 0;
+
+                    for (var i = 3; i < rowLength321; i += 1) {
+                        var row = table321.rows[i];
+                        var cellLength = row.cells.length;
+
+                        var lineTotalFilGlo = false;
+                        var lineTotalGlo = false;
+                        var lineData = false;
+                        if(row.getAttribute("idCate") != undefined) {
+                            lineData = true;
+                        }
+
+                        var lineAotm = false;
+
+                        if(row.getAttribute("idFiliAotm") != undefined) {
+                            lineAotm = true;
+                        }
+
+                        if (row.id.substring(0, 11) == "totalFilGlo") {
+                            lineTotalFilGlo = true;
+
+                            for (var y = 0; y < cellLength; y += 1) {
+                                var cell = row.cells[y];
+                                if (y == 1) {
+                                    cell.innerHTML = parseFloatNumber(mtTot1FilGlo,2);
+                                    mtTot1FilGlo = 0;
+                                } else if (y == 2) {
+                                    cell.innerHTML = parseFloatNumber(mtTot2FilGlo,2);
+                                    mtTot2FilGlo = 0;
+                                } else if (y == 3) {
+                                    cell.innerHTML = parseFloatNumber(mtTot3FilGlo,2);
+                                    mtTot3FilGlo = 0;
+                                } else if (y == 4) {
+                                    cell.innerHTML = parseFloatNumber(mtTot4FilGlo,2);
+                                    mtTot4FilGlo = 0;
+                                } else if (y == 5) {
+                                    cell.innerHTML = parseFloatNumber(mtTot5FilGlo,2);
+                                    mtTot5FilGlo = 0;
+                                } else if (y == 6) {
+                                    cell.innerHTML = parseFloatNumber(mtTot6FilGlo,2);
+                                    mtTot6FilGlo = 0;
+                                }
+
+                            }
+                        }
+
+                        if (row.id.substring(0, 8) == "totalGlo") {
+                            lineTotalGlo = true;
+
+                            for (var y = 0; y < cellLength; y += 1) {
+                                var cell = row.cells[y];
+                                if (y == 1) {
+                                    cell.innerHTML = mtTot1Glo;
+                                    mtTot1Glo = 0;
+                                } else if (y == 2) {
+                                    cell.innerHTML = mtTot2Glo;
+                                    mtTot2Glo = 0;
+                                } else if (y == 3) {
+                                    cell.innerHTML = mtTot3Glo;
+                                    mtTot3Glo = 0;
+                                } else if (y == 4) {
+                                    cell.innerHTML = mtTot4Glo;
+                                    mtTot4Glo = 0;
+                                } else if (y == 5) {
+                                    cell.innerHTML = mtTot5Glo;
+                                    mtTot5Glo = 0;
+                                } else if (y == 6) {
+                                    cell.innerHTML = mtTot6Glo;
+                                    mtTot6Glo = 0;
+                                }
+                            }
+                        }
+
+                        for (var y = 0; y < cellLength; y += 1) {
+                            var cell = row.cells[y];
+                            var cellValue;
+
+                            if (cell.id.substring(0, 5) == "r3212") {
+                                cellValue = $('#bscForm321_ind321' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r3212').val();
+                                if (cellValue != "") {
+                                    cellValue = parseFloatNumber(cellValue);
+                                    if(!lineAotm) {
+                                        mtTot2 += cellValue;
+                                        mtTot2FilGlo += cellValue;
+                                    }
+                                    mtTot2Glo += cellValue;
+                                }
+                            } else if (cell.id.substring(0, 5) == "r3213") {
+                                cellValue = $('#bscForm321_ind321' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r3213').val();
+                                if (cellValue != "") {
+                                    cellValue = parseFloatNumber(cellValue);
+                                    if(!lineAotm) {
+                                        mtTot3 += cellValue;
+                                        mtTot3FilGlo += cellValue;
+                                    }
+                                    mtTot3Glo += cellValue;
+                                }
+                            } else if (cell.id.substring(0, 5) == "r3214") {
+                                cellValue = $('#bscForm321_ind321' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r3214').val();
+                                if (cellValue != "") {
+                                    cellValue = parseFloatNumber(cellValue);
+                                    if(!lineAotm) {
+                                        mtTot4 += cellValue;
+                                        mtTot4FilGlo += cellValue;
+                                    }
+                                    mtTot4Glo += cellValue;
+                                }
+                            }  else if (cell.id.substring(0, 5) == "r3215") {
+                                cellValue = $('#bscForm321_ind321' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r3215').val();
+                                if (cellValue != "") {
+                                    cellValue = parseFloatNumber(cellValue);
+                                    if(!lineAotm) {
+                                        mtTot5 += cellValue;
+                                        mtTot5FilGlo += cellValue;
+                                    }
+                                    mtTot5Glo += cellValue;
+                                }
+                            }else if (cell.id.substring(0, 5) == "r3216") {
+                                cellValue = $('#bscForm321_ind321' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r3216').val();
+                                if (cellValue != "") {
+                                    cellValue = parseFloatNumber(cellValue);
+                                    if(!lineAotm) {
+                                        mtTot6 += cellValue;
+                                        mtTot6FilGlo += cellValue;
+                                    }
+                                    mtTot6Glo += cellValue;
+                                }
+                            } else if (cell.id.substring(0, 5) == "r3211") {
+                                cellValue = $('#bscForm321_ind321' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r3211').val();
+                                if (cellValue != "") {
+                                    cellValue = parseFloatNumber(cellValue);
+                                    if(!lineAotm) {
+                                        mtTot1 += cellValue;
+
+                                        mtTot1FilGlo += cellValue;
+                                    }
+                                    mtTot1Glo += cellValue;
+                                }
+                            }
+                        }
+
+                        if (lineData) {
+                            idxRowInput++;
+                        }
+                        if(lineAotm) idxRowInputAotm++;
+                    }// end for line
+
+                }
+
+
+                /*
+                 * METHODE AJAX SUBMIT
+                 */
+                $(function () {
+                    // Enregistrement en ajax
+                    $('form').on('submit', function (e) {
+                        var $this = $(this).closest('div');
+                        var btn = $(this).find("input[type=submit]:focus");
+                        var value_valide = $(btn).data('valide');
+                        $('#bscForm321_valide').val(value_valide);
+                        // Submit en ajax pour le fonctionnement d'appel par onglet
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ path('bilan_conso_remuneration_ind321_edit') }}',
+                            data: $('form').serialize(),
+                            success: function (responsejson) {
+
+                                if (responsejson.data == 1) {
+                                    if (recordAuto) {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement automatique réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+                                    } else {
+                                        $('#ind321').load('{{ path('bilan_conso_remuneration_ind321_edit') }}', function () {
+                                            $('#progImg').hide();
+                                            $('#messageJS').html("Enregistrement réussi");
+                                            messageJS.dialog("open");
+                                            setIncoherenceTable(responsejson);
+
+                                            var next = $($this).next('.panel-heading');
+                                            if(next.length == 0) {
+                                                window.location.href = '{{ path('bilan_conso_conditions_edit') }}';
+                                            }
+                                        });
+
+                                    }
+                                } else if (responsejson.data == "-3") {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                    messageJS.dialog("open");
+                                } else {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                    messageJS.dialog("open");
+                                }
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(xhr);
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                                messageJS.dialog("open");
+                            }
+
+                        });
+
+                    });
+
+                });
+
+        </script>
+    {% endif %}

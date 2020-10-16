@@ -1,0 +1,614 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+    {% if (EnqueteCollectiviteparam.blBilaSoci == true ) %}
+        <div class="col-md-9 contentConsolide pull-right" style='padding-right:0;padding-left:0;'>
+            {# <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-22.png") }}" class="icone-menu"/> Rémunération{% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_PREVIOUS_ADMIN') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3> #}
+            <h3 class="title-ind"><img src="{{ asset("img/icone/DescriptionSite-22.png") }}" class="icone-menu"/> Rémunération{% if consolide != null and (consolide.fgStat == 0 or consolide.fgStat is null or consolide.fgStat == 3  or consolide.fgStat == 4) and canwrite == true %}<button id='transmettre-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>{% endif %}{% if consolide != null and is_granted('ROLE_CDG') and (consolide.fgStat == 1 or consolide.fgStat == 5) and canwrite == true %}<button id='valider-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button><button id='refuser-cons' value='{{ consolide.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>{% endif %}</h3>
+            <div id="incoh_wrapper">
+            <div id="incoh">
+
+
+                <div id="incohpanel" class="panel panel-default">
+
+                    <span class="pull-right buttonmoins" id="HideShowIncoh" title="Réduire" ></span>
+
+                    Incohérences <span id="nbErreur" class="badge"></span>
+                    <table id="incoherenceTable" width="50%" class="table table-striped table-hover table-bordered">
+                        <tbody>
+                            {% if incoherenceList != null and incoherenceList.count() > 0  %}
+                                {% for tag in incoherenceList %}
+                                    {% if tag.form == '4' %}
+                                        <tr>
+                                            <td><a href="#" onclick="openError('{{tag.idToggle1}}', '{{tag.idToggle2}}', '{{tag.field}}')">{{tag.tableNum}}</a>
+                                            </td>
+                                            <td>{{ tag.message }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div id='incoh-legende'>
+                        <div>
+                            <p>Contrôle de cohérence :</p>
+                        </div>
+                        <div>
+                            <p><span class="badge badge-pill" id='cohe-error'>&nbsp;</span>Erreur de cohérence</p>
+                        </div>
+                        <div>
+                            <p><span class="badge badge-pill" id='cohe-atte'>&nbsp;</span>Donnée(s) en attente</p>
+                        </div>
+                        <div>
+                            <p><span class="badge badge-pill" id='cohe-vali'>&nbsp;</span>Validé</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="ghost hidden"></div>
+        </div>
+
+        <div class="panel panel-default col-md-9 contentConsolide pull-right">
+
+            {% if questionCollectiviteConsolide.q1 == true  %}
+                <!--  Tab 3.1.1 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            3.1.1 - Rémunérations des fonctionnaires occupant un EMPLOI PERMANENT
+                            ayant travaillé au moins un jour durant l'année {{AnneeCamp}}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb311" class="progress-bar remuneration {% if consolide != null %}{% if consolide.blIncoInd311 == 1 %} {% elseif consolide.blIncoInd311 == 2 %} blue {% elseif consolide.blIncoInd311 == 3 %} orange {% elseif consolide.blIncoInd311 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd311 }}%{% endif %};">
+                                    <span class="sr-only ind311-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb311-value status">{% if consolide != null %} {% if consolide.blIncoInd311 == 1 or consolide.blIncoInd311 == null %} A saisir {% elseif consolide.blIncoInd311 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd311 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd311 == 4 %}{% if totalInd311 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd311 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-311" title="Fiche 3.1.1" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle311" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind311" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+            {% if questionCollectiviteConsolide.q3 == true  %}
+                <!--  Tab 3.2.1 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            3.2.1 - Rémunérations des contractuels occupant un EMPLOI PERMANENT
+                                ayant travaillé au moins un jour durant l'année {{AnneeCamp}}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb321" class="progress-bar remuneration {% if consolide != null %}{% if consolide.blIncoInd321 == 1 %} {% elseif consolide.blIncoInd321 == 2 %} blue {% elseif consolide.blIncoInd321 == 3 %} orange {% elseif consolide.blIncoInd321 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd321 }}%{% endif %};">
+                                    <span class="sr-only ind321-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb321-value status">{% if consolide != null %} {% if consolide.blIncoInd321 == 1 or consolide.blIncoInd321 == null %} A saisir {% elseif consolide.blIncoInd321 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd321 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd321 == 4 %}{% if totalInd321 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd321 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-321" title="Fiche 3.2.1" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle321" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind321" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+
+            {% if questionCollectiviteConsolide.q5 == true  %}
+                <!--  Tab 3.3.1 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            3.3.1 Rémunérations des agents sur EMPLOIS NON PERMANENTS ayant travaillé au moins un jour durant l'année {{AnneeCamp}}
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb331" class="progress-bar remuneration" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd331 }}% {% endif %}" >
+                                    <span class="sr-only ind331-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb331-value status">{% if consolide != null %}{% if consolide.moyenneInd331 == 0 %} A saisir {% elseif consolide.moyenneInd331 == 100 %}{% if totalInd331 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd331 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span id="open-fiche-331" title="Fiche 3.3.1" class="buttonquestion"></span>
+                            <span class="buttonplus" id="toggle331" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body ind_totaux_inside" id="ind331" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+
+            <!--  Tab 3.4.1 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        3.4.1 - Indemnisation du chômage pour les titulaires
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb341" class="progress-bar remuneration" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd341 }}% {% endif %}" >
+                                <span class="sr-only ind341-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb341-value status">{% if consolide != null %}{% if consolide.moyenneInd341 == 0 %} A saisir {% elseif consolide.moyenneInd341 == 100 %}{% if totalInd341 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd341 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-341" title="Fiche 3.4.1" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle341" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind341" style="display: none;">
+
+            </div>
+
+
+            <!--  Tab 3.4.2 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        3.4.2 - Indemnisation du chômage pour les contractuels
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb342" class="progress-bar remuneration" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd342 }}% {% endif %}" >
+                                <span class="sr-only ind342-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb342-value status">{% if consolide != null %}{% if consolide.moyenneInd342 == 0 %} A saisir {% elseif consolide.moyenneInd342 == 100 %}{% if totalInd342 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd342 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span id="open-fiche-342" title="Fiche 3.4.1" class="buttonquestion"></span>
+                        <span class="buttonplus" id="toggle342" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind342" style="display: none;"></div>
+
+
+
+            <!--  Tab 3.4.3 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        3.4.3 - Maintien des primes en cas de congé maladie
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb343" class="progress-bar droit" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd343 }}% {% endif %}" >
+                                <span class="sr-only ind711-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb343-value status">{% if consolide != null %}{% if consolide.moyenneInd343 == 0 %} A saisir {% elseif consolide.moyenneInd343 == 100 %} Saisie cohérente {%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle343" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body" id="ind343" style="display: none;">
+
+            </div>
+
+
+            <!--  Tab 3.4.4 -->
+            <div class="panel-heading">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        3.4.4 - Nombre d'heures supplémentaires et complémentaires réalisées et rémunérées en {{AnneeCamp}} par filière et cadre d'emplois
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="progress">
+                            <div id="pb344" class="progress-bar remuneration" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {% if consolide != null %}{{ consolide.moyenneInd344 }}% {% endif %}" >
+                                <span class="sr-only ind344-value">0%</span>
+                            </div>
+
+                        </div>
+                        <span class="pb344-value status">{% if consolide != null %}{% if consolide.moyenneInd344 == 0  %} A saisir {% elseif consolide.moyenneInd344 == 100 %}{% if totalInd344 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd344 != 0.0 %} Saisie cohérente{% endif %}{%endif%}{%endif%} </span>
+                    </div>
+                    <div class="col-xs-1 information">
+                        <span class="buttonplus" id="toggle344" title="Agrandir" ></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body ind_totaux_inside" id="ind344" style="display: none;">
+
+            </div>
+
+
+            {% if questionCollectiviteConsolide.q1 == true  or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true %}
+                <!--  Tab 3.4.5 -->
+                <div class="panel-heading">
+                    <div class="col-xs-12">
+                        <div class="col-xs-8">
+                            3.4.5 - Dépenses de fonctionnement de la collectivité et dépenses de personnel
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress">
+                                <div id="pb345" class="progress-bar remuneration {% if consolide != null %}{% if consolide.blIncoInd345 == 1 %} {% elseif consolide.blIncoInd345 == 2 %} blue {% elseif consolide.blIncoInd345 == 3 %} orange {% elseif consolide.blIncoInd345 == 4 %} green {% endif %}{% endif %}"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{% if consolide != null %} {{ consolide.moyenneInd345 }}%{% endif %};">
+                                    <span class="sr-only ind345-value">0%</span>
+                                </div>
+
+                            </div>
+                            <span class="pb345-value status">{% if consolide != null %} {% if consolide.blIncoInd345 == 1 or consolide.blIncoInd345 == null %} A saisir {% elseif consolide.blIncoInd345 == 2 %} Donnée(s) attendue(s) {% elseif consolide.blIncoInd345 == 3 %} Donnée(s) incohérente(s) {% elseif consolide.blIncoInd345 == 4 %}{% if totalInd345 == 0.0 %} Saisie cohérente (données à 0){% elseif totalInd345 != 0.0 %} Saisie cohérente{% endif %}{% endif%}{% else %} A saisir{% endif%}</span>
+                        </div>
+                        <div class="col-xs-1 information">
+                            <span class="buttonplus" id="toggle345" title="Agrandir" ></span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body" id="ind345" style="display: none;">
+
+                </div>
+
+            {% endif %}
+
+            <div id="dialog-fiche-3XX" title="Fiche 3.1.1-3.4.2" class="displayNone" style="overflow:hidden;">
+                <p style="overflow-y: scroll; height: 400px;">
+                    3.1.1 et 3.2.1 - Rémunérations brutes des fonctionnaires et des agents
+                    non-titulaires occupant un emploi permanent</br>
+                    3.3.1 -  Rémunérations des agents sur emplois non permanents</br>
+                    3.4.1 Cotisations à l'UNEDIC et à pôle emploi</br>
+                    3.4.2 Allocations chômage versées directement aux bénéficiaires</br>
+                    </br>
+                    Quels sont les personnels à prendre en compte à l’indicateur 3.1.1. ?</br>
+                    *     les fonctionnaires stagiaires et titulaires recensés à l’indicateur 1.1.1.</br>
+                    *      rémunérés au 31/12/{{AnneeCamp}}</br>
+                    (agents ayant travaillé au moins un jour en décembre)</br>
+                    </br>
+                    Quelles sont les rémunérations à récapituler à l’indicateur 3.1.1. ?</br>
+                    *      colonne 3.1.1. : total des rémunérations brutes versées au cours de l’année (hors charges patronales)</br>
+                    *     colonne 3.1.1.1. : les primes de fin d’année ou tout autre complément de rémunération versé au titre de l’article 111 de la loi du 26 janvier 1984 (cf. encadré ci-dessous)</br>
+                    *      colonne 3.1.1.2. : les primes et indemnités de toute nature ne relevant pas de l’article 111 précité, à l’exception des remboursements de frais de déplacement (cf. encadré ci-dessous)</br>
+                    *      colonne 3.1.1.3. : les NBI</br>
+                    </br>
+                    ATTENTION : les montants à inscrire dans les colonnes 3.1.1.1.,  3.1.1.2. et 3.1.1.3. sont inclus dans le total des rémunérations de la colonne 3.1.1.</br>
+                    </br>
+                    Quels sont les personnels à prendre en compte à l’indicateur 3.2.1. ?</br>
+                    *      les agents contractuels occupant un emploi permanent recensés à l’indicateur 1.2.1</br>
+                    *      rémunérés au 31/12/{{AnneeCamp}}</br>
+                    (agents ayant travaillé au moins un jour en décembre)</br>
+                    </br>
+                    Quelles sont les rémunérations à récapituler à l’indicateur 3.2.1. ?</br>
+                    *      colonne 3.2.1 : total des rémunérations brutes versées au cours de l’année (hors charges patronales)</br>
+                    *      colonne 3.2.1.1 : les primes et indemnités de toute nature, y compris celles relevant de l’article 111 précité, à l’exception des remboursements de frais de déplacement</br>
+                    </br>
+                    ATTENTION : les montants à inscrire dans la colonne 3.2.1.1 sont inclus dans le total des rémunérations de la colonne 3.2.1</br>
+                    </br>
+                    Quels sont les personnels à prendre en compte à l’indicateur 3.3.1 ?</br>
+                    *      les agents contractuels occupant un emploi NON permanent recensés à l’indicateur 1.3.1.</br>
+                    *      rémunérés au 31/12/{{AnneeCamp}}</br>
+                    (agents ayant travaillé au moins un jour en décembre)</br>
+                    </br>
+                    Quelles sont les rémunérations à récapituler à l’indicateur 3.3.1 ?</br>
+                    *      total des rémunérations brutes versées au cours de l’année (hors charges patronales)</br>
+                    </br>
+                    Article 111</br>
+                    Modifié par Loi n°2007-209 du 19 février 2007 - art. 48 (V) JORF 21 février 2007</br>
+                    Les agents titulaires d'un emploi d'une collectivité ou d'un établissement relevant de la présente loi sont intégrés dans la fonction publique territoriale et classés dans les cadres d'emplois ou emplois en prenant en compte la durée totale des services qu'ils ont accomplis.</br>
+                    </br>
+                    Ces agents conservent les avantages qu'ils ont individuellement acquis en matière de rémunération et de retraite.</br>
+                    </br>
+                    Par exception à la limite résultant du premier alinéa de l'article 88, les avantages collectivement acquis ayant le caractère de complément de rémunération que les collectivités locales et leurs établissements publics ont mis en place avant l'entrée en vigueur de la présente loi sont maintenus au profit de l'ensemble de leurs agents, lorsque ces avantages sont pris en compte dans le budget de la collectivité ou de l'établissement.</br>
+                    </br>
+                    Les agents contractuels en fonctions à la date d'entrée en vigueur de la présente loi ne peuvent être titularisés [*condition*] dans un grade ou emploi de la fonction publique territoriale que selon les règles fixées, conformément aux articles 126 à 138, par le statut particulier du corps ou de l'emploi concerné, quels que soient les modalités de leur recrutement et les avantages dont ils bénéficient.</br>
+                    </br>
+                    </br>
+                    Article 88</br>
+                    Modifié par LOI n°2010-751 du 5 juillet 2010 - art. 40</br>
+                    L'assemblée délibérante de chaque collectivité territoriale ou le conseil d'administration d'un établissement public local fixe les régimes indemnitaires dans la limite de ceux dont bénéficient les différents services de l'Etat et peut décider, après avis du comité technique, d'instituer une prime d'intéressement tenant compte de la performance collective des services selon les modalités et dans les limites définies par décret en Conseil d'Etat. </br>
+                    Lorsque les services de l'Etat servant de référence bénéficient d'une prime de fonctions et de résultats, le régime indemnitaire que peut fixer l'organe délibérant comprend une part liée à la fonction et une part liée aux résultats.L'organe délibérant détermine les plafonds applicables à chacune de ces parts, sans que la somme de ceux-ci n'excède le plafond global de la prime de fonctions et de résultats des fonctionnaires de l'Etat, et fixe les critères pris en compte pour la détermination du niveau des fonctions et pour l'appréciation des résultats. </br>
+                    Ce régime est mis en place dans la collectivité territoriale ou l'établissement public local lors de la première modification de son régime indemnitaire qui suit l'entrée en vigueur de la prime de fonctions et de résultats dans les services de l'Etat. Le régime antérieur est maintenu jusqu'à cette modification.L'assemblée délibérante de la collectivité territoriale ou le conseil d'administration de l'établissement public local peut décider de maintenir, à titre individuel, au fonctionnaire concerné, le montant indemnitaire dont il bénéficiait en application des dispositions réglementaires antérieures, lorsque ce montant se trouve diminué soit par l'application ou la modification des dispositions réglementaires applicables aux services de l'Etat servant de référence, soit par l'effet d'une modification des bornes indiciaires du grade dont il est titulaire.</br>
+                    </br>
+                    Toute commune classée station de tourisme au sens de la sous-section 2 de la section 2 du chapitre III du titre III du livre Ier du code du tourisme (1) peut être surclassée dans une catégorie démographique supérieure, par référence à sa population totale calculée par l'addition de sa population permanente et de sa population touristique moyenne, cette dernière étant calculée selon les critères de capacité d'accueil établis par décret.Toute commune ou tout établissement public de coopération intercommunale compétent comportant au moins une zone urbaine sensible définie au 3 de l'article 42 de la loi n° 95-115 du 4 février 1995 d'orientation pour l'aménagement et le développement du territoire peut être surclassé dans une catégorie démographique supérieure par référence à la population totale obtenue en multipliant par deux la population des zones urbaines sensibles ou des parties de zones urbaines sensibles de la commune.</br>
+                    </br>
+                    </br>
+                    *3.4 - Indicateurs sur l'assurance chômage</br>
+                    </br>
+                    3.4.1 - Indemnisation du chômage pour les titulaires (auto-assurance)</br>
+                    Répondre uniquement par oui ou par non pour chaque modalité possible d'indeminisaton du chômage des titulaires</br>
+                    </br>
+                    3.4.2 - indemnisation du chômage pour les contractuels (auto-assurance ou adhésion au régime d'assurance chômage)</br>
+                    Répondre uniquement par oui ou par non pour chaque modalité possible d'indemisation du chômage des contractuels</br>
+                    </br>
+                    Pour les agents involontairement privés d'emploi, la collectivité peut choisir un des deux systèmes suivants :</br>
+                    Adhesion au régime d'assurance chômage: La collectivité cotise à l'URSAFF (pour le compte de l'UNEDIC) pour ses agents contractuels. Pôle emploi ( pour le compte de l'UNEDIC)  assurera la gestion administrative et le versement de l'allocation aux bénéficiaires. Ce systéme n'est possible que pour les agents contractuels.</br>
+                    Auto-assurance:La collectivité peut également choisir d'assurer elle-même la gestion administrative de l'allocation  et son versement au bénéficiaire. Ce système est obligatoire pour les fonctionnaires, il peut être étendu aux contractuels. Dans le cadre de l'auto-assurance, la collectivité peut passer une convention de gestion avec  Pôle emploi pour la  gestion  des dossiers et le versement des allocations. La collectivité paie des frais de gestion et rembourse à Pôle Emploi le montant de l'allocation chômage versée aux bénéficiaires (la charge financière de l'allocation incombe donc à la collectivité comme lorqu'elle verse directement les allocations).</br>
+
+                </p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {% set NumForm = '4' %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Attention à vérifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        var numForm = '4';
+        var nomForm = 'remuneration';
+        var nbInd = {{ nombreQuestion.nmquestion.remuneration }};
+
+
+        function initTab() {
+            if (currentTab != "") saveTab();
+            $('#content').html("");
+            $('#content').load('{{ path('bilan_conso_remuneration_edit') }}', function () { });
+            currentTab = "0";
+        }
+
+
+
+        $.ajaxSetup({cache: false});
+        initTab();
+
+
+
+        var idToggleCurr = "";
+        var idDivCurr = "";
+
+        $(document).ready(function ()
+        {
+            $('#HideShowIncoh').on('click', function() {
+                var incohHeight = $('#incoh').height();
+                $("#incoh_wrapper").css('height', incohHeight);
+                $("#incoh").affix({
+                    offset: {
+                      top: distance
+                    }
+                });
+            });
+
+            // TABLEAU 311
+            {% if questionCollectiviteConsolide.q1 == true  %}
+
+                addToggle("toggle311", "ind311");
+                $("#open-fiche-311").on("click", function () {
+                    $("#dialog-fiche-3XX").removeClass("displayNone");
+                    dialogFiche3XX.dialog("open");
+                });
+
+            {% endif %}
+
+            // TABLEAU 321
+            {% if questionCollectiviteConsolide.q3 == true  %}
+
+                addToggle("toggle321", "ind321");
+                $("#open-fiche-321").on("click", function () {
+                    $("#dialog-fiche-3XX").removeClass("displayNone");
+                    dialogFiche3XX.dialog("open");
+                });
+
+            {% endif %}
+
+            // TABLEAU 331
+            {% if questionCollectiviteConsolide.q5 == true  %}
+
+                addToggle("toggle331", "ind331");
+                $("#open-fiche-331").on("click", function () {
+                    $("#dialog-fiche-3XX").removeClass("displayNone");
+                    dialogFiche3XX.dialog("open");
+                });
+
+            {% endif %}
+
+
+            // TABLEAU 341
+                addToggle("toggle341", "ind341");
+                $("#open-fiche-341").on("click", function () {
+                    $("#dialog-fiche-3XX").removeClass("displayNone");
+                    dialogFiche3XX.dialog("open");
+                });
+
+            // TABLEAU 342
+                addToggle("toggle342", "ind342");
+                $("#open-fiche-342").on("click", function () {
+                    $("#dialog-fiche-3XX").removeClass("displayNone");
+                    dialogFiche3XX.dialog("open");
+                });
+
+            // TABLEAU 343
+            addToggle("toggle343", "ind343");
+
+            // TABLEAU 344
+                addToggle("toggle344", "ind344");
+
+
+            // TABLEAU 345
+            {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true %}
+
+                addToggle("toggle345", "ind345");
+
+            {% endif %}
+
+
+            initCount(numForm);
+            disabled();
+        });
+
+        /*
+         * METHODES GENERALES
+         */
+
+
+        function initDiv(idDiv) {
+            if (idDiv == undefined || idDiv == "null" || idDiv == "") {
+            } else {
+                if (idDiv == "ind311") {
+                    $('#ind311').load('{{ path('bilan_conso_remuneration_ind311_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind321") {
+                    $('#ind321').load('{{ path('bilan_conso_remuneration_ind321_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initLight(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind331") {
+                    $('#ind331').load('{{ path('bilan_conso_remuneration_ind331_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initCount(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind341") {
+                    $('#ind341').load('{{ path('bilan_conso_remuneration_ind341_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initCount(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind342") {
+                    $('#ind342').load('{{ path('bilan_conso_remuneration_ind342_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initCount(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind343") {
+                    $('#ind343').load('{{ path('bilan_conso_remuneration_ind343_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initCount(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind344") {
+                    $('#ind344').load('{{ path('bilan_conso_remuneration_ind344_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                         initCount(numForm);
+                         disabled();
+                    });
+                }
+                else if (idDiv == "ind345") {
+                    $('#ind345').load('{{ path('bilan_conso_remuneration_ind345_edit') }}', function () {
+                        // run the effect
+                        $('#' + idDiv).toggle("blind", 500);
+                        initLight(numForm);
+                        disabled();
+                    });
+                }
+            }
+        }
+
+
+        $('#HideShowIncoh').click(function () {
+            HideShowIncoh();
+        });
+
+
+
+        function setIncoherenceTable(responsejson) {
+            incoherenceList = responsejson.list.remuneration;
+            /*console.log(incoherenceList);*/
+            var table = document.getElementById('incoherenceTable');
+
+            var tbody = $(table).find('tbody');
+
+            var html_table_incoh = '';
+            $.each(incoherenceList, function() {
+                // console.log(this);
+                html_table_incoh += '<tr>';
+                html_table_incoh += '<td>'+"<a href=\"#\" onclick=\"openError('" + this.idToggle1 + "', '" + this.idToggle2 + "', '" + this.field + "')\">" + this.tableNum + "</a></td>";
+                html_table_incoh += '<td>'+ this.message +'</td>';
+                html_table_incoh += '</tr>';
+            });
+            $(tbody).html(html_table_incoh);
+
+            setIncoherenceLight(numForm);
+
+            $.each(responsejson.remuneration.pgInd, function() {
+                setPgInd(this.ind, this.blinco, this.moyenne, nomForm);
+            });
+
+            getMoyenneRemuneration(responsejson);
+            setPgMenu('Remuneration','remuneration', responsejson);
+        }
+
+
+        var getMoyenneRemuneration = function (response)
+        {
+            var total = Math.ceil(Math.ceil(response.pc.pcRemuneration) / nbInd);
+            $('#ValRemuneration').html(total + "%");
+            $('#pbRemuneration').css('width', total + "%");
+        }
+
+
+        var dialogFiche3XX = $("#dialog-fiche-3XX").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 800,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        dialogFiche3XX.dialog("close");
+                    }
+                },
+                close: function () {
+                }
+            });
+
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% if historiqueEcha is not null %}
+    <table class="table table-hover align-center" id='table-echanges'>
+        <thead>
+            <tr>
+                <th>Intitulé</th>
+                <th>Type</th>
+                <th>Date</th>
+                {% if droitsCdg is defined and (droitsCdg == 'write' or droitsCdg == null) %}<th>Supprimer</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if historiqueEcha is defined and historiqueEcha is not empty %}
+                {% for echange in historiqueEcha %}
+                    <tr id="{{ echange.idHistEcha }}">
+                        <td>{% if droitsCdg is defined and (droitsCdg == 'write' or droitsCdg == null) %}<p class="edit-echange">{% endif %}{{ echange.lbIntiEcha }}{% if droitsCdg is defined and (droitsCdg == 'write' or droitsCdg == null) %}</p>{% endif %}</td>
+                        <td>{{ echange.lbTypeEcha }}</td>
+                        <td>{{ echange.dtEcha|localizeddate('none', 'none', null, null, 'd MMMM Y') }}</td>
+                        {% if droitsCdg is defined and (droitsCdg == 'write' or droitsCdg == null) %}<td class="suppr-echange"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>{% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endif %}

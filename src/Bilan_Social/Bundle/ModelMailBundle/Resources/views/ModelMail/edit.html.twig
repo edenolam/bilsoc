@@ -1,0 +1,40 @@
+{% extends '@ModelMail/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li>Gestion des modèles de mails</li>
+                <li class="active">Modifier un modèle de mail</li>
+            </ol>
+        </div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h3>Modification du modèle de mail<a href="{{ path('modelmail_index') }}"><button class="btn btn-default pull-right">Retour à la liste</button></a></h3>
+        <hr>
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Modifier" class="btn button-tableau"/>
+        {{ form_end(edit_form) }}
+        <hr>
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Supprimer" class="btn button-tableau">
+        {{ form_end(delete_form) }}
+    </div>
+
+{% endblock %}

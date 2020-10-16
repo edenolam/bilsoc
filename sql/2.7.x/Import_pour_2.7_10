@@ -1,0 +1,23 @@
+
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCN', 'Commune et commune nouvelle', '0', 'SYSTEME', NOW(), null, null, "Commune Surclassée sur la strate de commune de plus de 400 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCN', 'Commune et commune nouvelle', '0', 'SYSTEME', NOW(), null, null, "Commune Surclassée sur la strate de commune de 150 000 à 400 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCN', 'Commune et commune nouvelle', '0', 'SYSTEME', NOW(), null, null, "Commune Surclassée sur la strate de commune de 80 000 à 150 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCN', 'Commune et commune nouvelle', '0', 'SYSTEME', NOW(), null, null, "Commune Surclassée sur la strate de commune de 40 000 à 80 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCN', 'Commune et commune nouvelle', '0', 'SYSTEME', NOW(), null, null, "Commune Surclassée sur la strate de commune de 20 000 à 40 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCN', 'Commune et commune nouvelle', '0', 'SYSTEME', NOW(), null, null, "Commune Surclassée sur la strate de commune de 10 000 à 20 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCN', 'Commune et commune nouvelle', '0', 'SYSTEME', NOW(), null, null, "Commune Surclassée sur la strate de commune de 2000 à 10 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCN', 'Commune et commune nouvelle', '0', 'SYSTEME', NOW(), null, null, "Commune Surclassée sur la strate de commune de 40 000 à 150 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CAG', "Communauté d'agglomération	Etablissements publics de cooperation", '0', 'SYSTEME', NOW(), null, null, "Communautés Urbaines et Communautés d'agglomération assimilées à des communes de + de 400 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CUR', 'Communauté urbaine	Etablissements publics de cooperation', '0', 'SYSTEME', NOW(), null, null, "Communautés Urbaines et Communautés d'agglomération assimilées à des communes de + de 400 000 hab.");
+INSERT INTO `ref_type_sur_class_demo`(`CD_TYPESURCLASSDEMO`, `LB_TYPESURCLASSDEMO`, `BL_VALI`, `CD_UTILCREA`, `created_at`, `CD_UTILMODI`, `updated_at`, `STRATSURCLASSDEMO`)
+							VALUES ('CCO', 'Communauté de communes	Etablissements publics de cooperation', '0', 'SYSTEME', NOW(), null, null, "Autres établissements publics de coopération assimilés à des communes de + 400 000 hab.");

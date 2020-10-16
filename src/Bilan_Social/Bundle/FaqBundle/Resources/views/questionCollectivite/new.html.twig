@@ -1,0 +1,30 @@
+{% extends '@Faq/layout.html.twig' %}
+
+
+{% block body %}
+    {{ parent() }}
+ {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    <p>{{ msg }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    <div class="col-xs-9">
+        <h1>Poser une question 
+            {% if is_granted("ROLE_CDG") %}
+            <a href="{{ path('question_index') }}">
+                <button class="btn btn-default pull-right margin10">Retour à la liste</button></a> 
+            {% endif %}
+        </h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Envoyer"  class="btn button-tableau" />
+        {{ form_end(form) }}
+
+      
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refn4ds_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refN4ds.cdValeur }}</td>
+                </tr>
+                <tr>
+                    <th>libellé</th>
+                    <td>{{ refN4ds.cdN4ds}}</td>
+                </tr>
+
+                <tr>
+                    <th>Obligatoire</th>
+                    <td>{% if refN4ds.blObligatoire %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refN4ds.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refN4ds} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refn4ds_edit', { 'idN4ds': refN4ds.idN4ds }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+        </ul>
+    {% endblock %}
+
+

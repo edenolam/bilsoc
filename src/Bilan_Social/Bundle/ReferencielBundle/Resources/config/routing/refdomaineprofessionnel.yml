@@ -1,0 +1,28 @@
+refdomaineprofessionnel_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefDomaineProfessionnel:index" }
+    methods:  GET
+
+refdomaineprofessionnel_show:
+    path:     /{idDomaineProfessionnel}/show
+    defaults: { _controller: "ReferencielBundle:RefDomaineProfessionnel:show" }
+    methods:  GET
+
+refdomaineprofessionnel_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefDomaineProfessionnel:new" }
+    methods:  [GET, POST]
+
+refdomaineprofessionnel_edit:
+    path:     /{idDomaineProfessionnel}/edit
+    defaults: { _controller: "ReferencielBundle:RefDomaineProfessionnel:edit" }
+    methods:  [GET, POST]
+
+refdomaineprofessionnel_delete:
+    path:     /{idDomaineProfessionnel}/delete
+    defaults: { _controller: "ReferencielBundle:RefDomaineProfessionnel:delete" }
+    methods:  DELETE
+    
+csv_export_refdomaineprofessionnel:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefDomaineProfessionnel:generateCsv" }

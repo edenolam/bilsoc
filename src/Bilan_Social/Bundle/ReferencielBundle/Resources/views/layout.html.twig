@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {#   {{ parent() }}#}
+
+{% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="{{ asset('js/ReferencielBundle/referenciel.js') }}"></script>
+
+{% endblock javascripts %}
+{% block body %}
+    {{parent()}}
+
+    <div class="modal fade" id='confirm-delete'>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center" >
+                    <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                    <p>Vous êtes sur le point <span id='modal-type-bs'></span> d'archiver ce référentiel.
+                        <br>Il ne sera plus disponible dans les écrans de l'application. <br><br>Etes-vous sûr de vouloir continuer ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id='submit' class="btn btn-primary pull-right">Oui</button>
+                    <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Non</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

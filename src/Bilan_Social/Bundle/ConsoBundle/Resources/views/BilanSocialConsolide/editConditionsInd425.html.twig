@@ -1,0 +1,90 @@
+    {% if formConditions425 is defined %}
+        {% set bilan_social_consolide = formConditions425.vars.data %}
+        {{ form_start(formConditions425) }}
+        
+        {{ form_row(formConditions425.q425) }}
+        
+        <br/>
+
+
+        <input class="btn button-tableau pull-right" type="submit"
+               value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1"/>
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formConditions425) }}
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                changeDetect = false;
+            });
+
+
+            /*
+          * METHODE AJAX SUBMIT
+          */
+            $(function () {
+                // Enregistrement en ajax
+                $('form').on('submit', function (e) {
+                    var $this = $(this).closest('div');
+                    var btn = $(this).find("input[type=submit]:focus");
+                    var value_valide = $(btn).data('valide');
+                    $('#bscForm425_valide').val(value_valide);
+                    // Submit en ajax pour le fonctionnement d'appel par onglet
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ path('bilan_conso_conditions_ind425_edit') }}',
+                        data: $('form').serialize(),
+                        success: function (responsejson) {
+
+                            if (responsejson.data == 1) {
+                                if (recordAuto) {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement automatique réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+                                } else {
+                                    $('#ind425').load('{{ path('bilan_conso_conditions_ind425_edit') }}', function () {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                        var next = $($this).next('.panel-heading');
+                                        if(next.length == 0) {
+                                            window.location.href = '{{ path('bilan_conso_formation_edit') }}';
+                                        }
+                                    });
+
+                                }
+                            } else if (responsejson.data == "-3") {
+                                $('#progImg').hide();
+                                $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                messageJS.dialog("open");
+                            } else {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                messageJS.dialog("open");
+                            }
+
+
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(xhr);
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                            messageJS.dialog("open");
+                        }
+
+                    });
+
+                });
+
+            });
+
+
+        </script>
+    {% endif %}

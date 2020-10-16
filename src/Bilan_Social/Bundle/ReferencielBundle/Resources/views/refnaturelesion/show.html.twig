@@ -1,0 +1,35 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refnaturelesion_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refNatureLesion.cdNaturelesi }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refNatureLesion.lbNaturelesi }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refNatureLesion.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refNatureLesion} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refnaturelesion_edit', { 'idNaturelesi': refNatureLesion.idNaturelesi }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

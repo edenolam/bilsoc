@@ -1,0 +1,44 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1> Listes des catégories</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refcategorieboeth_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refcategorieboeth') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refCategorieBoeth in refCategorieBoeths %}
+                    <tr>
+                        <td><a href="{{ path('refcategorieboeth_show', { 'idCategorieboeth': refCategorieBoeth.idCategorieboeth }) }}">{{ refCategorieBoeth.cdCategorieboeth }}</a></td>
+                        <td>{{ refCategorieBoeth.lbCategorieboeth }}</td>
+                        <td>{% if refCategorieBoeth.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refCategorieBoeth} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refcategorieboeth_show', { 'idCategorieboeth': refCategorieBoeth.idCategorieboeth }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refcategorieboeth_edit', { 'idCategorieboeth': refCategorieBoeth.idCategorieboeth }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

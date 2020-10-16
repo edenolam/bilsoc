@@ -1,0 +1,28 @@
+reffamillemetier_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefFamilleMetier:index" }
+    methods:  GET
+
+reffamillemetier_show:
+    path:     /{idFamilleMetier}/show
+    defaults: { _controller: "ReferencielBundle:RefFamilleMetier:show" }
+    methods:  GET
+
+reffamillemetier_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefFamilleMetier:new" }
+    methods:  [GET, POST]
+
+reffamillemetier_edit:
+    path:     /{idFamilleMetier}/edit
+    defaults: { _controller: "ReferencielBundle:RefFamilleMetier:edit" }
+    methods:  [GET, POST]
+
+reffamillemetier_delete:
+    path:     /{idFamilleMetier}/delete
+    defaults: { _controller: "ReferencielBundle:RefFamilleMetier:delete" }
+    methods:  DELETE
+
+csv_export_reffamillemetier:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefFamilleMetier:generateCsv" }

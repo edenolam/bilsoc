@@ -1,0 +1,59 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% set currentPath =  path('social_index', {'step':  app.request.get('step')  })  %}
+
+{% block body %}
+    {% if is_granted("ROLE_CDG") and app.session.get('user_siret') is defined and app.session.get('user_siret') is not null %}
+        Connecté en tant que {{ app.session.get('user_siret') }}<br>
+        <a href="{{ path('collectivity_remove_session') }}">Se déconnecter</a>
+    {% endif %}
+    <h1>Social creation</h1>
+    <div id="error">
+    </div>
+    {{ form_start(form, { 'attr': {'id': 'form_id'} }) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Sauvegarder et continuer" />
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {% if is_granted("ROLE_COLLECTIVITY") %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var intervalSave = {{ backup_interval }};
+                        setTimeout(autosave, intervalSave);
+
+                function autosave() {
+                    var path = "{{ currentPath }}";
+                    $.post(path,
+                            $('#form_id').serialize(),
+                            function (data) {
+                                if (data !== 'Success') {
+                                    autosave();
+                                }
+                            });
+                    setTimeout(autosave, intervalSave);
+                }
+
+                $('input').on('focusout', function () {
+                    var path = "{{ currentPath }}";
+                    $.ajax({
+                        type: "POST",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("isSendByFocus", true);
+                        },
+                        url: path,
+                        data: $('#form_id').serialize(),
+                        processData: false,
+                        success: function (msg) {
+                            $('#error').html(msg);
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endif %}
+
+{% endblock %}

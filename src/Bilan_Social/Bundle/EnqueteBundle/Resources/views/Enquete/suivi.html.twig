@@ -1,0 +1,267 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/ajoutEnquete.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/EnqueteBundle/Enquete.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+    <script type="text/javascript">
+        window.onmousedown = function (e) {
+            var el = e.target;
+            if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                e.preventDefault();
+
+                // toggle selection
+                if (el.hasAttribute('selected'))
+                    el.removeAttribute('selected');
+                else
+                    el.setAttribute('selected', '');
+
+                // hack to correct buggy behavior
+                var select = el.parentNode.cloneNode(true);
+                el.parentNode.parentNode.replaceChild(select, el.parentNode);
+            }
+        };
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Bilan social</a></li>
+                <li class="active">Suivre une enquête</li>
+            </ol>
+        </div>
+        <h1>Suivre une enquête</h1>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+                {% if app.session.flashBag.has('error') %}
+                    <div class="alert alert-danger fade in" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {% for msg in app.session.flashBag.get('error') %}
+                            {{ msg }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+         
+                
+                <div>
+                    {% if form is defined %}
+                        {{ form_start(form) }}
+                        {{ form_errors(form) }}
+
+                    <div class="panel panel-default">
+                        <div class='panel-heading'>
+                            <a class="displayToggle" data-toggle="collapse" href="#colonnes">
+                                <h3 style="display: inline-block;" class="panel-title">Afficher colonnes</h3>
+                                <span class="buttonplus" title="Agrandir"></span>
+                            </a>
+                        </div>
+                        <div id="colonnes" class="panel-collapse collapse">
+                            <div class='panel-body'>
+                                <div class='row' id='ajout-colonnes'>
+                                    <div class='col-md-5'>
+                                        {{ form_row(form.colonnes) }}
+                                    </div>
+                                    <div class='col-md-1' style="    margin-top: 17px; position: relative; left: 12px;"><br>
+                                        <p class='btn btn-default' id='ajouter-colonne'>+</p>
+                                    </div>
+                                    <div class='col-md-1' style="    margin-top: 17px; position: relative; left: 12px;"><br>
+                                        <p class='btn btn-default' id='enlever-colonne' style="padding: 6px 14px">-</p>
+                                    </div>
+                                    <div class='col-md-5 form-group'>
+                                        <select id='liste-colonnes' size='5' class='form-control'></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class='panel-heading'>
+                            <a class="displayToggle" data-toggle="collapse" href="#search">
+                                <h3 style="display: inline-block;" class="panel-title">Affiner recherche</h3>
+                                <span class="buttonplus" title="Agrandir"></span>
+                            </a>
+                        </div>
+                        <div id="search" class="panel-collapse collapse">
+                            <div class='panel-body'>
+                                <div id='param-filtre'>
+                                    <div class='row' id='param-filtre'>
+                                        <div class="col-md-4">
+                                            {{ form_row(form.filtres) }}
+                                        </div>
+                                        <div class="col-md-4">
+                                             <select id="conditions" name="condition" size="5" class="form-control">
+                                                    <option value="0">Choisir une condition</option>
+                                                </select>
+                                           {# {{ form_row(form.conditions) }}#}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select id="parametres" name="parametres" size="5" class="form-control">
+                                                    <option value="0">Choisir un filtre</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-12'>
+                                            <p class='btn btn-default pull-right' id='add-filtre'>Ajouter</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class='row'>
+                                    <div class='col-md-12' id='liste-filtres'>
+                                        <label>Liste des filtres</label>
+                                        <table></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+            
+            <div id='table-coll-suivi-inner'>
+
+                <table class="table table-hover align-center" id='suivi'>
+                <thead>
+                    <tr>
+                        <th>
+                            <button class="check-all all vertical btn btn-sm check-all-export">Tous</button></th>
+                        <th {# rowspan="2" #} class='col-hidden col-blTypeColl'><input type="hidden" value="0" name="champ-refTypeCollectivite">Type de la collectivité</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blDepa'><input type="hidden" value="0" name="champ-departement">Département</th>
+                        <th{#  rowspan="2" #} class='col-hidden col-blLbAdresse'><input type="hidden" value="0" name="champ-blLbAdresse">Adresse</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blLibe'><input type="hidden" value="0" name="champ-lbColl">Libellé de la collectivité</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blCdPost'><input type="hidden" value="0" name="champ-cdPost">Code postal</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blLbVill'><input type="hidden" value="0" name="champ-lbVill">Ville</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blCdInse'><input type="hidden" value="0" name="champ-cdInse">Code INSEE</th>
+                        <th class='col-hidden col-blNom'><input type="hidden" value="0" name="champ-lbNom">Nom du contact</th>
+                        <th class='col-hidden col-blTele'><input type="hidden" value="0" name="champ-lbTele">Téléphone du contact</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blSire'><input type="hidden" value="0" name="champ-nmSire">SIRET</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blNmPopuInse'><input type="hidden" value="0" name="champ-nmPopuInse">Population totale INSEE</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blSurclasDemo'><input type="hidden" value="0" name="champ-blSurclasDemo">Sur-classement démographique</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blNmStratColl'><input type="hidden" value="0" name="champ-nmStratColl">Strate de sur-classement</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blAffiCdg'><input type="hidden" value="0" name="champ-blAffiColl">Affilié</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blCtCdg'><input type="hidden" value="0" name="champ-blCtCdg">Rattachement au comité technique</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blChsct'><input type="hidden" value="0" name="champ-blChsct">CHSCT propre à la collectivité</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blCollDgcl'><input type="hidden" value="0" name="champ-blCollDgcl">Echantillon DGCL</th>
+                        <th {# rowspan='2' #} class='col-hidden col-blCourtier'><input type="hidden" value="0" name="champ-blCourtier">Courtier</th>
+                        <th {# rowspan="2" #} class='col-hidden col-cdg_is_authorized_by_collectivity'><input type="hidden" value="0" name="champ-cdg_is_authorized_by_collectivity">CDG autorisé à prendre la place</th>
+                        <th {# rowspan='2' #} class='col-hidden col-blNbAgenPerm'><input type="hidden" value="0" name="champ-blNbAgenPerm">Nombre total d'agents sur emploi permanent</th>
+                        <th {# rowspan='2' #} class='col-hidden col-blNbAgenTitu'><input type="hidden" value="0" name="champ-blNbAgenTitu">Nombre total d'agents titulaires</th>
+                        <th {# rowspan='2' #} class='col-hidden col-blNbAgenContPerm'><input type="hidden" value="0" name="champ-blNbAgenContPerm">Nombre total d'agents contractuels sur emploi permanent</th>
+                        <th {# rowspan='2' #} class='col-hidden col-blNbAgenContNonPerm'><input type="hidden" value="0" name="champ-blNbAgenContNonPerm">Nombre total d'agents contractuels sur emploi non permanent</th>
+                        <th {# rowspan="2" #} class='col-hidden col-fgStat'><input type="hidden" value="0" name="champ-fgStat">Etat de saisie</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blRass'><input type="hidden" value="0" name="champ-blRass">Rassct</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blGepe'><input type="hidden" value="0" name="champ-blGepe">Gpeec</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blGpeecPlus'><input type="hidden" value="0" name="champ-blGpeecPlus">Gpeec+</th>
+                        <th {# rowspan="2" #} class='col-hidden col-blHand'><input type="hidden" value="0" name="champ-blHand">Handitorial</th>
+                        <th {# rowspan="2" #} class='col-hidden col-initSource'><input type="hidden" value="0" name="champ-initSource">Mode de remplissage</th>
+                        <th {# rowspan="2" #} class='col-hidden col-nb_pc_bsc'><input type="hidden" value="0" name="champ-nb_pc_bsc">Taux de remplissage</th>
+                        <th {# rowspan="2" #} class='col-hidden col-apa'><input type="hidden" value="0" name="champ-apa">Agent par agent</th>
+                        <th {# rowspan="2" #} class='col-hidden col-cons'><input type="hidden" value="0" name="champ-cons">Consolidé</th>
+                        <th {# rowspan="2" #} class='col-hidden col-anal'><input type="hidden" value="0" name="champ-anal">Analyse</th>
+                        <th {# rowspan="2" #} class='col-hidden col-sais'><input type="hidden" value="0" name="champ-anal">Saisie enquête</th>
+                        <th {# rowspan="2" #} class='col-hidden col-dtLastconn'><input type="hidden" value="0" name="champ-dtLastconn">Dernière connexion</th>
+                        <th class="col-hidden">
+                            <button class='btn btn-primary' id='btn-open-modal' data-toggle="modal" data-target="#relance-mail">Relancer</button>
+                            <button class="check-all all vertical btn btn-sm check-all-relance" style="margin-top: 5px">Tous</button>
+                        </th>
+                        <th {# rowspan="2" #} class='col-hidden col-dtLastconn'><input type="hidden" value="0" name="champ-email">Email</th>
+                    </tr>
+                    {# <tr>
+                        <th id='col-export'><p>Tout cocher</p><button class="check-all all vertical btn btn-sm check-all-export">Tous</button></th>
+                        <th id='col-relance'><p>Tout cocher</p><button class="check-all all vertical btn btn-sm check-all-relance">Tous</button></th>
+                    </tr> #}
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+                
+                <input type="hidden" id="listeIds" name="listIds" value="">
+                <input type="hidden" id="listeColumns" name="listeColumns" value="">
+                <input type="hidden" name="button_sender" value='export-collectivite-enquete' id='button_sender'>
+
+                <button type='submit' class='btn button-tableau button-submit' name='id' title="Exporter les informations de la sélection" value='export-collectivite-enquete' id='export-collectivite-enquete'>Exporter</button>
+
+                <button type='submit' class='btn button-tableau button-submit' name='id' title="Exporter les informations de la sélection" value='export-collectivite-historique' id='export-collectivite-historique'>Historique</button>
+                
+                <button type='submit' class='btn button-tableau button-submit' name='generatebsvide' title="Générer les bilan sociaux à vide de la sélection" value='bsvide-collectivite-enquete' id='bsvide-collectivite-enquete'>Générer BS vides de la sélection</button>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+
+                       
+                       
+                          
+                        
+                        
+                        <div class="modal fade align-center" id='relance-mail'>
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    {{ form_start(formRelance) }}
+                                    <div class="modal-body">
+                                        <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                                        <div id="messageJS" class="alert alert-danger fade in" style="display:none"></div>
+                                        <p>Un mail de relance sera envoyé aux collectivités sélectionnées. Veuillez renseigner le message à envoyer ci-dessous.</p>
+                                        {{ form_row(formRelance.lbMessrela) }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary pull-right btn-relance">Envoyer</button>
+                                        <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Annuler</button>
+                                    </div>
+                                    {{ form_end(formRelance) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade align-center" id='export-relance-coll'>
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                                        <div id="messageJS" class="alert alert-danger fade in" style="display:none"></div>
+                                        <p>Aucune collectivité n'a été séléctionnée pour réaliser cette action.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade align-center" id='modalbsvide'>
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body" id="contentModalBsVide">
+                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary pull-right btn-relance" id="bsvide-confirmation">Valider</button>
+                                        <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Annuler</button>
+                                    </div>
+                                    {{ form_end(formRelance) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+
+            <div>
+                <p>Aucune enquête n'a été créée.</p>
+            </div>
+        {% endif %}
+    </div>
+        <div class='footer' style='height: 30px'>
+        </div>
+{% endblock %}

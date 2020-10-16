@@ -1,0 +1,28 @@
+reftrancheage_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefTrancheAge:index" }
+    methods:  GET
+
+reftrancheage_show:
+    path:     /{idTranage}/show
+    defaults: { _controller: "ReferencielBundle:RefTrancheAge:show" }
+    methods:  GET
+
+reftrancheage_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefTrancheAge:new" }
+    methods:  [GET, POST]
+
+reftrancheage_edit:
+    path:     /{idTranage}/edit
+    defaults: { _controller: "ReferencielBundle:RefTrancheAge:edit" }
+    methods:  [GET, POST]
+
+reftrancheage_delete:
+    path:     /{idTranage}/delete
+    defaults: { _controller: "ReferencielBundle:RefTrancheAge:delete" }
+    methods:  DELETE
+
+csv_export_reftrancheage:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefTrancheAge:generateCsv" }

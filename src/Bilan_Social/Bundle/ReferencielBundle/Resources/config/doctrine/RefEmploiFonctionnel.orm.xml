@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiFonctionnel" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefEmploiFonctionnelRepository" table="ref_emploi_fonctionnel">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_EMPLFONC" name="cdEmplfonc"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idEmplfonc" type="integer" column="ID_EMPLFONC">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdEmplfonc" type="string" column="CD_EMPLFONC" length="200" nullable="true"/>
+        <field name="lbEmplfonc" type="string" column="LB_EMPLFONC" length="200" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="cdMotiN4ds" type="string" column="CD_MOTI_N4DS" length="255" nullable="true"/>
+        <field name="cdMotiBcCiril" type="string" column="CD_MOTI_BC_CIRIL" length="255" nullable="true"/>
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+        <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere" inversed-by="EmpFoncFiliere">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+            <join-column name="ID_FILI" referenced-column-name="ID_FILI" nullable="true"/>
+        </many-to-one>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refEmploiFonctionnel" />
+    </entity>
+
+</doctrine-mapping>

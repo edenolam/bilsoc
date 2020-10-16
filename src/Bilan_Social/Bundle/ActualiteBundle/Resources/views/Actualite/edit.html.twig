@@ -1,0 +1,93 @@
+{% extends '@Actualite/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+{#    {% form_theme edit_form 'requiredFields.html.twig' %}#}
+    <div class="col-lg-9" >
+        <div class="container-fluid">
+            
+            <h1>Modification d'une actualité</h1>            
+            <a href="{{ path('actualite_index') }}" class="btn button-tableau pull-right margin10" role="button">Retour à la liste d'actualités</a>
+            <div class="clearfix"></div>
+            {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
+            {{ form_row(edit_form.titreActu) }}
+            {{ form_row(edit_form.texteActu) }}
+
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <b>Image courante</b> :
+                    <div class="text-center actu_header_img_wrapper">
+                        <img src="{{ imagePublicUrl }}" alt="{{ imagePublicUrl }}"  class="img-responsive image-apercu">
+                    </div>
+                    {{ form_row(edit_form.image) }}
+                </div>
+                <div class="col-xs-6">
+                    <b>Document courant : </b>
+                    {% if(document) %}
+                        <a href="{{ docPublicUrl }}">Télécharger le document</a>
+                    {% else %}
+                        Pas de document
+                    {% endif %}
+                    {{ form_row(edit_form.document) }}
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    {{ form_row(edit_form.DtDebut) }}
+                </div>
+                <div class="col-xs-6">
+                    {{ form_row(edit_form.DtFin) }}
+                </div>
+            </div>
+                
+            {{ form_row(edit_form.blPublish) }}
+
+            {% if is_granted("ROLE_ADMIN") %}
+
+                <table class="table table-hover align-center" id='cdgs'>
+                    <thead>
+                        <tr>
+                            <th>Départements</th>
+                            <th><p>Tout cocher</p><input type='checkbox' class='all' name='all'></th>
+                        </tr>
+                    </thead>
+                    <tbody id='listeCdg'>
+                        {% for liste in edit_form.cdgs%}
+
+                            <tr>
+                                <td>{{ liste.vars.label}}</td>
+                                <td>{{ form_row(liste,{'label':false}) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            {% if is_granted("ROLE_CDG") %}
+                <table class="table table-hover align-center" id='cdgs'>
+                    <thead>
+                        <tr>
+                            <th>Départements</th>
+                            <th><p>Tout cocher</p><input type='checkbox' class='all' name='all'></th>
+                        </tr>
+                    </thead>
+                    <tbody id='listeCdg'>
+                        {% for liste in edit_form.cdgDepartements%}
+
+                            <tr>
+                                <td>{{ liste.vars.label}}</td>
+                                <td>{{ form_row(liste,{'label':false}) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+            <input class="btn button-tableau pull-right" type="submit" value="Valider" />
+            {{ form_end(edit_form) }}
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Supprimer" class="btn button-tableau pull-left">
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialAvisInaptitudesAvant" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscHanditorialAvisInaptitudesAvantRepository" table="bsc_handitorial_avis_inaptitudes_avant">
+        <indexes>
+            <index name="FK_BSC_HANDITORIAL_AVIS_INAPTITUDES_AVANT_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_INAPTITUDE_BOETH" name="IDXU1_BSCHANDITORIALAVISINAPTITUDESAVANT"/>
+		</unique-constraints>
+        <id name="idBscHanditorialAvisInaptitudesAvant" type="integer" column="ID_BSC_HANDITORIAL_AVIS_INAPTITUDES_AVANT">
+            <generator strategy="IDENTITY"/>
+        </id>
+        
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscHanditorialAvisInaptitudesAvant">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refInaptitudeBoeth" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefInaptitudeBoeth">
+            <join-column name="ID_INAPTITUDE_BOETH" referenced-column-name="ID_INAPTITUDE_BOETH" nullable="false"/>
+        </many-to-one>
+        
+        <field name="avisInaptitudeAvantH" type="integer" column="AVIS_INAPTITUDE_AVANT_H" nullable="true"/>
+        <field name="avisInaptitudeAvantF" type="integer" column="AVIS_INAPTITUDE_AVANT_F" nullable="true"/>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

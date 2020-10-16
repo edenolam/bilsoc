@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CoreBundle\Entity\SocialStep2" repository-class="Bilan_Social\Bundle\CoreBundle\Repository\SocialStep2Repository" table="socialStep2">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <one-to-one field="user" target-entity="Bilan_Social\Bundle\UserBundle\Entity\User">
+            <join-column name="ID_UTIL" referenced-column-name="ID_UTIL" unique="false" />
+        </one-to-one>
+
+        <field name="field1" type="string" column="field_1" length="255" nullable="true"/>
+        <field name="field2" type="string" column="field_2" length="255" nullable="true"/>
+    </entity>
+</doctrine-mapping>

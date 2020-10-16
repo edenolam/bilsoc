@@ -1,0 +1,28 @@
+refmetier_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMetier:index" }
+    methods:  GET
+
+refmetier_show:
+    path:     /{idMetier}/show
+    defaults: { _controller: "ReferencielBundle:RefMetier:show" }
+    methods:  GET
+
+refmetier_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMetier:new" }
+    methods:  [GET, POST]
+
+refmetier_edit:
+    path:     /{idMetier}/edit
+    defaults: { _controller: "ReferencielBundle:RefMetier:edit" }
+    methods:  [GET, POST]
+
+refmetier_delete:
+    path:     /{idMetier}/delete
+    defaults: { _controller: "ReferencielBundle:RefMetier:delete" }
+    methods:  DELETE
+
+csv_export_refmetier:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMetier:generateCsv" }

@@ -1,0 +1,6 @@
+services:
+    bs.import.user_processor:
+        class: Bilan_Social\Bundle\ImportBundle\Processor\UserProcessor
+        arguments:
+            - '@bs.user.manager'
+            - '@security.password_encoder'

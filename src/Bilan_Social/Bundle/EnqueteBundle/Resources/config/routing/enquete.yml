@@ -1,0 +1,153 @@
+enquete_homepage:
+    path:     /
+    defaults: { _controller: EnqueteBundle:Enquete:index }
+    options:
+        expose: true
+
+enquete_creer:
+    path:     /creer
+    defaults: { _controller: EnqueteBundle:Enquete:creerEnquete }
+    options:
+        expose: true
+
+switch_cdg_saisie_enquete:
+    path:     /enquete-switch/{id}
+    defaults: { _controller: EnqueteBundle:Enquete:SwitchCdgToColSaisEnqu,  id:null }
+    options:
+        expose: true
+        
+enquete_cloturer:
+    path:     /cloturer/{id}
+    defaults: { _controller: EnqueteBundle:Enquete:cloturer }
+    options:
+        expose: true
+
+enquete_lancer:
+    path:     /lancer/{id}
+    defaults: { _controller: EnqueteBundle:Enquete:lancer }
+    options:
+        expose: true
+
+enquete_generer:
+    path:     /generer/{id}
+    defaults: { _controller: EnqueteBundle:Enquete:generercsv }
+    options:
+        expose: true
+
+enquete_ouvrir:
+    path:     /ouvrir/{id}-{idCamp}
+    defaults: { _controller: EnqueteBundle:Enquete:ouvrir }
+    options:
+        expose: true
+enquete_modifier_autorisation_cloture:
+    path:     /autorisation_cloture
+    defaults: { _controller: EnqueteBundle:Enquete:autorisationCloture }
+    options:
+        expose: true
+
+enquete_archiver:
+    path:     /archiver/{id}
+    defaults: { _controller: EnqueteBundle:Enquete:archiver }
+    options:
+        expose: true
+
+enquete_modifier:
+    path:     /modifier
+    defaults: { _controller: EnqueteBundle:Enquete:modifier }
+    options:
+        expose: true
+
+enquete_get_option_select:
+    path:     /getoptionsselect
+    defaults: { _controller: EnqueteBundle:Enquete:getoptionsselect }
+    methods:  [GET, POST]
+    options:
+        expose: true
+
+enquete_encode:
+    path:     /encode
+    defaults: { _controller: EnqueteBundle:Enquete:encodepassword }
+
+enquete_suivi:
+    path:     /suivi
+    defaults: { _controller: EnqueteBundle:Enquete:suivi }
+
+enquete_relancer:
+    path:     /relancer
+    defaults: { _controller: EnqueteBundle:Enquete:relancer }
+    options:
+        expose: true
+
+show_bilan_apa:
+    path: /show_bilan_apa/{userId}-{idColl}-{droit}
+    defaults: { _controller: "EnqueteBundle:Enquete:showBsApa" }
+    options:
+        expose: true
+
+show_bilan_cons:
+    path: /show_bilan_cons/{userId}-{idColl}-{return}
+    defaults: { _controller: "EnqueteBundle:Enquete:showBsCons", return: null }
+    options:
+        expose: true
+
+remove_cdg_session:
+    path: /remove_session
+    defaults: { _controller: "EnqueteBundle:Enquete:removeCdgSession" }
+
+enquete_importmassecoll:
+    path:     /importmassecoll
+    defaults: { _controller: EnqueteBundle:Enquete:importMasseCollectivite }
+    options:
+        expose: true
+
+ajax_get_enquete_collectivite:
+    path:     /modifier/ajaxGetEnqueteCollectivite/
+    defaults: { _controller: EnqueteBundle:Enquete:ajaxGetEnqueteCollectivite }
+    options:
+        expose: true
+
+ajax_suivi_enquete:
+    path:     /suivi/ajaxSuiviEnquete
+    defaults: { _controller: EnqueteBundle:Enquete:ajaxSuiviEnquete }
+    options:
+        expose: true
+
+enquete_parametrage:
+    path:     /parametrage
+    defaults: { _controller: EnqueteBundle:Enquete:getParametrage }
+    options:
+        expose: true
+
+save_enquete_collectivite:
+    path:     /saveEnqueteCollectiviteJson
+    defaults: { _controller: EnqueteBundle:Enquete:saveEnqueteCollectiviteJson }
+    methods:  [GET, POST]
+    options:
+        expose: true
+  
+enquete_gestion_creation:
+   path:    /gestion_enquete_creation/
+   controller: EnqueteBundle:Enquete:newEnquete
+   defaults:   { idEnqu: null }
+   options:
+        expose: true
+
+enquete_gestion_edition:
+   path:    /gestion_enquete_modification/{idEnqu}
+   controller: EnqueteBundle:Enquete:editEnquete
+   methods:  [GET, POST]
+   options:
+        expose: true
+        
+import_bc:
+   path:    /gestion_import
+   defaults: { _controller: EnqueteBundle:Enquete:importBc }
+   options:
+        expose: true
+
+
+gestion_enquete_admin:
+    path:    /gestion_enquete_administration/
+    controller: EnqueteBundle:Enquete:gestionEnqueteAdmin
+    options:
+        expose: true

@@ -1,0 +1,28 @@
+refcategorieboeth_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefCategorieBoeth:index" }
+    methods:  GET
+
+refcategorieboeth_show:
+    path:     /{idCategorieboeth}/show
+    defaults: { _controller: "ReferencielBundle:RefCategorieBoeth:show" }
+    methods:  GET
+
+refcategorieboeth_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefCategorieBoeth:new" }
+    methods:  [GET, POST]
+
+refcategorieboeth_edit:
+    path:     /{idCategorieboeth}/edit
+    defaults: { _controller: "ReferencielBundle:RefCategorieBoeth:edit" }
+    methods:  [GET, POST]
+
+refcategorieboeth_delete:
+    path:     /{idCategorieboeth}/delete
+    defaults: { _controller: "ReferencielBundle:RefCategorieBoeth:delete" }
+    methods:  DELETE
+
+csv_export_refcategorieboeth:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefCategorieBoeth:generateCsv" }

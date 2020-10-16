@@ -1,0 +1,28 @@
+refgrade_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefGrade:index" }
+    methods:  GET
+
+refgrade_show:
+    path:     /{idGrad}/show
+    defaults: { _controller: "ReferencielBundle:RefGrade:show" }
+    methods:  GET
+
+refgrade_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefGrade:new" }
+    methods:  [GET, POST]
+
+refgrade_edit:
+    path:     /{idGrad}/edit
+    defaults: { _controller: "ReferencielBundle:RefGrade:edit" }
+    methods:  [GET, POST]
+
+refgrade_delete:
+    path:     /{idGrad}/delete
+    defaults: { _controller: "ReferencielBundle:RefGrade:delete" }
+    methods:  DELETE
+
+csv_export_refgrade:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefGrade:generateCsv" }

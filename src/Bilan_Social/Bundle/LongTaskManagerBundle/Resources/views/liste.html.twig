@@ -1,0 +1,12 @@
+{#
+	liste des long_tasks
+#}
+{# {% extends '@LongTaskManager/layout.html.twig' %} #}
+{% block body %}
+
+	{% if tasks|length > 0 %}
+		{% for k,task in tasks %}
+			{% include '@LongTaskManager/fiche.html.twig' %}
+		{% endfor %}
+	{% endif %}
+{% endblock body %}

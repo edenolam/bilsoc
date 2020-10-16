@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\Sante" table="sante">
+        <indexes>
+            <index name="FK_SANTE_CATEGORIE" columns="ID_CATE"/>
+            <index name="FK_SANTE_INFOCOLLAGENT" columns="ID_INFOCOLLAGEN"/>
+        </indexes>
+        <id name="idSant" type="integer" column="ID_SANT">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="idInfocollagen" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationColectiviteAgent" inversed-by="sante">
+            <join-column name="ID_INFOCOLLAGEN" referenced-column-name="ID_INFOCOLLAGEN" />
+        </many-to-one>
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie" inversed-by="sante_categorie">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE"/>
+        </many-to-one>
+        <!--        <field name="idCate" type="integer" column="ID_CATE" nullable="true"/>-->
+        <!--        <field name="" type="integer" column="" nullable="true"/>-->
+        <field name="r81411" type="integer" column="R_81411" nullable="true"/>
+        <field name="r81412" type="integer" column="R_81412" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

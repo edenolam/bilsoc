@@ -1,0 +1,21 @@
+{
+    "name":"depaColl",
+    "value":{},
+    "data_type":"choices",
+    "form_type":"choices",
+    "form_options":{
+        "label":"infocentre.filter_form.depa_coll.label",
+        "expanded":true,
+        "multiple":true,
+        "attr":{"class":"form_choices_col_4 form_choices_inline child_box_border_tinyround child_box_border_slim"}
+    },
+    "src_type":"SQL_DATA_SRC",
+    "src":{
+        "table":"departement",
+        "map_by_key":{
+            "call":"concatRowData",
+            "with_params":["cdDepa"," - ","lbDepa"]
+        },
+        "get_values":"idDepa"
+    }
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTempsNonComplet" table="ref_temps_non_complet">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_TEMPNONCOMP" name="cdTempnoncomp"/>
+        </unique-constraints>
+        <id name="idTempnoncomp" type="integer" column="ID_TEMPNONCOMP">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdTempnoncomp" type="string" column="CD_TEMPNONCOMP" length="50" nullable="true"/>
+        <field name="lbTempnoncomp" type="string" column="LB_TEMPNONCOMP" length="100" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="nbMinuteBorneMin" type="integer" column="NB_MIN_BORNMIN" nullable="true"/>
+        <field name="nbMinuteBorneMax" type="integer" column="NB_MIN_BORNMAX" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refTempsNonComplet"/>
+    </entity>
+</doctrine-mapping>

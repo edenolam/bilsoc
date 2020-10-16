@@ -1,0 +1,813 @@
+#------------------------------------------#
+# Messages pour la carte de la page d'accueil cdg
+#------------------------------------------#
+
+success.getmap: données de carte chargées
+erreur.getmap.nodata : Aucune donnée à charger
+erreur.unique.violation: Une erreur s'est produite. Votre bilan social a expiré, vous devez le recharger.
+
+#------------------------------------------#
+# Messages utilisés dans l'agent par agent
+#------------------------------------------#
+
+# Nom de l'agent
+agent.lbnom.not_blank: Merci de renseigner le nom
+# Prénom de l'agent
+agent.lbpren.not_blank: Merci de renseigner le prénom
+# Date de naissance de l'agent
+agent.lbdtnais.not_blank: Merci de renseigner la date de naissance
+agent.datenais.bad_format: "Le format attendu pour la date est mois/année(ex: 01/2017)"
+# Genre de l'agent
+agent.cdsexe.not_blank: Merci de renseigner le genre
+# Agent rémunéré au 31/12
+agent.blAgenremu3112.not_blank: Cette réponse est obligatoire
+# Statut de l'agent
+agent.status.not_blank: Merci de renseigner le statut
+#CET
+agent.autre.cet.value: Le nombre de jours ne peut être supérieur à 60.
+# Q28.5 Nombre de retours au temps plein pour l'agent
+agent.nbAgenempltempcompnonrenou.onemax: 'La valeur ne doit pas dépasser 1'
+# Q37 - DGCL
+agent.blJoursCarence.label: "Q37 - Est-ce qu'au moins un jour de carence a été prélevé à l'agent en %annee% ?"
+# Q38 - DGCL
+agent.nbJoursCarence.label: "Q38 - Quel est le nombre de jours de carence prélevés sur l'année %annee% pour l'agent ?"
+# Q39 - DGCL
+agent.nbMontantCarence.label: "Q39 - Quel est le montant des sommes retenues pour délai de carence ? (en €)"
+
+# Création d'un nouvel agent
+new.agent.flash: Votre agent a été créé
+# Modification d'un agent
+edit.agent.flash: Votre agent a été modifié
+# validation d'un agent
+validate.agent.flash: Votre agent a été validé
+# suppression d'un agent
+delete.agent.flash: Votre agent a été supprimé
+# suppression plusieurs agents
+delete.agents.flash: Vos agents ont été supprimés
+
+# Création informations collectivite
+new.informationcollectivite.flash: Les informations de la collectivité ont été enregistrées
+# Modification informations collectivite
+edit.informationcollectivite.flash: Les informations de la collectivité ont été modifiées
+
+# Création informations générales
+new.informationgenerale.flash: Les informations générales de la collectivité ont été enregistrées
+# Modification informations générales
+edit.informationgenerale.flash: Les informations générales de la collectivité ont été modifiées
+
+#------------------------------------------#
+# Messages utilisés dans les bilans sociaux
+#------------------------------------------#
+
+# Mode de saisie
+modesaisie.bilansocial.flash: Votre mode de saisie a été pris en compte
+
+# Erreur lors de l'enregistrement du mode de saisie
+erreur.modesaisie.flash: Une erreur est survenue, veuillez recommencer.
+erreur.format.modal: Format de fichier incorrect.
+erreur.modesaisie.bilansocialvide.exist.flash: Un bilan social consolidé existe déjà pour cette enquête.
+
+#------------------------------------------#
+# Messages utilisés dans les campagnes
+#------------------------------------------#
+
+# Création d'une campagne
+new.campagne.flash: La campagne a été créée
+# Création d'une campagne
+edit.campagne.flash: La campagne a été modifiée
+# message si une campagne existe deja
+existe.campagne.flash: Une campagne existe déjà pour l'année renseignée
+# message si une campagne en cours est deja ouverte
+dejaouverte.campagne.flash: Une campagne est déjà ouverte
+# message lors d'une ouverture de campagne
+ouverture.campagne.flash: Campagne ouverte
+# message lors de fermeture d'une campagne
+cloture.campagne.flash: Campagne clôturée
+# message lors de campagne archivée
+archive.campagne.flash: Campagne archivée
+# message lors d'une relance par mail
+mailrelance.campagne.flash: Le mail de relance a été envoyé aux CDG concernées
+# erreur campagne
+erreur.campagne.flash: Une erreur est survenue, veuillez recommencer
+
+#------------------------------------------#
+# Messages utilisés pour les centres de gestion
+#------------------------------------------#
+editfiche.cdg.flash: La modification a bien été effectuée
+erreur.cdg.flash: Une erreur est survenue, veuillez recommencer
+enregistrementdepartement.cdg.flash: Les départements ont été attribués au centre de gestion.
+
+#------------------------------------------#
+# Messages utilisés dans les actualités
+#------------------------------------------#
+
+# Date de fin de l'actualité
+actualite.dateFin.expression: La date de fin doit être supérieure à la date de début
+# Format de l'image de l'actualité
+actualite.image.format:  fichier ({{ type }}) non valide, votre fichier doit avoir l'extension {{ types }}
+actualite.image.maxSize:  Fichier trop volumineux ({{ size }} {{ suffix }}). taille Max {{ limit }} {{ suffix }}.
+actualite.image.notfound: Fichier non trouvé
+actualite.image.minWidth: La largeur de l'image est trop petite {{ width }}px. La largeur minimum attendue est de {{ min_width }}px.
+actualite.image.minHeight: La hauteur de l'image est trop petite {{ height }}px. La hauteur minimum attendue est de {{ min_height }}px.
+# Départements liés à l'actualité
+actualite.departement.minimum: Vous devez sélectionner au moins un département
+actualite.cdg.minimum: Vous devez sélectionner au moins un centre de gestion.
+actualite.image.notnull: L'image est obligatoire.
+actualite.corp.notnull: le corps de l'actualité est obligatoire.
+
+#------------------------------------------#
+# Messages utilisés dans les collectivités
+#------------------------------------------#
+
+
+# messages de modal
+  # bouttons
+modal.btn.oupsNon: Oups, non !
+modal.btn.transmettreBilan: Oui, transmettre
+modal.btn.validerBilan: Oui, valider
+modal.btn.deverrouillerBilan: Oui, déverrouiller
+modal.btn.refuserBilan: Oui, refuser
+modal.btn.jaicompris: J'ai compris
+modal.btn.confirmer: confirmer
+modal.btn.oui: oui
+modal.btn.non: non
+  # transmistion bilan social
+consolide.modal.transmetreConso.title: Transmettre le Bilan Social
+consolide.modal.transmetreConso.msg: Êtes-vous sûr de vouloir transmettre votre Bilan Social à votre cdg ? Vous n'aurez plus la main sur la saisie de votre Bilan.
+  # validation bialn social
+consolide.modal.validationConso.title: Valider le Bilan Social
+consolide.modal.validationConso.msg: Êtes-vous sûr de vouloir valider le bilan social ? Cette action entrainera la transmission des données du Bilan social de cette collectivité dans l'espace DGCL
+  # devalider bilan social
+consolide.modal.deverrouillerConso.title: Déverrouiller le Bilan Social
+consolide.modal.deverrouillerConso.msg: Êtes-vous sûr de vouloir déverrouiller le bilan social ? Cette action permettra à la collectivité de saisir de nouveau ses données
+
+  # refus bilan social
+consolide.modal.refusConso.title: Refuser le Bilan Social
+consolide.modal.refusConso.msg: Êtes-vous sur de vouloir refuser le Bilan Social ? Cette action redonnera la main à la collectivité pour compléter son Bilan Social ou corriger les éventuelles incohérences<br />Souhaitez-vous en informer la collectivité par email ? <input id='send-email-when-refused' type='checkbox' />
+# La collectivité est-elle rattachée au comité technique (CT) du CDG ?
+collectivite.blctcdg.not_blank: Veuillez renseigner si la collectivité est rattachée au comité technique
+# La collectivité a-t-elle son propre CHSCT ?
+collectivite.blchsct.not_blank: Veuillez renseigner si la collectivité a son propre CHSCT
+# Code postal de la collectivité
+collectivite.cdPost.not_blank: Le code postal doit être renseigné
+collectivite.cdPost.minWidth: Le code postal doit contenir 5 chiffres
+collectivite.cdPost.maxWidth: Le code postal doit contenir 5 chiffres
+collectivite.cdPost.exactWidth: Le code postal doit contenir 5 chiffres
+#numéro de siret
+collectivite.nmSire.not_blank: Le numéro de siret doit être renseigné.
+collectivite.nmSire.minWidth: Le numéro de siret doit contenir 14 chiffres
+collectivite.nmSire.maxWidth: Le numéro de siret doit contenir 14 chiffres
+collectivite.nmSire.exactWidth: Le numéro de siret doit contenir 14 chiffres
+# nom de la collectivite
+collectivite.nom.not_blank: Le nom de la collectivité doit être renseigné
+# adresse de la collectivité
+collectivite.adresse.not_blank: L'adresse de la collectivité doit être renseignée
+# ville de la collectivité
+collectivite.ville.not_blank: La ville de la collectivité doit être renseignée
+# CODE INSEE
+# Type de collectivité
+collectivite.typecoll.not_blank: Le type de la collectivité doit être renseigné
+# Département de la collectivité
+collectivite.departement.not_blank: Le département de la collectivité doit être renseigné
+# Centre de gestion de la collectivité
+collectivite.cdgDepartement.not_blank: Le centre de gestion de la collectivité doit être renseigné
+# Population totale INSEE
+# Date de population totale INSEE
+# Sur-classement démographique
+# La collectivité est-elle affiliée au CDG
+collectivite.blAffiColl.not_blank: Cette réponse est obligatoire
+# La collectivité est-elle rattachée au comité technique ( CT ) du CDG ?
+# La collectivité fait-elle partie de l'échantillon de la DGCL ?
+collectivite.blCollDgcl.not_blank: Cette réponse est obligatoire
+informations.champs.dgcl: Champs renseigné par le centre de gestion
+# Zone d’emploi de la collectivité
+# SIRET de rattachement
+informations.champs.siret.rattachement: SIRET de l’EPCI de rattachement
+# Informations complémentaires
+
+editcontact.collectivite.flash: Les contacts ont été modifiés
+fiche.collectivite.archive.flash: La collectivité a bien été archivée.
+
+erreur.collectivite.flash: Une erreur est survenue, veuillez recommencer.
+erreur.modification.collectivite: Vous devez modifier au minimum une valeur afin d'envoyer une demande de modification.
+editfiche.collectivite.flash: La modification a été effectuée avec succès.
+edit.collectivite.flash: Vos informations ont bien été modifiées.
+demandedemodificationenvoye.collectivite.flash: Votre demande de modification a été envoyée à votre centre de gestion.
+
+modificationaccepte.collectivite.flash: Les modifications ont été acceptées par l'administrateur
+modificationrefuse.collectivite.flash: Les modifications ont été refusées par l'administrateur
+erreurtypefichier.collectivite.flash: Le type de ficher n'est pas correct, veuillez importer un fichier au format ".csv"
+modificationmasse.collectivite.flash: Les modifications ont été effectuées
+importmassesuccess.collectivite.flash : Fichier importé avec succès
+#newcollectiviteadmin.collectivite.flash: La collectivité a été créée  Voici ses identifiants login psw
+demandedecreationenvoyecdg.collectivite.flash: La demande de création a été envoyée à l'administrateur
+# login est une variable representant l'identifiant.
+# psw est une variable representant le mot de passe.
+newcollectiviteadmin.collectivite.flash: La collectivité a été créée. <br> Voici ses identifiants <ul><li> login </li><li>psw </li></ul>
+errorsiret.collectivite.flash: Une collectivité possède déjà ce numéro de SIRET, veuillez contacter l'administrateur.
+creationaccepte.collectivite.flash: La création de la collectivité a été acceptée par l'administrateur
+creationrefuse.collectivite.flash: La création de la collectivité a été refusée par l'administrateur
+erreurexportcollectivite.collectivite.flash: L'export n'a pas pu être effectué, veuillez cocher au moins une collectivité.
+erreurmdpcollectivite.collectivite.flash: La réinitialisation des mots de passe n'a pas pu être effectuée, veuillez cocher au moins une collectivité.
+# login est une variable representant l'identifiant.
+# psw est une variable representant le mot de passe.
+identifiantcollectivite.collectivite.flash: Voici les identifiants <ul><li> login </li><li>psw </li></ul>
+
+#------------------------------------#
+# Messages utilisés dans les FAQs
+#------------------------------------#
+
+faq.sujet.not_blank: Le sujet est obligatoire
+faq.question.not_blank: La question est obligatoire
+faq.reponse.not_blank: La réponse est obligatoire
+faq.send.error: Erreur lors de l'envoi de votre question
+edit.faq.flash: La modification de votre FAQ a été effectuée
+delete.faq.flash: La FAQ a été supprimée
+create.faq.flash: La FAQ a été créée
+delete.question.flash: La question a été supprimée
+
+#------------------------------------#
+# Messages utilisés dans les modeles de mails
+#------------------------------------#
+modelMail.objet.not_blank: L'objet du mail est obligatoire
+modelMail.body.not_blank: Le corps du mail est obligatoire
+
+
+#------------------------------------#
+# Messages utilisés dans le consolide
+#------------------------------------#
+
+
+ind110.consolide.incoherencelog: "Le total des tableaux [1.1.0] doit être inférieur ou égal au total [1.1.1] + [1.2.1]."
+
+# lbgrade est une variable representant le nom du grade.
+ind111Grade.consolide.incoherencelog: "Pour le grade lbgrade, la somme tous emplois hommes et femmes doit être égale à la somme des temps complets et des temps non complets."
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind112cadreemploi.consolide.incoherencelog: "Le nombre d'agents saisis pour le cadre d'emploi lbcadreemploi doit être égal au nombre d'agents à temps complet du cadre d'emploi saisis à l'indicateur 1.1.1 (1ère colonne)."
+ind112Hcadreemploi.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Le total Homme doit être inférieur ou égal au total 1.1.1 Homme"
+ind112Fcadreemploi.consolide.incoherencelog: "Cadre emploi lbcadreemploi : Le total Femme doit être inférieur ou égal au total 1.1.1 Femme"
+
+# lbcategorie est une variable representant le nom de la catégorie.
+ind113categorie.consolide.incoherencelog: "Le nombre d'agents saisis en catégorie lbcategorie doit être égal au nombre d'agents à temps partiel saisis au 1.1.2 (colonnes 1.1.2(3) à 1.1.2(8) )."
+# lbfiliere est une variable representant le nom de la filière.
+ind114filiere.consolide.incoherencelog: "Un ou plusieurs agents ont été saisis en filière lbfiliere à l'indicateur 1.1.1, merci de renseigner le nombre d'ETPR pour cette filière."
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploicdi.consolide.incoherencelog: "Pour le cadre emploi lbcadreemploi: La somme des agents femmes et hommes en CDI doit correspondre au nombre total d'agents en CDI. "
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploi.consolide.incoherencelog: "Pour le cadre emploi lbcadreemploi : La somme des agents à temps complet et temps non complet doit correspondre au nombre total d'agents tous types de contrats confondus. "
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploianciennete.consolide.incoherencelog: "Pour le cadre emploi lbcadreemploi : La somme des agents renseignés dans les colonnes ancienneté doit correspondre au nombre total d'agents tous types de contrats confondus."
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploitotal.consolide.incoherencelog: "Pour le cadre emploi lbcadreemploi : La somme des agents renseignés dans les colonnes femmes et hommes doit correspondre au nombre total d'agents tous types de contrats confondus."
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind121cadreemploitotalcdd.consolide.incoherencelog: "Pour le cadre emploi lbcadreemploi : La somme des agents renseignés en CDD femmes et hommes doit correspondre au total d'agents en CDD."
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind122cadreemploi.consolide.incoherencelog: "Le nombre d'agents saisis pour le cadre d'emploi lbcadreemploi doit être égal au total des agents à temps complet du cadre d'emploi saisis à l'indicateur 1.2.1."
+# lbcategorie est une variable representant le nom de la catégorie
+ind123categorie.consolide.incoherencelog: "Le nombre d'agents saisis en catégorie lbcategorie doit être égal au nombre d'agents à temps partiel saisi au 1.2.2 (colonnes 1.2.2(3) à 1.2.2(8))."
+# lbfiliere est une variable representant le nom de la filière.
+ind124filiere.consolide.incoherencelog: "Un ou plusieurs agents ont été saisis en filière lbfiliere à l'indicateur 1.2.1, merci de renseigner le nombre d'ETPR pour cette filière"
+# lbemploinonperm est une variable representant le nom de l'emploi non permanenet.
+ind1311emploinonperm.consolide.incoherencelog: "Le nombre de lbemploinonperm au 31/12 doit être inférieur ou égal au nombre de lbemploinonperm présents au cours de l'année."
+ind1311Hemploinonperm.consolide.incoherencelog: "Le nombre de lbemploinonperm au 31/12 Homme doit être inférieur ou égal au nombre de lbemploinonperm Homme présents au cours de l'année."
+ind1311Femploinonperm.consolide.incoherencelog: "Le nombre de lbemploinonperm au 31/12 Femme doit être inférieur ou égal au nombre de lbemploinonperm Femme présents au cours de l'année."
+# lbemploinonperm est une variable representant le nom de l'emploi non permanenet.
+ind1312emploinonperm.consolide.incoherencelog: "Le total lbemploinonperm de l'indicateur 1.3.1 (2) doit être inférieur ou égal à l'indicateur 1.3.1 (1)."
+ind1312Hemploinonperm.consolide.incoherencelog: "Le champ lbemploinonperm Homme de l'indicateur 1.3.1 (2) doit être inférieur ou égal à l'indicateur 1.3.1 (1)"
+ind1312Femploinonperm.consolide.incoherencelog: "Le champ lbemploinonperm Femme de l'indicateur 1.3.1 (2) doit être inférieur ou égal à l'indicateur 1.3.1 (1)"
+ind1312emploinonperm.consolide1311.incoherencelog: "Emploi non permanent lbemploinonperm : Totaux non renseignés par rapport à 1.3.1.1"
+ind1321.consolide.incoherencelog: "Personnels remplaçants mis à disposition par le centre de gestion : Totaux non correspondants"
+ind1322.consolide.incoherencelog: "Personnels employés dans le cadre du recours au service des entreprises  (intérim) : Totaux non correspondants"
+ind150totauxnoncorrespondant.consolide.incoherencelog: "Les arrivées moins les départs doivent êtes inférieures aux agents rémunérés au 31/12"
+# lbcadreemploi est une variable representant le nom du cadre emploi.
+ind152cadreemploi.consolide.incoherencelog: "Le total des lbcadreemploi par mode de recrutement doit être égal au total des arrivées des lbcadreemploi par temps de travail et par genre"
+# lbstagetitu est une variable representant le nom du stage de titularisation.
+ind154stagetituH.consolide.incoherencelog: "Le total des agents contractuels Homme nommés stagiaires doit être égal au total des contractuels Homme mis en stage à l'indicateur 1.5.0.2 (dernière ligne)."
+ind154stagetituF.consolide.incoherencelog: "Le total des agents contractuels Femme nommés stagiaires doit être égal au total des contractuels Femme mis en stage à l'indicateur 1.5.0.2 (dernière ligne)."
+
+ind156H.ind154H: "Le total des agents Hommes titularisés dans le cadre de la loi Sauvadet (1.5.6) doit être inférieur ou égal aux agents Hommes mis en stage dans le cadre de la loi Sauvadet (1.5.4)"
+ind156F.ind154F: "Le total des agents Femmes titularisés dans le cadre de la loi Sauvadet (1.5.6) doit être inférieur ou égal aux agents Femmes mis en stage dans le cadre de la loi Sauvadet (1.5.4)"
+
+# lbcategorie est une variable representant le nom de la catégorie.
+ind161categorieH111.consolide.incoherencelog: "Le total des titulaires Hommes en situation de handicap de la catégorie lbcategorie doit être inférieur ou égal au total des titulaires Hommes de la catégorie lbcategorie rémunérés au 31/12."
+ind161categorieF111.consolide.incoherencelog: "Le total des titulaires Femmes en situation de handicap de la catégorie lbcategorie doit être inférieur ou égal au total des titulaires Femmes de la catégorie lbcategorie rémunérés au 31/12."
+ind161categorieH121.consolide.incoherencelog: "Le total des contractuels sur emploi permanent Hommes en situation de handicap de la catégorie lbcategorie doit être inférieur ou égal au total des contractuels sur emploi permanent Hommes de la catégorie lbcategorie rémunérés au 31/12."
+ind161categorieF121.consolide.incoherencelog: "Le total des contractuels sur emploi permanent Femmes en situation de handicap de la catégorie lbcategorie doit être inférieur ou égal au total des contractuels sur emploi permanent Femmes de la catégorie lbcategorie rémunérés au 31/12."
+ind1612H131.consolide.incoherencelog : "Le total Contractuels sur emploi NON permanent Homme doit être inférieur ou égal au total Homme du 1.3.1(1.1)"
+ind1612F131.consolide.incoherencelog : "Le total Contractuels sur emploi NON permanent Femme doit être inférieur ou égal au total Femme du 1.3.1(1.2)"
+
+ind1711H.consolide.incoherencelog  : "Le total 1.7.1(1) Homme doit être égal au total Homme du 1.1.1"
+ind1711F.consolide.incoherencelog  : "Le total 1.7.1(1) Femme doit être égal au total Femme du 1.1.1"
+ind1712H.consolide.incoherencelog  : "Le total 1.7.1(2) Homme doit être égal au total Homme du 1.2.1"
+ind1712F.consolide.incoherencelog  : "Le total 1.7.1(2) Femme doit être égal au total Femme du 1.2.1"
+ind1713H.consolide.incoherencelog  : "Le total 1.7.1(3) Homme doit être égal au total Homme du 1.3.1(1.1)"
+ind1713F.consolide.incoherencelog  : "Le total 1.7.1(3) Femme doit être égal au total Femme du 1.3.1(1.2)"
+
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbarrethomme.consolide.incoherencelog: "Le nombre d'arrêts des titulaires et stagiaires hommes lbmotiabse doit être supérieur ou égal au nombre d'agents titulaires et stagiaires hommes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbjourneehomme.consolide.incoherencelog: "Le nombre de jours d'absence des titulaires et stagiaires  hommes lbmotiabse doit être supérieur ou égal au nombre d'agents titulaires et stagiaires hommes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbjourneesuparrethomme.consolide.incoherencelog: "Le nombre de jours d'absence des titulaires et stagiaires hommes lbmotiabse doit être supérieur ou égal au nombre d'arrêts des titulaires et stagiaires hommes lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbarretfemme.consolide.incoherencelog: "Le nombre d'arrêts des titulaires et stagiaires femmes lbmotiabse doit être supérieur ou égal au nombre d'agents titulaires et stagiaires femmes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbjourneefemme.consolide.incoherencelog: "Le nombre de jours d'absence des titulaires et stagiaires  femmes lbmotiabse doit être supérieur ou égal au nombre d'agents titulaires et stagiaires femmes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2111motifabsencenbjourneesuparretfemme.consolide.incoherencelog: "Le nombre de jours d'absence des titulaires et stagiaires femmes lbmotiabse doit être supérieur ou égal au nombre d'arrêts des titulaires et stagiaires femmes lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2112motifabsencenbfonctionnaire.consolide.incoherencelog: "Le nombre d'agents titulaires ou stagiaires arrêtés lbmotiabse doit être égal au nombre d'agents titulaires ou stagiaires arrêtés lbmotiabse dans le 1er tableau."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2112motifabsencenbfonctionnaire2113.consolide.incoherencelog: "2.1.1.2 : Motif absence lbmotiabse : Le nombre de fonctionnaires est différent du tableau 2.1.1.3"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2113motifabsencenbjournee2111.consolide.incoherencelog: "Le nombre de jours d'absence des titulaires et stagiaires lbmotiabse doit être égal au nombre de jours d'absence des titulaires et stagiaires lbmotiabse dans le 1er tableau."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2113motifabsencenbjournee2112.consolide.incoherencelog: "2.1.1.3 : Motif absence lbmotiabse : Le nombre de journées d'absence est différent du tableau 2.1.1.2"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbarrethommesupemplpermhomme.consolide.incoherencelog: "Le nombre d'arrêts des contractuels sur emploi permanent hommes lbmotiabse doit être supérieur ou égal au nombre d'agents contractuels sur emploi permanent hommes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+
+
+ind2121motifabsencenbabsencehommesupemplpermhomme.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi permanent hommes lbmotiabse doit être supérieur ou égal au nombre d'agents contractuels sur emploi permanent hommes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbjourneesuparrethomme.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi permanent hommes lbmotiabse doit être supérieur ou égal au nombre d'arrêts des contractuels sur emploi permanent hommes lbmotiabse."
+
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbarretfemmesupemplpermfemme.consolide.incoherencelog: "Le nombre d'arrêts des contractuels sur emploi permanent femmes lbmotiabse doit être supérieur ou égal au nombre d'agents contractuels sur emploi permanent femmes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbabsencefemmesupemplpermfemme.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi permanent femmes lbmotiabse doit être supérieur ou égal au nombre d'agents contractuels sur emploi permanent femmes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2121motifabsencenbjourneesuparretfemme.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi permanent femmes lbmotiabse doit être supérieur ou égal au nombre d'arrêts des contractuels sur emploi permanent femmes lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2122nbemploipermanent2121.consolide.incoherencelog: "Le nombre d'agents contractuels sur emploi permanent arrêtés lbmotiabse doit être égal au nombre d'agents contractuels sur emploi permanent arrêtés lbmotiabse dans le 1er tableau."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2122nbemploipermanent2123.consolide.incoherencelog: "2.1.2.2 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois permanents  est différent du tableau 2.1.2.3"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2123nbemploipermanent2121.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi permanent lbmotiabse doit être égal au nombre de jours d'absence des contractuels sur emploi permanent lbmotiabse dans le 1er tableau."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2123nbemploipermanent2122.consolide.incoherencelog: "2.1.2.3 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois permanents  est différent du tableau 2.1.2.2"
+
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbarrethommesupemplnonpermhomme.consolide.incoherencelog: "Le nombre d'arrêts des contractuels sur emploi non permanent hommes lbmotiabse doit être supérieur ou égal au nombre d'agents contractuels sur emploi non permanent hommes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbabsencehommesupemplnonpermhomme.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi non permanent hommes lbmotiabse doit être supérieur ou égal au nombre d'agents contractuels sur emploi non permanent hommes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbjourneesuparrethomme.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi non permanent hommes lbmotiabse doit être supérieur ou égal au nombre d'arrêts des contractuels sur emploi non permanent hommes lbmotiabse."
+
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbarretfemmesupemplnonpermfemme.consolide.incoherencelog: "Le nombre d'arrêts des contractuels sur emploi non permanent femmes lbmotiabse doit être supérieur ou égal au nombre d'agents contractuels sur emploi non permanent femmes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbabsencefemmesupemplnonpermfemme.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi non permanent femmes lbmotiabse doit être supérieur ou égal au nombre d'agents contractuels sur emploi non permanent femmes arrêtés lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2131motifabsencenbjourneesuparretfemme.consolide.incoherencelog: "Le nombre de jours d'absence des contractuels sur emploi non permanent femmes lbmotiabse doit être supérieur ou égal au nombre d'arrêts des contractuels sur emploi non permanent femmes lbmotiabse."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2132motifabsencenbfonctionnaire2131: "Le nombre d'agents contractuels sur emploi permanent arrêtés lbmotiabse doit être égal au nombre d'agents contractuels sur emploi permanent arrêtés lbmotiabse dans le 1er tableau."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2132motifabsencenbcontractuel2133: "2.1.3.2 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois non permanents est différent du tableau 2.1.3.3"
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2133motifabsencenbcontractuel2131: "Le nombre de jours d'absence des contractuels sur emploi permanent lbmotiabse doit être égal au nombre de jours d'absence des contractuels sur emploi permanent lbmotiabse dans le 1er tableau."
+# lbmotiabse est une variable representant le nom du motif absence.
+ind2133motifabsencenbcontractuel2132 : "2.1.3.3 : Motif absence lbmotiabse : Le nombre de contractuels sur emplois non permanents est différent du tableau 2.1.3.2"
+
+ind214erreurtotalpaternite : "Le nombre d'agents saisi au titre d'un congé paternité ou d'accueil de l'enfant doit être inférieur ou égal à la somme des agents saisis au titre d'un congé paternité ou d'accueil de l'enfant aux indicateurs 2.1.1, 2.1.2, 2.1.3"
+ind214erreurtotalsommepaternite : "Le nombre de jours d'absence saisi au titre d'un congé paternité ou d'accueil de l'enfant doit être inférieur ou égal à la somme du nombre de jours d'absence au titre d'un congé paternité ou d'accueil de l'enfant saisi aux indicateurs 2.1.1, 2.1.2, 2.1.3"
+
+ind221cadreemploiH.consolide.incoherencelog : "Le nombre total d'agents Homme doit être égal au nombre total d'agents Homme rémunérés au 31/12 (titulaires et contractuels sur emploi permanent à temps complet) saisi aux indicateurs 1.1.2 et 1.2.2."
+ind221cadreemploiF.consolide.incoherencelog : "Le nombre total d'agents Femme doit être égal au nombre total d'agents Femme rémunérés au 31/12 (titulaires et contractuels sur emploi permanent à temps complet) saisi aux indicateurs 1.1.2 et 1.2.2."
+
+ind222H.consolide.incoherencelog: "Le nombre d'agents Homme pour la contrainte lbCt doit être inférieur ou égal au nombre d'agents Homme saisi aux indicateurs 1.1.2 et 1.2.2."
+ind222F.consolide.incoherencelog: "Le nombre d'agents Femme pour la contrainte lbCt doit être inférieur ou égal au nombre d'agents Femme saisi aux indicateurs 1.1.2 et 1.2.2."
+
+ind2231H.cate: "Le nombre d'agents Homme ayant ouvert un CET en 2017 doit être inférieur ou égal au nombre d'agents Homme ayant un CET au 31/12"
+ind2231F.cate: "Le nombre d'agents Femme ayant ouvert un CET en 2017 doit être inférieur ou égal au nombre d'agents Femme ayant un CET au 31/12"
+ind2231H: Le nombre d'agents Homme ayant ouvert un CET doit être inférieur ou égal au nombre d'agents permanents Homme au 31/12
+ind2231F: Le nombre d'agents Femme ayant ouvert un CET doit être inférieur ou égal au nombre d'agents permanents Femme au 31/12
+
+ind224H.consolide.incoherencelog: "Le nombre d'agents Homme en télétravail doit être inférieur ou égal à la somme des agents Homme de rémunérés au 31/12 saisis aux indicateurs 1.1.1, 1.2.1 et 1.3.1."
+ind224F.consolide.incoherencelog: "Le nombre d'agents Femme en télétravail doit être inférieur ou égal à la somme des agents Femme de rémunérés au 31/12 saisis aux indicateurs 1.1.1, 1.2.1 et 1.3.1."
+
+# lbcategorie est une variable representant le nom de la catégorie
+ind311erreurtotalstrictementsup: "Pour les agents de catégorie lbcategorie : La somme des primes au titre de l'article 111, de l'article 88, de la NBI et des heures supplémentaires ou complémentaires doit être inférieure au montant total des rémunérations annuelles brutes"
+# lbcategorie est une variable representant le nom de la catégorie
+ind311totalhommesupsomme: "Pour les agents hommes de catégorie lbcategorie : La somme des primes au titre de l'article 111, de l'article 88, de la NBI et des heures supplémentaires ou complémentaires doit être inférieure au montant total des rémunérations annuelles brutes"
+# lbcategorie est une variable representant le nom de la catégorie
+ind311totalfemmesupsomme: "Pour les agents femmes de catégorie lbcategorie : La somme des primes au titre de l'article 111, de l'article 88, de la NBI et des heures supplémentaires ou complémentaires doit être inférieure au montant total des rémunérations annuelles brutes"
+ind311totalremunerations: "La rémuneration des fonctionnaires doit être renseignée."
+# lbcategorie est une variable representant le nom de la catégorie
+ind321totalstrictementsup: "Pour les agents de catégorie lbcategorie : La somme des primes et des heures supplémentaires/complémentaires doit être inférieur au montant total des rémunérations annuelles brutes"
+# lbcategorie est une variable representant le nom de la catégorie
+ind321totalsuphomme: "Pour les agents hommes de catégorie lbcategorie : La somme des primes et des heures supplémentaires ou complémentaires doit être inférieure au montant total des rémunérations annuelles brutes"
+# lbcategorie est une variable representant le nom de la catégorie
+ind321totalsupfemme: "Pour les agents femmes de catégorie lbcategorie : La somme des primes et des heures supplémentaires ou complémentaires doit être inférieure au montant total des rémunérations annuelles brutes"
+ind321totalremunerations: "La rémuneration des contractuels doit être renseignée."
+
+ind345chargepersonnelstrictementinferieur: "Les charges de personnel doivent être inférieures au montant des dépenses de fonctionnement"
+ind345nonrenseigne: "Les dépenses de fonctionnement et de personnel doivent être renseignées"
+ind411agentaffectprevent: "Le nombre total d'agents affectés à la prévention doit être inférieur ou égal à la somme des agents sur emploi permanent rémunérés au 31/12 saisis aux indicateurs 1.1.1 et 1.2.1"
+ind411actionpreventmontant: "Le montant en euro de la dernière ligne 'Dépenses correpondant...' doit être inférieur au montant de la ligne 3.4.4.1 de l'indicateur 3.4.4"
+
+
+# datecamp est une variable representant la date du début de campagne
+# datecrea est une variable representant la date de creation du document
+ind414annecreationdocument.consolide.incoherencelog: "L'année de création du document doit être supérieure à 1980 et inférieure ou égale à la date de début de campagne ( datecamp )"
+# datecamp est une variable representant la date du début de campagne
+# datecrea est une variable representant la date de creation du document
+ind414annemiseajourdocument.consolide.incoherencelog: "L'année de dernière mise à jour du document (datemaj) du document ne peut être postérieure à la date de début de campagne (datecamp), merci d'indiquer 'en cours' à la question votre collectivité dispose-t-elle d'un document unique d'évaluation des risques professionnels ?"
+ind414annemiseajourdocument2.consolide.incoherencelog: "L'année de dernière mise à jour du document (datemaj) ne peut être antérieure à l'année création (datecrea) du document, merci d'apporter les modifications nécessaires"
+
+ind421_SansArret_Service: "Le nombre je jours sans arrêt ne peut pas être supérieur au nombre total d'accidents de service"
+ind421_SansArret_Trajet: "Le nombre je jours sans arrêt ne peut pas être supérieur au nombre total d'accidents de trajet"
+ind421_Col9: "Le nombre de jours d'arrêts pour les agents Homme doit être égal au nombre de jours d'arrêts saisis pour les agents Homme aux indicateurs 2.1.1, 2.1.2 et 2.1.3"
+ind421_Col10: "Le nombre de jours d'arrêts pour les agents Femme doit être égal au nombre de jours d'arrêts saisis pour les agents Femme aux indicateurs 2.1.1, 2.1.2 et 2.1.3"
+
+ind421_Col11: "Le nombre de jours d'arrêts pour les agents Homme doit être égal au nombre de jours d'arrêts saisis pour les agents Homme aux indicateurs 2.1.1, 2.1.2 et 2.1.3"
+
+ind421_Col12: "Le nombre de jours d'arrêts pour les agents Femme doit être égal au nombre de jours d'arrêts saisis pour les agents Femme aux indicateurs 2.1.1, 2.1.2 et 2.1.3"
+ind421_Rassct_SansArret: "Le nombre d’accidents sans arrêt pour les agents Homme et Femme doit être égal au nombre d’accidents sans arrêts saisis pour les agents Homme et Femme à l’indicateur Rassct - durée des arrêts"
+ind421_Rassct_AvecArret: "Le nombre d’accidents avec arrêt pour les agents Homme et Femme doit être égal au nombre d’accidents avec arrêts saisis pour les agents Homme et Femme à l’indicateur Rassct - durée des arrêts"
+ind421_Rassct_NbJour_ArretAccidents: "Le total du nombre de jours d'arrêts ne doit pas être inférieur au nombre de jours d'arrêt à l’indicateur Rassct -  nature de lésion"
+ind421_Rassct_NbJour_NL: "Le total du nombre de jours d'arrêts ne doit pas être inférieur au nombre de jours d'arrêt à l’indicateur Rassct -  nature de lésion"
+ind421_Rassct_NbJour_SL: "Le total du nombre de jours d'arrêts ne doit pas être inférieur au nombre de jours d'arrêt à l’indicateur Rassct -  siège des lésions"
+ind421_Rassct_NbJour_EM: "Le total du nombre de jours d'arrêts ne doit pas être inférieur au nombre de jours d'arrêt à l’indicateur Rassct -  élément matériel"
+ind422_Col5_7: "Le nombre de jours d'arrêts pour les agents Homme doit être égal au nombre de jours d'arrêts saisis pour les agents Homme aux indicateurs 2.1.1, 2.1.2 et 2.1.3"
+ind422_Col6_8: "Le nombre de jours d'arrêts pour les agents Femme doit être égal au nombre de jours d'arrêts saisis pour les agents Femme aux indicateurs 2.1.1, 2.1.2 et 2.1.3"
+
+ind424allocationtempinvalidinfer111: "Allocation temporaire d'invalidité : L'ensemble des titulaires et stagiaires doit être inférieur ou égal au total 1.1.1(5) + 1.1.1(6)"
+ind424allocationtempinvalidhommeinfer111: "Le nombre d'allocations temporaires d'invalidité pour les agents titulaires et stagiaires hommes doit être inférieur ou égal au nombre d'agents titulaires et stagiaires hommes rémunérés au 31/12"
+ind424allocationtempinvalidfemmeinfer111: "Le nombre d'allocations temporaires d'invalidité pour les agents titulaires et stagiaires femmes doit être inférieur ou égal au nombre d'agents titulaires et stagiaires femmes rémunérés au 31/12"
+ind424allocationtempinvalidemppermhommeinfercdd121: "Le nombre d'allocations temporaires d'invalidité pour les agents contractuels sur emploi permanent hommes doit être inférieur ou égal au nombre d'agents contractuels sur emploi permanent hommes rémunérés au 31/12"
+ind424allocationtempinvalidemppermfemmeinfercdd121: "Le nombre d'allocations temporaires d'invalidité pour les agents contractuels sur emploi permanent femmes doit être inférieur ou égal au nombre d'agents contractuels sur emploi permanent hommes rémunérés au 31/12"
+ind424allocationtempinvalidempperminfercdd121: "Allocation temporaire d'invalidité : L'ensemble des contractuels sur emploi permanent doit être inférieur ou égal à l'ensemble des agents en CDD (1.2.1)"
+ind431acteviolencephysiquehomme: "Le nombre d'agents hommes qui ont été victimes d'actes de violence physiques avec arrêt doit être égal ou inférieur au nombre d'hommes dans les indicateurs 2.1.1, 2.1.2 et 2.1.3 avec motif d'absence accident de travail imputable au service ou accident de travail imputable au trajet"
+ind431acteviolencephysiquefemme: "Le nombre d'agents femmes qui ont été victimes d'actes de violence physiques avec arrêt doit être égal ou inférieur au nombre de femmes dans les indicateurs 2.1.1, 2.1.2 et 2.1.3 avec motif d'absence accident de travail imputable au service ou accident de travail imputable au trajet"
+
+ind5111categ.consolide111H.incoherencelog: "Le nombre d'agents Fonctionnaire Homme de catégorie lbcate est supérieur au nombre d'agents Fonctionnaire Homme de catégorie lbcate présents au 31/12, merci de vérifier que cela est exact."
+ind5111categ.consolide111F.incoherencelog: "Le nombre d'agents Fonctionnaire Femme de catégorie lbcate est supérieur au nombre d'agents Fonctionnaire Femme de catégorie lbcate présents au 31/12, merci de vérifier que cela est exact."
+ind5111categ.consolide121H.incoherencelog: "Le nombre d'agents Contractuel Homme de catégorie lbcate est supérieur au nombre d'agents Contractuel Homme de catégorie lbcate présents au 31/12, merci de vérifier que cela est exact."
+ind5111categ.consolide121F.incoherencelog: "Le nombre d'agents Contractuel Femme de catégorie lbcate est supérieur au nombre d'agents Contractuel Femme de catégorie lbcate présents au 31/12, merci de vérifier que cela est exact."
+ind5112categ.totalCPF1.incoherencelog: "Le nombre de jours de formation pour les agents de catégorie lbcate en lbForm dans le cadre du Compte Personnel de Formation doit être inférieur ou égal au nombre total de jours de formation pour les agents de catégorie lbcate en lbForm."
+ind5112categ.totalCPF2.incoherencelog: "Le nombre d'agents de catégorie lbcate formés dans le cadre du Compte Personnel de Formation en lbForm doit être inférieur ou égal au nombre total d'agents de catégorie lcatégorie ayant suivi au moins une formation."
+ind5112categ.totaux.incoherencelog: "Le nombre de jours total de formation pour les agents de catégorie lbcate en lbForm dans le cadre du Compte Personnel de Formation doit être supérieur ou égal au nombre total d'agents de catégorie lbcate en lbForm dans le cadre du Compte Personnel de Formation."
+ind5113categ.totalCPF1.incoherencelog: "Le nombre de jours de formation pour les agents de catégorie lbcate en lbForm dans le cadre du Compte Personnel de Formation doit être inférieur ou égal au nombre total de jours de formation pour les agents de catégorie lbcate en lbForm."
+ind5113categ.totalCPF2.incoherencelog: "Le nombre d'agents de catégorie lbcate formés dans le cadre du Compte Personnel de Formation en lbForm doit être inférieur ou égal au nombre total d'agents de catégorie lbcate ayant suivi au moins une formation."
+ind5113categ.totaux.incoherencelog: "Le nombre de jours total de formation pour les agents de catégorie lbcate en lbForm dans le cadre du Compte Personnel de Formation doit être supérieur ou égal au nombre total d'agents de catégorie lbcate en lbForm dans le cadre du Compte Personnel de Formation."
+ind5112Hcateg.ind5111H.incoherencelog : "Le nombre de départs en formation pour les fonctionnaires hommes doit être supérieur ou égal au nombre total de fonctionnaires hommes présents dans le tableau récapitulatif 5.1.1(1)."
+ind5112Fcateg.ind5111F.incoherencelog : "Le nombre de départs en formation pour les fonctionnaires femmes doit être supérieur ou égal au nombre total de fonctionnaires femmes présents dans le tableau récapitulatif 5.1.1(1)."
+ind5113Hcateg.ind5111H.incoherencelog : "Le nombre de départs en formation pour les contractuels sur emploi permanent hommes doit être supérieur ou égal au nombre total de contractuels sur emploi permanent hommes présents dans le tableau récapitulatif 5.1.1(1)."
+ind5113Fcateg.ind5111F.incoherencelog : "Le nombre de départs en formation pour les contractuels sur emploi permanent femmes doit être supérieur ou égal au nombre total de contractuels sur emploi permanent femmes présents dans le tableau récapitulatif 5.1.1(1)."
+
+
+ind5121enp.totalCPF1.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2(6) CPF doit être inférieur au total 5.1.2(5)"
+ind5121enp.totalCPF2.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2(10) CPF doit être inférieur au total 5.1.2(9)"
+ind5121enp.totaux.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2(5) doit être supérieur ou égal au total 5.1.2(9)"
+ind5121Henp.ind131H.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2 Homme ne doit pas dépasser le total 1.3.1 Homme"
+ind5121Fenp.ind131F.incoherencelog : "Emploi non permanent lbEmplnonperm : le total 5.1.2 Femme ne doit pas dépasser le total 1.3.1 Femme"
+
+ind514_ligne1.incoherencelog  : "Le total 1.1.1 temps complet + 1.2.1 temps complet étant supérieur strictement à 0, 5.1.4.1 doit être saisi."
+ind514_ligne2.incoherencelog  : "Le total 5.1.1.2(2) + 5.1.2.2(2) étant supérieur strictement à 0, 5.1.4.2 doit être saisi."
+ind514_lignetot.incoherencelog: "Le total 5.4.1 doit être inférieur ou égal au total 3.4.4.1"
+ind514_ligne1_51X.incoherencelog : "Le total 5.1.4.1 doit être supérieur à 0 car 5.1.1.2(1) + 5.1.2.2(1) est supérieur à 0"
+ind514_ligne2_51X.incoherencelog : "Le total 5.1.4.2 doit être supérieur à 0 car 5.1.1.2(2) + 5.1.2.2(2) est supérieur à 0"
+ind514_ligne3_51X.incoherencelog : "Le total 5.1.4.3 doit être supérieur à 0 car 5.1.1.2(4) + 5.1.2.2(4) est supérieur à 0"
+
+ind7141categ.totaux.incoherencelog : "Categorie lbcate : le total 7.1.4.1 doit être nul car le total 1.1.1 + 1.2.1 est nul"
+ind7142categ.totaux.incoherencelog : "Categorie lbcate : le total 7.1.4.2 doit être nul car le total 1.1.1 + 1.2.1 est nul"
+
+rassct_totalRNbAccidentsSurvenus.incoherencelog : "Le nombre total d'accidents dans l'onglet 'Durée des arrêts' ne doit pas être inférieur au nombre total d'accidents dans l'onglet 'Nombre d'accidents selon le type d'activité' "
+rassct_totalRNbAccidentNL.incoherencelog : "Le nombre total d'accidents dans l'onglet 'Durée des arrêts' ne doit pas être inférieur au nombre total d'accidents dans l'onglet 'Nombre d'accidents suivant la nature des lésions' "
+rassct_totalRNbAccidentNLSansArret.incoherencelog : "Le nombre d'accidents sans arrêt dans l'onglet 'Durée des arrêts' ne doit pas être inférieur au nombre d'accidents sans arrêt dans l'onglet 'Nombre d'accidents suivant la nature des lésions' "
+rassct_totalRNbAccidentNLAvecArret.incoherencelog : "Le nombre d'accidents avec arrêt dans l'onglet 'Durée des arrêts' ne doit pas être inférieur au nombre d'accidents avec arrêt dans l'onglet 'Nombre d'accidents suivant la nature des lésions' "
+rassct_totalRNbAccidentSL.incoherencelog: "Le nombre total d'accidents dans l'onglet 'Durée des arrêts' ne doit pas être inférieur au nombre total d'accidents dans l'onglet 'Nombre d'accidents suivant le siège des lésions' "
+rassct_totalRNbAccidentEM.incoherencelog: Le nombre total d'accidents dans l'onglet 'Durée des arrêts' ne doit pas être inférieur au nombre total d'accidents dans l'onglet 'Nombre d'accidents en fonction des éléments matériels' "
+
+# messages flash
+questionnaire.consolide.flash: 'Vous devez compléter le questionnaire avant de pouvoir générer le bilan'
+valide.consolide.flash: 'Le bilan social a été validé '
+deverrouiller.consolide.flash: Le bilan social a été déverrouillé.
+erreur.consolide.flash: 'Une erreur est survenue, veuillez recommencer.'
+refuse.consolide.flash: 'Le bilan social a été refusé par le centre de gestion'
+nocollectiviteassocie.consolide.flash: 'Pas de collectivité associée'
+noenqueteactive.consolide.flash : "Pas d'enquête active pour la collectivité"
+questionnairemodifie.consolide.flash : 'Questionnaires modifiés'
+erreurbadstatbsvide.enquete.flash : "Au moins une collectivité sélectionnée s'est déjà connectée, action annulée"
+bsexist.enquete.flash: "un bilan social existe déjà pour la collectivité "
+initexist.enquete.flash: "Une initialisation éxiste déjà pour la collectivité "
+# erreur lié au exception
+nocollectivite.consolide.exception : "Vous n'avez aucune collectivité rattachée. Contacter l'administrateur"
+noenqueteactive.consolide.exception : "Il n'y a aucune enquête active pour votre collectivité. Contacter l'administrateur"
+
+#------------------------------------------#
+# messages utilisé dans les envois de mail
+#------------------------------------------#
+
+envoye.contact.flash : 'Votre message a été transmis'
+erreur.contact.flash : 'Une erreur est survenue, veuillez recommencer'
+nocontact.contact.flash : "Aucun contact de référence n'a été trouvé"
+cdgnomail.contact.flash : "Le CDG séléctionné n'a pas d'adresse email, votre question a été transmise à l'administrateur"
+adminnomail.contact.flash : "L'administrateur n'a pas d'adresse email."
+mailnorfc.contact.flash : "L'adresses mail n'est pas valide."
+
+#------------------------------------------#
+# messages utilisés dans les enquetes
+#------------------------------------------#
+creation.enquete.flash: "L'enquête a été créée, vous pouvez maintenant la paramétrer."
+modifie.enquete.flash: "L'enquête a été modifiée"
+erreur.enquete.flash: "Une erreur est survenue, veuillez recommencer"
+erreur.enquete.droit.flash: "Vous n'avez pas les droits nécessaires à la création d'enquête"
+enqueteexiste.enquete.flash: 'Une enquête existe déjà pour cette campagne'
+enqueteouverte.enquete.flash: 'Enquête ouverte'
+enquetedejaouverte.enquete.flash: 'Une enquête est déjà ouverte pour cette campagne'
+enquetelancee.enquete.flash: 'Enquête lancée'
+mailrelanceenvoye.enquete.flash: 'Le mail de relance a été envoyé'
+erreurtypedefichier.enquete.flash: "Le type de ficher n'est pas correct, veuillez importer un fichier au format '.csv'"
+
+#------------------------------------------#
+# messages utilisés dans les referentiels
+#------------------------------------------#
+
+ajout.referentiel.flash: La donnée a bien été ajoutée au référentiel
+modification.referentiel.flash: La donnée a bien été modifiée
+archive.referentiel.flash : La donnée a bien été archivée
+
+#------------------------------------------#
+# messages utilisé dans les modèles de vues
+#------------------------------------------#
+ajout.modelvues.flash: L'enregistrement a été effectué
+erreur.modelvues.flash: Une erreur est survenue, veuillez recommencer
+
+#------------------------------------------#
+# messages utilisé pour l'import base carrière
+#------------------------------------------#
+erreur.importbasecarriere.emptyorbadformatfile.flash: "Veillez à ce que votre fichier ne soit pas vide ou que le type d'import choisi corresponde bien au format du fichier importé"
+erreur.importbasecarriere.erroranneereference.flash: "Le fichier ne correspond pas à l'année $anneeCampagneCourante"
+erreur.importbasecarriere.aucunecampagne.flash: "Aucune campagne courante trouvée."
+erreur.importbasecarriere.uploadFile.flash: "Une erreur est survenue lors de l'envoi du fichier"
+uploadfile.importbasecarriere.flash: "Le fichier a été envoyé avec succès"
+uploadfile.importbasecarriere.badformat.flash: "Le format du fichier n'est pas autorisé, veuillez utiliser un fichier xml"
+erreur.importbasecarriere.exist.file: "Un fichier de même nom existe déjà. Veuillez renommer votre fichier avant de l'importer"
+erreur.importbasecarriere.import.flash: "Une Erreur est survenue lors de l'import"
+success.importbasecarriere.import.flash: "Import base carrière réussi"
+erreur.importbasecarriere.import.aucune.basecarriere.flash: "Aucune base carrière n'est disponible pour votre collectivité"
+erreur.importbasecarriere.import.nousercollectivite.flash: "L'utilisateur doit être une collectivité"
+erreur.importbasecarriere.import.nouser.flash: "L'utilisateur est inconnu."
+
+#------------------------------------------#
+# messages utilisé pour la réinitialisation des collectivité à la première connexion
+#------------------------------------------#
+success.reinitcoll.flash : "Votre mot de passe et votre adresse email ont été modifiés. Vous pouvez commencer votre saisie."
+
+#------------------------------------------#
+# Messages utilisés dans les analyses
+#------------------------------------------#
+envoi.demande.analyse.flash: La demande a été envoyée
+erreur.envoi.demande.analyse.flash : Une erreur est survenue, veuillez recommencer
+enregistrement.modele.analyse.flash: Le modèle d'analyse a bien été sauvegardé
+depot.analyse.flash: L'analyse a bien été déposée
+suppression.analyse.ok: L'analyse a bien été supprimée
+
+erreur.changePwd.falseOldPwd.flash : "Votre mot de passe actuel ne correspond pas"
+success.changePwd.flash : "Votre mot de passe a été modifié."
+#------------------------------------------#
+# Messages de contraintes des formulaires
+#------------------------------------------#
+erreur.constraint.notblank: Ce champ ne doit pas être vide
+erreur.constraint.weakPassword: "Votre mot de passe doit contenir : au minimum 8 caractères et différents types de caractères (Majuscules, minuscules, chiffres et caractères spéciaux)"
+
+#------------------------------------------#
+# Messages de l'InfoCentre
+#------------------------------------------#
+infocentre.pool_manager.section.title : I - Gestion des échantillons
+infocentre.pool_manager.creapool.title : Création d'un échantillon
+infocentre.filter_form.section.title : II - Filtres 
+infocentre.filter_form.spinnertxt : Construction du formulaire
+infocentre.filter_results.section.title : III - Édition de l'échantillon
+infocentre.filter_results.section.results.sub_title : A - Résultats des filtres
+infocentre.filter_results.section.current_pool.sub_title : B - Échantillon
+infocentre.filter_results.spinnertxt :  Chargement des données de l'échantillon
+infocentre.pool_export_bay.section.title : IV - Exports
+infocentre.filter_form.section.title_V : V - Exports - Puit de données
+infocentre.filter_form.section.Echantillons_v : I - Echantillons
+infocentre.filter_form.section.select_export_v : II - Selection d'un export
+infocentre.filter_form.section.list_export_v : III - Liste des exports
+infocentre.filter_form.siret_coll.label : Siret de la collectivité
+infocentre.filter_form.siren_rattach_coll.label : Siren de rattachement
+infocentre.filter_form.saisie_apa.label : Saisie agent par agent
+infocentre.filter_form.echantillon_dgcl.label : Échantillon DGCL
+infocentre.filter_form.statut_bilan.label : État de saisie du bilan
+infocentre.filter_form.nb_population_range.label : Population de la collectivité
+infocentre.filter_form.nb_incoherence_bilan_range.label : Nombre d'incohérences
+infocentre.filter_form.cdg_acces_bilan.label : Cdg autorisé à prendre la place
+infocentre.filter_form.annee_camp.label : Année Campagne
+infocentre.filter_form.zone_emploi_coll.label : Zone d'emploi
+infocentre.filter_form.type_surcl_demo_coll.label : Type de surclassement démographique
+infocentre.filter_form.cdg_coll.label : Collectivités des CDG
+infocentre.filter_form.depa_coll.label : Départements
+infocentre.filter_form.type_coll.label : Types de collectivités
+infocentre.filter_form.code_insee_coll.label : Code INSEE de la collectivité
+infocentre.filter_form.ville_coll.label : Ville de la collectivité
+infocentre.filter_form.code_postalcoll.label : Code postal de la collectivité
+infocentre.filter_form.adresse_coll.label : Adresse de la collectivité
+infocentre.filter_form.date_last_co_range.label : Date de dernière connexion
+infocentre.filter_form.attach_ct_coll.label : Rattachées au CT
+infocentre.filter_form.nom_coll.label : Nom de la collectivité
+infocentre.filter_form.chsct_coll.label : CHSCT propre
+infocentre.filter_form.affi_coll.label : Collectivités affiliées
+infocentre.filter_form.type_init_bilan.label : Type d'initialisation
+infocentre.filter_form.param_enqu_col.label : Enquête
+infocentre.filter_form.nb_agent_range.label : Nombre d'agent
+infocentre.filter_form.nb_agent_etpr_range.label : Nombre d'agent Etpr
+
+infocentre.filter_results.include_to_pool.error.no_pool_selected : Veuillez sélectionner au moins un élément
+infocentre.filter_results.include_to_pool.error.no_stat_secret : Votre échantillon ne respecte pas le secret statistique (si collectivité(s) anonyme(s) dans l'échantillon au moins 5 collectivités anonymes ayant à minima 1 agents doivent être présentes)<br/>Il ne pourra pas être utilisé lors des exports
+infocentre.export_pool.error.no_stat_secret : Vous ne pouvez pas utiliser cet échantillon pour les exports<br/>Votre échantillon ne respecte pas le secret statistique (si collectivité(s) anonyme(s) dans l'échantillon au moins 5 collectivités anonymes ayant à minima 1 agents doivent être présentes)
+infocentre.export_pool.error.pool_empty : Votre échantillon est vide
+
+infocentre.export_pool.export_liste.libelle : Liste des collectivités
+infocentre.export_pool.export_liste.logo_alt : logo liste échantillon
+infocentre.export_pool.export_hrg.libelle : export H.R.G
+infocentre.export_pool.export_hrg.title : Handitorial RASSTC GPEEC
+infocentre.export_pool.export_hrg.logo_alt : logo Handitorial RASSTC GPEEC
+infocentre.export_pool.export_apa.libelle : Données agents
+infocentre.export_pool.export_dgcl.libelle : Export DGCL
+infocentre.export_pool.export_aggr_dgcl.libelle : Bilans Sociaux Agrégés
+infocentre.export_pool.export_aggr_dgcl.logo_alt : logo DGCL agrégés
+infocentre.export_pool.export_aggr_dgcl.title_1 : Bilans Sociaux Agrégés
+infocentre.export_pool.export_aggr_dgcl.title_2 : Cet export peut durer plusieurs jours selon l'échantillon sélectionné
+
+infocentre.etat.running: En cours
+infocentre.etat.finished: Terminé
+infocentre.etat.ready_to_run: Pret à démarrer
+infocentre.etat.aborted: Annulé
+infocentre.etat.run_failed: Echec
+infocentre.etat.finishing: En cours de finalisation
+
+
+infocentre.filter_form.pourcent_Handitorial_range.label : Taux de remplissage de Handitorial ( en %)
+infocentre.filter_form.pourcent_Rassct_range.label : Taux de remplissage de RASSCT ( en %)
+infocentre.filter_form.pourcent_Gpeec_range.label : Taux de remplissage de Gpeec ( en %)
+infocentre.filter_form.pourcent_GpeecPlus_range.label : Taux de remplissage de Gpeec Plus ( en %)
+infocentre.filter_form.pourcent_BilanSocialConso_range.label : Taux de remplissage du Bilan social consolidé ( en %)
+
+#
+# LongTaskManger
+#
+
+longtask.export.AGGREGATE_DGCL : Bilans Sociaux Agrégés
+longtask.export.FULL_DGCL : Full DGCL
+longtask.export.AGENT_PAR_AGENT : Données agents
+longtask.expoer.TALEND_JOB_AGENT_PAR_AGENT : Liste des collectivités
+longtask.export.HRG : Export HRG
+
+#-------------------------------------
+# Export agent par agent collectivité
+#-------------------------------------
+apa.export.headlbl.ID_BILASOCIAGEN: Identifiant de l'agent
+apa.export.headlbl.ID_ENQU: Identifiant de l'enquête
+apa.export.headlbl.LB_NOM: Nom
+apa.export.headlbl.LB_PREN: Prénom
+apa.export.headlbl.LB_DATENAIS: Date de naissance
+apa.export.headlbl.CD_SEXE: Sexe
+apa.export.headlbl.BL_BOETH: L'agent est-il B.O.E.T.H ?
+apa.export.headlbl.BL_AGENREMU3112: Rémunéré au 31/12 ? 
+apa.export.headlbl.BL_AGENREMUANNE: Rémunéré dans l'année ?
+apa.export.headlbl.BL_AGENARRIANNECOLL: Agent arrivé dans la collectivité
+apa.export.headlbl.BL_EMPLFONC: Emploi fonctionnel
+apa.export.headlbl.LB_GRADDETA: De quel grade est-il détaché ?
+apa.export.headlbl.DT_DETAEMPLFONC: A quelle date a-t-il été détaché sur cet emploi fonctionnel ?
+apa.export.headlbl.DT_ARRISTAT: Quelle est la date d’arrivée sur ce contrat ?
+apa.export.headlbl.BL_ACQUSTATANNE: L’agent a-t-il acquis ce statut au cours de l'année ?
+apa.export.headlbl.BL_AGENTITUSTAGANNE: L'agent a-t-il été titularisé ou mis en stage au cours de l'année ?
+apa.export.headlbl.LB_DATEDEPACOLL: Quelle est la date de départ de l'agent de la collectivité ?
+apa.export.headlbl.CD_MOTIDECE: Quel est le motif du décès ?
+apa.export.headlbl.BL_PROMAVANSTAGANNE: L'agent a-t-il eu une promotion, un avancement ou une mise en stage suite à un concours au cours de l'année ?
+apa.export.headlbl.BL_HEURESUPPCOMP: Cet agent est-il concerné par les heures supplémentaires ou complémentaires ?
+apa.export.headlbl.BL_TEMPCOMP: Temps complet
+apa.export.headlbl.BL_TEMPPLEIN: Temps plein
+apa.export.headlbl.NB_DEMAPART: Nombre de demandes présentées par l'agent
+apa.export.headlbl.NB_DEMAPARTACCE: Nombre de demandes acceptées pour l'agent
+apa.export.headlbl.NB_PREMDEMASATI: Nombre de premières demandes satisfaites pour l'agent
+apa.export.headlbl.NB_MODIEMPLPERMTEMPCOMP: Nombre de modifications de quotités pour l'agent
+apa.export.headlbl.NB_AGENEMPLTEMPCOMPNONRENOU: Nombre de retours au temps plein pour l'agent
+apa.export.headlbl.MT_REMUANNUBRUT: Montant total des rémunérations annuelles brutes ?
+# apa.export.headlbl.MT_TOTAREMUPRIMINDEM: Montant total des rémunérations annuelles brutes des primes et indemnités (Article 88 et article 111) ?
+# apa.export.headlbl.MT_TOTAREMUBRUTNBI: Montant total des rémunérations annuelles brutes liées à une NBI
+# apa.export.headlbl.MT_TOTAREMUBRUTHEURSUPP: Montant total des rémunérations annuelles brutes des heures supplémentaires ?
+# apa.export.headlbl.NB_HEURSUPP: Nombre d'heures supplémentaires réalisées et rémunérées
+# apa.export.headlbl.NB_HEURCOMPREALREMU: Nombre d'heures complémentaires réalisées et rémunérées
+apa.export.headlbl.BL_AGENABSE: L'agent a-t-il été absent au moins une fois au cours de l'année ?
+apa.export.headlbl.NB_ALLOTEMPINVTRAV: Nombre d'allocations temporaires d'invalidité (ATI) attribuées à l’agent suite à un accident de travail
+apa.export.headlbl.NB_ALLOTEMPINVAPRO: Nombre d'allocations temporaires d'invalidité (ATI) attribuées à l’agent suite à  une maladie professionnelle ou à caractère professionnel ou contractée pendant le service
+#apa.export.headlbl.BL_CONGPATEACCUENFA: L'agent a-t-il bénéficié d'un congé paternité ou un congé d'accueil d'un enfant au cours de l'année ?
+#apa.export.headlbl.NB_JOURCONGPATEACCUENFA: Le nombre total de jours au titre de ses congés au cours de l'année ?
+apa.export.headlbl.BL_ENTRDEPACONG: L'agent a-t-il bénéficié d'un entretien spécifique avant un congé au cours de l'année ? (départ)
+apa.export.headlbl.BL_ENTRRETOCONG: L'agent a-t-il bénéficié d'un entretien spécifique avant un congé au cours de l'année ? (retour)
+apa.export.headlbl.BL_CET: L'agent a-t-il un CET ?
+apa.export.headlbl.BL_CETOUVERT: L'agent a-t-il ouvert son CET cette année ?
+apa.export.headlbl.NB_JOURCUMU3112: Nombre de jours cumulés au 31/12 de l'année ?
+apa.export.headlbl.NB_JOURVERS3112: Nombre de jours versés au 31/12 de l'année ?
+apa.export.headlbl.NB_JOURDEPE3112: Nombre de jours dépensés au 31/12 de l'année ?
+apa.export.headlbl.NB_JOURINDE3112: Nombre de jours indemnisés au 31/12 de l'année ?
+apa.export.headlbl.NB_JOURPRISRAFP3112: Nombre de jour pris en compte au titre de la RAFP au 31/12 de l'année ?
+apa.export.headlbl.NB_JOURDONNEBENEF: Nombre de jours donnés au bénéfice de proches ?
+apa.export.headlbl.BL_TELETRAV: L'agent est-il concerné par le télé-travail ?
+apa.export.headlbl.BL_TELETRAVBENEF: L'agent a-t-il demandé à en bénéficier ?
+apa.export.headlbl.BL_AGENPREV: Est-ce que l'agent est affecté à la prévention ?
+apa.export.headlbl.BL_DEMAINAP: Est-ce que l'agent a fait une demande de reclassement au cours de l'année ?
+apa.export.headlbl.LB_INAPDEMA: Cause d'inaptitude
+apa.export.headlbl.BL_DECIINAP: Est-ce qu'il y a une décision d'inaptitude ?
+apa.export.headlbl.LB_INAPDECI: Liste des décisions d'inaptitude
+apa.export.headlbl.BL_FORMSUIV: Est-ce que l'agent a suivi une formation au cours de l'année ?
+apa.export.headlbl.BL_VAE: L'agent a-t-il sollicité une VAE ?
+apa.export.headlbl.ID_EBCF: A quel stade se situe le dossier de l'agent ?
+apa.export.headlbl.BL_BILACOMP: L'agent a-t-il effectué un bilan de compétences ?
+apa.export.headlbl.NB_BILACOMP: Saisir le nombre de bilans
+apa.export.headlbl.BL_CONGFORM: L'agent a-t-il bénéficié d'un congé de formation ?
+apa.export.headlbl.BL_CDI: L'agent est-il en CDI ?
+apa.export.headlbl.FG_STAT: Etat
+apa.export.headlbl.created_at: Date de création de l'agent
+apa.export.headlbl.updated_at: De de modification de l'agent
+apa.export.headlbl.LB_POSISTAT: Quelle est sa position particulière ?
+apa.export.headlbl.LB_STAT: Quel est son dernier statut connu au plus tard au 31/12 ?
+apa.export.headlbl.LB_FONCPUBL: De quelle fonction publique est-il détaché ?
+apa.export.headlbl.LB_EMPLFONC: Sur quel emploi fonctionnel est-il détaché ?
+apa.export.headlbl.LB_CATE: Quelle est la catégorie de l’agent au plus tard au 31/12 ?
+apa.export.headlbl.LB_FILI: Quelle est la filière de l'agent?
+apa.export.headlbl.LB_CADREMPL: Cadre emploi
+apa.export.headlbl.LB_GRAD: Quel est le grade de l'agent ?
+apa.export.headlbl.LB_MOTIARRI: Quel est le motif d'arrivée ?
+apa.export.headlbl.LB_STAGTITU: Quel est le motif de titularisation ou de stage ?
+apa.export.headlbl.LB_MOTIDEPA: Quel est le motif de départ ?
+apa.export.headlbl.LB_TEMPNONCOMP: Quelle est la durée hebdomadaire ?
+apa.export.headlbl.LB_TEMPPART: Quel est le type de temps partiel ?
+apa.export.headlbl.LB_POURTEMPPART: Quel est le pourcentage de temps partiel ?
+apa.export.headlbl.LB_CYCLTRAV: Quel est le cycle de travail ?
+apa.export.headlbl.BL_CYCLTRAV: Est-ce que ce cycle de travail a été délibéré avant le 1er janvier 2002 ?
+apa.export.headlbl.LB_TYPEMISSPREV: Quel type d'affectation ?
+apa.export.headlbl.LB_EMPLNONPERM: Quel est le type de contrat non permanent ?
+apa.export.headlbl.LB_STRUORIG: Quelle est la structure d'origine de l'agent ?
+apa.export.headlbl.LB_TYPECDD: Quel est le type de CDD ?
+apa.export.headlbl.LB_CADREEMPORIG: Quel est son cadre d'emploi d'origine ?
+apa.export.headlbl.LB_MOTIENTRDEP: Pour quel type de congés a-t-il bénéficié de cet entretien ?
+#apa.export.headlbl.LB_MOTIENTRRET: Pour quel type de congés a-t-il bénéficié de cet entretien ?
+apa.export.headlbl.BL_STRUORIGPOSISTAT: De quelle structure est-il originaire ?
+apa.export.headlbl.DT_CHANSTAT: Quel est la date du changement de statut ?
+apa.export.headlbl.BL_POSIACTI: Quelle est sa position statutaire au plus tard au 31/12 ?
+apa.export.headlbl.BL_POSIACTINONREMU: Quelle est sa position statutaire au plus tard au 31/12 ?
+apa.export.headlbl.LB_POSISTATNONREMU: Quelle est sa position particulière ?
+apa.export.headlbl.LB_FILIEMPLFONC: Filière
+apa.export.headlbl.LB_FILIINAP: Quelle est la filière de l'agent ?
+apa.export.headlbl.BL_DEMAPART: L'agent a-t il fait une demande de temps partiel dans l'année N ?
+apa.export.headlbl.NB_ALLOTEMPINVAAUTRECAS: Nombre d'allocations temporaires d'invalidité (ATI) attribuées à l’agent suite à autres cas
+apa.export.headlbl.CD_PROFESSIONCATEGSOCIO: Code profession catégorie socioprofessionnelle
+apa.export.headlbl.PC_FILLGROUP_STATUT: Pourcentage statut
+apa.export.headlbl.PC_FILLGROUP_REMUNERATION: Pourcentage rémunération
+apa.export.headlbl.PC_FILLGROUP_ABSENCE: Pourcentage absence
+apa.export.headlbl.PC_FILLGROUP_FORMATION: Pourcentage formation
+apa.export.headlbl.PC_FILLGROUP_AUTRE: Pourcentage autre
+apa.export.headlbl.PC_FILLGROUP_RASSCT: Pourcentage Rassct
+apa.export.headlbl.PC_FILLGROUP_HANDITORIAL: Pourcentage Handitorial
+apa.export.headlbl.PC_FILLGROUP_GPEEC: Pourcentage Gpeec
+apa.export.headlbl.LB_ALERTE_NONPERM_N4DS: Alerte Emploi Non Permanant N4DS
+apa.export.headlbl.PC_FILL_AGENT: Pourcentage Agent
+apa.export.headlbl.ID_ETPRAGENT: Identifiant Agent ETPR
+apa.export.headlbl.NB_HEUR: Nombre d'heures
+apa.export.headlbl.NB_HEUR_ETPR: Nombre d'heures ETPR
+apa.export.headlbl.DT_OUT: Date d'entrée 
+apa.export.headlbl.DT_IN: Date de sortie
+apa.export.headlbl.CD_UTILCREA: Code du créateur 
+apa.export.headlbl.CD_UTILMODI: Code du modificateur
+apa.export.headlbl.ID_ABSEARREAGEN: Identifiant Absence Arrêt Agent
+apa.export.headlbl.NB_ARRE: Nombre d'arrêt(s)
+apa.export.headlbl.NB_JOURABSE: Nombre de jours d'absences
+apa.export.headlbl.LB_MOTIABSE: Motif d'absence
+apa.export.headlbl.LB_NATURE_LESION: Nature lésion
+apa.export.headlbl.LB_SIEGE_LESION: Siège lésion
+apa.export.headlbl.LB_ELEMENT_MATERIEL: Élément matériel
+apa.export.headlbl.LB_MALADIE_PROFESSIONNELLE: Maladie professionnelle
+apa.export.headlbl.LB_TYPE_ACTIVITE_MALADIE_PRO: Type d'activité maladie professionnelle
+apa.export.headlbl.LB_TYPE_ACTIVITE_ARRET_TRAVAIL: Type d'activité arrêt de travail
+apa.export.headlbl.ACCIDENT_AVEC_ARRET: Accident avec arrêt
+apa.export.headlbl.ANNEE_EVENEMENT: Année de l'événement
+apa.export.headlbl.LB_METIER: Métier
+apa.export.headlbl.LB_DOMAINE_DIPLOME: Domaine diplôme
+apa.export.headlbl.LB_SPECIALITE: Spécialité
+apa.export.headlbl.ID_FORMAGEN: Identifiant formation agent
+apa.export.headlbl.NB_JOUR_FORM: Nombre de jours de formation
+apa.export.headlbl.LB_ORGAFORM: Organisme de formation 
+apa.export.headlbl.LB_FORM: Formation
+apa.export.headlbl.BL_CPF: CPF 
+apa.export.headlbl.LB_CATEGORIE_BOETH: Catégorie BOETH
+apa.export.headlbl.LB_NATURE_HANDICAP_BOETH: Nature Handicap BOETH
+apa.export.headlbl.LB_STAT: Statut
+apa.export.headlbl.LB_EMPLNONPERM: Emploi non permanent
+apa.export.headlbl.ID_REMUNERATIONAGENT: Identifiant Rémunération Agent
+#apa.export.headlbl.MT_TOTAL_HEURE_PAYEES: Total des heures payées
+apa.export.headlbl.MT_TOTAL_REMUNERATION_BRUTE: Montant total de la rémunération brute
+apa.export.headlbl.MT_PRIME: Dont primes et indemnités au titre de l'article 111
+#apa.export.headlbl.MT_REMUNERATION_ARTICLE_88: Dont primes et indemnités (y.c heures supplémentaires) relevant de l'article 88 (hors remboursement des frais)
+apa.export.headlbl.MT_NBI: Dont NBI
+apa.export.headlbl.MT_HC_HS: Dont HC/HS
+apa.export.headlbl.MT_SFT: Dont SFT
+apa.export.headlbl.MT_IR: Dont IR
+apa.export.headlbl.NB_HEURE_SUPP: Nombre d'heures supplémentaires
+apa.export.headlbl.NB_HEURE_COMPL: Nombre d'heures complémentaires

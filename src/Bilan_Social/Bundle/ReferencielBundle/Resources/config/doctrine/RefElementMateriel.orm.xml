@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefElementMateriel" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefElementMaterielRepository" table="ref_element_materiel">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_ELEMENT_MATERIEL" name="cdElementmat"/>
+        </unique-constraints>
+        <id name="idElementmat" type="integer" column="ID_ELEMENT_MATERIEL">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdElementmat" type="string" column="CD_ELEMENT_MATERIEL" length="50" nullable="true"/>
+        <field name="lbElementmat" type="text" column="LB_ELEMENT_MATERIEL" length="65535" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <one-to-many field="idElementMateriel" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\AbsenceArretAgent" mapped-by="idElementMateriel">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,37 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refmotifentretien_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refMotifEntretien.cdMotientr }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refMotifEntretien.lbMotientr }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refMotifEntretien.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refMotifEntretien} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refmotifentretien_edit', { 'idMotientr': refMotifEntretien.idMotientr }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+        </ul>
+    {% endblock %}
+

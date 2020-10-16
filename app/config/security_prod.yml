@@ -1,0 +1,45 @@
+security:
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        #login:
+        #    pattern:                        ^/utilisateur/login$
+        #    security:                       false
+            
+        forgotpassword:
+            pattern:                        ^/forgotpassword$
+            security:                       false
+            anonymous: true
+
+        reset:
+            pattern:                        ^/utilisateur/reset
+            security:                       false
+
+        changePassword:
+            pattern:                        ^/utilisateur/change
+            security:                       false
+            #anonymous: true
+
+        getCampagnecourante:
+            pattern:                        /campagne/api/talend/campagneCourante
+            security:                       false
+        main:
+            pattern:                        ^/
+            # form_login:
+            #     login_path:                 login
+            #     check_path:                 login_check
+            #     csrf_token_generator:       security.csrf.token_manager
+            #     default_target_path:        homepage
+            #     success_handler:  Bilan_Social.UserBundle.Component.Authentication.Handler.login_success_handler
+            # logout:
+            #     path:                       logout
+            #     #handlers: [userbundle_logoutlistener]
+            # logout_on_user_change: true
+            cas: true
+            security: true
+            anonymous:                      false
+            provider: utilisateur
+            # switch_user: true

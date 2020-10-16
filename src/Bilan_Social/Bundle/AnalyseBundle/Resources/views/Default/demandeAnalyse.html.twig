@@ -1,0 +1,282 @@
+{% extends 'CoreBundle::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/analyse.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/AnalyseBundle/Analyse.js') }}"></script>
+    <script>
+        {% if (bilanConso != null) %}
+            {% if (bilanConso.fgStat == 0 or bilanConso.fgStat == 4 or bilanConso.fgStat == 3) %}
+                var sfTransMsg = "demandeanalyse.exportdgcl.encours";
+            {% elseif (bilanConso.fgStat == 1 or bilanConso.fgStat == 5) %}
+                var sfTransMsg = "demandeanalyse.exportdgcl.transmis";
+            {% elseif (bilanConso.fgStat == 2) %}
+                var sfTransMsg = "demandeanalyse.exportdgcl.valide";
+            {% endif %}
+        {% endif %}
+
+        createBtpModal("exportdgcl","Confirmation",sfTrans(sfTransMsg),{
+            buttons:[
+                {
+                    lbl:sfTrans("modal.btn.oupsNon"),
+                    attr:{
+                        class:"btn btn-secondary"
+                    },
+                    extra:{
+                       dismiss:"modal"
+                    },
+                },{
+                    lbl:sfTrans("modal.btn.jaicompris"),
+                    attr:{
+                        class:"btn btn-primary"
+                    },
+                    callbacks:{
+                        click:function(){
+                            waitForDownload('DownloadOk','#exportdgcl .modal-footer','téléchargement en cours',function(){
+                                $('#exportdgcl').modal('hide');
+                            });
+                            var nm_annee = $('#anneecampagne').val();
+                            window.location.href = Routing.generate('import_txt_zipped_file')+'?nm_annee='+nm_annee;
+                        }
+                    }
+                }
+            ]
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div class="row">
+            <h3 class='title'>Mes analyses  {{ anneeCampagneLoad }} &nbsp;
+                {% if is_granted('ROLE_CDG') %}( {{ libCol }} : {{ siretCol}})
+                    <a href="{{ path('switch_to_cdg') }}">
+                        <button type="button" class="btn btn-primary pull-right" onClick="window.close()">Retour au suivi des enquêtes</button>
+                    </a>
+                {% endif %}
+            </h3>
+        </div>
+
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if campagnePrecedente is defined and campagnePrecedente is not null and campagnePrecedente is not empty %}
+            <select id="anneecampagne" class="form-control" style="margin-bottom: 15px;">
+                {% for campagne in campagnePrecedente %}
+                    <option value ="{{campagne.nmAnne}}" {% if anneeCampagneLoad == campagne.nmAnne %}selected{% endif %}> Campagne {{campagne.nmAnne}}</option>
+                {% endfor %}
+            </select>
+        {% endif %}
+
+
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h4 class="noMargin">Analyses partagées<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h4>
+            </div>
+            <div class="panel-body slide-up">
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>
+                            <th>Nom de l'analyse</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if analysePartagee is defined and analysePartagee is not null and analysePartagee is not empty %}
+                             {% for analyseParta in analysePartagee %}
+                            <tr>
+                                <td>{{ analyseParta.nom }}</td>
+                                <td>
+                                    <a href="{{ analyseParta.fileUrl }}">
+                                        <button type="button" class="btn button-tableau">Télécharger le document</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h4 class="noMargin">Analyses personnalisées<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h4>
+            </div>
+            <div class="panel-body slide-up">
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>
+                            <th>Nom de l'analyse</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if analysePerso is defined and analysePerso is not null and analysePerso is not empty %}
+                            {% for analyse in analysePerso %}
+                            <tr>
+                                <td>{{ analyse.nom }}</td>
+
+                                <td>
+                                    <a href="{{ analyse.fileUrl }}">
+                                        <button type="button" class="btn button-tableau">Télécharger le document</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h4 class="noMargin">Demandes d'analyse<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h4>
+            </div>
+            <div class="panel-body slide-up">
+                <h3>Liste des demandes d'analyse</h3>
+                <table class='table table-hover'>
+                    <thead>
+                        <tr>
+                            <th>Libellé</th>
+                            <th>Date de la demande</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if listeDemandes is not empty %}
+                            {% for demande in listeDemandes %}
+                                <tr>
+                                    <td>{{ demande.lbAnalyse }}</td>
+                                    <td>{{ demande.dtCrea|date('d/m/Y') }}</td>
+                                    <td>{% if demande.fgStat == 0 %}En cours{% else %}Transmis{% endif %}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <hr>
+                {% if anneeCampagneLoad == AnneeCamp%}
+
+                <h3>Envoyer une nouvelle demande</h3>
+                    {% if form is defined %}
+                        {{ form_start(form) }}
+                        {{ form_row(form.lbAnalyse) }}
+                        {{ form_row(form.lbTypeAnalyse) }}
+                        {{ form_row(form.cmDetail) }}
+                        {{ form_row(form.envoyer) }}
+                        {{ form_end(form) }}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+            <div class="panel panel-default contentConsolide">
+                <div class="panel-heading">
+                    <h4 class="noMargin">Procès-verbaux<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h4>
+                </div>
+                <div class="panel-body slide-up">
+                    <table class='table table-hover'>
+                        <thead>
+                            <tr>
+                                <th>Fichier</th>
+                                <th>Lien</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          {% if procesVerbaux is not empty %}
+                            {% for pv in procesVerbaux %}
+                                <tr>
+                                    <td>{{pv.nom}}</td>
+                                    <td>
+                                        <a href="{{ pv.fileUrl }}">
+                                            <button type="button" class="btn button-tableau">Télécharger le document</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    {% if anneeCampagneLoad == AnneeCamp%}
+                    <div class="panel panel-default contentConsolide">
+                        <div class="panel-heading">
+                            <h3 class="noMargin">Importer mon procès verbal</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {{ form_start(form_depot_pv) }}
+                            {{ form_widget(form_depot_pv) }}
+                            <button type="submit" class='btn button-tableau pull-right' id="">Envoyer</button>
+                            {{ form_end(form_depot_pv) }}
+
+
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if bilanConso != null and (bilanConso.fgStat == 2) %}
+                <div class="row hidden">
+                    <div class="col-xs-2 text-center">
+                        <img src="https://docs.microsoft.com/fr-fr/azure/sql-database/media/sql-database-elastic-pool-manage-portal/metric.png" alt="Jasper Report" style="max-width: 80%" />
+                    </div>
+                    <div class="col-xs-10">
+                        <h4>Synthèse indivisuelle du Bilan Social</h4>
+                        <ul>
+                            <li>Une <b>présentation synthétique</b> de vos donnéees à destination, par exemple, des élus, du Comité Technique, des agents, ...</li>
+                            <li>Les principales données du Bilan Social synthétisées en 4 pages</li>
+                        </ul>
+                        <a class='btn btn-primary' href="{{ path('test_jasperserver') }}" target="blank">Télécharger le rapport</a>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if is_granted("ROLE_COLLECTIVITY") or ("ROLE_CDG") %}
+                {% if bilanConso != null %}
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-xs-12">
+                            <a id="exportDgcl" data-toggle="modal" data-target="#exportdgcl" class='btn btn-success'>
+                                <img style="width: 30px; margin-right: 5px;" src="{{ asset("img/icone/ExportDGCL.png") }}" alt="Export DGCL" />Exporter votre fichier DGCL
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-xs-12">
+                            <a href="{{ path('call_export_hrg', {'_format': 'xls'} ) }}" class='btn btn-success'>
+                                <img style="width: 30px; margin-right: 5px;" src="{{ asset("img/icone/ExportDGCL.png") }}" alt="Export DGCL" />Exporter les données Handitorial / RASSCT / GPEEC
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col-xs-12">
+                        <a href="{{ path('call_export_agent_par_agent', {'_format': 'xls'} ) }}" class='btn btn-success'>
+                            <img style="width: 30px; margin-right: 5px;" src="{{ asset("img/icone/ExportDGCL.png") }}" alt="Export DGCL" />Exporter les données Agent par Agent
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% xlsdocument %}
+    {% for sheet in sheets %}
+        {% set sheet_type = sheet.type %}
+        {% include  '@Apa/export/apa_export_sheet_' ~ sheet_type ~ '.html.twig' with {'sheet':sheet, 'data':data } %}
+    {% endfor %}
+{% endxlsdocument %}

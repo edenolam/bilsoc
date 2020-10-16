@@ -1,0 +1,15 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block body %}
+    <h1>Bilan social</h1>
+    {% if is_granted("ROLE_CDG") %}
+        La collectivité n'a pas commencé la saisie du bilan social. <br>
+        <a href="{{ path('collectivity_list') }}">Retour</a>
+    {% else %}
+        <ul>
+            <li>
+                <a href="{{ path('social_new') }}">Commencer le bilan social</a>
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}

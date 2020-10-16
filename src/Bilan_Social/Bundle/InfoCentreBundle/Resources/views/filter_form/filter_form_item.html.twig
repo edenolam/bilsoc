@@ -1,0 +1,93 @@
+{#
+*	template de rendu d'un item du filter_form
+*
+*	/!\
+*	|	il ne doit pas être utilisé tel quel mais à l'intérieur 
+*	|	du filter_form.html.twig car utilisant les variables du template parent 
+*	/!\
+#}
+{% if attribute(filter_form,field_key) is defined %}
+	{% set is_sub_item = is_sub_item is defined ? is_sub_item : false %}
+	{% set col_class_on_group_item = field_options.col_nb is defined ? 'col-md-' ~ field_options.col_nb : col_class_for_group_item %}
+	{% set before_group_item = field_options.preceded_around_by is defined ? field_options.preceded_by : "" %}
+	{% set after_group_item = field_options.followed_around_by is defined ? field_options.followed_by : "" %}
+	{% set extra_class_for_item_wrapper = field_options.extra_wrapper_class is defined ? field_options.extra_wrapper_class : "" %}
+	{% set field_prototype = field_options.prototype is defined ? field_options.prototype : false %}
+	{% set precise_draw = false %}
+	{% for option_name in options_need_precise_draw if not precise_draw %}
+		{% set precise_draw = attribute(field_options,option_name) is defined ? true : false %}
+	{% endfor %}
+	{% set class_on_group_item = col_class_on_group_item ~ " " ~ extra_class_for_item_wrapper %}
+	{% if is_sub_item %}
+		
+	{% endif %}
+	{# {{ dump(field_key) }}
+	{{ dump(field_options) }}
+	{{ dump(options_need_precise_draw) }}
+	{{ dump(precise_draw) }} #}
+
+	<div class="{{ class_on_group_item }}">
+		{{ before_group_item }}
+		{% if precise_draw %}
+			{% set field_id = attribute(filter_form,field_key).vars.id %}
+			{% set before_item = field_options.preceded_by is defined ? field_options.preceded_by : "" %}
+			{% set after_item = field_options.followed_by is defined ? field_options.followed_by : "" %}
+			{% set label_extra_var = field_options.label_extra_var is defined ? field_options.label_extra_var : [] %}
+			{% set label_outside_form_group = field_options.label_outside_form_group is defined ? field_options.label_outside_form_group : false %}
+			{% set widget_extra_var = field_options.widget_extra_var is defined ? field_options.widget_extra_var : [] %}
+			{% set select_all_btn = field_options.select_all_btn is defined ? field_options.select_all_btn : "" %}
+			{% set label_collabse = field_options.label_collabse is defined ? field_options.label_collabse : false %}
+			{% if label_outside_form_group %}
+				{% if label_collabse %}
+					<span class='label_collabse' data-toggle="collapse" href="#{{field_key}}-body-collapse" aria-expanded="false">
+				{% endif %}
+				{{ form_label(attribute(filter_form,field_key),label_extra_var) }}
+				{% if label_collabse %}
+					<i class="fa fa-chevron-down"></i>
+					</span>
+				{% endif %}
+				{% if field_prototype == true %}
+					<button type="button" class="btn btn-primary field_prototype_add_btn" data-prototype-target="#{{ field_id }}">+</button>
+				{% endif %}
+			{% endif %}
+			{% set form_group_extra_class = "" %}
+			{% if field_prototype == true %}
+				{# {% set form_group_extra_class = form_group_extra_class ~ " col-md-2" %} #}
+			{% endif %}
+			<div class='form-group {{ form_group_extra_class }}'>
+				{% if not label_outside_form_group %}
+					{% if label_collabse %}
+						<span class='label_collabse' data-toggle="collapse" href="#{{field_key}}-body-collapse" aria-expanded="false">
+					{% endif %}
+					{{ form_label(attribute(filter_form,field_key),label_extra_var) }}
+					{% if label_collabse %}
+						<i class="fa fa-chevron-down"></i>
+						</span>
+					{% endif %}
+					{% if field_prototype == true %}
+						<button type="button" class="btn btn-primary field_prototype_add_btn" data-prototype-target="#{{ field_id }}">+</button>
+					{% endif %}
+				{% endif %}
+				{% if select_all_btn %}
+					<label class='select_all_label box_border_tinyround box_border_slim'>
+						<input type="checkbox" class='select_all_fellow_checkbox {{ label_collabse ? "select_all_collapse" : "" }}'/>
+						Tout cocher
+					</label>
+				{% endif %}
+				{% if label_collabse %}
+					<div id="{{field_key}}-body-collapse" class='field-collapse-body collapse'>
+				{% endif %}
+				{{ before_item }}
+				{{ form_widget(attribute(filter_form,field_key),widget_extra_var) }}
+				{{ after_item }}
+				{% if label_collabse %}
+					</div>
+				{% endif %}				
+			</div>
+		{% else %}
+			{% set row_extra_var = field_options.row_extra_var is defined ? field_options.row_extra_var : [] %}
+			{{ form_row(attribute(filter_form,field_key),row_extra_var) }}
+		{% endif %}
+		{{ after_group_item }}
+	</div>
+{% endif %}

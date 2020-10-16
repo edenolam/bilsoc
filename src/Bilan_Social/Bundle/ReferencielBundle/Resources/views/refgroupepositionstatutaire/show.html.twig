@@ -1,0 +1,42 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refgroupepositionstatutaire_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refGroupePositionStatutaire.cdGrouPosistat }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refGroupePositionStatutaire.lbGrouPosistat }}</td>
+                </tr>
+                <tr>
+                    <th>Texte complémentaire</th>
+                    <td>{{ refGroupePositionStatutaire.lbGrouCompl }}</td>
+                </tr>
+                <tr>
+                    <th>Commentaire</th>
+                    <td>{{ refGroupePositionStatutaire.lbGrouComm }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refGroupePositionStatutaire.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refGroupePositionStatutaire} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refgroupepositionstatutaire_edit', { 'idGrouPosistat': refGroupePositionStatutaire.idGrouPosistat }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des motifs de grève </h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refmotifgreve_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refmotifgreve') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refMotifGreve in refMotifGreves %}
+                    <tr>
+                        <td><a href="{{ path('refmotifgreve_show', { 'idMotigrev': refMotifGreve.idMotigrev }) }}">{{ refMotifGreve.cdMotigrev }}</a></td>
+                        <td>{{ refMotifGreve.lbMotigrev }}</td>
+                        <td>{% if refMotifGreve.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refMotifGreve} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refmotifgreve_show', { 'idMotigrev': refMotifGreve.idMotigrev }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refmotifgreve_edit', { 'idMotigrev': refMotifGreve.idMotigrev }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

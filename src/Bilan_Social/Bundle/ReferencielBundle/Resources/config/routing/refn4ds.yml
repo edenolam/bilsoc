@@ -1,0 +1,28 @@
+refn4ds_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefN4ds:index" }
+    methods:  GET
+
+refn4ds_show:
+    path:     /{idN4ds}/show
+    defaults: { _controller: "ReferencielBundle:RefN4ds:show" }
+    methods:  GET
+
+refn4ds_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefN4ds:new" }
+    methods:  [GET, POST]
+
+refn4ds_edit:
+    path:     /{idN4ds}/edit
+    defaults: { _controller: "ReferencielBundle:RefN4ds:edit" }
+    methods:  [GET, POST]
+
+refn4ds_delete:
+    path:     /{idN4ds}/delete
+    defaults: { _controller: "ReferencielBundle:RefN4ds:delete" }
+    methods:  DELETE
+
+csv_export_refn4ds:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefN4ds:generateCsv" }

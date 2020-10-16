@@ -1,0 +1,43 @@
+user_account:
+    path:     /user/
+    defaults: { _controller: "CoreBundle:Account:edit" }
+    methods:  [GET, POST]
+
+user_registration:
+    path: /admin/user/register
+    defaults: { _controller: "UserBundle:Registration:register" }
+    methods:  [GET, POST]
+
+user_account_draft:
+    path: /user/draft
+    methods:  GET
+    defaults: { _controller: "CoreBundle:Account:showDraft" }
+
+user_account_accept_change:
+    path: /user/draft/accept/{userDraft}
+    defaults: { _controller: "CoreBundle:Account:acceptChange" }
+    methods:  GET
+
+user_account_reject_change:
+    path: /user/draft/reject/{userDraft}
+    defaults: { _controller: "CoreBundle:Account:rejectChange" }
+    methods:  GET
+#admin_purchase_show:
+#    path:     /{id}/show
+#    defaults: { _controller: "ECAdminBundle:Purchase:show" }
+#    methods:  GET
+#
+#admin_purchase_new:
+#    path:     /new
+#    defaults: { _controller: "ECAdminBundle:Purchase:new" }
+#    methods:  [GET, POST]
+#
+#admin_purchase_edit:
+#    path:     /{id}/edit
+#    defaults: { _controller: "ECAdminBundle:Purchase:edit" }
+#    methods:  [GET, POST]
+#
+#admin_purchase_delete:
+#    path:     /{id}/delete
+#    defaults: { _controller: "ECAdminBundle:Purchase:delete" }
+#    methods:  DELETE

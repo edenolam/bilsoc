@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefDomaineSpecialite" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefDomaineSpecialiteRepository"  table="ref_domaine_specialite">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_DOMAINE_SPECIALITE" name="cdDomaineSpecialite"/>
+        </unique-constraints>
+        <id name="idDomaineSpecialite" type="integer" column="ID_DOMAINE_SPECIALITE">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdDomaineSpecialite" type="string" column="CD_DOMAINE_SPECIALITE" length="50" nullable="true"/>
+        <field name="lbDomaineSpecialite" type="string" column="LB_DOMAINE_SPECIALITE" length="255" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="refSpecialites" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefSpecialite" mapped-by="refDomaineSpecialite">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+<!--        <many-to-one field="RefFamilleMetier" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFamilleMetier" inversed-by="RefMetier">
+            <join-column name="ID_FAMILLE_METIER" referenced-column-name="ID_FAMILLE_METIER" />
+        </many-to-one>
+          <one-to-many field="gpeec_metier" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Gpeec" mapped-by="refMetier">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>-->
+    </entity>
+</doctrine-mapping>

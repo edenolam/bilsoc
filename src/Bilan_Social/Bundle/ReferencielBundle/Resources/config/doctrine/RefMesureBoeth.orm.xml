@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMesureBoeth" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefMesureBoethRepository" table="ref_mesure_boeth">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_MESURE_BOETH" name="cdMesureboeth"/>
+        </unique-constraints>
+        <id name="idMesureboeth" type="integer" column="ID_MESURE_BOETH">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdMesureboeth" type="string" column="CD_MESURE_BOETH" length="50" nullable="true"/>
+        <field name="lbMesureboeth" type="text" column="LB_MESURE_BOETH" length="65535" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <one-to-many field="idMesureInaptitudeEnCoursAnnee" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Handitorial" mapped-by="idMesureInaptitudeEnCoursAnnee">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="idMesureInaptitudeAvantAnnee" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Handitorial" mapped-by="idMesureInaptitudeAvantAnnee">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="idMesureInaptitudeEnCoursAnneeSauvegarde" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SauvegardeDonneesAgents" mapped-by="idMesureInaptitudeEnCoursAnnee">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="idMesureInaptitudeAvantAnneeSauvegarde" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SauvegardeDonneesAgents" mapped-by="idMesureInaptitudeAvantAnnee">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,51 @@
+{% extends '@Apa/layout.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/ApaBundle/informationGenerale.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    {% set droitCdg = app.session.get('droit') %}
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+
+
+
+    <div class="col-xs-9 {% if is_granted("ROLE_CDG") and droitCdg == 'voir' %}input-disabled{% endif %}">
+
+        <div class="panel panel-default">
+            <div class="panel-heading noPadding">
+                <h3 class="panel-title" style="max-height:40px;"><span style="position:relative;bottom:6px;left:25px;color:#1b1464;font-size:1.2em;"><img src="{{ asset("img/icone/unlock.png") }}" style="width:50px;margin-right:8px;"/> Informations générales</span></h3>
+            </div>
+            <div class="panel-body">
+                {{ form_start(edit_form) }}
+                <label class="control-label required">Avez-vous un agent ou plus ayant des cycles de travail spécifiques ?</label> <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q2infoGene" aria-hidden="true"></span>
+                
+                {{ form_row(edit_form.q2) }}
+                <label class="control-label required">Avez-vous un agent ou plus bénéficiant de l’obligation d’emploi travailleurs handicapés (BOETH loi de 2005) y compris reclassés ?</label><span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q3" aria-hidden="true"></span>                
+                
+                {{ form_row(edit_form.q3) }}
+{#                <label class="control-label required">Existe-t-il un dispositif d’entretiens spécifiques pour congés de 6 mois et plus avant le départ en congés ?</label><span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q4" aria-hidden="true"></span>                #}
+{#                {{ form_row(edit_form.q4) }}#}
+{#                {{ form_row(edit_form.q5) }}#}
+                <label class="control-label required">Avez-vous un agent ou plus possédant un Compte Epargne Temps ?</label><span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q6" aria-hidden="true"></span>                
+                {{ form_row(edit_form.q6) }}
+                <label class="control-label required">Avez-vous un agent ou plus qui exerce ses fonctions dans le cadre du télétravail ?</label><span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#q7" aria-hidden="true"></span>                
+                {{ form_row(edit_form.q7) }}
+
+                {{ form_row(edit_form.blHeursupp) }}
+                {{ form_row(edit_form.blHeurcomp) }}
+
+                {{ form_row(edit_form.Enregistrer) }}
+                {{ form_end(edit_form) }}
+
+
+
+                <a href="{{ path('bilansocialagent_index') }}"> <button type="button" class="btn btn-primary">retour listes des agents</button></a>
+
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

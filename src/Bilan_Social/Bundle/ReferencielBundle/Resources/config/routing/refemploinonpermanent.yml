@@ -1,0 +1,28 @@
+refemploinonpermanent_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefEmploiNonPermanent:index" }
+    methods:  GET
+
+refemploinonpermanent_show:
+    path:     /{idEmplnonperm}/show
+    defaults: { _controller: "ReferencielBundle:RefEmploiNonPermanent:show" }
+    methods:  GET
+
+refemploinonpermanent_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefEmploiNonPermanent:new" }
+    methods:  [GET, POST]
+
+refemploinonpermanent_edit:
+    path:     /{idEmplnonperm}/edit
+    defaults: { _controller: "ReferencielBundle:RefEmploiNonPermanent:edit" }
+    methods:  [GET, POST]
+
+refemploinonpermanent_delete:
+    path:     /{idEmplnonperm}/delete
+    defaults: { _controller: "ReferencielBundle:RefEmploiNonPermanent:delete" }
+    methods:  DELETE
+
+csv_export_refemploinonpermanent:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefEmploiNonPermanent:generateCsv" }

@@ -1,0 +1,332 @@
+{% if formTpsTrav224 is defined %}
+    {% set bilan_social_consolide = formTpsTrav224.vars.data %}
+
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+    {{ form_start(formTpsTrav224) }}
+
+    <label>Avez-vous délibéré sur la mise en place du télétravail ?</label>
+    {{ form_row(formTpsTrav224.q224) }}
+
+    <div id="ind224b" style="display: none;">
+        <table width="100%" id="ind224Table" class="table table-striped table-hover table-bordered">
+            <thead>
+            <tr>
+                <th rowspan="2"></th>
+                <th colspan="5" style="text-align: center">Hommes
+                    <br/>
+                    <span class="alerteConso">[1.1.1] + [1.2.1] + [1.3.1.1] = {{ totalH }}</span>
+
+                </th>
+                <th colspan="5" style="text-align: center">Femmes
+                    <br/>
+                    <span class="alerteConso">[1.1.1] + [1.2.1] + [1.3.1.1] = {{ totalF }}</span>
+                </th>
+                <th class="filiTable" rowspan="2" style="text-align: center">Total Hommes + Femmes</th>
+            </tr>
+            <tr>
+                <th style="text-align: center">Cat. A</th>
+                <th style="text-align: center">Cat. B</th>
+                <th style="text-align: center">Cat. C</th>
+                <th style="text-align: center">Agents et ouvriers territoriaux de Mayotte (AOTM)</th>
+                <th class="filiTable" style="text-align: center">Total</th>
+                <th style="text-align: center">Cat. A</th>
+                <th style="text-align: center">Cat. B</th>
+                <th style="text-align: center">Cat. C</th>
+                <th style="text-align: center">Agents et ouvriers territoriaux de Mayotte (AOTM)</th>
+                <th class="filiTable" style="text-align: center">Total</th>
+            </tr>
+            </thead>
+            <tbody class="ind_table_totaux">
+            {% for tag in formTpsTrav224.ind224s %}
+                {% set row_data = tag.vars.value %}
+                {% set total_h1 = row_data.r2249 + row_data.r22410 + row_data.r22411 + row_data.r22412 %}
+                {% set total_f1 = row_data.r22413 + row_data.r22414 + row_data.r22415 + row_data.r22416 %}
+                {% set total_hf1 = total_h1 + total_f1 %}
+                {% set total_h2 = row_data.r2241 + row_data.r2242 + row_data.r2243 + row_data.r2244 %}
+                {% set total_f2 = row_data.r2245 + row_data.r2246 + row_data.r2247 + row_data.r2248 %}
+                {% set total_hf2 = total_h2 + total_f2 %}
+
+                <div>
+                    <tr>
+                        <td style="min-width: 400px">
+                            Nombre d’agents ayant demandé à bénéficier au cours de l'année {{ AnneeCamp }}
+                        </td>
+
+                        <td data-col-group='total_h1'>
+                            {{ form_row(tag.r2249) }}
+                        </td>
+                        <td data-col-group='total_h1'>
+                            {{ form_row(tag.r22410) }}
+                        </td>
+                        <td data-col-group='total_h1'>
+                            {{ form_row(tag.r22411) }}
+                        </td>
+                        <td data-col-group='total_h1'>
+                            {{ form_row(tag.r22412) }}
+                        </td>
+                        <td class="filiTable" data-col-id='total_h1' data-col-group="total_hf1" style="text-align: center">{{ total_h1 }}</td>
+                        <td data-col-group='total_f1'>
+                            {{ form_row(tag.r22413) }}
+                        </td>
+                        <td data-col-group='total_f1'>
+                            {{ form_row(tag.r22414) }}
+                        </td>
+                        <td data-col-group='total_f1'>
+                            {{ form_row(tag.r22415) }}
+                        </td>
+                        <td data-col-group='total_f1'>
+                            {{ form_row(tag.r22416) }}
+                        </td>
+                        <td class="filiTable" data-col-id='total_f1' data-col-group="total_hf1" style="text-align: center">{{ total_f1 }}</td>
+                        <td class="filiTable" data-col-id='total_hf1' style="text-align: center">{{ total_hf1 }}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="min-width: 400px">
+                            Nombre d'agents exerçants leurs fonctions dans le cadre du télétravail (article 133 de la
+                            loi du
+                            12 mars 2012)
+                        </td>
+
+                        <td data-col-group='total_h2'>
+                            {{ form_row(tag.r2241) }}
+                        </td>
+                        <td data-col-group='total_h2'>
+                            {{ form_row(tag.r2242) }}
+                        </td>
+                        <td data-col-group='total_h2'>
+                            {{ form_row(tag.r2243) }}
+                        </td>
+                        <td data-col-group='total_h2'>
+                            {{ form_row(tag.r2247) }}
+                        </td>
+                        <td class="filiTable" data-col-id='total_h2' data-col-group="total_hf2" style="text-align: center">{{ total_h2 }}</td>
+                        <td data-col-group='total_f2'>
+                            {{ form_row(tag.r2244) }}
+                        </td>
+                        <td data-col-group='total_f2'>
+                            {{ form_row(tag.r2245) }}
+                        </td>
+                        <td data-col-group='total_f2'>
+                            {{ form_row(tag.r2246) }}
+                        </td>
+                        <td data-col-group='total_f2'>
+                            {{ form_row(tag.r2248) }}
+                        </td>
+                        <td class="filiTable" data-col-id='total_f2' data-col-group="total_hf2" style="text-align: center">{{ total_f2 }}</td>
+                        <td class="filiTable" data-col-id='total_hf2' style="text-align: center">{{ total_hf2 }}</td>
+                    </tr>
+                </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <br/>
+
+    <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence"
+           name="valider" onclick="recordAuto = false;
+                    $('#progImg').show();" data-valide="1"/>
+
+    <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+    {{ form_end(formTpsTrav224) }}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            changeDetect = false;
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true %}
+            $(document).change();
+            // update224();
+
+            function initForm224() {
+                var q224Res = $('input[name="bscForm224[q224]"]').filter(':checked').val();
+
+                if (q224Res == "1") {
+                    $('#ind224b').show();
+                } else {
+                    $('#ind224b').hide();
+                }
+
+            }
+
+            initForm224();
+            $("#bscForm224_q224").on("click", function () {
+                initForm224();
+            });
+
+
+            function submitForm224() {
+                var q224Res = $('input[name="bscForm224[q224]"]').filter(':checked').val();
+
+                if (q224Res == "1") {
+                    $('#ind224b').show();
+                } else {
+                    $('#ind224b').hide();
+                    $('#bscForm224_ind224s_0_r2241').val('');
+                    $('#bscForm224_ind224s_0_r2242').val('');
+                    $('#bscForm224_ind224s_0_r2243').val('');
+                    $('#bscForm224_ind224s_0_r2244').val('');
+                    $('#bscForm224_ind224s_0_r2245').val('');
+                    $('#bscForm224_ind224s_0_r2246').val('');
+                    $('#bscForm224_ind224s_0_r2247').val('');
+                    $('#bscForm224_ind224s_0_r2248').val('');
+                    $('#bscForm224_ind224s_0_r2249').val('');
+                    $('#bscForm224_ind224s_0_r22410').val('');
+                    $('#bscForm224_ind224s_0_r22411').val('');
+                    $('#bscForm224_ind224s_0_r22412').val('');
+                    $('#bscForm224_ind224s_0_r22413').val('');
+                    $('#bscForm224_ind224s_0_r22414').val('');
+                    $('#bscForm224_ind224s_0_r22415').val('');
+                    $('#bscForm224_ind224s_0_r22416').val('');
+
+                }
+
+            }
+
+            submitForm224();
+            $("#bscForm224_q224").on("submit", function () {
+                submitForm224();
+            });
+
+
+            {% endif %}
+        });
+
+        // function changedR224(obj) {
+        //     update224();
+        // }
+
+        // function update224(onInit) {
+        //     var table224 = document.getElementById('ind224Table');
+        //     var rowLength224 = table224.rows.length;
+        //     var idxRowInput = 0;
+        //
+        //     var mtTot1 = 0;
+        //     var mtTot2 = 0;
+        //
+        //
+        //     var mtTot1Glo = 0;
+        //     var mtTot2Glo = 0;
+        //
+        //
+        //     for (var i = 2; i < rowLength224; i += 1) {
+        //         var row = table224.rows[i];
+        //         var cellLength = row.cells.length;
+        //
+        //         var lineTotal = false;
+        //         var lineTot1 = 0;
+        //
+        //
+        //         lineTot1 = 0;
+        //         for (var y = 0; y < cellLength; y += 1) {
+        //             var cell = row.cells[y];
+        //             if (cell.id.substring(0, 6) == "r2241") {
+        //                 if ($('#bscForm224_ind224s_' + idxRowInput + '_r2241').val() != "") {
+        //                     mtTot1 += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2241').val());
+        //                     mtTot1Glo += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2241').val());
+        //                     lineTot1 += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2241').val());
+        //                 }
+        //             } else if (cell.id.substring(0, 6) == "r2242") {
+        //                 if ($('#bscForm224_ind224s_' + idxRowInput + '_r2242').val() != "") {
+        //                     mtTot2 += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2242').val());
+        //                     mtTot2Glo += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2242').val());
+        //                     lineTot1 += parseInt($('#bscForm224_ind224s_' + idxRowInput + '_r2242').val());
+        //                 }
+        //
+        //             } else if (cell.id.substring(0, 8) == "lineTot1") {
+        //                 cell.innerHTML = lineTot1;
+        //
+        //             }
+        //
+        //         }
+        //
+        //         if (!lineTotal)
+        //             idxRowInput++;
+        //     }// end for line
+        //
+        //     if (!onInit) {
+        //
+        //     }
+        //
+        // }
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                var q224Res = $('input[name="bscForm224[q224]"]').filter(':checked').val();
+                $('#bscForm224_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+                if (checkIfZeroOrNull(q224Res, 'ind224Table', 'ind224b') == true) {
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ path('bilan_conso_tpstrav_ind224_edit') }}',
+                        data: $('form').serialize(),
+                        success: function (responsejson) {
+
+                            if (responsejson.data == 1) {
+                                if (recordAuto) {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement automatique réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+                                } else {
+                                    $('#ind224').load('{{ path('bilan_conso_tpstrav_ind224_edit') }}', function () {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                        var next = $($this).next('.panel-heading');
+                                        if (next.length == 0) {
+                                            window.location.href = '{{ path('bilan_conso_remuneration_edit') }}';
+                                        }
+                                    });
+
+                                }
+                            } else if (responsejson.data == "-3") {
+                                $('#progImg').hide();
+                                $('#messageJS').html("{{ 'erreur.unique.violation'|trans }}");
+                                messageJS.dialog("open");
+                            } else {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                messageJS.dialog("open");
+                            }
+
+
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(xhr);
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                            messageJS.dialog("open");
+                        }
+
+                    });
+                } else {
+                    $('#progImg').hide();
+                }
+
+            });
+
+        });
+
+    </script>
+{% endif %}
+
+

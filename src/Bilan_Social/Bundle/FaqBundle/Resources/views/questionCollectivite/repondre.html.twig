@@ -1,0 +1,41 @@
+{% extends '@Faq/layout.html.twig' %}
+
+
+{% block body %}
+
+    {{ parent() }}
+
+
+    <div class="col-xs-9">
+
+        <h1>Répondre à une question</h1>
+        <p>Emetteur de la question: {{question.IdColl.lbColl}}</p>
+        <p>Sujet de la question : {{question.sujet}}</p>
+        <p>Question : {{question.question}}</p>
+        {{ form_start(edit_form) }}
+            {% if question.blCloturer == false %}
+                {{ form_widget(edit_form.reponse) }}
+            {% else %}
+                {{ form_widget(edit_form.reponse, { 'disabled': 'disabled' }) }}
+            {% endif %}
+            
+            {% if access_write is defined and access_write == true and (question.blCloturer is null or question.blCloturer == false) %}
+    {#            <input class="btn pull-right" type="submit" value="Envoyer" />#}
+                <div style="margin: 10px 0;">
+                    {{ form_widget(edit_form.send) }}
+                    {{ form_widget(edit_form.send_without_response) }}
+                </div>
+            {% elseif access_write is defined and access_write == true and question.blCloturer %}
+                <div style="margin: 10px 0;">
+                    {{ form_widget(edit_form.send, { 'disabled': 'disabled' }) }}
+                    {{ form_widget(edit_form.send_without_response, { 'disabled': 'disabled' }) }}
+                    <p style="cursor: default" class="btn pull-right">Question fermée</p>
+                </div>
+            {% endif %}
+        {{ form_end(edit_form) }}
+
+
+        <a href="{{ path('question_index') }}"><button class="btn pull-left">Retour</button></a>
+
+    </div>
+{% endblock %}

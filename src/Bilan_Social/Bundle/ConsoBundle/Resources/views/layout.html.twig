@@ -1,0 +1,626 @@
+{% extends "base.html.twig" %}
+
+{% set NumForm = '0' %}
+
+{% block header %}
+{% endblock %}
+
+{% block body %}
+    <input type='hidden' id='idColl' value='{{ idColl }}'>
+
+    <input type='hidden' id='TotalMouvPb' value='{{ nombreQuestion.moyenne.mouvement }}'>
+    <input type='hidden' id='TotalEffPb' value='{{ nombreQuestion.moyenne.effectif }}'>
+    <input type='hidden' id='TotalTpsTravPb' value='{{ nombreQuestion.moyenne.tempstravail }}'>
+    <input type='hidden' id='TotalConditionsPb' value='{{nombreQuestion.moyenne.condition}}'>
+    <input type='hidden' id='TotalRemunerationPb' value='{{ nombreQuestion.moyenne.remuneration }}'>
+    <input type='hidden' id='TotalFormationPb' value='{{nombreQuestion.moyenne.formation}}'>
+    <input type='hidden' id='TotalDroitPb' value='{{ nombreQuestion.moyenne.droit }}'>
+    <input type='hidden' id='TotalRassctPb' value='{{ nombreQuestion.moyenne.rassct }}'>
+    <input type='hidden' id='TotalGpeecPb' value='{{ nombreQuestion.moyenne.gpeec }}'>
+    <input type='hidden' id='TotalHanditorialPb' value='{{ nombreQuestion.moyenne.handitorial }}'>
+
+
+
+
+     {% block menu %}
+        {% include '@Conso/menu.html.twig' %}
+    {% endblock menu%}
+
+    {% block header_app %}
+        {{parent()}}
+    {% endblock header_app%}
+
+    {% if bilanConso is not null%}
+        {% if info_saisie.initSource == "bs-vide" %}
+            <div id="alertconso" class="alert alert-info col-md-12 col-md-9">
+                <strong>Ce bilan est initialisé à vide, il est donc impossible de saisir des données.</strong>
+            </div>
+        {% endif %}
+        {% if bilanConso.fgstat == 1 %}
+            <div id="alertconso" class="alert alert-info col-md-12 col-md-9">
+                <strong>Vous avez transmis votre bilan social à votre CDG et il est en attente de validation.</strong>
+            </div>
+        {% elseif bilanConso.fgstat == 2 %}
+            <div id="alertconso" class="alert alert-success col-md-12 col-md-9">
+                <strong>Votre bilan social a été validé et transmis à la DGCL</strong>
+            </div>
+        {% endif %}
+    {% endif %}
+
+
+    <div id="messageJS" title="Alerte" class="displayNone" style="overflow:hidden;"></div>
+
+
+
+
+<div id="confirm" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Attention</h4>
+          </div>
+          <div class="modal-body">
+
+               <p>Des données n'ont pas été enregistrée, si vous cliquez sur 'Continuer' elles seront perdue.</p>
+
+          </div>
+          <div class="modal-footer">
+           <button id="confirmYes" onclick="confirmModalToCloseToggle()" type="button" class="btn btn-primary">Continuer</button>
+          </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+    <script type="text/javascript" src="{{ asset('js/ConsoBundle/bilanSocialConsolideEdit.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ConsoBundle/bilanSocialConsolideEditEffectif.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ConsoBundle/bilanSocialConsolideSousTotaux.js') }}"></script>
+
+    <script type="text/javascript">
+
+        $(".menu-toggle").click(function (e) {
+            $(".menu-conso").toggleClass("hide");
+            $(".contentConsolide").toggleClass("col-md-12 col-md-9");
+            $(".questionConsolide").toggleClass("col-md-12 col-md-9");
+            $("#titleConsolide").toggleClass("col-md-12 col-md-9");
+            $("#messageJS").toggleClass("col-md-12 col-md-9");
+            $("#alertconso").toggleClass("col-md-12 col-md-9");
+{#            $("#incohpanel").toggleClass("col-md-offset-3");#}
+        });
+        var Collectivite = $('#idColl').val();
+        $('#clearConsolide').on('click', function () {
+            var tableau = {id: Collectivite};
+            var url = Routing.generate('bilan_conso_to_bilan_apa', {idColl: Collectivite});
+            window.location.href = url;
+        });
+
+
+
+
+        var jump = function (e)
+        {
+            var target = location.hash;
+            if (target === "#Titulaire") {
+                target = "toggle111";
+            } else if (target === "#ContractuelEmploiPermanent") {
+                target = "toggle121";
+            } else if (target === "#ContractuelEmploiNonPermanent") {
+                target = "toggle131";
+            }
+
+            $('#' + target).click();
+
+            $("#incoherenceTable").addClass('hide');
+
+            $('html,body').animate(
+                    {
+                        scrollTop: $('#' + target).offset().top - 30
+                    }, 2000, function ()
+            {
+            });
+        }
+
+        function scrollTo( target ) {
+            $("#incoherenceTable").addClass('hide');
+            if( target.length ) {
+                $("html, body").stop().animate( { scrollTop: $(target).offset().top - 40 }, 3000);
+            }
+        }
+
+        $(document).ready(function ()
+        {
+
+
+
+            $('body').bind('cut copy paste', function (e) {
+                e.preventDefault();
+            });
+            //Disable mouse right click
+            $("body").on("contextmenu", function (e) {
+                return false;
+            });
+
+            if (location.hash) {
+                jump();
+            }
+            $('.anchor').click(function () {
+                setTimeout(function () {
+                    jump();
+                }, 1);
+            });
+            /* permet de remplir la progresse bar effectif en recuperant la valeur dans un input hidden au moment d'arriver sur le bilan social */
+            var TotalEffPb = Math.ceil($('#TotalEffPb').val());
+            $('#ValEff').html(TotalEffPb + "%");
+            $('#pbEff').css('width', TotalEffPb + "%");
+
+
+            var TotalTpsTravPb = Math.ceil($('#TotalTpsTravPb').val());
+            $('#ValTpsTrav').html(TotalTpsTravPb + "%");
+            $('#pbTpsTrav').css('width', TotalTpsTravPb + "%");
+
+
+            var TotalMouvPb = Math.ceil($('#TotalMouvPb').val());
+            $('#ValMouv').html(TotalMouvPb + "%");
+            $('#pbMouv').css('width', TotalMouvPb + "%");
+
+            var TotalConditionsPb = Math.ceil($('#TotalConditionsPb').val());
+            $('#ValConditions').html(TotalConditionsPb + "%");
+            $('#pbConditions').css('width', TotalConditionsPb + "%");
+
+            var TotalRemunerationPb = Math.ceil($('#TotalRemunerationPb').val());
+            $('#ValRemuneration').html(TotalRemunerationPb + "%");
+            $('#pbRemuneration').css('width', TotalRemunerationPb + "%");
+
+            var TotalFormationPb = Math.ceil($('#TotalFormationPb').val());
+            $('#ValFormation').html(TotalFormationPb + "%");
+            $('#pbFormation').css('width', TotalFormationPb + "%");
+
+            var TotalDroitPb = Math.ceil($('#TotalDroitPb').val());
+            $('#ValDroit').html(TotalDroitPb + "%");
+            $('#pbDroit').css('width', TotalDroitPb + "%");
+
+            var TotalRassctPb = Math.ceil($('#TotalRassctPb').val());
+            $('#ValRassct').html(TotalRassctPb + "%");
+            $('#pbRassct').css('width', TotalRassctPb + "%");
+
+            var TotalGpeecPb = Math.ceil($('#TotalGpeecPb').val());
+            $('#ValGpeec').html(TotalGpeecPb + "%");
+            $('#pbGpeec').css('width', TotalGpeecPb + "%");
+
+            var TotalHanditorialPb = Math.ceil($('#TotalHanditorialPb').val());
+            $('#ValHanditorial').html(TotalHanditorialPb + "%");
+            $('#pbHanditorial').css('width', TotalHanditorialPb + "%");
+        });
+
+
+
+        var currentTab = "";
+        var recordAuto = false;
+        var incoherenceList;
+        var toggleToClose = '';
+        var divToClose = '';
+        var nomForm = '';
+
+        function disabled()
+        {
+            {% if(bilanConso is not null) %}
+                {% if (info_saisie.initSource == "bs-vide")  %}
+                    $('input:not([type="button"])').prop('disabled', true);
+                {% endif %}
+                {% if ((bilanConso.fgstat == 1 or bilanConso.fgstat == 2 or bilanConso.fgstat == 5 ) and is_granted('ROLE_COLLECTIVITY'))  %}                    
+                    $('input:not([type="button"])').prop("disabled", true);
+                {% endif %}
+                {% if (bilanConso.fgStat == 2 and is_granted('ROLE_CDG')) %}
+                    $('input:not([type="button"])').prop('disabled', true);
+                {% endif %}
+                {% if (canwrite == false) %}
+                    $('input:not([type="button"])').prop('disabled', true);
+                {% endif %}
+            {% endif %}
+        }
+
+        $.urlParam = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results !== null) {
+                return results[1] || 0;
+            } else {
+                return results;
+            }
+        }
+
+        function saveTab() {
+            recordAuto = true;
+            $('form').submit();
+        }
+
+
+        // Fonction AutoSave
+        var intervalSave = {{ backup_interval }};
+                setTimeout(autosave, intervalSave);
+        function autosave() {
+            {% if(bilanConso is not null) %}
+                {% if (bilanConso.fgstat != 1 or bilanConso.fgstat != 2 or bilanConso.fgstat != 5) %}
+                if (currentTab != "")
+                    saveTab();
+                setTimeout(autosave, intervalSave);
+                {% endif %}
+            {% endif %}
+        }
+
+
+        function save() {
+
+            if (currentTab != "")
+                saveTab();
+        }
+
+        function lightError(field, blIncoherence) {
+            if(field == "nbAgents" || field == "nmTotJourAbs") {
+                var obj3 = $('.' + field);
+            } else {
+                var obj3 = $('#' + field);
+            }
+            if (obj3 != undefined) {
+                if (blIncoherence == 1) {
+                    $(obj3).addClass('form_orange');
+                } else {
+                    $(obj3).addClass('form_bordeaux');
+                }
+            }
+        }
+
+        function runEffect(toggle, div) {
+            var css = $("#" + toggle).attr('class');
+            if (css == "buttonplus") {
+                // Ouverture du toggle clické
+
+                // Fermeture prealable du toggle ouvert precedemment
+                if (idDivCurr != undefined && idDivCurr != "null" && idDivCurr != "") {
+                    var res = runEffect(idToggleCurr, idDivCurr);
+                    if(res == 0) return 0;
+                }
+
+                $("#" + toggle).attr('class', 'buttonmoins');
+                $("#" + toggle).attr('title', 'Réduire');
+                initDiv(div);
+                idToggleCurr = toggle;
+                idDivCurr = div;
+            } else {
+                // Fermeture du toggle clické
+                if(changeDetect){
+
+                    $('#confirm').modal().show();
+                    toggleToClose = toggle;
+                    divToClose = div;
+
+                }else{
+                     $('#' + div).toggle("blind", 500);
+                        $("#" + toggle).attr('class', 'buttonplus');
+                        $("#" + toggle).attr('title', 'Agrandir');
+                        idToggleCurr = "";
+                        idDivCurr = "";
+                        $('#' + div).html("");
+                }
+
+            }
+        }
+        function confirmModalToCloseToggle(){
+
+            $('#' + divToClose).toggle("blind", 500);
+            $("#" + toggleToClose).attr('class', 'buttonplus');
+            $("#" + toggleToClose).attr('title', 'Agrandir');
+            idToggleCurr = "";
+            idDivCurr = "";
+            $('#' + divToClose).html("");
+            $('#confirm').modal('hide');
+        }
+
+        function addToggle(toggleName, divName) {
+            $('#' + toggleName).click(function () {
+                runEffect(toggleName, divName);
+            });
+        }
+
+
+        function openError(idToggle1, idToggle2, field) {
+             var obj1 = $('#' + idToggle1);
+             var css1 = obj1.attr('class');
+             if (css1 == "buttonplus") {
+                 obj1.click();
+             }
+             // TODO : Voir à enlever les setTimeout pour executer dans le click est complete
+             setTimeout(function () {
+                 if (idToggle2 != "") {
+                     var obj2 = $('#' + idToggle2);
+                     var css2 = obj2.attr('class');
+                     if (css2 == "buttonplus") {
+                         obj2.click();
+                     }
+                 }
+
+                 setTimeout(function () {
+
+                     HideShowIncoh(1);
+                     $('html, body').animate({
+                         scrollTop: $("#" + field).offset().top - 130
+                     }, 2000);
+                 }, 4000);
+             }, 3000);
+         }
+
+        function setPgMenu(idMenu, nameOnglet, response) {
+              var objPgMenu = $('#pb' + idMenu);
+              objPgMenu.removeClass();
+              /*console.log(eval('response.'+nameOnglet));*/
+              objPgMenu.addClass("progress-bar");
+              objPgMenu.addClass("progress-bar-white");
+              if (eval('response.'+nameOnglet+'.blIncoGlobal') === 3) {
+                  objPgMenu.addClass("orange");
+              }
+        }
+
+
+        function setPgInd(tableNum, blIncoInd, moyenneInd, formName) {
+
+
+            var objPgInd = $('#pb' + tableNum);
+            var Statut = $('.pb' + tableNum + "-value");
+            objPgInd.removeClass();
+            if (blIncoInd === null) {
+                blIncoInd = 1;
+            }
+            objPgInd.addClass("progress-bar " + formName);
+            if (blIncoInd === 2) {
+                objPgInd.addClass("blue");
+                Statut.html('Donnée(s) attendue(s)');
+            } else if (blIncoInd === 3) {
+                objPgInd.addClass("orange");
+                Statut.html('Donnée(s) incohérente(s)');
+            } else if (blIncoInd === 4) {
+                objPgInd.addClass("green");
+                Statut.html('Saisie cohérente');
+            }
+
+            objPgInd.css('width', moyenneInd + "%");
+        }
+
+        function setIncoherenceLight(numForm) {
+            var count = 0;
+            for (var idx in incoherenceList) {
+                var incoh = incoherenceList[idx];
+                if (incoh.form == numForm) {
+                    lightError(incoh.field, incoh.incoherence);
+                    count++;
+                }
+            }
+
+            $('#nbErreur').html(count);
+        }
+
+        var messageJS = $("#messageJS").dialog({
+                autoOpen: false,
+                resizable: true,
+                height: "auto",
+                width: 400,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        messageJS.dialog("close");
+                    }
+                },
+                open: function (event, ui) {
+                    setTimeout(function () {
+                        messageJS.dialog("close");
+                    }, 3000);
+                },
+                close: function () {
+                }
+            });
+
+        function initLight(numForm) {
+            if (incoherenceList != undefined) {
+                // Si le json js a été chargé  (via un eneregistrement) => light via le json
+                setIncoherenceLight(numForm);
+            } else {
+                // si premier acces à la page => light via le twig
+                var count = 0;
+                {% if incoherenceList is  defined %}
+                {% for tag in incoherenceList %}
+                    {% if tag.form == NumForm %}
+                        lightError('{{tag.field}}', {{tag.blIncoherence}});
+                        count++;
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                $('#nbErreur').html(count);
+            }
+        }
+
+        function initCount(numForm) {
+            if (incoherenceList != undefined) {
+
+                // Si le json js a été chargé  (via un eneregistrement) => light via le json
+                var count = 0;
+                for (var idx in incoherenceList) {
+                    var incoh = incoherenceList[idx];
+                    if (incoh.form == numForm) {
+                        count++;
+                    }
+                }
+
+                $('#nbErreur').html(count);
+            } else {
+                // si premier acces à la page => light via le twig
+                var count = 0;
+                {% if incoherenceList is  defined %}
+                {% for tag in incoherenceList %}
+                    {% if tag.form == NumForm %}
+                          count++;
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+
+
+                $('#nbErreur').html(count);
+            }
+        }
+
+        function HideShowIncoh(viaAjax)
+        {
+            if (viaAjax !== 1) {
+                if ($('#HideShowIncoh').hasClass('buttonmoins')) {
+                    $("#HideShowIncoh").removeClass('buttonmoins');
+                    $("#HideShowIncoh").addClass('buttonplus');
+                    $("#HideShowIncoh").attr('title', 'Agrandir');
+
+                } else {
+
+                    $("#HideShowIncoh").removeClass('buttonplus');
+                    $("#HideShowIncoh").addClass('buttonmoins');
+                    $("#HideShowIncoh").attr('title', 'Réduire');
+
+                }
+            }
+            else if (viaAjax == 1) {
+                $("#HideShowIncoh").removeClass('buttonplus');
+                $("#HideShowIncoh").removeClass('buttonmoins');
+                $("#HideShowIncoh").addClass('buttonplus');
+                $("#HideShowIncoh").attr('title', 'Agrandir');
+            }
+
+            $('#incoherenceTable').toggleClass('hide');
+        }
+
+        // Calculer le total d'une colonne
+        function sumInputsValueByClass(class_str){
+            //var input = $(this);
+            //var col_index = $(input).parents('td:first').prop('cellIndex')+1;
+            var sum = 0;
+            $('.'+class_str).each(function(){
+                var temp_val = $(this).val();
+                sum += Number(temp_val);
+            });
+            return sum;
+        }
+
+        // Calculer le %age d'un champ en fonction de tous
+        function getPourcent(tableId, inputClass, pourcentClass) {
+            var totalNbAccident = sumInputsValueByClass(inputClass);
+            var pourcent = 0;
+            var to_print = 0;
+            $('#'+ tableId).find('tr').each(function() {
+                if($(this).find('.' + inputClass).val() != '' && totalNbAccident>0) {
+                    var nbAccident = $(this).find('.' + inputClass).val();
+                    pourcent = nbAccident / totalNbAccident * 100;
+                    to_print = pourcent;
+                } else {
+                    to_print = 0;
+                }
+                $(this).find('.' + pourcentClass).html(to_print.toFixed(1));
+            });
+        }
+
+        // Arrondir à l'entier le plus proche ou au .5
+        function roundToDecimal() {
+            $('input').each(function() {
+                if($(this).hasClass('positiveFloat') && $(this).val() != '') {
+                    var number = $(this).val();
+                    number = (Math.round(number * 2) / 2).toFixed(2);
+                    $(this).val(number);
+                }
+            });
+        }
+
+        // Afficher le total d'une colonne
+        function totColumn(fieldClass, totalClass) {
+            var value = sumInputsValueByClass(fieldClass);
+            var total = $('.' + totalClass);
+            total.html(value);
+        }
+
+        // Calculer le total d'une ligne
+        function sumRow(tableId, tdClass, totalColumnClass) {
+            var totRow = 0;
+            $('#' + tableId).find('tr').each(function() {
+               var $this = $(this);
+               $this.find('.' + tdClass).each(function() {
+                   var inputValue = $(this).find('input').val();
+                   totRow = parseInt(totRow) + parseInt(inputValue != '' ? inputValue : 0);
+               });
+               $this.find('.' + totalColumnClass).html(totRow);
+               totRow = 0;
+            });
+        }
+
+        // Calculer le total d'un tableau entier
+        function sumTotal(tableId, tdClass, totalClass) {
+            var total = 0;
+            $('#' + tableId).find('tr').each(function() {
+               var $this = $(this);
+               $this.find('.' + tdClass).each(function() {
+                   var inputValue = $(this).find('input').val();
+                   total = parseInt(total) + parseInt(inputValue != '' ? inputValue : 0);
+               });
+               $(this).find('.' + totalClass).html(total);
+            });
+        }
+
+        var distance = $('#incoh').offset().top,
+        $window = $(window);
+
+        var stickyHeight = $('#incoh').outerHeight();
+        $window.scroll(function() {
+            if ( $window.scrollTop() >= distance ) {
+                $('#incoh').css({
+                    'position': 'fixed',
+                    'top': 0,
+                    'left': 0,
+                    'margin-left': '25%',
+                    'right': 0,
+                    'z-index': 500
+                });
+{#                $('body').css('padding-bottom',stickyHeight+'px');#}
+{#                $(".ghost").removeClass("hidden");#}
+                if($('#wrapper').css('display') == 'none') {
+                    $('#incoh').css('margin-left', '0');
+                }
+            } else {
+                $('#incoh').css({
+                    'position': 'relative',
+                    'margin-left': '0%'
+                });
+{#                $(".ghost").addClass("hidden");#}
+{#                $('body').css('padding-bottom','0');#}
+            }
+        });
+
+        $("#incoh").affix({
+            offset: {
+              top: distance
+            }
+        });
+
+        $("#incoh_wrapper").height($("#incoh").height());
+
+
+        var changeDetect = false;
+
+        function changedDetect(input){
+            changeDetect = true;
+        }
+
+    </script>
+
+
+
+{% endblock %}

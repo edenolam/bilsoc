@@ -1,0 +1,28 @@
+refinaptitude_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefInaptitude:index" }
+    methods:  GET
+
+refinaptitude_show:
+    path:     /{idInap}/show
+    defaults: { _controller: "ReferencielBundle:RefInaptitude:show" }
+    methods:  GET
+
+refinaptitude_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefInaptitude:new" }
+    methods:  [GET, POST]
+
+refinaptitude_edit:
+    path:     /{idInap}/edit
+    defaults: { _controller: "ReferencielBundle:RefInaptitude:edit" }
+    methods:  [GET, POST]
+
+refinaptitude_delete:
+    path:     /{idInap}/delete
+    defaults: { _controller: "ReferencielBundle:RefInaptitude:delete" }
+    methods:  DELETE
+
+csv_export_refinaptitude:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefInaptitude:generateCsv" }

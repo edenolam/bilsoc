@@ -1,0 +1,62 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-xs-9">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        <div class="panel panel-default contentConsolide">
+
+
+            <div class="panel-heading">
+                <h3 class="noMargin">Campagnes</h3>
+            </div>
+
+
+            <div class="panel-body">
+                {% if listeCampagnes is empty %}
+                    <p>Aucune campagne n'a été crée.</p>
+                {% else %}
+                    <h3>Campagne en cours</h3>
+                    {% for campagne in listeCampagnes %}
+                        {% if campagne.fgStat == 0 or campagne.fgStat == 1 %}
+                            <p><span class='bold'>Titre de la campage : </span>{{ campagne.lbCamp }}{% if campagne.fgStat == "0" or campagne.fgStat == "1" or campagne.fgStat == "2" %}<a class='pull-right' href="{{ path('campagne_create', {'id': campagne.idCamp}) }}"><button type="submit" class="btn btn-primary">Modifier</button></a>{% endif %}</p>
+                            <p><span class='bold'>Année de référence : </span>{{ campagne.nmAnne }}</p>
+                            <p><span class='bold'>Statut : </span>{% if campagne.fgStat == "1" %} ouverte {% elseif campagne.fgStat == "2" %} clôturée {% elseif campagne.fgStat == "3" %} archivée {% else %} En attente {% endif %}</p>
+                            {% if campagne.fgStat == "0" or campagne.fgStat == "2" %}<a href="{{ path('campagne_ouvrir', {'id': campagne.idCamp}) }}"><button type="submit" class="btn btn-success btn-outline btn-sm">Ouvrir</button></a>{% endif %}
+                            {% if campagne.fgStat == "1" %}<a href="{{ path('campagne_cloturer', {'id': campagne.idCamp}) }}"><button type="submit" class="btn btn-danger btn-outline btn-sm">Cloturer</button></a>{% endif %}
+                            {% if campagne.fgStat == "2" %}<a href="{{ path('campagne_archiver', {'id': campagne.idCamp}) }}"><button type="submit" class="btn btn-warning btn-outline btn-sm">Archiver</button></a>{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <hr>
+                    <h3>Campagnes archivées ou clôturées</h3>
+                    {% for campagne in listeCampagnes %}
+                        {% if campagne.fgStat != 0 and campagne.fgStat != 1 %}
+                            <hr style='border: 0;border-top: 1px solid lightgray;'>
+                            <p><span class='bold'>Titre de la campage : </span>{{ campagne.lbCamp }}{% if campagne.fgStat == "0" or campagne.fgStat == "1" or campagne.fgStat == "2" %}<a class='pull-right' href="{{ path('campagne_create', {'id': campagne.idCamp}) }}"><button type="submit" class="btn btn-primary">Modifier</button></a>{% endif %}</p>
+                            <p><span class='bold'>Année de référence : </span>{{ campagne.nmAnne }}</p>
+                            <p><span class='bold'>Statut : </span>{% if campagne.fgStat == "1" %} ouverte {% elseif campagne.fgStat == "2" %} clôturée {% elseif campagne.fgStat == "3" %} archivée {% else %} En attente {% endif %}</p>
+                            {% if campagne.fgStat == "0" or campagne.fgStat == "2" %}<a href="{{ path('campagne_ouvrir', {'id': campagne.idCamp}) }}"><button type="submit" class="btn btn-success btn-outline btn-sm">Ouvrir</button></a>{% endif %}
+                            {% if campagne.fgStat == "1" %}<a href="{{ path('campagne_cloturer', {'id': campagne.idCamp}) }}"><button type="submit" class="btn btn-danger btn-outline btn-sm">Cloturer</button></a>{% endif %}
+                            {% if campagne.fgStat == "2" %}<a href="{{ path('campagne_archiver', {'id': campagne.idCamp}) }}"><button type="submit" class="btn btn-warning btn-outline btn-sm">Archiver</button></a>{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if affiAjou %}
+                    <div id="admin">
+                        <a href="{{ path('campagne_create') }}"><button type="submit" class="btn btn-primary">Ajouter une campagne</button></a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

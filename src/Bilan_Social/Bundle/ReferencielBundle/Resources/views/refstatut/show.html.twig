@@ -1,0 +1,40 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refstatut_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refStatut.cdStat }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refStatut.lbStat }}</td>
+                </tr>
+                <tr>
+                    <th>Code N4DS</th>
+                    <td>{{ refStatut.cdMotiN4ds }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refStatut.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refStatut} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refstatut_edit', { 'idStat': refStatut.idStat }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+        </ul>
+    {% endblock %}

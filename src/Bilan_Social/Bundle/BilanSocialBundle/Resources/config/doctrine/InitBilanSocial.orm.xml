@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\BilanSocialBundle\Entity\InitBilanSocial" repository-class="Bilan_Social\Bundle\BilanSocialBundle\Repository\InitBilanSocialRepository" table="init_bilan_social">
+        <id name="idInitBs" type="integer" column="ID_INIT_BS">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="enquete" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+            <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" nullable="true"/>
+        </many-to-one>
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" nullable="true"/>
+        </many-to-one>
+        <field name="blDeclAgen" type="boolean" column="BL_DECL_AGEN" nullable="true"/>
+        <field name="blLock" type="boolean" column="BL_LOCK" nullable="true"/>
+        <field name="blBsExis" type="boolean" column="BL_BS_EXIS" nullable="true"/>
+        <field name="blApa" type="boolean" column="BL_APA" nullable="true"/>
+        <field name="blCons" type="boolean" column="BL_CONS" nullable="true"/>
+        <field name="initSource" type="string" length="8" column="INIT_SOURCE" nullable="true"/>
+        <field name="dtCrea" type="date" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="dtModi" type="date" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+    </entity>
+</doctrine-mapping>

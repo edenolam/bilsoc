@@ -1,0 +1,337 @@
+{% extends '@User/layout.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+
+        <div class="row bodyBilanSocial">
+            <div class="col-lg-10 col-lg-offset-1">
+                <div>
+                    <ol class="breadcrumb">
+                        <li><a href="#">Bilan social</a></li>
+                        <li class="active">Créer un compte utilisateur</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    {{ form_start(form) }}
+                    <div class="col-lg-3">
+                        <h1>Compte</h1>
+                        <div class="containerFormCompte">
+
+                            {{ form_widget(form) }}
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <h1>Droits</h1>
+                        <div class="containerForm">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="borderRadiusTable"></th>
+                                        <th colspan="3">Gestion des comptes des collectivités</th>
+                                        <th colspan="3">Administrer les campagnes</th>
+                                        <th colspan="3">Prendre la place de la collectivité</th>
+                                        <th colspan="3">Gérer les modèles de mail</th>
+                                        <th colspan="3" class="borderRadiusTable">Gérer l'espace analyse RH</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Région</td>
+                                        <td>Département</td>
+                                        <td>L</td>
+                                        <td>S</td>
+                                        <td>R</td>
+                                        <td>L</td>
+                                        <td>S</td>
+                                        <td>R</td>
+                                        <td>L</td>
+                                        <td>S</td>
+                                        <td>R</td>
+                                        <td>L</td>
+                                        <td>S</td>
+                                        <td>R</td>
+                                        <td>L</td>
+                                        <td>S</td>
+                                        <td>R</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="4" class="boldTitle">AURA</td>
+                                        <td>1</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="4" class="boldTitle">BOFC</td>
+                                        <td>21</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>25</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>39</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>38</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" class="boldTitle">BRET</td>
+                                        <td>22</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>29</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" class="boldTitle">CVDL</td>
+                                        <td>18</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>28</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                    <tr class="borderRadiusTable">
+                                        <td>36</td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                        <td><input type="checkbox" title=""/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="containerButton">
+                            <button type="submit" class="btn btn-default">Enregistrer</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+
+            </div>
+        </div>
+        <div class="row footerBilanSocial">
+            <p>Conditions générales</p>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

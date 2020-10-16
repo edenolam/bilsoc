@@ -1,0 +1,129 @@
+{# empty Twig template #}
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+
+    {% if formGpeecNiveauDiplome is defined %}
+{#        {{dump()}}#}
+        {{ form_start(formGpeecNiveauDiplome) }}
+
+
+            <table width="100%" id="bscGpeecNiveauDiplome" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr entete="1">
+                        <th width="20%" rowspan="4">Niveaux Diplome</th>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                    </tr>
+
+                </thead>
+                <tbody id="tbody">
+
+                        {% for tag in formGpeecNiveauDiplome.bscGpeecNiveauDiplomes %}
+                            <tr>
+                             <td>
+{#                                 {{dump(tag)}}#}
+                                {{ form_widget(tag.refDomaineDiplome) }}
+                                {{ tag.refDomaineDiplome.vars.data.lbDomaineDiplome }}
+                            </td>
+                            <td id="rNb1" style="text-align: center">{{ form_widget(tag.nbHommes) }}</td>
+                            <td id="rNb2" style="text-align: center">{{ form_widget(tag.nbFemmes) }}</td>
+                            </tr>
+                        {% endfor %}
+                     <tr class="EnsembleTable" id="totalHF">
+                                <td><b>Ensemble </b></td>
+                                <td style="text-align: center" class='total_H'>0</td>
+                                <td style="text-align: center" class="total_F">0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display: none"/>
+
+        {{ form_end(formGpeecNiveauDiplome) }}
+
+        <script type="text/javascript">
+            $(document).ready(function ()
+            {
+                changeDetect = false;
+
+                $(document).change();
+
+
+                totColumn("gpeec_niveau_diplome_homme", "total_H");
+                totColumn("gpeec_niveau_diplome_femme", "total_F");
+            });
+
+            $('.gpeec_niveau_diplome_homme, .gpeec_niveau_diplome_femme').on('blur', function(){
+                totColumn("gpeec_niveau_diplome_homme", "total_H");
+                totColumn("gpeec_niveau_diplome_femme", "total_F");
+            });
+
+
+                /*
+                 * METHODE AJAX SUBMIT
+                 */
+                $(function () {
+                    // Enregistrement en ajax
+                    $('form').on('submit', function (e) {
+                        var btn = $(this).find("input[type=submit]:focus");
+                        var value_valide = $(btn).data('valide');
+                        $('#bscFormGpeecPlusNbAgentsParSpeEtAge_valide').val(value_valide);
+                        // Submit en ajax pour le fonctionnement d'appel par onglet
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ path('bilan_conso_gpeec_bscGpeecNiveauDeDiplome_edit') }}',
+                            data: $('form').serialize(),
+                            success: function (responsejson) {
+
+                                if (responsejson.data == 1) {
+                                    if (recordAuto) {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement automatique réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+                                    } else {
+                                        $('#niveau_de_diplome').load('{{ path('bilan_conso_gpeec_bscGpeecNiveauDeDiplome_edit') }}', function () {
+                                            $('#progImg').hide();
+                                            $('#messageJS').html("Enregistrement réussi");
+                                            messageJS.dialog("open");
+                                            setIncoherenceTable(responsejson);
+                                        });
+
+                                    }
+                                } else if (responsejson.data == "-3") {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                    messageJS.dialog("open");
+                                } else {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                    messageJS.dialog("open");
+                                }
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(xhr);
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                                messageJS.dialog("open");
+                            }
+
+                        });
+
+                    });
+
+                });
+        </script>
+    {% endif %}

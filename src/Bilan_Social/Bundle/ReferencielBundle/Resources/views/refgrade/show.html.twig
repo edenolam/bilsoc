@@ -1,0 +1,42 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refgrade_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refGrade.cdGrad }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refGrade.lbGrad }}</td>
+                </tr>
+                <tr>
+                    <th>Cadre emploi</th>
+                    <td>{{ refGrade.RefCadreEmploi.lbCadrempl }}</td>
+                </tr>
+                <tr>
+                    <th>Détachement</th>
+                    <td>{% if refGrade.blDeta %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refGrade.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refGrade} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refgrade_edit', { 'idGrad': refGrade.idGrad }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}

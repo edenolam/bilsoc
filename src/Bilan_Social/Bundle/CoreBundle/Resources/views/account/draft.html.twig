@@ -1,0 +1,24 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block body %}
+    <h1>Validation de la modification des comptes utilisateur</h1>
+
+    {% for userDraft in userDrafts %}
+        <h3>Utilisateur: {{ userDraft.user.username }}</h3>
+        <h4>Modification :</h4>
+        <ul>
+            {% if userDraft.postalCode is not null %}
+                <li>Code postale : {{ userDraft.postalCode }}</li>
+                {% endif %}
+                {% if userDraft.department is not null %}
+                <li>Departement : {{ userDraft.department }}</li>
+                {% endif %}
+                {% if userDraft.email is not null %}
+                <li>Email : {{ userDraft.email }}</li>
+                {% endif %}
+        </ul>
+        <p><a href="{{ path('user_account_accept_change', {'userDraft':  userDraft.id  }) }}">Accepter la modification</a></p>
+        <p><a href="{{ path('user_account_reject_change', {'userDraft':  userDraft.id  }) }}">Rejeter la modification</a></p>
+    {% endfor %}
+
+{% endblock %}

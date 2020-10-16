@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Reftypesurclassdemos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Cdtypesurclassdemo</th>
+                <th>Lbtypesurclassdemo</th>
+                <th>Stratsurclassdemo</th>
+                <th>Blvali</th>
+                <th>Cdutilcrea</th>
+                <th>Createdat</th>
+                <th>Cdutilmodi</th>
+                <th>Updatedat</th>
+                <th>Idtypesurclassdemo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for refTypeSurclassDemo in refTypeSurclassDemos %}
+            <tr>
+                <td><a href="{{ path('reftypesurclassdemo_show', { 'idTypeSurclassDemo': refTypeSurclassDemo.idTypeSurclassDemo }) }}">{{ refTypeSurclassDemo.cdTypeSurclassDemo }}</a></td>
+                <td>{{ refTypeSurclassDemo.lbTypeSurclassDemo }}</td>
+                <td>{{ refTypeSurclassDemo.stratSurclassDemo }}</td>
+                <td>{% if refTypeSurclassDemo.blVali %}Yes{% else %}No{% endif %}</td>
+                <td>{{ refTypeSurclassDemo.cdUtilcrea }}</td>
+                <td>{% if refTypeSurclassDemo.createdAt %}{{ refTypeSurclassDemo.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ refTypeSurclassDemo.cdUtilmodi }}</td>
+                <td>{% if refTypeSurclassDemo.updatedAt %}{{ refTypeSurclassDemo.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ refTypeSurclassDemo.idTypeSurclassDemo }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('reftypesurclassdemo_show', { 'idTypeSurclassDemo': refTypeSurclassDemo.idTypeSurclassDemo }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('reftypesurclassdemo_edit', { 'idTypeSurclassDemo': refTypeSurclassDemo.idTypeSurclassDemo }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('reftypesurclassdemo_new') }}">Create a new refTypeSurclassDemo</a>
+        </li>
+    </ul>
+{% endblock %}

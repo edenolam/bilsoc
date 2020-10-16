@@ -1,0 +1,229 @@
+    {% if formConditions411 is defined %}
+        {% set bilan_social_consolide = formConditions411.vars.data %}
+        {{ form_start(formConditions411) }}
+
+        <div id="ind411">
+            <h5>
+                Champ : le tableau qui suit concerne les agents titulaires, stagiaires et contractuels sur emplois permanents
+            </h5>
+
+            <table width="100%" id="ind411Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="1"></th>
+                        <th style="text-align: center">Effectif</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for tag in formConditions411.ind411s %}
+                    <tr idTrTyp="{{tag.refTypeMissionPrevention.vars.value}}" id="411idTr_{{tag.refTypeMissionPrevention.vars.value}}">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            {{ form_widget(tag.refTypeMissionPrevention) }}
+                            {{ tag.refTypeMissionPrevention.vars.data.lbTypemissprev}}
+                        </td>
+                        <td id="r4111">{{ form_widget(tag.r4111) }}</td>
+                    </tr>
+                {% endfor %}
+                    <tr class="filiTable" id="tot411" style="text-align: center">
+                        <td>Total</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <i>
+                * Article 4 du Décret n°85-603 du 10 juin 1985 : Ils constituent le niveau de proximité du réseau des agents de prévention.<br />
+                ** Article 4 et 4-1 du Décret n°85-603 du 10 juin 1985 : Ils assurent une mission de coordination et sont institués lorsque l'importance des risques professionnels ou des effectifs le justifie.<br />
+                Ils sont chargés de conseiller l'autorité terriroriale auprès de laquelle ils sont placés, dans la démarche d'évaluation des risques et dans la mise en place d'une politique de prévention des risques<br />
+                ainsi que dans la mise en oeuvre des règles de sécurité et d'hygiène au travail.<br />
+                *** Article 5 du Décret n°85-603 du 10 juin 1985 : Ils sont désignés par la collectivité. Ils sont chargés d'assurer une fonction d'inspection dans le domaine de la santé et de la sécurité.<br />
+            </i>
+
+            <h5>
+                Champ : le tableau qui suit concerne les agents titulaires, stagiaires et contractuels sur emplois permanents
+            </h5>
+
+            <table width="100%" id="ind412Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="1"></th>
+                        <th style="text-align: center">Montant en euros (arrondi à l'euro supérieur)</th>
+                        <th style="text-align: center">Nombre de jours</th>
+                        <th style="text-align: center"><b>Nombre d'agents</b></th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+                {% for tag in formConditions411.ind412s %}
+                    <tr idTrTyp="{{tag.refActionPrevention.vars.value}}" id="412idTr_{{tag.refActionPrevention.vars.value}}">
+                        <td id="categTd" style="min-width: 200px; text-align: center">
+                            {{ form_widget(tag.refActionPrevention) }}
+                            {{ tag.refActionPrevention.vars.data.lbActionprev}}
+                        </td>
+                        <td id="r4121">{{ form_widget(tag.r4121) }}</td>
+                        {% if(tag.refActionPrevention.vars.data.blNbjour == 1) %}
+                            <td id="r4122">{{ form_widget(tag.r4122) }}</td>
+                            <td id="r4123">{{ form_widget(tag.r4123) }}</td>
+                        {% else %}
+                            <td><span hidden>{{ form_widget(tag.r4122) }}</span></td>
+                            <td><span hidden>{{ form_widget(tag.r4123) }}</span></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                {% set total = bilan_social_consolide.getIndPileForBy('ind412s') %}
+                    <tr class="filiTable row_totaux" style="text-align: center">
+                        <td>Total</td>
+                        <td>{{ total.r4121 }}</td>
+                        <td>{{ total.r4122 }}</td>
+                        <td>{{ total.r4123 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <i>
+                (*) Il s'agit, par exemple : <br/>
+                - d'un centre de gestion dans le cadre de missions de conseil ou d'inspection,<br />
+                - d'une entreprise pour évaluer les risques professionnels,<br />
+                - d'un ergonome
+            </i>
+        </div>
+        <br/>
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formConditions411) }}
+
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true %}
+
+                $(document).change();
+                update411();
+
+            {% endif %}
+        });
+
+        {% if questionCollectiviteConsolide.q2 == true or questionCollectiviteConsolide.q4 == true or questionCollectiviteConsolide.q6 == true %}
+        function changedR411(obj) {
+            update411();
+        }
+
+        function update411() {
+            var table411 = document.getElementById('ind411Table');
+            var rowLength411 = table411.rows.length;
+            var idxRowInput = 0;
+
+            var mtTot1 = 0;
+
+            var mtTot1Glo = 0;
+
+            for (var i = 1; i < rowLength411; i += 1) {
+                var row = table411.rows[i];
+                var cellLength = row.cells.length;
+
+                var lineTotalGlo = false;
+
+                if (row.id.substring(0, 6) == "tot411") {
+                    lineTotalGlo = true;
+
+                    for (var y = 0; y < cellLength; y += 1) {
+                        var cell = row.cells[y];
+                        if (y == 1) {
+                            cell.innerHTML = mtTot1Glo;
+                            mtTot1Glo = 0;
+                        }
+                    }
+                }
+
+                for (var y = 0; y < cellLength; y += 1) {
+                    var cell = row.cells[y];
+
+                    if (cell.id.substring(0, 5) == "r4111") {
+                        if ($('#bscForm411_ind411s_' + idxRowInput + '_r4111').val() != "") {
+                            mtTot1 += parseInt($('#bscForm411_ind411s_' + idxRowInput + '_r4111').val());
+                            mtTot1Glo += parseInt($('#bscForm411_ind411s_' + idxRowInput + '_r4111').val());
+                        }
+                    }
+                }
+
+                if (!lineTotalGlo) {
+                    idxRowInput++;
+                }
+            }// end for line
+
+        }
+
+        {% endif %}
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm411_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_conditions_ind411_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind411').load('{{ path('bilan_conso_conditions_ind411_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_formation_edit') }}';
+                                    }
+                                });
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}

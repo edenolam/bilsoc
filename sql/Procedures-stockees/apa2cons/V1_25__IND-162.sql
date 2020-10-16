@@ -1,0 +1,29 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS apa2cons_ind162
+$$
+
+CREATE PROCEDURE apa2cons_ind162(idBilaSociCons INT, idColl INT, idEnqu INT)
+COMMENT ''
+LANGUAGE SQL
+NOT DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+BEGIN
+
+	declare r16211 decimal(10,2);
+	declare r16212 decimal(10,2);
+	declare r16213 decimal(10,2);
+	declare r16214 decimal(10,2);
+
+	SELECT MT_DEPETOTA, MT_DEPEINSEPERSHAND, MT_REALEMPLPERSHAND, MT_DEPEAMENTRAV INTO r16211, r16212, r16213, r16214
+	FROM information_colectivite_agent
+	WHERE ID_COLL = idColl
+	AND ID_ENQU = idEnqu;
+		
+			
+	UPDATE bilan_social_consolide SET R_16211 = r16211, R_16212 = r16212, R_16213 = r16213, R_16214 = r16214
+	WHERE ID_BILASOCICONS = idBilaSociCons;	
+  
+END
+$$

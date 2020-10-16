@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind222" table="ind_222">
+        <indexes>
+            <index name="FK_222BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_222_CONTTRAV" columns="ID_CONTTRAV"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_CONTTRAV" name="IDXU1_IND_222"/>
+		</unique-constraints>
+        <id name="id222" type="integer" column="ID_222">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind222s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refContrainteTravail" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefContrainteTravail">
+            <join-column name="ID_CONTTRAV" referenced-column-name="ID_CONTTRAV" nullable="false"/>
+        </many-to-one>
+
+        <field name="r2221" type="integer" column="R_2221" nullable="true" />
+        <field name="r2222" type="integer" column="R_2222" nullable="true" />
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>
+

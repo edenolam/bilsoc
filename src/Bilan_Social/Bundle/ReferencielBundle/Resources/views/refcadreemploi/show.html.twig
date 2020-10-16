@@ -1,0 +1,42 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refcadreemploi_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped">
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refCadreEmploi.cdCadrempl }}</td>
+                </tr>
+                <tr>
+                    <th>libellé</th>
+                    <td>{{ refCadreEmploi.lbCadrempl }}</td>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <td>{{ refCadreEmploi.RefCategorie.lbCate }}</td>
+                </tr>
+                <tr>
+                    <th>Filière</th>
+                    <td>{{ refCadreEmploi.RefFiliere.lbFili }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refCadreEmploi.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refCadreEmploi} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refcadreemploi_edit', { 'idCadrempl': refCadreEmploi.idCadrempl}) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}

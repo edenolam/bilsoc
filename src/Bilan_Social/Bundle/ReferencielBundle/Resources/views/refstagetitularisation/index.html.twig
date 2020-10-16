@@ -1,0 +1,46 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste stages de titularisation </h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refstagetitularisation_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refstagetitularisation') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refStageTitularisation in refStageTitularisations %}
+                    <tr>
+                        <td><a href="{{ path('refstagetitularisation_show', { 'idStagtitu': refStageTitularisation.idStagtitu }) }}">{{ refStageTitularisation.cdStagtitu }}</a></td>
+                        <td>{{ refStageTitularisation.lbStagtitu }}</td>
+                        <td>{% if refStageTitularisation.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refStageTitularisation} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refstagetitularisation_show', { 'idStagtitu': refStageTitularisation.idStagtitu }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refstagetitularisation_edit', { 'idStagtitu': refStageTitularisation.idStagtitu }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+

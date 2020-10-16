@@ -1,0 +1,338 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/collectivite.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+{#    <link href="{{ asset('node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css') }}" rel="stylesheet">#}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/inputGestion.js') }}"></script>
+{#    <script src="{{ asset('node_modules/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>#}
+    <script>
+        $('.toggle-bs').bootstrapToggle({
+            on: 'Oui',
+            off: 'Non'
+        });
+        $('.toggle-disable').bootstrapToggle('disable');
+        $('#bilan_social_bundle_collectivitebundle_collectivite_soumettreValidation').prop('disabled',{{ blEnvoi }});
+    </script>
+    
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+
+        <h3>Mes informations</h3>
+        {% if authorized == false %}
+            <p>Vous n'êtes pas autorisé à voir ni modifier cette collectivité</p>
+        {% else %}
+            {% if app.session.flashBag.has('notice') %}
+                <div class="alert alert-success fade in" role="alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {% for msg in app.session.flashBag.get('notice') %}
+                        {{ msg }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if app.session.flashBag.has('error') %}
+                <div class="alert alert-danger fade in" role="alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {% for msg in app.session.flashBag.get('error') %}
+                        {{ msg }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if form is defined %}
+                <div>
+                    {% set currentCampagne = campagne_service.GetCurrentCampagne() %}
+                    {{ form_start(form) }}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="noMargin">Identification</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% if blEnvoi == true %}
+                                <div class="alert alert-success fade in" role="alert">
+                                    <p>Une demande de modification a été envoyée à votre centre de gestion, veuillez attendre la validation ou non de ces informations avant d'en transmettre une nouvelle.</p>
+                                </div>
+                            {% endif %}
+                            <div class='row'>
+                                <div class='col-sm-4'>
+                                    {{ form_row(form.nmSire) }}
+                                </div>
+                                <div class='col-sm-8'>
+                                    {{ form_row(form.refTypeCollectivite) }}
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-12'>
+                                    {{ form_row(form.lbColl) }}
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-4'>
+                                    {{ form_row(form.cdPost) }}
+                                </div>
+                                <div class='col-sm-4'>
+                                    {{ form_row(form.lbVill) }}
+                                </div>
+                                <div class='col-sm-4'>
+                                    {{ form_row(form.departement) }}
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-12'>
+                                    {{ form_row(form.soumettreValidation) }}
+                                </div>
+                            </div>
+{#                            <button type='submit' class='btn button-tableau pull-right' {% if blEnvoi == true %}disabled{% endif %}>Soumettre modifications</button>#}
+                        </div>
+                    </div>
+                    {#{{ form_end(formRequest) }}
+                    {{ form_start(form) }}#}
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            {{ form_row(form.lbAdre) }}
+                        </div>
+                    </div>
+                    <div style='display:flex;'>
+                        <div style='margin-right:10px;'>
+                            {{ form_label(form.nmLogeOphlmOdhlm) }}
+                        </div>
+                        <div style='width:70%;'>
+                            {{ form_widget(form.nmLogeOphlmOdhlm) }}
+                        </div>
+                    </div>
+                    <div class='row'>
+                                <div class='col-sm-5' style="padding-top: 15px;">
+                                    <label>Votre collectivité est-elle sur-classée ?</label>
+                                </div>
+                                <div class='col-sm-7'>
+                                    {{ form_widget(form.blSurclasDemo) }}
+                                </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-md-12 surclassdemo" >
+                            <div style='margin-right:10px;'>
+                                {{ form_label(form.refTypeSurclassDemo) }}
+                            </div>
+                            <div class="margin10">
+                                {{ form_widget(form.refTypeSurclassDemo) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-sm-4'>
+                            {{ form_row(form.nmPopuInse) }}
+                        </div>
+                        <div class='col-sm-4'>
+                            {{ form_row(form.dtPopuInse) }}
+                        </div>
+                        <div class='col-sm-4'>
+                            {{ form_row(form.cdInse) }}
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            {{ form_row(form.lbZoneEmplColl) }}
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-sm-6'>
+                            {{ form_row(form.nmSireRata) }}
+                        </div>
+                        <div class='col-sm-6'>
+                            <p></p>
+                            <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="{{ infoSireRatt }}"></i>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="noMargin">Contacts de ma collectivité</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% form_theme form.contacts '@Collectivite/fields_child.html.twig' %}
+                            <label>Contacts</label>
+                            <table class="table" id="mytable8">
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Téléphone fixe</th>
+                                        <th>Fonction</th>
+                                        <th>Adresse email</th>
+                                        <th>Contact par défaut</th>
+                                        <th>Contact Gpeec</th>
+                                        <th id="button"><button id="add-contact-coll" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="form8" data-prototype="{{ form_widget(form.contacts.vars.prototype)|e ('html_attr') }}">
+                                    {% for cont in form.contacts %}
+                                        <tr>
+                                            {{ form_widget(cont) }}<td><button type="button" class="remove btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="noMargin">Mon centre de gestion</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_row(formCdg.lbCdg) }}
+                            {% form_theme formCdg.contacts '@Apa/fields_child.html.twig' %}
+                            <label>Contacts</label>
+                            <table class="table" id="mytable9">
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Téléphone fixe</th>
+                                        <th>Téléphone mobile</th>
+                                        <th>Fonction</th>
+                                        <th>Adresse email</th>
+                                        <th>Contact par défaut</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="form8-cdg" data-prototype="{{ form_widget(formCdg.contacts.vars.prototype)|e ('html_attr') }}">
+                                    {% for contact in formCdg.contacts %}
+                                        <tr>
+                                            {{ form(contact) }}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <hr>
+                            <div class='row'>
+                                <div class='col-sm-5' style="padding-top: 15px;">
+                                    {% if currentCampagne is not null and currentCampagne is not empty %}
+                                        <label>Affiliation de votre collectivité au CDG en {{ currentCampagne.nmAnne }}</label>
+                                    {% else %}
+                                        <label>Affiliation de votre collectivité au CDG</label>
+                                    {% endif %}
+                                </div>
+                                <div class='col-sm-7'>
+                                    {{ form_widget(form.blAffiColl) }}
+                                </div>
+                            </div>
+                            <div class='row' >
+                                <div class='col-sm-5' style="padding-top: 15px;">
+                                    {% if currentCampagne is not null and currentCampagne is not empty %}
+                                        <label>Rattachement au comité technique (CT) du CDG en {{ currentCampagne.nmAnne }} </label>
+                                    {% else %}
+                                        <label>Rattachement au comité technique (CT) du CDG </label>
+                                    {% endif %}
+                                </div>
+                                <div class='col-sm-7'>
+                                    {{ form_widget(form.blCtCdg) }}
+                                </div>
+                            </div>
+                            <div class='row' id='div-chsct'>
+                                <div class='col-sm-5' style="padding-top: 15px;">
+                                    <label>La collectivité a-t-elle son propre CHSCT ?</label>
+                                </div>
+                                <div class='col-sm-7'>
+                                    {{ form_widget(form.blChsct) }}
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-5' style="padding-top: 15px;">
+                                    {% if currentCampagne is not null and currentCampagne is not empty %}
+                                        <label>Votre collectivité fait-elle partie de l’échantillon DGCL {{ currentCampagne.nmAnne }} ? </label>
+                                    {% else %}
+                                        <label>Votre collectivité fait-elle partie de l’échantillon DGCL ? </label>
+                                    {% endif %}
+                                </div>
+                                <div class='col-sm-7' style='display:flex;'>
+                                    <div>
+                                    {{ form_widget(form.blCollDgcl) }}
+                                    </div>
+                                    <div>
+                                        <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="{{ infoDgcl }}"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-5' style="padding-top: 15px;">
+                                    <label>Autoriser le CDG à accéder au bilan social ?</label>
+                                </div>
+                                <div class='col-sm-7'>
+                                    {{ form_widget(form.cdg_is_authorized_by_collectivity) }}
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-5' style="padding-top: 15px;">
+                                    <label>Autoriser le CDG à accéder aux données module GPEEC ?</label>
+                                </div>
+                                <div class='col-sm-7'>
+                                    {{ form_widget(form.cdgGpeec) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            {{ form_row(form.modifier) }}
+                        </div>
+                    </div>
+                    {#<button type='submit' class='btn button-tableau'>Modifier</button>#}
+                    {{ form_end(form) }}
+                </div>
+                {% if relance is not null %}
+                    <hr>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="noMargin">Relance</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{ relance.dtDernrela|date("d/m/Y") }} : {{ relance.lbMessrela }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div id="myModal" class="modal fade text-center" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                    <p>Vous essayez de rentrer deux contacts par défaut.</p>
+                    <p> Veuillez à nouveau selectionner le seul contact par défaut.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="myModal2" class="modal fade text-center" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                    <p>Aucun contact par défaut n'est renseigné</p>
+                    <p> Veuillez à nouveau selectionner le seul contact par défaut.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

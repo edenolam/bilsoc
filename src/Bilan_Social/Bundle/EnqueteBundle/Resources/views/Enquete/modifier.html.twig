@@ -1,0 +1,375 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/ajoutEnquete.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/EnqueteBundle/Enquete.js') }}"></script>
+    <script type="text/javascript" >
+        window.onmousedown = function (e) {
+            var el = e.target;
+            if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                e.preventDefault();
+
+                // toggle selection
+                if (el.hasAttribute('selected'))
+                    el.removeAttribute('selected');
+                else
+                    el.setAttribute('selected', '');
+
+                // hack to correct buggy behavior
+                var select = el.parentNode.cloneNode(true);
+                el.parentNode.parentNode.replaceChild(select, el.parentNode);
+            }
+        };
+        $('.retour').click(function (e) {
+            e.preventDefault();
+            window.location.href = '{{ path('enquete_homepage') }}';
+        });
+        $('form').submit(function () {
+            $('.retour').prop('disabled', false);
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+
+
+    {{parent()}}
+
+
+    <div class="col-lg-9">
+        <div id="messageSuccess" class="alert alert-success hidden"></div>
+        <div class="alert alert-info fade in" role="alert">
+            <p>Attention ! Lorsque vous revenez à une étape précédente, les informations renseignées ne sont pas sauvegardées, il vous faudra les remplir de nouveau.</p>
+        </div>
+
+        <div class="panel panel-default contentConsolide">
+
+
+            <div class="panel-heading">
+                <h3 class="noMargin">Paramétrage de l'enquête {{ lbEnquete }}</h3>
+            </div>
+
+            <div class="panel-body">
+
+                <div>
+                    {% include '@Enquete/Enquete/list.html.twig' %}
+                </div>
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {% if flow.getCurrentStepNumber() == 1 %}
+                    <div>
+                        {{ form_row(form.lbEnqu) }}
+                        {{ form_row(form.cmDesc) }}
+                        {{ form_row(form.dtDebu) }}
+                        {{ form_row(form.departements) }}
+                        {{ form_row(form.reinitMdp) }}
+                       
+                    </div>
+                        {% include '@Enquete/Enquete/buttons.html.twig' with {
+                                    craue_formflow_button_class_last: 'btn btn-primary pull-right',
+                                    craue_formflow_button_class_back: 'btn',
+                                } %}
+                {% endif %}
+
+                {% if flow.getCurrentStepNumber() == 2 %}
+                    <div>
+                        {{ form_row(form.blModi) }}
+                        <div id="ecran-modi-masse">
+                            <div class="form-group">
+                                <label class="btn btn-default btn-file control-label required" for="form_importCollectivite">Choisissez un fichier</label>
+                                <input type="file" id="form_importCollectivite" name="form[importCollectivite]" style="display:none;">
+                                <p id="file-select"><span class='bold'>Fichier sélectionné : </span><span id='name-file'></span></p>
+                            <button type="button" class='btn button-tableau' id="import-masse-coll">Importer</button>
+                            <p> Le type du fichier attendu est au format ".csv"</p>
+                            <div id='table-modif-mass-wrapper'>
+                                 <table class='table table-hover' id='table-modif-mass'>
+                <thead>
+                    <tr>
+                        <th>
+                            <p>Modifier</p>
+                            <div>
+                                <button type="button" class="check-all all vertical btn btn-sm" id="modif">Tous</button>
+                            </div>
+                        </th>
+                        <th>SIRET</th>
+                        <th>Strate de sur-classement</th>
+                        <th class='col-hidden col-checkAll col-blBilaSoci col-blRass col-blHand col-blGpee col-bl-GpeecPlus col-blApa col-blCons col-blN4ds col-blBaseCarr col-blBilaSociVide' id="check">Tout cocher</th>
+                        <th>
+                            <p>Sur-classement démographique</p>
+                            <div>
+                                <button type="button" class="check-all all vertical btn btn-sm" id="blSurclasDemo">Tous</button>
+                            </div>
+                        </th>
+                        <th>
+                            <p>La collectivité est-elle affiliée au CDG ?</p>
+                            <div>
+                                <button type="button" class="check-all all vertical btn btn-sm" id="blAffiColl">Tous</button>
+                            </div>
+                        </th>
+                        <th>
+                            <p>La collectivité est-elle rattachée au comité technique du CDG ?</p>
+                            <div>
+                                <button type="button" class="check-all all vertical btn btn-sm" id="blCtCdg">Tous</button>
+                            </div>
+                        </th>
+                        <th class='chsct'>
+                            <p>La collectivité a-t-elle son propre CHSCT ?</p>
+                            <div>
+                                <button type="button" class="check-all all vertical btn btn-sm" id="blChsct">Tous</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                </tbody>
+            </table>
+                            <button class='btn button-tableau' type="button" id='modif-masse'>Modifier</button>
+                            </div>
+                            <div class="alert alert-danger fade in" role="alert" id='alert-err'>
+                               <p>Ces numéros de SIRET ne correspondent pas à des collectivités appartenant à ce CDG, ou n'ont pas encore été validées par l'administrateur :</p>
+                                <br>
+                                <ul id='list-err'>
+                                </ul>
+                                <br>
+                                <p>Veuillez nettoyer votre fichier et recommencer l'import.</p>
+                            </div>
+                        </div>
+                             <div class="alert alert-danger fade in" role="alert" id='err-format'>
+                            </div>
+                        {#<p class='align-center'><a class="lien-menu" href="{{ path('collectivite_modification_masse_import') }}"><span>Modification en masse des collectivités</span> </a></p>#}
+                    </div>
+                        {% include '@Enquete/Enquete/buttons.html.twig' with {
+                                    craue_formflow_button_class_last: 'btn btn-primary pull-right',
+                                    craue_formflow_button_class_back: 'btn',
+                                } %}
+                {% endif %}
+
+                {% if flow.getCurrentStepNumber() == 3 %}
+                    <h4 class="lazy_loading" style='text-align:center'><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Chargement des données en cours</h4>
+                {% endif %}
+
+                {% if flow.getCurrentStepNumber() == 3 %}
+                    <div class="loadingTable">
+
+                  <div class="panel panel-default">
+                        <div class='panel-heading'>
+                            <a class="displayToggle" data-toggle="collapse" href="#colonnes">
+                                <h3 style="display: inline-block;" class="panel-title">Afficher colonnes</h3>
+                                <span class="buttonplus" title="Agrandir"></span>
+                            </a>
+                        </div>
+                        <div id="colonnes" class="panel-collapse collapse">
+                            <div class='panel-body'>
+                                <div class='row' id='ajout-colonnes'>
+                                    <div class='col-md-5'>
+                                        {{ form_row(form.colonnes) }}
+                                    </div>
+                                    <div class='col-md-1' style="    margin-top: 17px; position: relative; left: 12px;"><br>
+                                        <p class='btn btn-default' id='ajouter-colonne'>+</p>
+                                    </div>
+                                    <div class='col-md-1' style="    margin-top: 17px; position: relative; left: 12px;"><br>
+                                        <p class='btn btn-default' id='enlever-colonne' style="padding: 6px 14px">-</p>
+                                    </div>
+                                    <div class='col-md-5 form-group'>
+                                        <select id='liste-colonnes' size='5' class='form-control'></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class='panel-heading'>
+                            <a class="displayToggle" data-toggle="collapse" href="#search">
+                                <h3 style="display: inline-block;" class="panel-title">Affiner recherche</h3>
+                                <span class="buttonplus" title="Agrandir"></span>
+                            </a>
+                        </div>
+                        <div id="search" class="panel-collapse collapse">
+                            <div class='panel-body'>
+                                <div id='param-filtre'>
+                                    <div class='row' id='param-filtre'>
+                                        <div class="col-md-4">
+                                            {{ form_row(form.filtres) }}
+                                        </div>
+                                        <div class="col-md-4">
+                                             <select id="conditions" name="condition" size="5" class="form-control">
+                                                    <option value="0">Choisir une condition</option>
+                                                </select>
+                                           {# {{ form_row(form.conditions) }}#}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select id="parametres" name="parametres" size="5" class="form-control">
+                                                    <option value="0">Choisir un filtre</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-12'>
+                                            <p class='btn btn-default pull-right' id='add-filtre'>Ajouter</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class='row'>
+                                    <div class='col-md-12' id='liste-filtres'>
+                                        <label>Liste des filtres</label>
+                                        <table></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div id='table-coll-inner'>
+                            <table class="table table-hover align-center" id='essai'>
+                                <thead>
+                                    <tr>
+                                        <th {# rowspan='2' #} class='col-hidden col-blTypeColl'><input type="hidden" value="0" name="champ-refTypeCollectivite">Type de la collectivité</th>
+                                        <th {# rowspan='2'  #}class='col-hidden col-blDepa'><input type="hidden" value="0" name="champ-departement">Département</th>
+                                        <th {# rowspan='2'  #}class='col-hidden col-blLbAdresse'><input type="hidden" value="0" name="champ-blLbAdresse">Adresse</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blLibe'><input type="hidden" value="0" name="champ-lbColl">Libellé de la collectivité</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blCdPost'><input type="hidden" value="0" name="champ-cdPost">Code postal</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blLbVill'><input type="hidden" value="0" name="champ-lbVill">Ville</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blCdInse'><input type="hidden" value="0" name="champ-cdInse">Code INSEE</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blSire'><input type="hidden" value="0" name="champ-nmSire">SIRET</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blNmPopuInse'><input type="hidden" value="0" name="champ-nmPopuInse">Population totale INSEE</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blSurclasDemo'><input type="hidden" value="0" name="champ-blSurclasDemo">Sur-classement démographique</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blNmStratColl'><input type="hidden" value="0" name="champ-nmStratColl">Strate de sur-classement</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blAffiCdg'><input type="hidden" value="0" name="champ-blAffiColl">Affilié</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blCtCdg'><input type="hidden" value="0" name="champ-blCtCdg">Rattachement au comité technique</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blChsct'><input type="hidden" value="0" name="champ-blChsct">CHSCT propre à la collectivité</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blCollDgcl'><input type="hidden" value="0" name="champ-blCollDgcl">Echantillon DGCL</th>
+                                        <th  {# rowspan='2' #}  class='col-hidden col-blCourtier'><input type="hidden" value="0" name="champ-blCourtier">Courtier</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-cdg_is_authorized_by_collectivity'><input type="hidden" value="0" name="champ-cdg_is_authorized_by_collectivity">CDG autorisé à prendre la place</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blNbAgenPerm'><input type="hidden" value="0" name="champ-blNbAgenPerm">Nombre total d'agents sur emploi permanent</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blNbAgenTitu'><input type="hidden" value="0" name="champ-blNbAgenTitu">Nombre total d'agents titulaires</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blNbAgenContPerm'><input type="hidden" value="0" name="champ-blNbAgenContPerm">Nombre total d'agents contractuels sur emploi permanent</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-blNbAgenContNonPerm'><input type="hidden" value="0" name="champ-blNbAgenContNonPerm">Nombre total d'agents contractuels sur emploi non permanent</th>
+                                        <th {# rowspan='2' #} class='col-hidden col-toutCocher'><input type='hidden' value='0' name='champ-toutCocher'>Tout cocher</th>
+                                        <th class='col-hidden col-blBilaSoci allBilaSoci'>
+                                            <input type="hidden" value="0" name="champ-blBilaSoci">
+                                            <p class='dt-text-header-wrapper'>Bilan Social</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blBilaSoci" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blRass allRast'>
+                                            <input type="hidden" value="0" name="champ-blRass">
+                                            <p class='dt-text-header-wrapper'>RASSCT</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blRass" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blHand allHand'>
+                                            <input type="hidden" value="0" name="champ-blHand">
+                                            <p class='dt-text-header-wrapper'>Handitorial</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blHand" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blGpee allGpee'>
+                                            <input type="hidden" value="0" name="champ-blGpee">
+                                            <p class='dt-text-header-wrapper'>GPEEC</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blGpee" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blGpeecPlus allGpeecPlus'>
+                                            <input type="hidden" value="0" name="champ-blGpeecPlus">
+                                            <p class='dt-text-header-wrapper'>GPEEC +</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blGpeecPlus" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blApa allApa'>
+                                            <input type="hidden" value="0" name="champ-blApa">
+                                            <p class='dt-text-header-wrapper'>Agent par agent</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blApa" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blCons allCons'>
+                                            <input type="hidden" value="0" name="champ-blCons">
+                                            <p class='dt-text-header-wrapper'>Consolidé</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blCons" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blN4ds allN4ds'>
+                                            <input type="hidden" value="0" name="champ-blN4ds">
+                                            <p class='dt-text-header-wrapper'>N4DS</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blN4ds" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blBaseCarr allBaseCarr'>
+                                            <input type="hidden" value="0" name="champ-blBaseCarr">
+                                            <p class='dt-text-header-wrapper'>Base carrière</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blBaseCarr" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blBilaSociVide allBilansocivide'>
+                                            <input type="hidden" value="0" name="champ-blBilaSociVide">
+                                            <p class='dt-text-header-wrapper'>Bilan Social Vide</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blBilaSociVide" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                        <th class='col-hidden col-blDgcl allDgcl'>
+                                            <input type="hidden" value="0" name="champ-blDgcl">
+                                            <p class='dt-text-header-wrapper'>DGCL</p>
+                                            <div class='dt-btn-header-wrapper'>
+                                                <button class="check-all all vertical btn btn-sm" id="blDgcl" type='button'>Tous</button>
+                                            </div>
+                                        </th>
+                                    </tr>
+
+                                    {# <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr> #}
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                        {% include '@Enquete/Enquete/buttons.html.twig' with {
+                                    craue_formflow_button_class_back: 'btn',
+                                } %}
+
+                        <h4 class="lazy_loading_save hidden" style='text-align:center'>
+                            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>Modification en cours
+                        </h4>
+
+                    </div>
+
+                {% endif %}
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

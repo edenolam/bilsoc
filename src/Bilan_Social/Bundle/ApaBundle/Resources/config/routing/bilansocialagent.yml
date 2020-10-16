@@ -1,0 +1,207 @@
+bilansocialagent_index:
+    path:     /
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:index" }
+    methods:  [GET, POST]
+    options:
+        expose: true
+
+bilansocialagent_show:
+    path:     /{idBilasociagen}/show
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:show" }
+    methods:  GET
+
+bilansocialagent_new:
+    path:     /new
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:new" }
+    methods:  [GET, POST]
+
+bilansocialagent_edit:
+    path:     /{idBilasociagen}/edit
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:edit" }
+    methods:  [GET, POST]
+    options:
+        expose: true
+
+bilansocialagent_nextprev_edit:
+    path:     /nextprevedit
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:editNextPrev" }
+    methods:  [GET, POST]
+    options:
+        expose: true
+
+bilansocialagent_delete:
+    path:     /{idBilasociagen}/delete
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:delete" }
+    methods:  GET
+    options:
+        expose: true
+
+bilansocialagent_delete_several:
+    path:     /delete_several
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:deleteSeveral" }
+    methods:  [GET, POST]
+    options:
+        expose: true
+
+bilansocialagent_delete_entity:
+    path: /{idbilansocialagen}/delete_entity
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:delete_form" }
+
+bilansocialagent_questionnaire_onglet:
+    path: /{idBilasociagen}/onglet
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:questionnaires" }
+    methods: [GET, POST]
+
+
+bilansocialagent_list_agent:
+    path: /Liste_agents
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:list" }
+    methods: [GET, POST]
+
+ajax_list_fonctionnaire:
+    path:   /fonctionnaire
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:AjaxFonctionnaire" }
+    methods: POST
+    options:
+        expose: true
+
+ajax_list_emploipermanent:
+    path:   /emploipermanent
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:AjaxEmploiPermanent" }
+    options:
+        expose: true
+
+ajax_list_emploinonpermanent:
+    path:   /emploinonpermanent
+    defaults: { _controller: "ApaBundle:BilanSocialAgent:AjaxEmploiNonPermanent" }
+    options:
+        expose: true
+
+
+ajax_cadre_emploi:
+  path:   /cadre_emploi
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxCadreemploi" }
+  options:
+    expose: true
+
+ajax_cadre_emploi_grade:
+  path:   /cadre_emploi_grade
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxGrade" }
+  options:
+    expose: true
+
+ajax_stage_titularisation:
+  path:   /changetitu
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxStageTitu" }
+  options:
+    expose: true
+
+ajax_motif_depart:
+  path:   /motif_depart
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxMotifDepart" }
+  options:
+    expose: true
+
+ajax_motif_arrivee:
+  path:   /motif_arrivee
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxMotifArrivee" }
+  options:
+    expose: true
+
+ajax_q11_1_q12_1:
+  path:   /q11_1_q12_1
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajax_q11_1_q12_1" }
+  options:
+    expose: true
+
+ajax_inaptitude_filiere:
+  path:   /inaptitude_filiere
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxInaptitudeFiliere" }
+  options:
+    expose: true
+
+ajax_motif_deces:
+  path:   /motif_deces
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxMotifDepartDeces" }
+  options:
+    expose: true
+ajax_position_statutaire:
+  path:   /motif_position
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxMotifposition" }
+  options:
+    expose: true
+
+ajax_get_metier:
+  path:   /ajax_get_metier
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxGetMetier" }
+  options:
+    expose: true
+
+ajax_get_famille_metier:
+  path:   /ajax_get_famille_metier
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxGetFamilleMetier" }
+  options:
+    expose: true
+
+ajax_get_specialite:
+  path:   /ajax_get_specialite
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxGetSpecialite" }
+  options:
+    expose: true
+
+ajax_get_domaine_specialite:
+  path:   /ajax_get_domaine_specialite
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxGetDomaineSpecialite" }
+  options:
+    expose: true
+
+ajax_get_cadreemploi_by_filiere_etpr:
+  path:   /ajax_get_cadreemploi_etpr
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxCadreemploiEtpr" }
+  options:
+    expose: true
+
+ajax_get_cadreemploi_by_filiere_heure_supp:
+  path:   /ajax_get_cadreemploi_Heure_Supp
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxCadreemploiheureSupp" }
+  options:
+    expose: true
+
+ajax_q41_status_motif_depart:
+  path:   /ajax_q41_status_motif_depart
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxQ41StatusMotifDepart" }
+  options:
+    expose: true
+
+ajax_mouvement_interne_annee_status:
+  path:   /ajax_mouvement_interne_annee_status
+  defaults: { _controller: "ApaBundle:BilanSocialAgent:ajaxMouvementInterneAnneeStatus" }
+  options:
+    expose: true
+
+apa_export:
+  path:   /apa_export.{_format}
+  defaults: 
+    _controller: "ApaBundle:BilanSocialAgent:apaExport"
+  options:
+    expose: true        
+  requirements:
+    _format: csv|xls|xlsx
+
+apa_import_courtier:
+  path:   /apa_import.{_format}
+  defaults:
+    _controller: "ApaBundle:BilanSocialAgent:apaImportCourtier"
+    _format: xls
+  options:
+    expose: true
+  requirements:
+    _format: csv|xls|xlsx
+
+apa_courtier_modal:
+  path:   /apa_import_courtier_modal
+  defaults:
+    _controller: "ApaBundle:BilanSocialAgent:apaImportCourtierModal"
+    _format: xls
+  options:
+    expose: true

@@ -1,0 +1,870 @@
+
+    {% if formEffectif112 is defined %}
+        {% set bilan_social_consolide = formEffectif112.vars.data %}
+        {{ form_start(formEffectif112) }}
+
+        <h5>
+            Champ : le tableau qui suit concerne les agents titulaires et stagiaires occupant un emploi permanent<br/>
+            Remarque importante : les agents occupant un emploi fonctionnel doivent être uniquement comptabilisé dans leurs cadres d'emplois et grades respectifs.
+        </h5>
+
+        <table width="100%" id="ind112Table" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr entete="1">
+                    <th width="20%" rowspan="4"></th>
+                    <th colspan=11" style="text-align: center">FONCTIONNAIRES sur emplois permanents occupant un poste
+                        à  TEMPS COMPLET et exerçant leurs fonctions à  :</th>
+                    <th rowspan="3" colspan=3" style="text-align: center">Total</th>
+                </tr>
+                <tr entete="1">
+                    <th colspan="3" style="text-align: center">Temps plein</th>
+                    <th colspan="7" style="text-align: center">Tout type de TEMPS PARTIEL (sauf thérapeutique)</th>
+                    <th rowspan="3" style="text-align: center">Total temps plein + temps partiel</th>
+                </tr>
+                <tr entete="1">
+                    <th colspan="2" style="text-align: center">100%</th>
+                    <th rowspan="2" style="text-align: center">Total temps plein</th>
+                    <th colspan="2" style="text-align: center">Moins de 80%	</th>
+                    <th colspan="2" style="text-align: center">de 80% à  moins de 90%</th>
+                    <th colspan="2" style="text-align: center">90% et plus</th>
+                    <th rowspan="2" style="text-align: center">Total temps partiel</th>
+
+                </tr>
+                <tr entete="1">
+                    <th style="text-align: center">Hommes<br/>1.1.2 (1)</th>
+                    <th style="text-align: center">Femmes<br/>1.1.2 (2)</th>
+                    <th style="text-align: center">Hommes<br/>1.1.2 (3)</th>
+                    <th style="text-align: center">Femmes<br/>1.1.2 (4)</th>
+                    <th style="text-align: center">Hommes<br/>1.1.2 (5)</th>
+                    <th style="text-align: center">Femmes<br/>1.1.2 (6)</th>
+                    <th style="text-align: center">Hommes<br/>1.1.2 (7)</th>
+                    <th style="text-align: center">Femmes<br/>1.1.2 (8)</th>
+                    <th style="text-align: center">Hommes</th>
+                    <th style="text-align: center">Femmes</th>
+                    <th class="filiTable" style="text-align: center">Total Hommes + Femmes</th>
+                </tr>
+            </thead>
+            <tbody id="112tbody" class='ind_table_totaux'>
+                {% for tagF in filieres %}
+                    {% if tagF.cdFili != "AD" or (tagF.cdFili == "AD" and totalFiliereAdmin != 0) %}
+                        <tr id="entetFil" hide="1" idFili="{{ tagF.idFili }}" style="text-align: center" >
+                            <td colspan="15">
+                                &nbsp;&nbsp;&nbsp;&nbsp;{{ tagF.lbFili }}
+                                {% for key,tot in arrayTotalFiliere %}
+                                    {% if(key == tagF.idFili) %}
+                                        <span class="alerteConso">[{% if(tot) == null %} 0 {% else %} {{ tot }} {% endif %}]</span>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if idFili == tagF.idFili%}
+                                    <input class="buttonmoins" type="button" id="toggle112_{{ tagF.idFili}}"
+                                           onclick="toggleFiliere112(this, {{ tagF.idFili}})">
+                                {% endif%}
+
+                                {% if idFili != tagF.idFili%}
+                                    <input class="buttonplus" type="button" id="toggle112_{{ tagF.idFili}}"
+                                           onclick="toggleFiliere112(this, {{ tagF.idFili}})">
+                                {% endif%}
+                            </td>
+                        </tr>
+
+                        {% if idFili == tagF.idFili%}
+                            {% for tag in formEffectif112.ind112sTemp %}
+                                {% set row_data = tag.vars.value %}
+                                {% set total_fili_h = row_data.r1121 + row_data.r1123 + row_data.r1125 + row_data.r1127 %}
+                                {% set total_fili_f = row_data.r1122 + row_data.r1124 + row_data.r1126 + row_data.r1128 %}
+                                {% set total_t_plein = row_data.r1121 + row_data.r1122 %}
+                                {% set total_t_part = row_data.r1123 + row_data.r1124 + row_data.r1125 + row_data.r1126 + row_data.r1127 + row_data.r1128 %}
+                                <tr  cdFili="{{ tag.cdFili.vars.value }}"
+                                     id="112trCE_{{tag.refCadreEmploi.vars.value}}"
+                                     idTrFili="{{ tag.idFili.vars.value }}"
+                                     idTrCate="{{ tag.idCate.vars.value }}"
+                                     >
+                                    <td>
+                                        {{ form_widget(tag.refCadreEmploi) }}
+                                        {{ form_widget(tag.idFili) }}
+                                        {{ form_widget(tag.cdFili) }}
+                                        {{ form_widget(tag.lbFili) }}
+                                        {{ form_widget(tag.newFiliere) }}
+                                        {{ form_widget(tag.lastFiliere) }}
+                                        {{ form_widget(tag.idCate) }}
+                                        {{ form_widget(tag.totalCeInd111) }}
+                                        {{ tag.refCadreEmploi.vars.data.lbCadrempl }}
+                                        <br/>
+                                        <span class="alerteConso">[1.1.1] = {{ tag.vars.value.totalCeInd111 }}</span>
+                                    </td>
+                                    <td id="r1121" style="text-align: center" data-col-group='row_total_h,row_total_t_plein'>{{ form_widget(tag.r1121) }}</td>
+                                    <td id="r1122" style="text-align: center" data-col-group='row_total_f,row_total_t_plein'>{{ form_widget(tag.r1122) }}</td>
+                                    <td style="text-align: center" data-col-id='row_total_t_plein' data-col-group='row_total_t_plein_part'>{{ total_t_plein }}</td>
+                                    <td id="r1123" style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ form_widget(tag.r1123) }}</td>
+                                    <td id="r1124" style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ form_widget(tag.r1124) }}</td>
+                                    <td id="r1125" style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ form_widget(tag.r1125) }}</td>
+                                    <td id="r1126" style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ form_widget(tag.r1126) }}</td>
+                                    <td id="r1127" style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ form_widget(tag.r1127) }}</td>
+                                    <td id="r1128" style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ form_widget(tag.r1128) }}</td>
+                                    <td style="text-align: center" data-col-id='row_total_t_part' data-col-group='row_total_t_plein_part'>{{ total_t_part }}</td>
+                                    <td style="text-align: center" data-col-id='row_total_t_plein_part'>{{ total_t_plein + total_t_part }}</td>
+                                    <td id="lineTot1" style="text-align: center" data-col-id='row_total_h' data-col-group='row_total_all'>{{ total_fili_h }}</td>
+                                    <td id="lineTot2" style="text-align: center" data-col-id='row_total_f' data-col-group='row_total_all'>{{ total_fili_f }}</td>
+                                    <td class="filiTable" id="lineTot3" style="text-align: center" data-col-id='row_total_all'>{{ total_fili_h + total_fili_f }}</td>
+                                </tr>
+
+                                {% if tag.lastFiliere.vars.value == true %}
+
+                                {% endif %}
+
+                            {% endfor %}
+                            {% set total_fili = bilan_social_consolide.getIndPileForBy('ind112sTemp',['refCadreEmploi','refFiliere','idFili'],idFili) %}
+                            {% set total_fili_h = total_fili.r1121 + total_fili.r1123 + total_fili.r1125 + total_fili.r1127 %}
+                            {% set total_fili_f = total_fili.r1122 + total_fili.r1124 + total_fili.r1126 + total_fili.r1128 %}
+                            {% set total_fili_t_plein = total_fili.r1121 + total_fili.r1122 %}
+                            {% set total_fili_t_part = total_fili.r1123 + total_fili.r1124 + total_fili.r1125 + total_fili.r1126 + total_fili.r1127 + total_fili.r1128 %}
+                            <tr class="filiTable row_totaux" id="totalFil" cdFili="{{ tagF.cdFili }}">
+                                <td><b>Total {{ tagF.lbFili }} </b></td>
+                                <td style="text-align: center" data-col-group='row_total_h,row_total_t_plein'>{{ total_fili.r1121 }}</td>
+                                <td style="text-align: center" data-col-group='row_total_f,row_total_t_plein'>{{ total_fili.r1122 }}</td>
+                                <td style="text-align: center" data-col-id='row_total_t_plein' data-col-group='row_total_t_plein_part'>{{ total_fili_t_plein }}</td>
+                                <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_fili.r1123 }}</td>
+                                <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_fili.r1124 }}</td>
+                                <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_fili.r1125 }}</td>
+                                <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_fili.r1126 }}</td>
+                                <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_fili.r1127 }}</td>
+                                <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_fili.r1128 }}</td>
+                                <td style="text-align: center" data-col-id='row_total_t_part' data-col-group='row_total_t_plein_part'>{{ total_fili_t_part }}</td>
+                                <td style="text-align: center" data-col-id='row_total_t_plein_part'>{{ total_fili_t_plein + total_fili_t_part }}</td>
+                                <td style="text-align: center" data-col-id='row_total_h' data-col-group='row_total_all'>{{ total_fili_h }}</td>
+                                <td style="text-align: center" data-col-id='row_total_f' data-col-group='row_total_all'>{{ total_fili_f }}</td>
+                                <td style="text-align: center" data-col-id='row_total_all'>{{ total_fili_h + total_fili_f }}</td>
+                            </tr>
+
+                        {% endif %}
+
+                    {% endif %}
+
+                {% endfor %}
+                {% set total_all_fili = bilan_social_consolide.getIndPileForBy('ind112s',['refCadreEmploi','refFiliere','cdFili'],['AOTM','H','HH'],{'exclude':true}) %}
+                {% set total_all_fili_h = total_all_fili.r1121 + total_all_fili.r1123 + total_all_fili.r1125 + total_all_fili.r1127 %}
+                {% set total_all_fili_f = total_all_fili.r1122 + total_all_fili.r1124 + total_all_fili.r1126 + total_all_fili.r1128 %}
+                {% set total_all_t_plein = total_all_fili.r1121 + total_all_fili.r1122 %}
+                {% set total_all_t_part = total_all_fili.r1123 + total_all_fili.r1124 + total_all_fili.r1125 + total_all_fili.r1126 + total_all_fili.r1127 + total_all_fili.r1128 %}
+                {#<tr id="totalHorsFil" class="filiTable" style="display: none">
+                    <td></td>
+                    <td style="text-align: center">{{totalInd112.r1121}}</td>
+                    <td style="text-align: center">{{totalInd112.r1122}}</td>
+                    <td style="text-align: center">{{totalInd112.r1123}}</td>
+                    <td style="text-align: center">{{totalInd112.r1124}}</td>
+                    <td style="text-align: center">{{totalInd112.r1125}}</td>
+                    <td style="text-align: center">{{totalInd112.r1126}}</td>
+                    <td style="text-align: center">{{totalInd112.r1127}}</td>
+                    <td style="text-align: center">{{totalInd112.r1128}}</td>
+                    <td style="text-align: center">{{ total_all_fili_h }}</td>
+                    <td style="text-align: center">{{ total_all_fili_f }}</td>
+                    <td style="text-align: center">{{ total_all_fili_h + total_all_fili_f }}</td>
+                </tr>#}
+                <tr id="totalFilGlo" class="filiTable row_totaux">
+                    <td><b>TOUTES FILIERES</b></td>
+                    <td style="text-align: center" data-col-group='row_total_h,row_total_t_plein'>{{ total_all_fili.r1121 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_f,row_total_t_plein'>{{ total_all_fili.r1122 }}</td>
+                    <td style="text-align: center" data-col-id='row_total_t_plein' data-col-group='row_total_t_plein_part'>{{ total_all_t_plein }}</td>
+                    <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_all_fili.r1123 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_all_fili.r1124 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_all_fili.r1125 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_all_fili.r1126 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_all_fili.r1127 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_all_fili.r1128 }}</td>
+                    <td style="text-align: center" data-col-id='row_total_t_part' data-col-group='row_total_t_plein_part'>{{ total_all_t_part }}</td>
+                    <td style="text-align: center" data-col-id='row_total_t_plein_part'>{{ total_all_t_plein + total_all_t_part }}</td>
+                    <td style="text-align: center" data-col-id='row_total_h' data-col-group='row_total_all'>{{ total_all_fili_h }}</td>
+                    <td style="text-align: center" data-col-id='row_total_f' data-col-group='row_total_all'>{{ total_all_fili_f }}</td>
+                    <td style="text-align: center" data-col-id='row_total_all'>{{ total_all_fili_h + total_all_fili_f }}</td>
+
+                </tr>
+
+                {% for tag in formEffectif112.ind112AotmsTemp %}
+                    {% set total_aotm_fili_h = tag.vars.value.r1121 + tag.vars.value.r1123 + tag.vars.value.r1125 + tag.vars.value.r1127 %}
+                    {% set total_aotm_fili_f = tag.vars.value.r1122 + tag.vars.value.r1124 + tag.vars.value.r1126 + tag.vars.value.r1128 %}
+                    {% set total_aotm_fili_t_plein = tag.vars.value.r1121 + tag.vars.value.r1122 %}
+                    {% set total_aotm_fili_t_part = tag.vars.value.r1123 + tag.vars.value.r1124 + tag.vars.value.r1125 + tag.vars.value.r1126 + tag.vars.value.r1127 + tag.vars.value.r1128 %}
+                    <tr  cdFili="{{ tag.cdFili.vars.value }}"
+                         id="112trCE_{{tag.refCadreEmploi.vars.value}}"
+                         idTrFiliAotm="{{ tag.idFili.vars.value }}"
+                         idTrCate="{{ tag.idCate.vars.value }}"
+                         >
+                        <td>
+                            {{ form_widget(tag.refCadreEmploi) }}
+                            {{ form_widget(tag.idFili) }}
+                            {{ form_widget(tag.cdFili) }}
+                            {{ form_widget(tag.lbFili) }}
+                            {{ form_widget(tag.newFiliere) }}
+                            {{ form_widget(tag.lastFiliere) }}
+                            {{ form_widget(tag.idCate) }}
+                            {{ form_widget(tag.totalCeInd111) }}
+                            {{ tag.refCadreEmploi.vars.data.lbCadrempl }}
+                            <br/>
+                            <span class="alerteConso">[1.1.1] = {{ tag.vars.value.totalCeInd111 }}</span>
+                        </td>
+                        <td id="r1121" style="text-align: center" data-col-group='row_total_h,row_total_t_plein'>{{ form_widget(tag.r1121) }}</td>
+                        <td id="r1122" style="text-align: center" data-col-group='row_total_f,row_total_t_plein'>{{ form_widget(tag.r1122) }}</td>
+                        <td style="text-align: center" data-col-id='row_total_t_plein' data-col-group='row_total_t_plein_part'>{{ total_aotm_fili_t_plein }}</td>
+                        <td id="r1123" style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ form_widget(tag.r1123) }}</td>
+                        <td id="r1124" style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ form_widget(tag.r1124) }}</td>
+                        <td id="r1125" style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ form_widget(tag.r1125) }}</td>
+                        <td id="r1126" style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ form_widget(tag.r1126) }}</td>
+                        <td id="r1127" style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ form_widget(tag.r1127) }}</td>
+                        <td id="r1128" style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ form_widget(tag.r1128) }}</td>
+                        <td style="text-align: center" data-col-id='row_total_t_part' data-col-group='row_total_t_plein_part'>{{ total_aotm_fili_t_part }}</td>
+                        <td style="text-align: center" data-col-id='row_total_t_plein_part'>{{ total_aotm_fili_t_plein + total_aotm_fili_t_part }}</td>
+                        <td id="lineTot1" style="text-align: center" data-col-id='row_total_h' data-col-group='row_total_all'>{{ total_aotm_fili_h }}</td>
+                        <td id="lineTot2" style="text-align: center" data-col-id='row_total_f' data-col-group='row_total_all'>{{ total_aotm_fili_f }}</td>
+                        <td class="filiTable" id="lineTot3" style="text-align: center"  data-col-id='row_total_all'>{{ total_aotm_fili_h + total_aotm_fili_f }}</td>
+                    </tr>
+
+                {% endfor %}
+                {% set total_all_ind = bilan_social_consolide.getIndPileForBy('ind112s',['refCadreEmploi','refFiliere','cdFili'],['H','HH'],{'exclude':true}) %}
+                {% set total_all_ind_h = total_all_ind.r1121 + total_all_ind.r1123 + total_all_ind.r1125 + total_all_ind.r1127 %}
+                {% set total_all_ind_f = total_all_ind.r1122 + total_all_ind.r1124 + total_all_ind.r1126 + total_all_ind.r1128 %}
+                {% set total_all_ind_t_plein = total_all_ind.r1121 + total_all_ind.r1122 %}
+                {% set total_all_ind_t_part = total_all_ind.r1123 + total_all_ind.r1124 + total_all_ind.r1125 + total_all_ind.r1126 + total_all_ind.r1127 + total_all_ind.r1128 %}
+                <tr id="totalGlo" class="filiTable row_totaux">
+                    <td><b>TOTAL</b></td>
+                    <td style="text-align: center" data-col-group='row_total_h,row_total_t_plein'>{{ total_all_ind.r1121 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_f,row_total_t_plein'>{{ total_all_ind.r1122 }}</td>
+                    <td style="text-align: center" data-col-id='row_total_t_plein' data-col-group='row_total_t_plein_part'>{{ total_all_ind_t_plein }}</td>
+                    <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_all_ind.r1123 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_all_ind.r1124 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_all_ind.r1125 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_all_ind.r1126 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_h,row_total_t_part'>{{ total_all_ind.r1127 }}</td>
+                    <td style="text-align: center" data-col-group='row_total_f,row_total_t_part'>{{ total_all_ind.r1128 }}</td>
+                    <td style="text-align: center" data-col-id='row_total_t_part' data-col-group='row_total_t_plein_part'>{{ total_all_ind_t_part }}</td>
+                    <td style="text-align: center" data-col-id='row_total_t_plein_part'>{{ total_all_ind_t_plein + total_all_ind_t_part }}</td>
+                    <td style="text-align: center" data-col-id='row_total_h' data-col-group='row_total_all'>{{ total_all_ind_h }}</td>
+                    <td style="text-align: center" data-col-id='row_total_f' data-col-group='row_total_all'>{{ total_all_ind_f }}</td>
+                    <td style="text-align: center" data-col-id='row_total_all'>{{ total_all_ind_h + total_all_ind_f }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formEffectif112) }}
+
+
+        <script type="text/javascript">
+
+            var cdFiliAdm = "AD";
+            var withInd112Adm = true;
+
+
+
+            $(document).ready(function ()
+            {
+                changeDetect = false;
+                {% include 'stickyheader.txt' %}
+                getBrowserSetSticky(ind112Table);
+
+            {% if questionCollectiviteConsolide.q2 == true %}
+
+                    putSelectOnText112('ind112sTemp', 'refCadreEmploi');
+                    putSelectOnText112('ind112AotmsTemp', 'refCadreEmploi');
+                    $(document).change();
+                    //update112(true, withInd112Adm);
+
+            {% endif %}
+                });
+
+                /**
+                 * Symfony met les entity many to one en select
+                 *       - Impossibilité de mettre en dsabled car à  l'envoi du form, no ne récup plus la valeur du référentiel
+                 * => Solution temporaire :
+                 *       - Cacher le select de l'entity référentiel
+                 *       - récupérer le text sélectionné par défaut du référentiel
+                 *       - ajouter ce texte à  la colonne du tab correpondant
+                 */
+                function putSelectOnText112(listName, referentielName, withCompl, withNoLibelle) {
+                    var count = $('#bscForm112_' + listName + '_0_' + referentielName + ' option').length;
+
+                    for (var i = 0; i < count; i++) {
+                        $('#bscForm112_' + listName + '_' + i + '_' + referentielName + '').hide();
+
+                        if (withNoLibelle == undefined) {
+                            var val = $('#bscForm112_' + listName + '_' + i + '_' + referentielName + ' option:selected').val();
+                            var tex = $('#bscForm112_' + listName + '_' + i + '_' + referentielName + ' option:selected').text();
+                            //$('#bscForm112_'+listName+'_'+i+'_'+referentielName+'').parent().append(tex);
+                        }
+
+                        if (withCompl != undefined) {
+                            //$('#bscForm112_'+listName+'_'+i+'_'+referentielName+'').parent().append(' '
+                            //   + '<span id="bscForm112_'+listName+'_'+i+'_'+referentielName+'_'+val+'"></span>');
+                        }
+                    }
+                }
+
+                function initLight112() {
+                    if (incoherenceList != undefined) {
+                        // Si le json js a été chargé  (via un eneregistrement) => light via le json
+                        for (var idx in incoherenceList) {
+                            var incoh = incoherenceList[idx];
+                            if (incoh.tableNum == '1.1.2') {
+                                lightError(incoh.field, incoh.incoherence);
+                            }
+                        }
+                    } else {
+                        // si premier acces à la page => light via le twig
+
+                        {% for tag in incoherenceList %}
+                            {% if tag.tableNum == '1.1.2' %}
+                            lightError('{{tag.field}}', {{tag.blIncoherence}});
+                            {% endif %}
+                        {% endfor %}
+
+                    }
+                }
+
+                /*
+                 * METHODES Tableau 1.1.2
+                 */
+            {% if questionCollectiviteConsolide.q2 == true %}
+
+                function toggleFiliere112(toggleObj, pidFili) {
+                    var css = toggleObj.getAttribute('class');
+
+                {% if idFili != null and idFili != 0 %}
+                        // Sauvegarde auto
+                        if (currentTab != "")
+                            saveTab(currentTab);
+                {% endif %}
+
+                        if (css == "buttonplus") {
+                            $('#ind112').load('{{ path('bilan_conso_effectif_ind112_edit') }}?idFili=' + pidFili, function () {
+                                initLight112();
+                                disabled();
+                            });
+
+                        } else {
+                            $('#ind112').load('{{ path('bilan_conso_effectif_ind112_edit') }}?idFili=' + 0, function () {
+                                initLight112();
+                                disabled();
+                            });
+
+                        }
+                    }
+
+                    function changedR112(obj) {
+                        //update112(false, withInd112Adm);
+                    }
+
+
+                    function update112(onInit, withAdmin) {
+                        /*var table112 = document.getElementById('ind112Table');
+
+                        var rowLength112 = table112.rows.length;
+                        var idxRowInput = 0;
+                        var idxRowInputAotm = 0;
+
+                        var mtTot1 = 0;
+                        var mtTot2 = 0;
+                        var mtTot3 = 0;
+                        var mtTot4 = 0;
+                        var mtTot5 = 0;
+                        var mtTot6 = 0;
+                        var mtTot7 = 0;
+                        var mtTot8 = 0;
+
+                        var mtTot1Fil = 0;
+                        var mtTot2Fil = 0;
+                        var mtTot3Fil = 0;
+                        var mtTot4Fil = 0;
+                        var mtTot5Fil = 0;
+                        var mtTot6Fil = 0;
+                        var mtTot7Fil = 0;
+                        var mtTot8Fil = 0;
+
+                        var mtTot1FilGlo = 0;
+                        var mtTot2FilGlo = 0;
+                        var mtTot3FilGlo = 0;
+                        var mtTot4FilGlo = 0;
+                        var mtTot5FilGlo = 0;
+                        var mtTot6FilGlo = 0;
+                        var mtTot7FilGlo = 0;
+                        var mtTot8FilGlo = 0;
+
+                        var mtTot1HorsFil = 0;
+                        var mtTot2HorsFil = 0;
+                        var mtTot3HorsFil = 0;
+                        var mtTot4HorsFil = 0;
+                        var mtTot5HorsFil = 0;
+                        var mtTot6HorsFil = 0;
+                        var mtTot7HorsFil = 0;
+                        var mtTot8HorsFil = 0;
+
+                        var mtTot1Glo = 0;
+                        var mtTot2Glo = 0;
+                        var mtTot3Glo = 0;
+                        var mtTot4Glo = 0;
+                        var mtTot5Glo = 0;
+                        var mtTot6Glo = 0;
+                        var mtTot7Glo = 0;
+                        var mtTot8Glo = 0;
+
+                        for (var i = 0; i < rowLength112; i += 1) {
+                            var row = table112.rows[i];
+
+                            if(row.getAttribute("entete") != undefined && row.getAttribute("entete") == "1") {
+                                continue;
+                            }
+
+                            var lineAotm = false;
+
+                            if(row.getAttribute("idTrFiliAotm") != undefined) {
+                                lineAotm = true;
+                            }
+
+                            var cellLength = row.cells.length;
+
+                            var lineTotalFil = false;
+                            var lineTotalFilGlo = false;
+                            var lineTotalGlo = false;
+                            var lineTot1 = 0;
+                            var lineTot2 = 0;
+
+                            if (row.id.substring(0, 8) == "entetFil") {
+                                var cdFiliEnt = row.getAttribute("cdFili");
+                                if (cdFiliEnt == cdFiliAdm) {
+                                    if (withAdmin) {
+                                        row.style.display = "";
+                                    } else {
+                                        row.style.display = "none";
+                                    }
+                                }
+                                continue;
+                            }
+
+                            if (row.id.substring(0, 18) == "totalHorsFil") {
+                                for (var y = 0; y < cellLength; y += 1) {
+                                    var cell = row.cells[y];
+                                    if (y == 1) {
+                                        mtTot1HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 2) {
+                                        mtTot2HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 3) {
+                                        mtTot3HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 4) {
+                                        mtTot4HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 5) {
+                                        mtTot5HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 6) {
+                                        mtTot6HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 7) {
+                                        mtTot7HorsFil = parseInt(cell.innerHTML);
+                                    } else if (y == 8) {
+                                        mtTot8HorsFil = parseInt(cell.innerHTML);
+                                    }
+                                }
+                            }
+
+                            lineTot1 = 0;
+                            lineTot2 = 0;
+
+                            if (row.id.substring(0, 11) == "totalFilGlo") {
+                                lineTotalFilGlo = true;
+
+                                for (var y = 0; y < cellLength; y += 1) {
+                                    var cell = row.cells[y];
+                                    if (y == 1) {
+                                        cell.innerHTML = mtTot1FilGlo + mtTot1HorsFil;
+                                        lineTot1 += mtTot1FilGlo + mtTot1HorsFil;
+                                        mtTot1FilGlo = 0;
+                                    } else if (y == 2) {
+                                        cell.innerHTML = mtTot2FilGlo + mtTot2HorsFil;
+                                        lineTot2 += mtTot2FilGlo + mtTot2HorsFil;
+                                        mtTot2FilGlo = 0;
+                                    } else if (y == 3) {
+                                        cell.innerHTML = mtTot3FilGlo + mtTot3HorsFil;
+                                        lineTot1 += mtTot3FilGlo + mtTot3HorsFil;
+                                        mtTot3FilGlo = 0;
+                                    } else if (y == 4) {
+                                        cell.innerHTML = mtTot4FilGlo + mtTot4HorsFil;
+                                        lineTot2 += mtTot4FilGlo + mtTot4HorsFil;
+                                        mtTot4FilGlo = 0;
+                                    } else if (y == 5) {
+                                        cell.innerHTML = mtTot5FilGlo + mtTot5HorsFil;
+                                        lineTot1 += mtTot5FilGlo + mtTot5HorsFil;
+                                        mtTot5FilGlo = 0;
+                                    } else if (y == 6) {
+                                        cell.innerHTML = mtTot6FilGlo + mtTot6HorsFil;
+                                        lineTot2 += mtTot6FilGlo + mtTot6HorsFil;
+                                        mtTot6FilGlo = 0;
+                                    } else if (y == 7) {
+                                        cell.innerHTML = mtTot7FilGlo + mtTot7HorsFil;
+                                        lineTot1 += mtTot7FilGlo + mtTot7HorsFil;
+                                        mtTot7FilGlo = 0;
+                                    } else if (y == 8) {
+                                        cell.innerHTML = mtTot8FilGlo + mtTot8HorsFil;
+                                        lineTot2 += mtTot8FilGlo + mtTot8HorsFil;
+                                        mtTot8FilGlo = 0;
+                                    } else if (y == 9) {
+                                        cell.innerHTML = lineTot1;
+                                    } else if (y == 10) {
+                                        cell.innerHTML = lineTot2;
+                                    } else if (y == 11) {
+                                        cell.innerHTML = lineTot1 + lineTot2;
+                                    }
+                                }
+                            } else if (row.id.substring(0, 8) == "totalFil") {
+                                lineTotalFil = true;
+
+                                var cdFiliEnt = row.getAttribute("cdFili");
+                                if (cdFiliEnt == cdFiliAdm) {
+                                    if (withAdmin) {
+                                        row.style.display = "";
+
+                                    } else {
+                                        row.style.display = "none";
+                                    }
+                                }
+
+                                for (var y = 0; y < cellLength; y += 1) {
+                                    var cell = row.cells[y];
+                                    if (y == 1) {
+                                        cell.innerHTML = mtTot1Fil;
+                                        lineTot1 += mtTot1Fil;
+                                        mtTot1Fil = 0;
+                                    } else if (y == 2) {
+                                        cell.innerHTML = mtTot2Fil;
+                                        lineTot2 += mtTot2Fil;
+                                        mtTot2Fil = 0;
+                                    } else if (y == 3) {
+                                        cell.innerHTML = mtTot3Fil;
+                                        lineTot1 += mtTot3Fil;
+                                        mtTot3Fil = 0;
+                                    } else if (y == 4) {
+                                        cell.innerHTML = mtTot4Fil;
+                                        lineTot2 += mtTot4Fil;
+                                        mtTot4Fil = 0;
+                                    } else if (y == 5) {
+                                        cell.innerHTML = mtTot5Fil;
+                                        lineTot1 += mtTot5Fil;
+                                        mtTot5Fil = 0;
+                                    } else if (y == 6) {
+                                        cell.innerHTML = mtTot6Fil;
+                                        lineTot2 += mtTot6Fil;
+                                        mtTot6Fil = 0;
+                                    } else if (y == 7) {
+                                        cell.innerHTML = mtTot7Fil;
+                                        lineTot1 += mtTot7Fil;
+                                        mtTot7Fil = 0;
+                                    } else if (y == 8) {
+                                        cell.innerHTML = mtTot8Fil;
+                                        lineTot2 += mtTot8Fil;
+                                        mtTot8Fil = 0;
+                                    } else if (y == 9) {
+                                        cell.innerHTML = lineTot1;
+                                    } else if (y == 10) {
+                                        cell.innerHTML = lineTot2;
+                                    } else if (y == 11) {
+                                        cell.innerHTML = lineTot1 + lineTot2;
+                                    }
+                                }
+                            }
+
+
+                            lineTot1 = 0;
+                            lineTot2 = 0;
+
+                            if (row.id.substring(0, 8) == "totalGlo") {
+                                lineTotalGlo = true;
+
+                                for (var y = 0; y < cellLength; y += 1) {
+                                    var cell = row.cells[y];
+                                    if (y == 1) {
+                                        cell.innerHTML = mtTot1Glo + mtTot1HorsFil;
+                                        lineTot1 += mtTot1Glo + mtTot1HorsFil;
+                                        mtTot1Glo = 0;
+                                    } else if (y == 2) {
+                                        cell.innerHTML = mtTot2Glo + mtTot2HorsFil;
+                                        lineTot2 += mtTot2Glo + mtTot2HorsFil;
+                                        mtTot2Glo = 0;
+                                    } else if (y == 3) {
+                                        cell.innerHTML = mtTot3Glo + mtTot3HorsFil;
+                                        lineTot1 += mtTot3Glo + mtTot3HorsFil;
+                                        mtTot3Glo = 0;
+                                    } else if (y == 4) {
+                                        cell.innerHTML = mtTot4Glo + mtTot4HorsFil;
+                                        lineTot2 += mtTot4Glo + mtTot4HorsFil;
+                                        mtTot4Glo = 0;
+                                    } else if (y == 5) {
+                                        cell.innerHTML = mtTot5Glo + mtTot5HorsFil;
+                                        lineTot1 += mtTot5Glo + mtTot5HorsFil;
+                                        mtTot5Glo = 0;
+                                    } else if (y == 6) {
+                                        cell.innerHTML = mtTot6Glo + mtTot6HorsFil;
+                                        lineTot2 += mtTot6Glo + mtTot6HorsFil;
+                                        mtTot6Glo = 0;
+                                    } else if (y == 7) {
+                                        cell.innerHTML = mtTot7Glo + mtTot7HorsFil;
+                                        lineTot1 += mtTot7Glo + mtTot7HorsFil;
+                                        mtTot7Glo = 0;
+                                    } else if (y == 8) {
+                                        cell.innerHTML = mtTot8Glo + mtTot8HorsFil;
+                                        lineTot2 += mtTot8Glo + mtTot8HorsFil;
+                                        mtTot8Glo = 0;
+                                    } else if (y == 9) {
+                                        cell.innerHTML = lineTot1;
+                                    } else if (y == 10) {
+                                        cell.innerHTML = lineTot2;
+                                    } else if (y == 11) {
+                                        cell.innerHTML = lineTot1 + lineTot2;
+                                    }
+                                }
+                            }
+
+
+                            lineTot1 = 0;
+                            lineTot2 = 0;
+
+                            var cdFili = row.getAttribute("cdFili");
+                            if (cdFili == cdFiliAdm) {
+                                if (withAdmin) {
+                                    row.style.display = "";
+                                } else {
+                                    row.style.display = "none";
+                                }
+                            }
+
+                            for (var y = 0; y < cellLength; y += 1) {
+                                var cell = row.cells[y];
+                                var cellValue;
+
+                                if (cell.id.substring(0, 5) == "r1121") {
+                                    if (cdFili == cdFiliAdm && !withAdmin) $('#bscForm112_ind112sTemp_' + idxRowInput + '_r1121').val("");
+                                    cellValue = $('#bscForm112_ind112' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1121').val();
+                                    if (cellValue != "") {
+                                        cellValue = parseInt(cellValue);
+                                        if(!lineAotm) {
+                                            mtTot1 += cellValue;
+                                            mtTot1Fil += cellValue;
+                                            if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                                mtTot1FilGlo += cellValue;
+                                            }
+                                        }
+                                        if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                            mtTot1Glo += cellValue;
+                                        }
+                                        lineTot1 += cellValue;
+                                    }
+                                  //  if ($('#bscForm112_ind112sTemp_' + idxRowInput + '_r1121').val() != "") {
+                                  //      mtTot1 += parseInt($('#bscForm112_ind112sTemp_' + idxRowInput + '_r1121').val());
+                                  //      mtTot1Fil += parseInt($('#bscForm112_ind112sTemp_' + idxRowInput + '_r1121').val());
+                                  //      if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                  //          mtTot1FilGlo += parseInt($('#bscForm112_ind112sTemp_' + idxRowInput + '_r1121').val());
+                                  //      }
+                                  //      lineTot1 += parseInt($('#bscForm112_ind112sTemp_' + idxRowInput + '_r1121').val());
+                                  //  }
+                                } else if (cell.id.substring(0, 5) == "r1122") {
+                                    if (cdFili == cdFiliAdm && !withAdmin) $('#bscForm112_ind112sTemp_' + idxRowInput + '_r1122').val("");
+                                    cellValue = $('#bscForm112_ind112' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1122').val();
+                                    if (cellValue != "") {
+                                        cellValue = parseInt(cellValue);
+                                        if(!lineAotm) {
+                                            mtTot2 += cellValue;
+                                            mtTot2Fil += cellValue;
+                                            if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                                mtTot2FilGlo += cellValue;
+                                            }
+                                        }
+                                        if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                            mtTot2Glo += cellValue;
+                                        }
+                                        lineTot2 += cellValue;
+                                    }
+                                } else if (cell.id.substring(0, 5) == "r1123") {
+                                    if (cdFili == cdFiliAdm && !withAdmin) $('#bscForm112_ind112sTemp_' + idxRowInput + '_r1123').val("");
+                                    cellValue = $('#bscForm112_ind112' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1123').val();
+                                    if (cellValue != "") {
+                                        cellValue = parseInt(cellValue);
+                                        if(!lineAotm) {
+                                            mtTot3 += cellValue;
+                                            mtTot3Fil += cellValue;
+                                            if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                                mtTot3FilGlo += cellValue;
+                                            }
+                                        }
+                                        if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                            mtTot3Glo += cellValue;
+                                        }
+                                        lineTot1 += cellValue;
+                                    }
+                                } else if (cell.id.substring(0, 5) == "r1124") {
+                                    if (cdFili == cdFiliAdm && !withAdmin) $('#bscForm112_ind112sTemp_' + idxRowInput + '_r1124').val("");
+                                    cellValue = $('#bscForm112_ind112' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1124').val();
+                                    if (cellValue != "") {
+                                        cellValue = parseInt(cellValue);
+                                        if(!lineAotm) {
+                                            mtTot4 += cellValue;
+                                            mtTot4Fil += cellValue;
+                                            if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                                mtTot4FilGlo += cellValue;
+                                            }
+                                        }
+                                        if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                            mtTot4Glo += cellValue;
+                                        }
+                                        lineTot2 += cellValue;
+                                    }
+                                } else if (cell.id.substring(0, 5) == "r1125") {
+                                    if (cdFili == cdFiliAdm && !withAdmin) $('#bscForm112_ind112sTemp_' + idxRowInput + '_r1125').val("");
+                                    cellValue = $('#bscForm112_ind112' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1125').val();
+                                    if (cellValue != "") {
+                                        cellValue = parseInt(cellValue);
+                                        if(!lineAotm) {
+                                            mtTot5 += cellValue;
+                                            mtTot5Fil += cellValue;
+                                            if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                                mtTot5FilGlo += cellValue;
+                                            }
+                                        }
+                                        if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                            mtTot5Glo += cellValue;
+                                        }
+                                        lineTot1 += cellValue;
+                                    }
+                                } else if (cell.id.substring(0, 5) == "r1126") {
+                                    if (cdFili == cdFiliAdm && !withAdmin) $('#bscForm112_ind112sTemp_' + idxRowInput + '_r1126').val("");
+                                    cellValue = $('#bscForm112_ind112' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1126').val();
+                                    if (cellValue != "") {
+                                        cellValue = parseInt(cellValue);
+                                        if(!lineAotm) {
+                                            mtTot6 += cellValue;
+                                            mtTot6Fil += cellValue;
+                                            if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                                mtTot6FilGlo += cellValue;
+                                            }
+                                        }
+                                        if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                            mtTot6Glo += cellValue;
+                                        }
+                                        lineTot2 += cellValue;
+                                    }
+                                } else if (cell.id.substring(0, 5) == "r1127") {
+                                    if (cdFili == cdFiliAdm && !withAdmin) $('#bscForm112_ind112sTemp_' + idxRowInput + '_r1127').val("");
+                                    cellValue = $('#bscForm112_ind112' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1127').val();
+                                    if (cellValue != "") {
+                                        cellValue = parseInt(cellValue);
+                                        if(!lineAotm) {
+                                            mtTot7 += cellValue;
+                                            mtTot7Fil += cellValue;
+                                            if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                                mtTot7FilGlo += cellValue;
+                                            }
+                                        }
+                                        if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                            mtTot7Glo += cellValue;
+                                        }
+                                        lineTot1 += cellValue;
+                                    }
+                                } else if (cell.id.substring(0, 5) == "r1128") {
+                                    if (cdFili == cdFiliAdm && !withAdmin) $('#bscForm112_ind112sTemp_' + idxRowInput + '_r1128').val("");
+                                    cellValue = $('#bscForm112_ind112' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1128').val();
+                                    if (cellValue != "") {
+                                        cellValue = parseInt(cellValue);
+                                        if(!lineAotm) {
+                                            mtTot8 += cellValue;
+                                            mtTot8Fil += cellValue;
+                                            if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                                mtTot8FilGlo += cellValue;
+                                            }
+                                        }
+                                        if (cdFili != cdFiliAdm || (cdFili == cdFiliAdm && withAdmin)) {
+                                            mtTot8Glo += cellValue;
+                                        }
+                                        lineTot2 += cellValue;
+                                    }
+                                } else if (cell.id.substring(0, 8) == "lineTot1") {
+                                    cell.innerHTML = lineTot1;
+                                } else if (cell.id.substring(0, 8) == "lineTot2") {
+                                    cell.innerHTML = lineTot2;
+                                } else if (cell.id.substring(0, 8) == "lineTot3") {
+                                    cell.innerHTML = lineTot1 + lineTot2;
+                                }
+
+                            }
+
+                            if (!lineTotalFil && !lineTotalFilGlo && !lineTotalGlo) idxRowInput++;
+                            if(lineAotm) idxRowInputAotm++;
+                        }// end for line
+                        */
+                    }
+
+            {% endif %}
+
+
+                /*
+                 * METHODE AJAX SUBMIT
+                 */
+                $(function () {
+                    // Enregistrement en ajax
+                    $('form').on('submit', function (e) {
+                        var $this = $(this).closest('div');
+                        var btn = $(this).find("input[type=submit]:focus");
+                        var value_valide = $(btn).data('valide');
+                        $('#bscForm112_valide').val(value_valide);
+                        // Submit en ajax pour le fonctionnement d'appel par onglet
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ path('bilan_conso_effectif_ind112_edit') }}?idFili={{idFili}}',
+                            data: $('form').serialize(),
+                            success: function (responsejson) {
+                                if (responsejson.data == 1) {
+                                    if (recordAuto) {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement automatique réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+                                    } else {
+                                        $('#ind112').load('{{ path('bilan_conso_effectif_ind112_edit') }}', function () {
+                                            $('#progImg').hide();
+                                            $('#messageJS').html("Enregistrement réussi");
+                                            messageJS.dialog("open");
+                                            setIncoherenceTable(responsejson);
+
+                                            var next = $($this).next('.panel-heading');
+                                            if(next.length == 0) {
+                                                window.location.href = '{{ path('bilan_conso_mouv_edit') }}';
+                                            }
+                                        });
+
+                                    }
+                                } else if (responsejson.data == "-3") {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                    messageJS.dialog("open");
+                                } else {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                    messageJS.dialog("open");
+                                }
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(xhr);
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                                messageJS.dialog("open");
+                            }
+
+                        });
+
+                    });
+
+                });
+
+        </script>
+    {% endif %}

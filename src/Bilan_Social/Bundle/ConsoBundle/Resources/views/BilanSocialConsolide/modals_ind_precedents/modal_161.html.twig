@@ -1,0 +1,115 @@
+<div class="modal fade" id="161" tabindex="-1" role="dialog" aria-labelledby="161" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="161">Indicateur 161 de l'année {{ indicateur_precedent.ind_161.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="background-color: #efefef">
+                {% if indicateur_precedent.ind_161.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.ind_161.annee }}
+                {% else %}
+                    <table width="100%" id="ind161TablePrec" class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr entete="1">
+                                <th ></th>
+                                {% if questionCollectiviteConsolide.q2 == true %}
+                                <th colspan="2" style="text-align: center">Titulaires et stagiaires</th>
+                                {% endif %}
+                                {% if questionCollectiviteConsolide.q4 == true %}
+                                <th colspan="2" style="text-align: center">Contractuels sur emploi permanent</th>
+                                {% endif %}
+                            </tr>
+
+                            <tr entete="1">
+                                <th style="text-align: center">Catégorie hiérarchique</th>
+                                {% if questionCollectiviteConsolide.q2 == true %}
+                                <th style="text-align: center">Hommes</th>
+                                <th style="text-align: center">Femmes</th>
+                                {% endif %}
+                                {% if questionCollectiviteConsolide.q4 == true %}
+                                <th style="text-align: center">Hommes</th>
+                                <th style="text-align: center">Femmes</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set total1 = 0%}
+                        {% set total2 = 0%}
+                        {% set total3 = 0%}
+                        {% set total4 = 0%}
+                        {% set totalGlo = 0%}
+
+                        {% for tag in indicateur_precedent.ind_161.indicateur %}
+                            {% set total1 = total1 + tag.R_1611 %}
+                            {% set total2 = total2 + tag.R_1612 %}
+                            {% set total3 = total3 + tag.R_1613 %}
+                            {% set total4 = total4 + tag.R_1614 %}
+                            {% set totalGlo =  tag.R_1611 + tag.R_1612 + tag.R_1613 + tag.R_1614 %}
+                            <tr>
+                                <td style="min-width: 400px">
+                                    {{ tag.LB_CATE }}
+                                </td>
+                                <td id="r1611_prec" style="text-align: center">{{ tag.R_1611 }}</td>
+                                <td id="r1611_prec" style="text-align: center">{{ tag.R_1612 }}</td>
+                                <td id="r1611_prec" style="text-align: center">{{ tag.R_1613 }}</td>
+                                <td id="r1611_prec" style="text-align: center">{{ tag.R_1614 }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        {% if indicateur_precedent.ind_161.indicateur|length > 0  %}
+                            <tr id="total161">
+                                <td style="min-width: 400px"><b>TOTAL </b></td>
+                                <td style="text-align: center">{{ total1 }}</td>
+                                <td style="text-align: center">{{ total2 }}</td>
+                                <td style="text-align: center">{{ total3 }}</td>
+                                <td style="text-align: center">{{ total4 }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if indicateur_precedent.ind_1612.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.ind_1612.annee }}
+                {% else %}
+
+                <table width="100%" id="ind1612Table" class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr entete="1">
+                            <th colspan="4">Contractuels sur emploi NON permanent</th>
+                        </tr>
+                        <tr entete="1">
+                            <th colspan="2" style="text-align: center">TOTAL</th>
+                            <th colspan="2" style="text-align: center">Dont apprentis</th>
+                        </tr>
+
+                        <tr entete="1">
+                            <th style="text-align: center">Hommes</th>
+                            <th style="text-align: center">Femmes</th>
+                            <th style="text-align: center">Hommes</th>
+                            <th style="text-align: center">Femmes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for tag in indicateur_precedent.ind_1612.indicateur %}
+                        <tr id="1612idTr">
+                            <td id="r16121">{{ tag.R_16121 }}</td>
+                            <td id="r16122">{{ tag.R_16122 }}</td>
+                            <td id="r16123">{{ tag.R_16123 }}</td>
+                            <td id="r16124">{{ tag.R_16124 }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+{% extends '@User/layout.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/UserBundle/User.js') }}"></script>
+{% endblock %}
+{% block body %}
+
+
+
+    <div class="container">
+        {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('blocked') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('blocked') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('blocked_info') %}
+            <div class="alert alert-info fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('blocked_info') %}
+                    <br>
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('TempAccount') %}
+            <div class="alert alert-info fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('TempAccount') %}
+                    <br>
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form action="{{ path('login_check') }}" method="post" class="form-signin">
+            <h2 class="form-signin-heading identification-center">Identification</h2>
+            <label for="inputEmail">Identifiant : </label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+            <label for="inputPassword">Mot de passe :</label>
+            <input type="password" id="password" name="_password" class="form-control"/>
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+                   >
+            <button class="btn btn-lg btn-block button-tableau" type="submit">Connexion</button>
+            <a href="{{ path('forgot_password_step1') }}" >Mot de passe oublié</a>
+        </form>
+
+    </div> <!-- /container -->
+
+{% endblock %}

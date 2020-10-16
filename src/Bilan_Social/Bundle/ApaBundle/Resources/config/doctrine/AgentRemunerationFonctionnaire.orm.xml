@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\AgentRemunerationFonctionnaire" table="Agent_Remuneration_Fonctionnaire">
+        <indexes>
+            <index name="FK_AGENT_REMUNERATION_FONCTIONNAIRE_CATEGORIE" columns="ID_CATE"/>
+            <index name="FK_AGENT_REMUNERATION_FONCTIONNAIRE_INFOGENE" columns="ID_INFOGENE"/>
+        </indexes>
+        <id name="idAgentRemunerationFonctionnaire" type="integer" column="ID_AGENT_REMUNERATION_FONCTIONNAIRE">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="idInfoGene" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationGenerale" inversed-by="agentremufonctionnaire">
+            <join-column name="ID_INFOGENE" referenced-column-name="ID_INFOGENE" />
+        </many-to-one>
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie" inversed-by="agentremufonctionnaire_categorie">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE"/>
+        </many-to-one>
+        <!--        <field name="idCate" type="integer" column="ID_CATE" nullable="true"/>-->
+        <!--        <field name="" type="integer" column="" nullable="true"/>-->
+        <field name="r311h" type="integer" column="R311h" nullable="true"/>
+        <field name="r311f" type="integer" column="R311f" nullable="true"/>
+        <field name="r3111h" type="integer" column="R3111h" nullable="true"/>
+        <field name="r3111f" type="integer" column="R3111f" nullable="true"/>
+        <field name="r3112h" type="integer" column="R3112h" nullable="true"/>
+        <field name="r3112f" type="integer" column="R3112f" nullable="true"/>
+        <field name="r3113h" type="integer" column="R3113h" nullable="true"/>
+        <field name="r3113f" type="integer" column="R3113f" nullable="true"/>
+        <field name="r3114h" type="integer" column="R3114h" nullable="true"/>
+        <field name="r3114f" type="integer" column="R3114f" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

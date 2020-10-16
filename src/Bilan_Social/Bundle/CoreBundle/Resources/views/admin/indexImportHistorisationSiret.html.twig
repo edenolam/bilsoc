@@ -1,0 +1,104 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/CollectiviteBundle/historisationimport.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Administration</a></li>
+                <li class="active">Import fichier historisation des SIRET</li>
+            </ol>
+        </div>
+        <h1>Import fichier historisation des SIRET</h1>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {% if importDone == false %}
+            <input class="btn button-tableau pull-right margin10 sendFile" type="submit" value="Importer" />
+            {% endif %}
+            {{ form_end(form) }}
+        </div>
+
+        <div>
+            {% if importDone == true %}
+
+                <ul>
+                    <li>Aucun changement : {{ vide|length }}</li>
+                    <li>Changement d'adresse : {{ ca|length }}</li>
+                    <li>Fusion : {{ fusion|length }}</li>
+                </ul>
+
+                <input class="btn button-tableau pull-right margin10 sendjob" type="button" value="Valider" />
+
+                <h1>Liste des imports en erreur</h1>
+
+                <table class="table table-hover align-center" id='erreurs'>
+                    <thead>
+                        <tr>
+                            <th class='col-hidden col-nmSire'><input type="hidden" value="0" name="champ-nmSire">Siret</th>
+                            <th class='col-hidden col-idColl'><input type="hidden" value="0" name="champ-idColl">Identifiant de la collectivité</th>
+                            <th class='col-hidden col-lbColl'><input type="hidden" value="0" name="champ-lbColl">Libellé de la collectivité</th>
+                            <th class='col-lbAdresse'><input type="hidden" value="1" name="champ-lbAdre">Adresse</th>
+                            <th class='col-hidden col-idDepa'><input type="hidden" value="0" name="champ-idDepa">Numéro département</th>
+                            <th class='col-hidden col-blLbVill'><input type="hidden" value="0" name="champ-lbVill">Ville</th>
+                            <th class='col-hidden col-LbErreur'><input type="hidden" value="0" name="champ-lbErreur">Erreur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="histoTraitement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Traitements en cours</h4>
+                </div>
+                <div class="modal-body">
+                    <ol>
+                        <li> Traitement automatique des fusions <span class="etape1 glyphicon glyphicon-download"></span> </li>
+                        <li> Traitement automatique des changements d'adresse <span class="etape2 glyphicon glyphicon-download"></span></li>
+                        <li> Traitement automatique des collectivités sans changement <span class="etape3 glyphicon glyphicon-download"></span></li>
+                        <li> Traitement automatique des collectivités nouvellement crées <span class="etape4 glyphicon glyphicon-download"></span></li>
+                        <li> Traitement automatique des collectivités pour la saisie manuelle <span class="etape5 glyphicon glyphicon-download"></span></li>
+                    </ol>
+                </div>
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

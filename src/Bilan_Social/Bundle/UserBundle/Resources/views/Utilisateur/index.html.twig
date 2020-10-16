@@ -1,0 +1,89 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/utilisateurs.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/UserBundle/utilisateur.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Comptes utilisateur</a></li>
+                <li class="active">Rechercher un utilisateur</li>
+            </ol>
+        </div>
+        <h1>Rechercher un utilisateur</h1>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div id="table-utilisateur-wrapper">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" value="" placeholder="Recherche par identifiant" id="recherche-identifiant" class="form-control">
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" value="" placeholder="Recherche par département" id="recherche-departement" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper">
+                <table id="table-utilisateur" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Identifiant</th>
+                            <th>Département(s)</th>
+                            <th>Référent(s)</th>
+                            <th>Dernière connexion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for k,v in utilisateurs %}
+                            <tr>
+                                {% if 'ROLE_CDG' in v.roles %}
+                                    <td><a href="{{ path('utilisateur_fiche', {'id':  k}) }}">{{ v.username }}</a></td>
+                                {% elseif 'ROLE_INFOCENTRE' in v.roles %}
+                                    <td><a href="{{ path('user_infocentre_edit', {'id': k}) }}">{{ v.username }}</a></td>
+                                {% endif %}
+                                <td>
+                                    <ul>
+                                    {% for dept in v.departements %}
+                                        <li>{{ dept }}</li>
+                                    {% endfor %}
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                    {% if v.referents is defined and v.referents is not null %}
+                                        {% for ref in v.referents %}
+                                            <li>{{ ref }}</li>
+                                        {% endfor %}
+                                    {% endif %}
+                                    </ul>
+                                </td>
+                                <td>{% if v.dtConn is not null %}{{ v.dtConn|localizeddate('none', 'none', null, null, 'd MMMM Y - H:mm') }}{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

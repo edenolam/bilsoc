@@ -1,0 +1,80 @@
+<div class="modal fade" id="5111" tabindex="-1" role="dialog" aria-labelledby="5111" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="5111_title">Indicateur 5111 de l'année {{ indicateur_precedent.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #efefef">
+                {% if indicateur_precedent.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.annee }}
+                {% else %}
+                    <table width="100%" id="ind5111TablePrec" class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style="text-align: center"></th>
+                                <th colspan="2" style="text-align: center">FONCTIONNAIRES</th>
+                                <th colspan="2" style="text-align: center">CONTRACTUELS SUR EMPLOI PERMANENT</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center">
+                                    Hommes
+                                    <br/>
+                                    <span class="alerteConso">[1.1.1] = {{ nbFonctH }}</span>
+                                </th>
+                                <th style="text-align: center">Femmes
+                                    <br/>
+                                    <span class="alerteConso">[1.1.1] = {{ nbFonctF }}</span>
+                                </th>
+                                <th style="text-align: center">Hommes
+                                    <br/>
+                                    <span class="alerteConso">[1.2.1] = {{ nbContractH }}</span>
+                                </th>
+                                <th style="text-align: center">Femmes
+                                    <br/>
+                                    <span class="alerteConso">[1.2.1] = {{ nbContractF }}</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set total1 = 0%}
+                        {% set total2 = 0%}
+                        {% set total3 = 0%}
+                        {% set total4 = 0%}
+                        {% set totalGlo = 0%}
+
+                        {% for tag in indicateur_precedent.indicateur %}
+                            {% set total1 = total1 + tag.R_51111 %}
+                            {% set total2 = total2 + tag.R_51112 %}
+                            {% set total3 = total3 + tag.R_51113 %}
+                            {% set total4 = total4 + tag.R_51114 %}
+                            {% set totalGlo =  tag.R_51111 + tag.R_51112 + tag.R_51113 + tag.R_51114 %}
+                            <tr>
+                                <td style="min-width: 400px">
+                                    {{ tag.LB_CATE }}
+                                </td>
+                                <td id="r51111_prec" style="text-align: center">{{ tag.R_51111 }}</td>
+                                <td id="r51112_prec" style="text-align: center">{{ tag.R_51112 }}</td>
+                                <td id="r51113_prec" style="text-align: center">{{ tag.R_51113 }}</td>
+                                <td id="r51114_prec" style="text-align: center">{{ tag.R_51114 }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        {% if indicateur_precedent.indicateur|length > 0  %}
+                            <tr id="total5111">
+                                <td style="min-width: 400px"><b>Total</b></td>
+                                <td style="text-align: center">{{ total1 }}</td>
+                                <td style="text-align: center">{{ total2 }}</td>
+                                <td style="text-align: center">{{ total3 }}</td>
+                                <td style="text-align: center">{{ total4 }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

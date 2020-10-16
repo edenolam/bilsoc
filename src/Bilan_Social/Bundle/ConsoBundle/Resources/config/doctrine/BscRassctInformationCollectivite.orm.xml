@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BscRassctInformationCollectivite" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscRassctInformationCollectiviteRepository" table="bsc_rassct_information_collectivite">
+        <indexes>
+            <index name="FK_BSC_RASSCT_INFORMATION_COLLECTIVITE_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+        <id name="idBscRassctInformationCollectivite" type="integer" column="ID_BSC_RASSCT_INFORMATION_COLLECTIVITE">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <one-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscRassctInformationCollectivite">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+
+        <field name="rassctExistEvalRPS" type="boolean" column="RASSCT_EXIST_EVAL_RPS" nullable="true"></field>
+        <field name="rassctMajEvalRPS" type="boolean" column="RASSCT_MAJ_EVAL_RPS" nullable="true"></field>
+        <field name="rassctDiagRPS" type="boolean" column="RASSCT_DIAG_RPS" nullable="true"></field>
+        <field name="rassctExistPrevActionSante" type="boolean" column="RASSCT_EXIST_PREV_ACTION_SANTE" nullable="true"></field>
+        <field name="rassctActiMedecPrev" type="boolean" column="RASSCT_ACTI_MEDEC_PREV" nullable="true"></field>
+        <field name="rassctDesiACFI" type="boolean" column="RASSCT_DESI_ACFI" nullable="true"></field>
+        <field name="rassctNbVisitACFI" type="integer" column="RASSCT_NB_VISIT_ACFI" nullable="true"></field>
+        <field name="rassctNbCtChsct" type="integer" column="RASSCT_NB_CT_CHSCT" nullable="true"></field>
+        <field name="rassctExistPrevEntreExte" type="boolean" column="RASSCT_EXIST_PREV_ENTRE_EXTE" nullable="true"></field>
+        <field name="rassctExistDiagPeniAnnex" type="boolean" column="RASSCT_EXIST_DIAG_PENI_ANNEX" nullable="true"></field>
+        <field name="rassctNeceFicheSuiviFact" type="boolean" column="RASSCT_NECE_FICHE_SUIVI_FACT" nullable="true"></field>
+        <field name="rassctExistFicheExpoPeni" type="boolean" column="RASSCT_EXIST_FICHE_EXPO_PENI" nullable="true"></field>
+        <field name="rassctNeceFicheAmiante" type="boolean" column="RASSCT_NECE_FICHE_AMIANTE" nullable="true"></field>
+        <field name="rassctExistFicheAmiante" type="boolean" column="RASSCT_EXIST_FICHE_AMIANTE" nullable="true"></field>
+    </entity>
+</doctrine-mapping>

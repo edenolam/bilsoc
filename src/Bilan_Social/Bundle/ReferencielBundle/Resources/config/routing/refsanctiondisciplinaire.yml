@@ -1,0 +1,29 @@
+refsanctiondisciplinaire_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefSanctionDisciplinaire:index" }
+    methods:  GET
+
+refsanctiondisciplinaire_show:
+    path:     /{idSancdisc}/show
+    defaults: { _controller: "ReferencielBundle:RefSanctionDisciplinaire:show" }
+    methods:  GET
+
+refsanctiondisciplinaire_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefSanctionDisciplinaire:new" }
+    methods:  [GET, POST]
+
+refsanctiondisciplinaire_edit:
+    path:     /{idSancdisc}/edit
+    defaults: { _controller: "ReferencielBundle:RefSanctionDisciplinaire:edit" }
+    methods:  [GET, POST]
+
+refsanctiondisciplinaire_delete:
+    path:     /{idSancdisc}/delete
+    defaults: { _controller: "ReferencielBundle:RefSanctionDisciplinaire:delete" }
+    methods:  DELETE
+
+csv_export_refsanctiondisciplinaire:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefSanctionDisciplinaire:generateCsv" }
+    

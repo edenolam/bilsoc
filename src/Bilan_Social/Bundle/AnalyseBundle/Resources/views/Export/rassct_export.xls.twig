@@ -1,0 +1,36 @@
+{% xlssheet 'RASSCT' {
+    columnDimension: {
+        'A': {
+            width: '60'
+        }
+    }
+    } %}
+
+    {% xlsrow %}
+        {% xlscell %}{% endxlscell %}
+        {% xlscell %}2016{% endxlscell %}
+        {% xlscell %}2017{% endxlscell %}
+    {% endxlsrow %}
+
+    {% xlsrow %}
+        {% xlscell %}Accident du travail / de service{% endxlscell %}
+        {% xlscell %}Nombre{% endxlscell %}
+        {% xlscell %}Nombre{% endxlscell %}
+    {% endxlsrow %}
+
+    {% set ref = ["Nombre d'accidents sans arrêt",
+        "Nombre d'accidents avec arrêt entre 1 et 3 jours",
+        "Nombre d'accidents avec arrêt entre 4 et 21 jours",
+        "Nombre d'accidents avec arrêt entre 22 et 89 jours",
+        "Nombre d'accidents avec arrêt de 90 jours ou plus"] %}
+
+    {% set i = 0 %}
+    {% for value in rassct %}
+        {% xlsrow %}
+            {% xlscell %} {{ ref[i] }} {% endxlscell %}
+            {% xlscell %}{{ value.rAccident1 }}{% endxlscell %}
+            {% xlscell %}{{ value.rAccident2 }}{% endxlscell %}
+        {% endxlsrow %}
+        {% set i = i +1 %}
+    {% endfor %}
+{% endxlssheet %}

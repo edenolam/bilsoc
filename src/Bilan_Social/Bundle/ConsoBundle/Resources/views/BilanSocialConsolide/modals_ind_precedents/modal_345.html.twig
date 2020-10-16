@@ -1,0 +1,35 @@
+
+
+<div class="modal fade" id="345" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Indicateur 345 de l'année {{ indicateur_precedent.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #efefef">
+
+                <table width="100%" id="ind345Table" class="table table-striped table-hover table-bordered">
+                    <tbody>
+                    <tr id="idTr1">
+                        <td style="min-width: 200px">3.4.5.1</td>
+                        <td style="min-width: 500px">Montant des dépenses de fonctionnement de la collectivité constatées au compte administratif de l'année de référence (opérations réelles, hors opérations d'ordre)</td>
+                        <td>{{ indicateur_precedent.indicateur.0.R_3441 }}</td>
+                    </tr>
+                    <tr id="idTr2">
+                        <td style="min-width: 200px">3.4.5.2</td>
+                        <td style="min-width: 500px">Charges de personnel (opérations réelles, hors opérations d'ordres)</td>
+                        <td>{{  indicateur_precedent.indicateur.0.R_3442 }}</td>
+                    </tr>
+                    <tr id="idTr3">
+                        <td style="min-width: 200px" colspan="2">Poids de la masse salarial</td>
+                        <td><span id="ratio"/>{{  indicateur_precedent.indicateur.0.R_3441 > 0 ? (((indicateur_precedent.indicateur.0.R_3442/indicateur_precedent.indicateur.0.R_3441) * 1000)|round /10)~'%' : "0%" }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

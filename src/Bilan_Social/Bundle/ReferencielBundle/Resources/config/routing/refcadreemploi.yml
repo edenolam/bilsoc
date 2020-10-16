@@ -1,0 +1,28 @@
+refcadreemploi_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefCadreEmploi:index" }
+    methods:  GET
+
+refcadreemploi_show:
+    path:     /{idCadrempl}/show
+    defaults: { _controller: "ReferencielBundle:RefCadreEmploi:show" }
+    methods:  GET
+
+refcadreemploi_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefCadreEmploi:new" }
+    methods:  [GET, POST]
+
+refcadreemploi_edit:
+    path:     /{idCadrempl}/edit
+    defaults: { _controller: "ReferencielBundle:RefCadreEmploi:edit" }
+    methods:  [GET, POST]
+
+refcadreemploi_delete:
+    path:     /{idCadrempl}/delete
+    defaults: { _controller: "ReferencielBundle:RefCadreEmploi:delete" }
+    methods:  DELETE
+
+csv_export_refcadreemploi:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefCadreEmploi:generateCsv" }

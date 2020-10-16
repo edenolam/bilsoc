@@ -1,0 +1,3 @@
+/* Met le boolean pour les droits mails a 1 pour tout les cdgs */
+
+UPDATE utilisateur SET BL_DROITMAIL = 1 WHERE ID_COLL iS NULL; 

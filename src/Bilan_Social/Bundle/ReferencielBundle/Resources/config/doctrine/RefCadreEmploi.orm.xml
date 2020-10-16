@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCadreEmploi" repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefCadreEmploiRepository" table="ref_cadre_emploi">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <indexes>
+            <index name="FK_CADREEMPLOI_CATEGORIE" columns="ID_CATE"/>
+            <index name="FK_CADREEMPLOI_FILIERE" columns="ID_FILI"/>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint columns="CD_CADREMPL" name="cdCadrempl"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idCadrempl" type="integer" column="ID_CADREMPL">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="refFiliere" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefFiliere">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+            <join-column name="ID_FILI" referenced-column-name="ID_FILI" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE" nullable="false"/>
+        </many-to-one>
+
+        <field name="cdCadrempl" type="string" column="CD_CADREMPL" length="50" nullable="true"/>
+        <field name="lbCadrempl" type="string" column="LB_CADREMPL" length="200" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="blCons" type="boolean" column="BL_CONS" nullable="true"/>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refCadreEmploi" />
+        <one-to-many field="bilanSocialAgentCadreEmploiOrigin" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refCadreEmploiOrigin" />
+        <one-to-many field="HeuSuppReaRemAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\HeuSuppReaRemAgent" mapped-by="refCadreEmploi" />
+        <one-to-many field="HeuCompReaRemAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\HeuCompReaRemAgent" mapped-by="refCadreEmploi" />
+         <one-to-many field="bilanSocialAgents_deta" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="RefCadreEmploiDeta"/>
+    </entity>
+</doctrine-mapping>

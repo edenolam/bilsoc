@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialTempsPleins" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscHanditorialTempsPleinsRepository" table="bsc_handitorial_temps_pleins">
+        <indexes>
+            <index name="FK_BSC_HANDITORIAL_TEMPS_PLEINS_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+        <id name="idBscHanditorialTempsPleins" type="integer" column="ID_BSC_HANDITORIAL_TEMPS_PLEINS">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscHanditorialTempsPleins">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <field name="tempsPleinH" type="integer" column="TEMPS_PLEIN_H" nullable="true" />
+        <field name="tempsPleinF" type="integer" column="TEMPS_PLEIN_F" nullable="true"/>
+        <field name="tempsPartielH" type="integer" column="TEMPS_PARTIEL_H" nullable="true" />
+        <field name="tempsPartielF" type="integer" column="TEMPS_PARTIEL_F" nullable="true"/>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

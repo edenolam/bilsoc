@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind141" table="ind_141" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind141Repository">
+    <indexes>
+      <index name="FK_141_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+      <index name="FK_141_POSITIONSTATUTAIRE" columns="ID_POSISTAT"/>
+    </indexes>
+	<unique-constraints>
+		<unique-constraint columns="ID_BILASOCICONS,ID_POSISTAT" name="IDXU1_IND_141"/>
+	</unique-constraints>
+    <id name="id141" type="integer" column="ID_141">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind141s">
+        <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+    </many-to-one>
+
+    <many-to-one field="refPositionStatutaire" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefPositionStatutaire">
+        <join-column name="ID_POSISTAT" referenced-column-name="ID_POSISTAT" nullable="false"/>
+    </many-to-one>
+
+    <field name="r1411" type="integer" column="R_1411" nullable="true"/>
+    <field name="r1412" type="integer" column="R_1412" nullable="true"/>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

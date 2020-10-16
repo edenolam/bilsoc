@@ -1,0 +1,181 @@
+
+    {% if formConditions414 is defined %}
+
+        {{ form_start(formConditions414) }}
+
+        <h5>
+            <b>4.1.4 - Document unique d'évaluation des risques professionnels (DUERP)</b>
+        </h5>
+
+        {{ form_row(formConditions414.q414) }}
+
+
+        <div id="ind414b" style="display: none;">
+            <table width="100%" id="ind414Table" class="table table-striped table-hover table-bordered">
+                <tbody>
+
+                    <tr id="dateCrea">
+                        <td>Année de création du document</td>
+                        <td style="text-align: center" id="r4141">{{ form_row(formConditions414.r4141) }}</td>
+                    </tr>
+
+                    <tr id="dateUpdate">
+                        <td>Année de la dernière mise à jour</td>
+                        <td style="text-align: center" id="r4142">{{ form_row(formConditions414.r4142) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <i>
+            <b>Précision:</b> le document unique est mis à jour (Article R4121-1 du code du travail)<br />
+            1° au moins chaque année;<br />
+            2° lors de toute décision d'aménagement important modifiant les conditions de santé et de sécurité ou les conditions de travail, au sens de l'article L. 4612-8;<br />
+            3° lorsqu'une information supplémentaire intéressant l'évaluation d'un risque dans une unité de travail est recueillie;<br /><br />
+            Toutefois pour les collectivités de moins de 11 agents, cette disposition peut être moins fréquente sous réserve que soit garanti un niveau équivalent de protection de la santé et de la sécurité des agents.
+        </i>
+
+        <h5 style="margin-top: 50px">
+            <b>4.1.5 - Plan de prévention des risques psychosociaux (RPS)</b>
+        </h5>
+       {{ form_row(formConditions414.q415) }}
+
+        <h5 style="margin-top: 50px">
+            <b>4.1.6 - Démarches de prévention des risques</b>
+        </h5>
+        <h5>
+            Votre collectivité a-t-elle mis en place les démarches de prévention suivantes :
+        </h5>
+        {{ form_row(formConditions414.q4161) }}
+        {{ form_row(formConditions414.q4162) }}
+        {{ form_row(formConditions414.q4163) }}
+
+
+        <h5 style="margin-top: 50px">
+            <b>4.1.7 - Registre de santé et de sécurité au travail</b>
+        </h5>
+        {{ form_row(formConditions414.q417) }}
+        <br/>
+
+        <i>
+            Ce registre est obligatoire, anciennement dénommé ""registre d'hygiène et de sécurité".<br />
+            Il est mis à disposition de tous les agents afin qu'ils retranscrivent leurs observations en matière d'hygiène et de sécurité dans leur travail quotidien, comme par exemple :<br />
+            - signaler un dysfonctionnement, une anomalie, des problèmes liés à l'ambiance de travail (encombrement, température, bruit...), à la formation, à la présence de produits ou équipements dangereux ou encore à l'environnement de travail (état des locaux, vétusté des installations...) ;<br />
+            - poser des questions relatives à la prévention des risques professionnels.<br />
+            Il s'agit d'un véritable outil de communication et de traçabilité.<br />
+        </i>
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formConditions414) }}
+
+        <script type="text/javascript">
+
+        {% if questionCollectiviteConsolide.q1 == true or questionCollectiviteConsolide.q3 == true or questionCollectiviteConsolide.q5 == true %}
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+
+            $(document).change();
+
+            function initForm414() {
+                var q414Res = $('input[name="bscForm414[q414]"]').filter(':checked').val();
+
+                if (q414Res == "1") {
+                    $('#ind414b').show();
+                    $('#ind414b input').prop('required',true);
+                } else {
+                    $('#ind414b').hide();
+                    $('#ind414b input').prop('required',false);
+                }
+
+            }
+
+            initForm414();
+            $("#bscForm414_q414").on("click", function () {
+                initForm414();
+            });
+
+        });
+        {% endif %}
+
+        function changedR414(obj) {
+
+        }
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                var qRes414 = $('input[name="bscForm414[q414]"]').filter(':checked').val();
+                var Res414Status = checkIfZeroOrNull(qRes414, 'ind414Table', 'ind414b');
+                $('#bscForm414_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+                if (Res414Status == true) {
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ path('bilan_conso_conditions_ind414_edit') }}',
+                        data: $('form').serialize(),
+                        success: function (responsejson) {
+
+                            if (responsejson.data == 1) {
+                                if (recordAuto) {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement automatique réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+                                } else {
+                                    $('#ind414').load('{{ path('bilan_conso_conditions_ind414_edit') }}', function () {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                        var next = $($this).next('.panel-heading');
+                                        if(next.length == 0) {
+                                            window.location.href = '{{ path('bilan_conso_formation_edit') }}';
+                                        }
+                                    });
+
+                                }
+                            } else if (responsejson.data == "-3") {
+                                $('#progImg').hide();
+                                $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                messageJS.dialog("open");
+                            } else {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                messageJS.dialog("open");
+                            }
+
+
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(xhr);
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                            messageJS.dialog("open");
+                        }
+
+                    });
+                } else {
+                    $('#progImg').hide();
+                }
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+

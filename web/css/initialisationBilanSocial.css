@@ -1,0 +1,26 @@
+i{font-size:30px;color:#4d4d4d;margin-top:10px;}
+p{margin:10px 0;}
+#wrapper{background-color:#efefef;}
+#container{padding:50px 20px;}
+.white-wrapper{padding:5px 15px;}
+#bl-bs.white-wrapper{padding:5px 0;}
+.white{background-color:#ffffff;border-radius:5px;padding:5px;}
+.choix-bs{padding:10px;}
+.choix-bs .white{padding-top:20px;height:190px;position:relative;}
+.choix-bs .white button{position:absolute;bottom:10px;left:5%;width:90%;}
+.flex{display:flex;}
+.div-100{height:100px;}
+.btn-100{width:100%;}
+.btn-oui, .btn-non, .btn-submit{height:45px;padding-top:10px;}
+.btn-oui,.modal .btn-primary{background-color:#1b1464;color:#ffffff;}
+.btn-non{background-color:#0b0b96;color:#ffffff;}
+.btn-classic{background-color:#ed1c24;color:#ffffff;}
+.btn-submit{margin:5px 0;padding-top:0;}
+.btn-oui:hover:not([disabled]), .btn-non:hover:not([disabled]), .btn-classic:hover:not([disabled]), .btn-oui:focus:not([disabled]), .btn-non:focus:not([disabled]), .btn-classic:focus:not([disabled]), .btn-oui.focus:not([disabled]), .btn-non.focus:not([disabled]), .btn-classic.focus:not([disabled]){color:#ffffff;font-weight: bold;}
+
+.grey .white{background-color:#b3b3b3 !important;}
+.grey .btn{background-color:#808080 !important;}
+
+input[type=radio]:not([disabled]){cursor:pointer;}
+
+.modal-footer{border:none;}

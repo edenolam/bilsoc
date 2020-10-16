@@ -1,0 +1,293 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+        <script type="text/javascript">
+
+            if (window.location.hash == '#historiqueEcha') {
+                $('#historiqueEchangeAnchor').trigger('click');
+            }
+
+            $('input,select').removeAttr('disabled');
+        </script>
+{#        uniquement l'administrateur est autorisé a modifier le numéro de siret#}
+         {% if not is_granted("ROLE_ADMIN") %}
+        <script type="text/javascript">
+            $('input,select').removeAttr('disabled');
+            
+            /* Application du ticket 3923 pour que le CDG et la collectivité ne peuvent pas modifier le nm de siret */
+            var inputReadOnly = $('input,select');
+           
+            inputReadOnly.each(function(){
+                if( this.id !== 'bilan_social_bundle_collectivitebundle_collectivite_nmSire'){
+                    $(this).removeAttr('readonly');
+                }
+            });
+        </script>
+        {% else%}
+        <script type="text/javascript">
+            $('input,select').removeAttr('disabled');
+            
+            /* Application du ticket 3923 pour que le CDG et la collectivité ne peuvent pas modifier le nm de siret */
+            var inputReadOnly = $('input,select');
+           
+            inputReadOnly.each(function(){
+             
+                    $(this).removeAttr('readonly');
+                
+            });
+        </script>
+            
+          {% endif %}
+    {#{% endif %}#}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Collectivités</a></li>
+                {% if app.request.get('id') == null %}
+                    <li class="active">Création d'une collectivité</li>
+                {% else %}
+                    <li class="active">Modification d'une collectivité</li>
+                {% endif %}
+            </ol>
+        </div>
+        {% if app.request.get('id') == null %}
+            <h3>Créer une collectivité</h3>
+        {% else %}
+            {% if droitsCdg is not null %}
+                <h3>Gérer la collectivité</h3>
+                <ul class="nav nav-tabs">
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CDG') %}
+                        <li><a class="active" data-toggle="tab" href="#archiver">Mise à jour SIRET</a></li>
+                    {% endif %}
+                    <li><a data-toggle="tab" href="#formulaire">Modification</a></li>
+                    {% if app.request.get('id') != null %}
+                        <li><a data-toggle="tab" href="#historiqueBS">Historique du bilan social</a></li>
+                        <li><a id="historiqueEchangeAnchor" data-toggle="tab" href="#historiqueEcha">Historique des échanges</a></li>
+
+                    {% endif %}
+                </ul>
+            {% endif %}
+        {% endif %}
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {% if msg.liste is defined %}
+                        <p>{{ msg.text|raw }}</p>
+                        <ul>
+                            <li>Login : {{ msg.liste.login }}</li>
+                            <li>Mot de passe : {{ msg.liste.psw }}</li>
+                        </ul>
+                    {% else %}
+                        {{ msg|raw }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if droitsCdg is not null or app.request.get('id') == null %}
+            <div class="tab-content">
+                <input type="hidden" id="idColl" value="{{ app.request.get('id') }}">
+                <div id="formulaire" class="tab-pane fade in active">
+                        {% if (historiqueCollectivite is not null and historiqueCollectivite is not empty and collectivite.blActi == 0) %}
+                            <div class="alert alert-success fade in" style='margin-top: 20px;'>
+                                <p>Cette collectivité a été archivée (voir onglet "Archiver").</p>
+                            </div>
+                        {% endif %}
+                        {% if droitsCdg != 'write' and droitsCdg != null %}
+                            <div class="alert alert-danger fade in" style='margin-top: 20px;'>
+                                <p>Vous n'avez pas les droits pour {% if app.request.get('id') != null %}modifier cette{% else %}ajouter une{% endif %} collectivité.</p>
+                            </div>
+                        {% endif %}
+                        {% if form is defined %}
+                            <div>
+                                {{ form_start(form) }}
+                                {% if historiqueCollectivite is not null and collectivite.blActi == 0 %}<fieldset disabled>{% endif %}
+                                
+                                {{ form_row(form.nmSire) }}
+                                {{ form_row(form.lbColl) }}
+                                {{ form_row(form.lbAdre) }}
+                                {{ form_row(form.cdPost) }}
+                                {{ form_row(form.lbVill) }}
+                                {{ form_row(form.cdInse) }}
+                                {{ form_row(form.refTypeCollectivite) }}
+                                {{ form_row(form.departement) }}
+                                <div class="form-group">
+                                    <label>Centre de gestion</label>
+                                    <select id="cdgDepa" class="form-control">
+                                        <option value='0'>Veuillez sélectionner un département</option>
+                                    </select>
+                                </div>
+                                {{ form_row(form.nmPopuInse) }}
+                                {{ form_row(form.dtPopuInse) }}
+{#                                {{ form_row(form.nmSurclasDemo) }}#}
+                                <div class='row'>
+                                    <div class='col-sm-5' style="padding-top: 15px;">
+                                        <label>Votre collectivité est-elle sur-classée ?</label>
+                                    </div>
+                                    <div class='col-sm-7'>
+                                        {{ form_widget(form.blSurclasDemo) }}
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class="col-md-12 surclassdemo" >
+                                        <div style='margin-right:10px;'>
+                                            {{ form_label(form.refTypeSurclassDemo) }}
+                                        </div>
+                                        <div class="margin10">
+                                            {{ form_widget(form.refTypeSurclassDemo) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form_row(form.blAffiColl) }}
+                                {{ form_row(form.blCtCdg) }}
+                                {{ form_row(form.blChsct) }}
+                                {{ form_row(form.blCollDgcl) }}
+                                {{ form_row(form.lbZoneEmplColl) }}
+                                {{ form_row(form.nmSireRata) }}
+                                {{ form_row(form.cmInfoComp) }}
+                                {% if form.cmMoti is defined %}{{ form_row(form.cmMoti) }}{% endif %}
+                                {% if droitsCdg == 'write' %}
+                                    {% if app.request.get('id') == null %}
+                                        <button type='submit' class='btn button-tableau'>Créer</button>
+                                    {% else %}
+                                        {{ form_row(form.modifier) }}
+                                    {% endif %}
+                                {% endif %}
+                                {% if historiqueCollectivite is not null and collectivite.blActi == 0 %}</fieldset>{% endif %}
+                                {{ form_end(form) }}
+                            </div>
+                        {% endif %}
+                </div>
+                {% if app.request.get('id') != null %}
+                    <div id="historiqueBS" class="tab-pane fade in">
+                        {% if historiqueCollectivite is not null and historiqueCollectivite is not empty and collectivite.blActi == 0 %}
+                            <div class="alert alert-success fade in" style='margin-top: 20px;'>
+                                <p>Cette collectivité a été archivée (voir onglet "Archiver").</p>
+                            </div>
+                        {% endif %}
+                        {% if historiqueBs is not null %}
+                            <table class="table table-hover align-center" id='table-etat-bs'>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Etat</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if historiqueBs is defined and historiqueBs is not empty %}
+                                        {% for evenement in historiqueBs %}
+                                            <tr>
+                                                <td>{{ evenement.dtChgt|localizeddate('none', 'none', null, null, 'd MMMM Y - H:mm') }}</td>
+                                                <td>{{ etat_saisie_bilan_social[evenement.fgStat] }}</td>
+                                                <td>{{ type_bilan_social[evenement.cdTypebilasoci] }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                    <div id="historiqueEcha" class="tab-pane fade in">
+                        {% if historiqueCollectivite is not null and historiqueCollectivite is not empty and collectivite.blActi == 0 %}
+                            <div class="alert alert-success fade in" style='margin-top: 20px;'>
+                                <p>Cette collectivité a été archivée (voir onglet "Archiver").</p>
+                            </div>
+                        {% endif %}
+                        {% if droitsCdg is not defined and droitsCdg != 'write' %}
+                            <div class="alert alert-danger fade in" style='margin-top: 20px;'>
+                                <p>Vous n'avez pas les droits pour ajouter ou modifier un échange.</p>
+                            </div>
+                        {% endif %}
+                        <div id="messageJS" class="alert fade in" style="display:none"></div>
+                        {% if droitsCdg is defined and droitsCdg == 'write' and collectivite.blActi == true %}
+                            <button class='btn button-tableau' id='ajout-echange'>Ajouter</button>
+                        {% endif %}
+                        <div id="table-echanges-wrapper">
+                            {% include '@Collectivite/Collectivite/tableauEchange.html.twig' %}
+                        </div>
+                        <div id="modal-wrapper">
+                            {% include '@Collectivite/Collectivite/modalEchange.html.twig' %}
+                        </div>
+                    </div>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CDG') %}
+                        <div id="archiver" class="tab-pane fade in active">
+                            {% if infoCollectivite is defined and infoCollectivite is not null %}
+                                <div class="alert alert-info" role="alert">
+                                    {#<p>Ancien SIRET : {{ infoCollectivite.ancienSiret }}</p>#}
+                                    <p>SIRET : {{ infoCollectivite.nouveauSiret }}</p>
+                                    <p>Nom de la collectivité ( Raison soaicle ) : {{ infoCollectivite.lbColl }}</p>
+                                    <p>Adresse : {{ infoCollectivite.lbAdress }}</p>
+                                    <p>Code Postal:  code postal</p>
+                                   {# <p>Departement:  {{ infoCollectivite.lbDepa }} - {{ infoCollectivite.cdDepa }}</p>#}
+                                    <p>Ville : {{ infoCollectivite.lbVille }}</p>
+                                    <p>Type de collectivité : Type de collectivité</p>
+                                </div>
+
+
+
+
+
+
+
+                            {%  endif  %}
+                            {% if historiqueCollectivite is null or historiqueCollectivite is empty and collectivite.blActi == 0 %}
+                                {% if formArchive is defined %}
+                                    {{ form_start(formArchive) }}
+                                        {{ form_row(formArchive.RefNatureMAJ) }}
+                                        {{ form_row(formArchive.nmNouvSire) }}
+                                        {{ form_row(formArchive.nmSireAbso) }}
+                                        {{ form_row(formArchive.dtArch) }}
+                                        {# {{ form_row(formArchive.archiver) }} #}
+                                    {{ form_end(formArchive) }}
+                                {% endif %}
+                            {% else %}
+                                <h3>Informations d'archivage</h3>
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Type d'achivage</th>
+                                            <th>Date d{% if historiqueCollectivite.lbTypeArch == 'fusion' or  historiqueCollectivite.lbTypeArch == 'dissolution'%}e {% else %}'{% endif %}{{ historiqueCollectivite.lbTypeArch }}</th>
+                                            <th>Ancien SIRET</th>
+                                            {% if historiqueCollectivite.nmNouvSire is not null %}<th>Nouveau SIRET</th>{% endif %}
+                                            {% if historiqueCollectivite.nmSireAbso is not null %}<th>SIRET d'absorption</th>{% endif %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ historiqueCollectivite.RefNatureMAJ.lbNatureMAJ }}</td>
+                                            <td>{{ historiqueCollectivite.dtArch|date('d M Y') }}</td>
+                                            <td>{{ historiqueCollectivite.nmAnciSire }}</td>
+                                            {% if historiqueCollectivite.nmNouvSire is not null %}<td>{{ historiqueCollectivite.nmNouvSire }}</td>{% endif %}
+                                            {% if historiqueCollectivite.nmSireAbso is not null %}<td>{{ historiqueCollectivite.nmSireAbso }}</td>{% endif %}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="alert alert-danger fade in" style='margin-top: 20px;'>
+                <p>Vous n'avez pas le droit d'accéder à cette collectivité.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

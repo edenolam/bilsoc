@@ -1,0 +1,35 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refavancementpromotionconcours_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refAvancementPromotionConcour.cdAvanpromconc }}</td>
+                </tr>
+                <tr>
+                    <th>libellé</th>
+                    <td>{{ refAvancementPromotionConcour.lbAvanpromconc }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refAvancementPromotionConcour.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refAvancementPromotionConcour} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refavancementpromotionconcours_edit', { 'idAvanpromconc': refAvancementPromotionConcour.idAvanpromconc}) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}
+

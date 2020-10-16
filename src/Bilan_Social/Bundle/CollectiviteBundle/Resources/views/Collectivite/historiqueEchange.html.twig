@@ -1,0 +1,68 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Mon compte</a></li>
+                <li class="active">Mes réponses</li>
+            </ol>
+        </div>
+        <h3>Mes réponses</h3>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if historiqueEcha is not null %}
+            <table class="table table-hover align-center" id='table-echanges'>
+                <thead>
+                    <tr>
+                        <th>Intitulé</th>
+                        <th>Type</th>
+                        <th>Commentaire</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% if historiqueEcha is defined and historiqueEcha is not empty %}
+                        {% for echange in historiqueEcha %}
+                            <tr>
+                                <td>{{ echange.lbIntiEcha }}</td>
+                                <td>{{ echange.lbTypeEcha }}</td>
+                                <td>{{ echange.cmEcha }}</td>
+                                <td>{{ echange.dtEcha|localizeddate('none', 'none', null, null, 'd MMMM Y') }}</td>
+                            </tr>
+                        {% endfor %}
+
+                    {% else %}
+                        <p>Aucun échange</p>
+                    {% endif %}
+                </tbody>
+            </table>
+        {% endif %}
+        {% if check is defined and check == false %}
+            <p>Vous n'avez pas les droits sur cette collectivité.</p>
+        {% endif %}
+    </div>
+{% endblock %}

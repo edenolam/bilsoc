@@ -1,0 +1,123 @@
+.boxAccueil div {
+    margin-bottom: 20px;
+}
+
+.bodyBilanSocial .titleAccueil {
+    margin-bottom: 40px;
+}
+
+/* EFFECT */
+
+
+figcaption {
+    position: relative;
+}
+
+.fondColor {
+    background-color: white;
+    height: 120px;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px black;
+}
+
+figure.effect-goliath {
+    background: #df4e4e;
+    border-radius: 5px;
+}
+
+figure.effect-goliath .fondColor,
+figure.effect-goliath h2 {
+    -webkit-transition: -webkit-transform 0.35s;
+    transition: transform 0.35s;
+}
+
+figure.effect-goliath .fondColor {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    width: 100%;
+}
+
+figure.effect-goliath h2,
+figure.effect-goliath .listMenu {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: initial;
+}
+
+figure.effect-goliath h2 {
+    top: -110px;
+    color: #df4e4e;
+}
+
+figure.effect-goliath .listMenu {
+    text-transform: none;
+    margin-top: -70px;
+    opacity: 0;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: translate3d(0,50px,0);
+    transform: translate3d(0,50px,0);
+    color: white;
+    font-size: 15px;
+    background: #df4e4e;
+    border-radius: 5px;
+    padding-bottom: 20px;
+}
+
+figure.effect-goliath .listMenu a {
+    display: block;
+    color: white;
+}
+
+figure.effect-goliath .listMenu a:hover {
+    color: #1a355d;
+}
+
+figure.effect-goliath:hover .fondColor {
+    -webkit-transform: translate3d(0,-80px,0);
+    transform: translate3d(0,-80px,0);
+    cursor: pointer;
+}
+
+figure.effect-goliath:hover h2 {
+    -webkit-transform: translate3d(0,-80px,0);
+    transform: translate3d(0,-80px,0);
+    cursor: pointer;
+}
+
+figure.effect-goliath:hover .listMenu {
+    opacity: 1;
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+
+figcaption h2 .glyphicon {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 40px;
+    color: #df4e4e;
+}
+
+
+/* CAROUSEL */
+
+.carousel {
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.carousel .carousel-control {
+    background-image: none !important;
+    width: 6%;
+}
+
+.carousel img {
+    width: 100%;
+}
+
+.carousel-inner {
+    border-radius: 5px;
+}

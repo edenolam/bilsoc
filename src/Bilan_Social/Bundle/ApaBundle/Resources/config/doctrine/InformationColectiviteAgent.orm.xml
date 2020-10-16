@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\InformationColectiviteAgent" repository-class="Bilan_Social\Bundle\ApaBundle\Repository\InformationColectiviteAgentRepository" table="information_colectivite_agent">
+        <indexes>
+            <index name="FK_INFOSCOLLECTIVITEAGENT_COLLECTIVTE" columns="ID_COLL"/>
+            <index name="FK_INFOSCOLLECTIVITEAGENT_ENQUETE" columns="ID_ENQU"/>
+        </indexes>
+        <id name="idInfocollagen" type="integer" column="ID_INFOCOLLAGEN">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="enquete" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+            <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" nullable="true"/>
+        </many-to-one>
+
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" nullable="true"/>
+        </many-to-one>
+        <field name="r2101" type="integer" column="R2101" nullable="true"/>
+        <field name="r2103" type="integer" column="R2103" nullable="true"/>
+        <field name="r2104" type="integer" column="R2104" nullable="true"/>
+        <field name="q425" type="integer" column="Q425" nullable="true"/>
+        <field name="q3110" type="integer" column="Q3110" nullable="true"/>
+        <field name="q3111" type="integer" column="Q3111" nullable="true"/>
+        <field name="r2102" type="integer" column="R2102" nullable="true"/>
+        <field name="rifseepContractuel" type="integer" column="RIFSEEP_CONTRACTUEL" nullable="true"/>
+        <field name="mpccm" type="integer" column="MPCCM" nullable="true"/>
+        <field name="titu341" type="integer" column="TITU_341" nullable="true"/>
+        <field name="stag341" type="integer" column="STAG_341" nullable="true"/>
+        <field name="contractuel342" type="integer" column="CONTRACTUEL_342" nullable="true"/>
+
+        <!-- 6.1.1 - CHSCT -->
+        <field name="nbJourActRep" type="integer" column="NB_JOUR_ACT_REP" nullable="true"/>
+        <field name="nbJourActSec" type="integer" column="NB_JOUR_ACT_SEC" nullable="true"/>
+
+        <field name="blChartemp" type="boolean" column="BL_CHARTEMP" nullable="true"/>
+        <field name="r2271" type="integer" column="R2271" nullable="true"/>
+        <field name="r2272" type="integer" column="R2272" nullable="true"/>
+        <field name="blAutoassusansconvtitu" type="integer" column="BL_AUTOASSUSANSCONVTITU" nullable="true"/>
+        <field name="blAutoassuavecconvtitu" type="integer" column="BL_AUTOASSUAVECCONVTITU" nullable="true"/>
+        <field name="blAutoassuavecconvcont" type="integer" column="BL_AUTOASSUAVECCONVCONT" nullable="true"/>
+        <field name="blAutoassusansconvcont" type="integer" column="BL_AUTOASSUSANSCONVCONT" nullable="true"/>
+        <field name="blRegiassuchom" type="integer" column="BL_REGIASSUCHOM" nullable="true"/>
+<!--        <field name="blHeursupp" type="boolean" column="BL_HEURSUPP" nullable="true"/>-->
+<!--        <field name="blHeurcomp" type="boolean" column="BL_HEURCOMP" nullable="true"/>-->
+        <field name="pcOnglets" type="integer" column="PC_ONGLETS" nullable="true"/>
+        <field name="mtDepefonccoll" type="integer" column="MT_DEPEFONCCOLL" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="mtCharpers" type="integer" column="MT_CHARPERS" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="lbRati" type="float" column="LB_RATI" precision="4" scale="1" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="blAgenaffeprev" type="boolean" column="BL_AGENAFFEPREV" nullable="true"/>
+        <field name="nbVisimedisponprevH" type="integer" column="NB_VISIMEDISPONPREV_H" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbVisimedisponprevF" type="integer" column="NB_VISIMEDISPONPREV_F" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="blDocurisqpro" type="integer" column="BL_DOCURISQPRO" nullable="true"/>
+        <field name="nmAnnecrea" type="integer" column="NM_ANNECREA" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nmAnnedernmaj" type="integer" column="NM_ANNEDERNMAJ" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="blPlanprevrisqpsysoci" type="integer" column="BL_PLANPREVRISQPSYSOCI" nullable="true"/>
+        <field name="blDemaprevtroumuscu" type="integer" column="BL_DEMAPREVTROUMUSCU" nullable="true"/>
+        <field name="blDemaprevrisqcanc" type="integer" column="BL_DEMAPREVRISQCANC" nullable="true"/>
+        <field name="blAutrdemaprev" type="integer" column="BL_AUTRDEMAPREV" nullable="true"/>
+        <field name="blRegisantsecutrav" type="boolean" column="BL_REGISANTSECUTRAV" nullable="true"/>
+        <field name="blActeviolphys" type="integer" column="BL_ACTEVIOLPHYS" nullable="true"/>
+        <field name="q432" type="integer" column="Q432" nullable="true"/>
+        <field name="q433" type="integer" column="Q433" nullable="true"/>
+        <field name="mtCnfptcotiobl" type="integer" column="MT_CNFPTCOTIOBL" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="mtCnfptsupcotiobl" type="integer" column="MT_CNFPTSUPCOTIOBL" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="mtAutrorga" type="integer" column="MT_AUTRORGA" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="mtFraidepla" type="integer" column="MT_FRAIDEPLA" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbReunct" type="integer" column="NB_REUNCT" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbReuncommiadmi" type="integer" column="NB_REUNCOMMIADMI" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbReuncommiconsu" type="integer" column="NB_REUNCOMMICONSU" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbReunchsct" type="integer" column="NB_REUNCHSCT" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="blCtsiegmissdevo" type="boolean" column="BL_CTSIEGMISSDEVO" nullable="true"/>
+        <field name="nbReunctmissdevo" type="integer" column="NB_REUNCTMISSDEVO" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbJourautospeacco" type="integer" column="NB_JOURAUTOSPEACCO" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbJourabse" type="integer" column="NB_JOURABSE" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbHeurglob" type="integer" column="NB_HEURGLOB" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbHeurdroisynd" type="integer" column="NB_HEURDROISYND" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbHeurutil" type="integer" column="NB_HEURUTIL" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbProtacco" type="integer" column="NB_PROTACCO" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="blGrev" type="boolean" column="BL_GREV" nullable="true"/>
+        <field name="blRecPersTemp" type="boolean" column="BL_RECPERSTEMP" nullable="true"/>
+        <field name="blSubvverscomi" type="boolean" column="BL_SUBVVERSCOMI" nullable="true"/>
+        <field name="blCotisubvcomiinter" type="boolean" column="BL_COTISUBVCOMIINTER" nullable="true"/>
+       <!-- <field name="blPresservcoll" type="boolean" column="BL_PRESSERVCOLL" nullable="true"/>-->
+        <field name="blPresservcomsoc" type="boolean" column="BL_PRESSERVCOMSOC" nullable="true"/>
+        <field name="blPlacresecrec" type="integer" column="BL_PLACRESECREC" nullable="true"/>
+        <field name="blAidefinagardenfa" type="integer" column="BL_AIDEFINAGARDENFA" nullable="true"/>
+        <field name="blAutrgardenfa" type="integer" column="BL_AUTRGARDENFA" nullable="true"/>
+        <field name="blAutrgardenfaDescription" type="text" column="BL_AUTRGARDENFADESCRIPTION" nullable="true"/>
+        <field name="blSantconvparti" type="boolean" column="BL_SANTCONVPARTI" nullable="true"/>
+        <field name="blSantcontregl" type="boolean" column="BL_SANTCONTREGL" nullable="true"/>
+        <field name="blPrevoconvparti" type="boolean" column="BL_PREVOCONVPARTI" nullable="true"/>
+        <field name="blPrevocontregl" type="boolean" column="BL_PREVOCONTREGL" nullable="true"/>
+        <field name="mtDepetota" type="integer" column="MT_DEPETOTA" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="mtDepeinsepershand" type="integer" column="MT_DEPEINSEPERSHAND" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="mtRealemplpershand" type="integer" column="MT_REALEMPLPERSHAND" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="mtDepeamentrav" type="integer" column="MT_DEPEAMENTRAV" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="nbTravhandemplperm" type="integer" column="NB_TRAVHANDEMPLPERM" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="txEmpldiretravhand" type="integer" column="TX_EMPLDIRETRAVHAND" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="txEmpllegatravhand" type="integer" column="TX_EMPLLEGATRAVHAND" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+
+
+        <one-to-many field="sante" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Sante" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="prevoyance" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Prevoyance" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="ActionPrevention" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\ActionPrevention" mapped-by="collectivite">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="ActeViolencePhysique" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\ActeViolencePhysique" mapped-by="collectivite">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="ConflitTravail" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\ConflitTravail" mapped-by="collectivite">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+<!--        <one-to-many field="Etpr114AnneePrecedente" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Etpr114AnneePrecedente" mapped-by="idInfocollagen">-->
+<!--            <cascade>-->
+<!--                <cascade-persist/>-->
+<!--                <cascade-merge/>-->
+<!--                <cascade-remove/>-->
+<!--            </cascade>-->
+<!--        </one-to-many>-->
+        <one-to-many field="infocoll_132" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InfoColl_132" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="infocoll_157" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InfoColl_157" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="infocoll_215" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InfoColl_215" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="infocoll_216" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InfoColl_216" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+<!--        <one-to-many field="Etpr124AnneePrecedente" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Etpr124AnneePrecedente" mapped-by="idInfocollagen">-->
+<!--            <cascade>-->
+<!--                <cascade-persist/>-->
+<!--                <cascade-merge/>-->
+<!--                <cascade-remove/>-->
+<!--            </cascade>-->
+<!--        </one-to-many>-->
+        <one-to-many field="Etpr131AnneePrecedente" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Etpr131AnneePrecedente" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="AgentSanctionDisciplinaire" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SanctionDisciplinaire" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="AgentSanctionDisciplinaireStagiaire" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SanctionDisciplinaireStagiaire" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="AgentSanctionDisciplinaireContractuel" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\SanctionDisciplinaireContractuel" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="AgentMotifSanctionDisciplinaire" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\MotifSanctionDisciplinaire" mapped-by="idInfocollagen">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <!-- 2.1.7-->
+        <field name="q2171" type="boolean" column="Q2171" nullable="true"></field>
+        <field name="r2171" type="boolean" column="R2171" nullable="true"></field>
+        <field name="q2172" type="boolean" column="Q2172" nullable="true"></field>
+        <field name="r2172" type="boolean" column="R2172" nullable="true"></field>
+        <field name="q2173" type="boolean" column="Q2173" nullable="true"></field>
+        <field name="r2173" type="boolean" column="R2173" nullable="true"></field>
+        <field name="q2174" type="boolean" column="Q2174" nullable="true"></field>
+        <field name="r2174" type="boolean" column="R2174" nullable="true"></field>
+
+
+
+
+        <field name="rassctExistEvalRPS" type="boolean" column="RASSCT_EXIST_EVAL_RPS" nullable="true"></field>
+        <field name="rassctMajEvalRPS" type="boolean" column="RASSCT_MAJ_EVAL_RPS" nullable="true"></field>
+        <field name="rassctDiagRPS" type="boolean" column="RASSCT_DIAG_RPS" nullable="true"></field>
+        <field name="rassctExistPrevActionSante" type="boolean" column="RASSCT_EXIST_PREV_ACTION_SANTE" nullable="true"></field>
+        <field name="rassctActiMedecPrev" type="boolean" column="RASSCT_ACTI_MEDEC_PREV" nullable="true"></field>
+        <field name="rassctDesiACFI" type="boolean" column="RASSCT_DESI_ACFI" nullable="true"></field>
+        <field name="rassctNbVisitACFI" type="integer" column="RASSCT_NB_VISIT_ACFI" nullable="true"></field>
+        <field name="rassctNbCtChsct" type="integer" column="RASSCT_NB_CT_CHSCT" nullable="true"></field>
+        <field name="rassctExistPrevEntreExte" type="boolean" column="RASSCT_EXIST_PREV_ENTRE_EXTE" nullable="true"></field>
+        <field name="rassctExistDiagPeniAnnex" type="boolean" column="RASSCT_EXIST_DIAG_PENI_ANNEX" nullable="true"></field>
+        <field name="rassctNeceFicheSuiviFact" type="boolean" column="RASSCT_NECE_FICHE_SUIVI_FACT" nullable="true"></field>
+        <field name="rassctExistFicheExpoPeni" type="boolean" column="RASSCT_EXIST_FICHE_EXPO_PENI" nullable="true"></field>
+        <field name="rassctNeceFicheAmiante" type="boolean" column="RASSCT_NECE_FICHE_AMIANTE" nullable="true"></field>
+        <field name="rassctExistFicheAmiante" type="boolean" column="RASSCT_EXIST_FICHE_AMIANTE" nullable="true"></field>
+
+        <field name="handMailCorres" type="string" column="HAND_MAIL_CORRES" nullable="true"></field>
+        <field name="handObliEmplTrav" type="boolean" column="HAND_OBLI_EMPL_TRAV" nullable="true"></field>
+        <field name="handNbAvisInapTempo" type="integer" column="HAND_NB_AVIS_INAP_TEMPO" nullable="true"></field>
+        <field name="handNbAvisInapDef" type="integer" column="HAND_NB_AVIS_INAP_DEF" nullable="true"></field>
+        <field name="handNbAvisInapDefToutesFonctions" type="integer" column="HAND_NB_AVIS_INAP_DEF_TOUTES_FONCTIONS" nullable="true"></field>
+        <field name="handNbRecla" type="integer" column="HAND_NB_RECLA" nullable="true"></field>
+        <field name="handNbRetraiteInval" type="integer" column="HAND_NB_RETRAITE_INVAL" nullable="true"></field>
+        <field name="handNbLicencInapPhysi" type="integer" column="HAND_NB_LICENC_INAP_PHYSI" nullable="true"></field>
+        <field name="handMesureAmenaPosteCondTrav" type="boolean" column="HAND_MESURE_AMENA_POSTE_COND_TRAV" nullable="true"></field>
+        <field name="handNbMesureAmenaPosteCondTrav" type="integer" column="HAND_NB_MESURE_AMENA_POSTE_COND_TRAV" nullable="true"></field>
+        <field name="handNbMesureAmenaPosteCondTravBoeth" type="integer" column="HAND_NB_MESURE_AMENA_POSTE_COND_TRAV_BOETH" nullable="true"></field>
+        <field name="handMesureChangAffec" type="boolean" column="HAND_MESURE_CHANG_AFFEC" nullable="true"></field>
+        <field name="handNbMesureChangAffec" type="integer" column="HAND_NB_MESURE_CHANG_AFFEC" nullable="true"></field>
+        <field name="handNbMesureChangAffecBoeth" type="integer" column="HAND_NB_MESURE_CHANG_AFFEC_BOETH" nullable="true"></field>
+        <field name="handDispoOffice" type="boolean" column="HAND_DISPO_OFFICE" nullable="true"></field>
+        <field name="handNbDispoOffice" type="integer" column="HAND_NB_DISPO_OFFICE" nullable="true"></field>
+        <field name="handNbDispoOfficeBoeth" type="integer" column="HAND_NB_DISPO_OFFICE_BOETH" nullable="true"></field>
+        <field name="handNbReclaDemande" type="integer" column="HAND_NB_RECLA_DEMANDE" nullable="true"></field>
+        <field name="handNbDemReclaInapAcciTravMaladiePro" type="integer" column="HAND_NB_DEM_RECLA_INAP_ACCI_TRAV_MALADIE_PRO" nullable="true"></field>
+        <field name="handNbReclaReal" type="integer" column="HAND_NB_RECLA_REAL" nullable="true"></field>
+        <field name="handNbReaReclaInapAcciTravMaladiePro" type="integer" column="HAND_NB_REA_RECLA_INAP_ACCI_TRAV_MALADIE_PRO" nullable="true"></field>
+
+        <field name="r13221" type="integer" column="R_13221_1" nullable="true"/>
+        <field name="r13222" type="integer" column="R_13222_1" nullable="true"/>
+        <field name="r13223" type="integer" column="R_13223_2" nullable="true"/>
+        <field name="r13224" type="integer" column="R_13224_2" nullable="true"/>
+
+
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

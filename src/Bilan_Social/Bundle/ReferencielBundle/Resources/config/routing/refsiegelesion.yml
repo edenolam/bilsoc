@@ -1,0 +1,28 @@
+refsiegelesion_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefSiegeLesion:index" }
+    methods:  GET
+
+refsiegelesion_show:
+    path:     /{idSiegelesi}/show
+    defaults: { _controller: "ReferencielBundle:RefSiegeLesion:show" }
+    methods:  GET
+
+refsiegelesion_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefSiegeLesion:new" }
+    methods:  [GET, POST]
+
+refsiegelesion_edit:
+    path:     /{idSiegelesi}/edit
+    defaults: { _controller: "ReferencielBundle:RefSiegeLesion:edit" }
+    methods:  [GET, POST]
+
+refsiegelesion_delete:
+    path:     /{idSiegelesi}/delete
+    defaults: { _controller: "ReferencielBundle:RefSiegeLesion:delete" }
+    methods:  DELETE
+    
+csv_export_refsiegelesion:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefSiegeLesion:generateCsv" }

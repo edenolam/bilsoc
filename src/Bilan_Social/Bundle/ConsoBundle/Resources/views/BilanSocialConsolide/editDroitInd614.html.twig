@@ -1,0 +1,404 @@
+{% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% set AnneeCamp1 = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+        {% set AnneeCamp1 = (campagne.nmAnne-1) %}
+    {% endif %}
+
+{% if formDroit614 is defined %}
+
+
+    {{ form_start(formDroit614) }}
+
+
+    <h5>6.1.4 - Nombre de sanctions disciplinaires prononcées dans l'année</h5>
+
+    Champ : les tableaux qui suivent concerne les fonctionnaires et les contractuels (sur un emploi permanent ou non permanent).
+    <br/>
+
+
+    <table width="100%" id="ind6141Table" class="table table-bordered text-center">
+
+        <tbody>
+        <tr class="filiTable">
+            <td colspan="1" rowspan="2" style="text-align: center">Fonctionnaires titulaires</td>
+            <td colspan="2" style="text-align: center">Nombre de sanctions prononcées concernant les fonctionnaires
+                titulaires (art. 89 de la loi du 26 janvier 1984) en {{ AnneeCamp }}</td>
+        </tr>
+        <tr>
+            <td colspan="1">Hommes</td>
+            <td colspan="1">Femmes</td>
+        </tr>
+        {% for tag in formDroit614.ind6141s %}
+
+            {% if tag.firstGroupe1.vars.value == true %}
+                <tr id="trTotalGroupe1" class="filiTable">
+                    <td>Sanctions du 1er groupe :</td>
+                    <td id="totalGroupe1">0</td>
+                    <td id="totalGroupe1_2">0</td>
+                </tr>
+            {% endif %}
+            {% if tag.firstGroupe2.vars.value == true %}
+                <tr id="trTotalGroupe2" class="filiTable">
+                    <td>Sanctions du 2e groupe :</td>
+                    <td id="totalGroupe2">0</td>
+                    <td id="totalGroupe2_2">0</td>
+                </tr>
+            {% endif %}
+            {% if tag.firstGroupe3.vars.value == true %}
+                <tr id="trTotalGroupe3" class="filiTable">
+                    <td>Sanctions du 3e groupe :</td>
+                    <td id="totalGroupe3">0</td>
+                    <td id="totalGroupe3_2">0</td>
+                </tr>
+            {% endif %}
+            {% if tag.firstGroupe4.vars.value == true %}
+                <tr id="trTotalGroupe4" class="filiTable">
+                    <td>Sanctions du 4e groupe :</td>
+                    <td id="totalGroupe4">0</td>
+                    <td id="totalGroupe4_2">0</td>
+                </tr>
+            {% endif %}
+
+
+                <tr id="6141idTr" idGroupe="{{ tag.groupe.vars.value }}">
+            {% if tag.groupe.vars.value == "1" or tag.groupe.vars.value == "2" or tag.groupe.vars.value == "3" or tag.groupe.vars.value == "4" %}
+                    <td style="min-width: 500px">
+                        {{ form_widget(tag.refSanctionDisciplinaire) }}
+                        {{ form_widget(tag.firstGroupe1) }}
+                        {{ form_widget(tag.firstGroupe2) }}
+                        {{ form_widget(tag.firstGroupe3) }}
+                        {{ form_widget(tag.firstGroupe4) }}
+                        {{ tag.refSanctionDisciplinaire.vars.data.lbSancdisc }}
+                    </td>
+
+                        {#Hommes#}
+                        <td id="r61411">{{ form_widget(tag.r61411) }}</td>
+                        {#Femmes#}
+                        <td id="r61412">{{ form_widget(tag.r61412) }}</td>
+            {% endif %}
+                </tr>
+
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <br/>
+
+
+
+    <table width="100%" id="ind6143Table" class="table table-bordered text-center">
+
+        <tbody>
+            <tr id="trTotalGroupe5" class="filiTable">
+                <td colspan="1" rowspan="2" style="text-align: center">Fonctionnaires stagiaires</td>
+                <td colspan="2">Nombre de sanctions prononcées concernant les fonctionnaires stagiaires (art. 6 du
+                    décret n° 92-1194 du 4 novembre 1992) en {{ AnneeCamp }}</td>
+            </tr>
+            <tr>
+                <td colspan="1">Hommes</td>
+                <td colspan="1">Femmes</td>
+            </tr>
+        {% for tag in formDroit614.ind6143s %}
+
+            <tr id="6141idTr" idGroupe="{{ tag.groupe.vars.value }}">
+
+                <td style="min-width: 500px">
+                    {{ form_widget(tag.refSanctionDisciplinaire) }}
+                    {{ form_widget(tag.firstGroupe1) }}
+                    {{ form_widget(tag.firstGroupe2) }}
+                    {{ form_widget(tag.firstGroupe3) }}
+                    {{ form_widget(tag.firstGroupe4) }}
+                    {{ form_widget(tag.firstGroupe5) }}
+                    {{ form_widget(tag.firstGroupe6) }}
+                    {{ form_widget(tag.groupe) }}
+                    {{ tag.refSanctionDisciplinaire.vars.data.lbSancdisc }}
+                </td>
+
+                {#Hommes#}
+                <td id="r61431">{{ form_widget(tag.r61431) }}</td>
+                {#Femmes#}
+                <td id="r61432">{{ form_widget(tag.r61432) }}</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <br/>
+
+    <table width="100%" id="ind6144Table" class="table table-bordered text-center">
+
+        <tbody>
+            <tr id="trTotalGroupe6" class="filiTable">
+                <td colspan="1" rowspan="2" style="text-align: center">Contractuels</td>
+                <td colspan="2">Nombre de sanctions prononcées concernant les agents contractuels (art. 36-1 du
+                    décret n° 88-145 du 15 février 1988) en {{ AnneeCamp }}</td>
+            </tr>
+            <tr>
+                <td colspan="1">Hommes</td>
+                <td colspan="1">Femmes</td>
+            </tr>
+        {% for tag in formDroit614.ind6144s %}
+
+            <tr id="6141idTr" idGroupe="{{ tag.groupe.vars.value }}">
+
+                <td style="min-width: 500px">
+                    {{ form_widget(tag.refSanctionDisciplinaire) }}
+                    {{ form_widget(tag.firstGroupe1) }}
+                    {{ form_widget(tag.firstGroupe2) }}
+                    {{ form_widget(tag.firstGroupe3) }}
+                    {{ form_widget(tag.firstGroupe4) }}
+                    {{ form_widget(tag.firstGroupe5) }}
+                    {{ form_widget(tag.firstGroupe6) }}
+                    {{ form_widget(tag.groupe) }}
+                    {{ tag.refSanctionDisciplinaire.vars.data.lbSancdisc }}
+                </td>
+
+                {#Hommes#}
+                <td id="r61441">{{ form_widget(tag.r61441) }}</td>
+                {#Femmes#}
+                <td id="r61442">{{ form_widget(tag.r61442) }}</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <br/>
+
+    <table width="100%" id="ind6142Table" class="table table-striped table-hover table-bordered">
+
+        <tbody>
+        <tr>
+            <th colspan="1" rowspan="2" style="text-align: center">Compter un motif par sanction</th>
+            <th colspan="1" style="text-align: center">Principal motif des sanctions prononcées concernant les agents
+                fonctionnaires, stagiaires et contractuels en {{ AnneeCamp }}</th>
+            <th colspan="1" style="text-align: center">Principal motif des sanctions prononcées concernant les agents
+                fonctionnaires, stagiaires et contractuels en {{ AnneeCamp }}</th>
+        </tr>
+        <tr>
+            <td colspan="1">Hommes</td>
+            <td colspan="1">Femmes</td>
+        </tr>
+        {% for tag in formDroit614.ind6142s %}
+
+            <tr id="6142idTr">
+                <td style="min-width: 500px">
+                    {{ form_widget(tag.refMotifSanctionDisciplinaire) }}
+                    {{ tag.refMotifSanctionDisciplinaire.vars.data.lbMotiSancdisc }}
+                </td>
+
+                {#Hommes#}
+                <td id="r61421">{{ form_widget(tag.r61421) }}</td>
+                {#Femmess#}
+                <td id="r61422">{{ form_widget(tag.r61422) }}</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <br/>
+
+    <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence"
+           name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1"/>
+
+    <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+    {{ form_end(formDroit614) }}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#bscForm_ind6141s').hide();
+            changeDetect = false;
+            $(document).change();
+            update6141();
+
+        });
+
+
+        function changedR6141(obj) {
+            update6141();
+        }
+
+        function changedR6142(obj) {
+
+        }
+
+        function update6141() {
+
+            var table6141 = document.getElementById('ind6141Table');
+            var rowLength6141 = table6141.rows.length;
+            var idxRowInput = 0;
+
+            var mtTot1_h = 0;
+            var mtTot2_h = 0;
+            var mtTot3_h = 0;
+            var mtTot4_h = 0;
+
+            var mtTot1_f = 0;
+            var mtTot2_f = 0;
+            var mtTot3_f = 0;
+            var mtTot4_f = 0;
+
+            for (var i = 2; i < rowLength6141; i++) {
+                var row = table6141.rows[i];
+                var cellLength = row.cells.length;
+
+                if (row.id.substring(0, 13) == "trTotalGroupe") {
+                    continue;
+                }
+
+                var groupe = row.getAttribute("idGroupe");
+                var groupe2 = row.getAttribute("idGroupe");
+
+                for (var y = 0; y < cellLength; y += 1) {
+                    var cell = row.cells[y];
+                    var cellValue_h;
+                    var cellValue_f;
+
+                    if (cell.id.substring(0, 6) == "r61411") {
+                        cellValue_h = $('#bscForm_ind6141s_' + idxRowInput + '_r61411').val();
+                        console.log($('#bscForm_ind6141s_' + idxRowInput + '_r61411'));
+                        console.log(cellValue_h);
+                        if (cellValue_h != "") {
+                            cellValue_h = parseInt(cellValue_h);
+
+                            if (groupe == '1') mtTot1_h += cellValue_h;
+                            if (groupe == '2') mtTot2_h += cellValue_h;
+                            if (groupe == '3') mtTot3_h += cellValue_h;
+                            if (groupe == '4') mtTot4_h += cellValue_h;
+                        }
+                    }
+                    if (cell.id.substring(0, 6) == "r61412") {
+                        cellValue_f = $('#bscForm_ind6141s_' + idxRowInput + '_r61412').val();
+                        if (cellValue_f != "") {
+                            cellValue_f = parseInt(cellValue_f);
+
+                            if (groupe2 == '1') mtTot1_f += cellValue_f;
+                            if (groupe2 == '2') mtTot2_f += cellValue_f;
+                            if (groupe2 == '3') mtTot3_f += cellValue_f;
+                            if (groupe2 == '4') mtTot4_f += cellValue_f;
+                        }
+                    }
+                }
+                idxRowInput++;
+
+            }// end for line
+
+
+            for (var i = 1; i < rowLength6141; i += 1) {
+                var row = table6141.rows[i];
+                var cellLength = row.cells.length;
+
+                for (var y = 0; y < cellLength; y += 1) {
+                    var cell = row.cells[y];
+
+
+                    if (row.id.substring(0, 14) == "trTotalGroupe1") {
+                        if (y == 1) cell.innerHTML = mtTot1_h;
+                        else if (y == 2) cell.innerHTML = mtTot1_f;
+                    }
+                    if (row.id.substring(0, 14) == "trTotalGroupe2") {
+                        if (y == 1) cell.innerHTML = mtTot2_h;
+                        else if (y == 2) cell.innerHTML = mtTot2_f;
+                    }
+                    if (row.id.substring(0, 14) == "trTotalGroupe3") {
+                        if (y == 1) cell.innerHTML = mtTot3_h;
+                        else if (y == 2) cell.innerHTML = mtTot3_f;
+                    }
+                    if (row.id.substring(0, 14) == "trTotalGroupe4") {
+                        if (y == 1) cell.innerHTML = mtTot4_h;
+                        else if (y == 2) cell.innerHTML = mtTot4_f;
+                    }
+                }
+
+            }
+
+        }
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_droit_ind614_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind614').load('{{ path('bilan_conso_droit_ind614_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if (next.length == 0) {
+                                        if (blRassct == true) {
+                                            window.location.href = '{{ path('bilan_conso_rassct_edit') }}';
+                                        } else if (blHand == true) {
+                                            window.location.href = '{{ path('bilan_conso_handitorial_edit') }}';
+                                        } else if (blGpeec == true) {
+                                            window.location.href = '{{ path('bilan_conso_gpeec_edit') }}';
+                                        }
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{ 'erreur.unique.violation'|trans }}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+{% endif %}
+

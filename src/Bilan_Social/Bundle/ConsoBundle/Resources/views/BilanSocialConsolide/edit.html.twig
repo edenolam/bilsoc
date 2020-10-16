@@ -1,0 +1,49 @@
+{% extends "@Conso/layout.html.twig" %}
+
+{% block body %}
+
+    {{ parent() }}
+     
+    <div class="col-xs-9">
+
+        <style media="screen" type="text/css">
+            .ind110 {
+                width: 50px;
+            }
+        </style>
+
+        <h3 class="title-ind"> 
+            {% if bilanConso != null and (bilanConso.fgStat == 0 or bilanConso.fgStat is null or bilanConso.fgStat == 4) %}
+                <button id='transmettre-cons' value='{{ bilanConso.idBilasocicons }}' class='btn button-tableau pull-right'>Transmettre</button>
+            {% endif %}
+
+            {# {% if bilanConso != null and is_granted('ROLE_PREVIOUS_ADMIN') and (bilanConso.fgStat == 1 or bilanConso.fgStat == 5) and canwrite == true %} #}
+            {% if bilanConso != null and is_granted('ROLE_CDG') and (bilanConso.fgStat == 1 or bilanConso.fgStat == 5) and canwrite == true %}
+                <button id='valider-cons' value='{{ bilanConso.idBilasocicons }}' class='btn button-tableau pull-right'>Valider</button>
+                <button id='refuser-cons' value='{{ bilanConso.idBilasocicons }}' class='btn button-tableau pull-right'>Refuser</button>
+            {% endif %}
+            
+            {# {% if bilanConso != null and is_granted('ROLE_PREVIOUS_ADMIN') and (bilanConso.fgStat == 2) and canwrite == true %} #}
+            {% if bilanConso != null and is_granted('ROLE_CDG') and (bilanConso.fgStat == 2) and canwrite == true %}
+                <button id='deverrouiller-cons' value='{{ bilanConso.idBilasocicons }}' class='btn button-tableau pull-right'>Déverrouiller</button>
+            {% endif %}
+        </h3>
+
+
+    
+        <div id="content"></div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(".menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+{% endblock %}

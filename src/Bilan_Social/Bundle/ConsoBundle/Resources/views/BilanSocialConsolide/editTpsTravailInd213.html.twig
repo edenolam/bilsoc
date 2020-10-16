@@ -1,0 +1,808 @@
+
+    {% if formTpsTrav213 is defined %}
+        {% set bilan_social_consolide = formTpsTrav213.vars.data %}
+        {{ form_start(formTpsTrav213) }}
+
+            <table width="100%" id="ind2131Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2" rowspan="2" style="text-align: center"></th>
+                        <th colspan="3" style="text-align: center">Nombre de contractuels sur emplois non permanents *</th>
+                        <th colspan="3" style="text-align: center">Nombre de journées d'absence</th>
+                        <th colspan="3" style="text-align: center">Nombre d'arrêts**</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th style="text-align: center">Total</th>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th style="text-align: center">Total</th>
+                        <th style="text-align: center">Hommes</th>
+                        <th style="text-align: center">Femmes</th>
+                        <th style="text-align: center">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formTpsTrav213.ind2131s %}
+                    {% set row_data = tag.vars.value %}
+                    {% set total_fonc = row_data.r21311 + row_data.r21312 %}
+                    {% set total_abs = row_data.r21313 + row_data.r21314 %}
+                    {% set total_arr = row_data.r21315 + row_data.r21316 %}
+                    <tr idTrMa="{{tag.refMotifAbsence.vars.value}}" id="2131idMa_{{tag.refMotifAbsence.vars.value}}">
+                        {% if tag.nbRowspan.vars.value != null  %}
+                        <td style="min-width: 100px" rowspan="{{tag.nbRowspan.vars.value}}">
+                            {% if tag.refMotifAbsence.vars.data.blAbsecomp == true %}
+                                Médical compressible
+                            {% endif %}
+                            {% if tag.refMotifAbsence.vars.data.blAbsemedi == true %}
+                                Médical non compressible
+                            {% endif %}
+                            {% if tag.refMotifAbsence.vars.data.blAbseautrrais == true %}
+                                Autres raisons
+                            {% endif %}
+                        </td>
+                        {% endif %}
+
+                        <td style="min-width: 300px">
+                            {{ form_widget(tag.refMotifAbsence) }}
+
+                            {{ form_widget(tag.nbRowspan) }}
+
+                            {{ tag.refMotifAbsence.vars.data.lbMotiabse}}
+                        </td>
+
+                        <td id="r21311" data-col-group='row_fonc'>
+                            {% if tag.refMotifAbsence.vars.data.cdMotiabse != 'ABS006' %}
+                                {{ form_widget(tag.r21311) }}
+                            {% endif %}
+                            {% if tag.refMotifAbsence.vars.data.cdMotiabse == 'ABS006' %}
+                                <div style="display : none">
+                                {{ form_widget(tag.r21311) }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td id="r21312" data-col-group='row_fonc'>{{ form_widget(tag.r21312) }}</td>
+                        <td data-col-id='row_fonc'>{{ total_fonc }}</td>
+                        <td id="r21313" data-col-group='row_abs'>
+                            {% if tag.refMotifAbsence.vars.data.cdMotiabse != 'ABS006' %}
+                                {{ form_widget(tag.r21313) }}
+                            {% endif %}
+                            {% if tag.refMotifAbsence.vars.data.cdMotiabse == 'ABS006' %}
+                                <div style="display : none">
+                                {{ form_widget(tag.r21313) }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td id="r21314" data-col-group='row_abs'>{{ form_widget(tag.r21314) }}</td>
+                        <td data-col-id='row_abs'>{{ total_abs }}</td>
+                        <td id="r21315" data-col-group='row_arr'>
+                            {% if tag.refMotifAbsence.vars.data.cdMotiabse != 'ABS006' and tag.refMotifAbsence.vars.data.cdMotiabse != 'ABS008'  %}
+                                {{ form_widget(tag.r21315) }}
+                            {% endif %}
+                            {% if tag.refMotifAbsence.vars.data.cdMotiabse == 'ABS006' or tag.refMotifAbsence.vars.data.cdMotiabse == 'ABS008'  %}
+                                <div style="display : none">
+                                {{ form_widget(tag.r21315) }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td id="r21316" data-col-group='row_arr'>
+                            {% if tag.refMotifAbsence.vars.data.cdMotiabse != 'ABS008'  %}
+                                {{ form_widget(tag.r21316) }}
+                            {% endif %}
+                            {% if tag.refMotifAbsence.vars.data.cdMotiabse == 'ABS008' %}
+                                <div style="display : none">
+                                {{ form_widget(tag.r21316) }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td data-col-id='row_arr'>{{ total_arr }}</td>
+                    </tr>
+
+                {% endfor %}
+                {% set total_row = bilan_social_consolide.getIndPileForBy('ind2131s') %}
+                {% set total_row_fonc = total_row.r21311 + total_row.r21312 %}
+                {% set total_row_abs  = total_row.r21313 + total_row.r21314 %}
+                {% set total_row_att  = total_row.r21315 + total_row.r21316 %}
+                 <tr class="filiTable row_totaux" id="total">
+                    <th class="filiTable" colspan="2" style="text-align: center">Total</th>
+                    <th class="filiTable" style="text-align: center" data-col-group='total_all_fonc'>{{ total_row.r21311 }}</th>
+                    <th class="filiTable" style="text-align: center" data-col-group='total_all_fonc'>{{ total_row.r21312 }}</th>
+                    <th class="filiTable" style="text-align: center" data-col-id='total_all_fonc'>{{ total_row_fonc }}</th>
+                    <th class="filiTable" style="text-align: center" data-col-group='total_all_abs'>{{ total_row.r21313 }}</th>
+                    <th class="filiTable" style="text-align: center" data-col-group='total_all_abs'>{{ total_row.r21314 }}</th>
+                    <th class="filiTable" style="text-align: center" data-col-id='total_all_abs'>{{ total_row_abs }}</th>
+                    <th class="filiTable" style="text-align: center" data-col-group='total_all_att'>{{ total_row.r21315 }}</th>
+                    <th class="filiTable" style="text-align: center" data-col-group='total_all_att'>{{ total_row.r21316 }}</th>
+                    <th class="filiTable" style="text-align: center" data-col-id='total_all_att'>{{ total_row_att }}</th>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <i>
+            * Si un agent a été absent sur plusieurs périodes dans l'année, ne le compter qu'une seule fois.<br/>
+            ** Si un arrêt est prolongé, ne le compter qu'une seule fois.  <br/>
+            <br/>
+            Les congés pour couches pathologiques sont à inclure : <br/>
+             (1) - en congé maternité pour les fonctionnaires<br/>
+              - en congé maladie pour les contractuels.<br/>
+            </i>
+            <br/><br/>
+
+            <table width="100%" id="ind2132Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="2" colspan="2" style="text-align: center"></th>
+                        <th colspan="11" style="text-align: center">Nombre de contractuels sur emplois non permanents *</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center">Moins de 25 ans</th>
+                        <th style="text-align: center">25 ans à 29 ans</th>
+                        <th style="text-align: center">30 ans à 34 ans</th>
+                        <th style="text-align: center">35 ans à 39 ans</th>
+                        <th style="text-align: center">40 ans à 44 ans</th>
+                        <th style="text-align: center">45 ans à 49 ans</th>
+                        <th style="text-align: center">50 ans à 54 ans</th>
+                        <th style="text-align: center">55 ans à 59 ans</th>
+                        <th style="text-align: center">60 ans à 64 ans</th>
+                        <th style="text-align: center">65 ans et plus</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for tag in formTpsTrav213.ind2132s %}
+                    <tr idTrMa="{{tag.refMotifAbsence.vars.value}}" id="2132idMa_{{tag.refMotifAbsence.vars.value}}">
+                        {% if tag.nbRowspan.vars.value != null  %}
+                        <td style="min-width: 100px" rowspan="{{tag.nbRowspan.vars.value}}">
+                            {% if tag.refMotifAbsence.vars.data.blAbsecomp == true %}
+                                Médical compressible
+                            {% endif %}
+                            {% if tag.refMotifAbsence.vars.data.blAbsemedi == true %}
+                                Médical non compressible
+                            {% endif %}
+
+                        </td>
+                        {% endif %}
+
+                        <td style="min-width: 300px">
+                            {{ form_widget(tag.refMotifAbsence) }}
+                            {{ form_widget(tag.nbRowspan) }}
+                            {{ form_widget(tag.total2131) }}
+                            {{ tag.refMotifAbsence.vars.data.lbMotiabse}}
+                            <br/>
+                            <span class="alerteConso">[2.1.3.1] = {{ tag.vars.value.total2131 }}</span>
+                        </td>
+
+                        <td id="r21321">{{ form_widget(tag.r21321) }}</td>
+                        <td id="r21322">{{ form_widget(tag.r21322) }}</td>
+                        <td id="r21323">{{ form_widget(tag.r21323) }}</td>
+                        <td id="r21324">{{ form_widget(tag.r21324) }}</td>
+                        <td id="r21325">{{ form_widget(tag.r21325) }}</td>
+                        <td id="r21326">{{ form_widget(tag.r21326) }}</td>
+                        <td id="r21327">{{ form_widget(tag.r21327) }}</td>
+                        <td id="r21328">{{ form_widget(tag.r21328) }}</td>
+                        <td id="r21329">{{ form_widget(tag.r21329) }}</td>
+                        <td id="r213210">{{ form_widget(tag.r213210) }}</td>
+                        <td class="filiTable" id="lineTot1" style="text-align: center">0</td>
+                    </tr>
+
+                {% endfor %}
+                 <tr class="filiTable" id="total">
+                    <th class="filiTable" colspan="2" style="text-align: center">Total</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+            <i>* si un agent a été absent sur plusieurs périodes dans l'année, ne le compter qu'une seule fois</i>
+            <br/><br/>
+
+
+            <table width="100%" id="ind2133Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="2" colspan="2" style="text-align: center"></th>
+                        <th colspan="11" style="text-align: center">Nombre de journées d'absence</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center">Moins de 25 ans</th>
+                        <th style="text-align: center">25 ans à 29 ans</th>
+                        <th style="text-align: center">30 ans à 34 ans</th>
+                        <th style="text-align: center">35 ans à 39 ans</th>
+                        <th style="text-align: center">40 ans à 44 ans</th>
+                        <th style="text-align: center">45 ans à 49 ans</th>
+                        <th style="text-align: center">50 ans à 54 ans</th>
+                        <th style="text-align: center">55 ans à 59 ans</th>
+                        <th style="text-align: center">60 ans à 64 ans</th>
+                        <th style="text-align: center">65 ans et plus</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for tag in formTpsTrav213.ind2133s %}
+                    <tr idTrMa="{{tag.refMotifAbsence.vars.value}}" id="2133idMa_{{tag.refMotifAbsence.vars.value}}">
+                        {% if tag.nbRowspan.vars.value != null  %}
+                        <td style="min-width: 100px" rowspan="{{tag.nbRowspan.vars.value}}">
+                            {% if tag.refMotifAbsence.vars.data.blAbsecomp == true %}
+                                Médical compressible
+                            {% endif %}
+                            {% if tag.refMotifAbsence.vars.data.blAbsemedi == true %}
+                                Médical non compressible
+                            {% endif %}
+                        </td>
+                        {% endif %}
+
+                        <td style="min-width: 300px">
+                            {{ form_widget(tag.refMotifAbsence) }}
+                            {{ form_widget(tag.nbRowspan) }}
+                            {{ form_widget(tag.total2131) }}
+                            {{ tag.refMotifAbsence.vars.data.lbMotiabse}}
+                            <br/>
+                            <span class="alerteConso">[2.1.3.1] = {{ tag.vars.value.total2131 }}</span>
+                        </td>
+
+                        <td id="r21331">{{ form_widget(tag.r21331) }}</td>
+                        <td id="r21332">{{ form_widget(tag.r21332) }}</td>
+                        <td id="r21333">{{ form_widget(tag.r21333) }}</td>
+                        <td id="r21334">{{ form_widget(tag.r21334) }}</td>
+                        <td id="r21335">{{ form_widget(tag.r21335) }}</td>
+                        <td id="r21336">{{ form_widget(tag.r21336) }}</td>
+                        <td id="r21337">{{ form_widget(tag.r21337) }}</td>
+                        <td id="r21338">{{ form_widget(tag.r21338) }}</td>
+                        <td id="r21339">{{ form_widget(tag.r21339) }}</td>
+                        <td id="r213310">{{ form_widget(tag.r213310) }}</td>
+                        <td class="filiTable" id="lineTot1" style="text-align: center">0</td>
+                    </tr>
+
+                {% endfor %}
+                 <tr class="filiTable" id="total">
+                    <th class="filiTable" colspan="2" style="text-align: center">Total</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                    <th class="filiTable" style="text-align: center">0</th>
+                </tr>
+                </tbody>
+            </table>
+
+            <br/>
+
+            <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                    $('#progImg').show();" data-valide="1" />
+
+            <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formTpsTrav213) }}
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            {% if questionCollectiviteConsolide.q1 == true   %}
+                $(document).change();
+                // update2131();
+                update2132();
+                update2133();
+
+            {% endif %}
+        });
+
+        function changedR2131(obj) {
+            // update2131();
+        }
+
+        function changedR2132(obj) {
+            update2132();
+        }
+
+        function changedR2133(obj) {
+            update2133();
+        }
+
+        function update2131(){
+            var table2131 = document.getElementById('ind2131Table');
+
+            var rowLength2131 = table2131.rows.length;
+            var idxRowInput = 0;
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+            var mtTot5 = 0;
+            var mtTot6 = 0;
+
+            for(var i=2; i<rowLength2131; i+=1){
+                // contenu de la ligne entière
+                var row = table2131.rows[i];
+                // nombre de cellule sur la ligne
+                var cellLength = row.cells.length;
+
+                var lineTotal = false;
+
+                if(row.id.substring(0, 5)=="total") {
+                    lineTotal = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1;
+                            mtTot1 = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2;
+                            mtTot2 = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = mtTot3;
+                            mtTot3 = 0;
+                        }
+                        else if(y==4) {
+                            cell.innerHTML = mtTot4;
+                            mtTot4 = 0;
+                        }
+                        else if(y==5) {
+                            cell.innerHTML = mtTot5;
+                            mtTot5 = 0;
+                        }
+                        else if(y==6) {
+                            cell.innerHTML = mtTot6;
+                            mtTot6 = 0;
+                        }
+
+                    }
+                }
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+                    if(cell.id.substring(0, 6)=="r21311") {
+                        if($('#bscForm213_ind2131s_'+idxRowInput+'_r21311').val()!="") {
+                            mtTot1 += parseInt($('#bscForm213_ind2131s_'+idxRowInput+'_r21311').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21312") {
+                        if($('#bscForm213_ind2131s_'+idxRowInput+'_r21312').val()!="") {
+                            mtTot2 += parseInt($('#bscForm213_ind2131s_'+idxRowInput+'_r21312').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21313") {
+                        if($('#bscForm213_ind2131s_'+idxRowInput+'_r21313').val()!="") {
+                            mtTot3 += parseFloat($('#bscForm213_ind2131s_'+idxRowInput+'_r21313').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21314") {
+                        if($('#bscForm213_ind2131s_'+idxRowInput+'_r21314').val()!="") {
+                            mtTot4 += parseFloat($('#bscForm213_ind2131s_'+idxRowInput+'_r21314').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21315") {
+                        if($('#bscForm213_ind2131s_'+idxRowInput+'_r21315').val()!="") {
+                            mtTot5 += parseInt($('#bscForm213_ind2131s_'+idxRowInput+'_r21315').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21316") {
+                        if($('#bscForm213_ind2131s_'+idxRowInput+'_r21316').val()!="") {
+                            mtTot6 += parseInt($('#bscForm213_ind2131s_'+idxRowInput+'_r21316').val());
+                        }
+                    }
+
+                }
+
+                if(!lineTotal) idxRowInput++;
+            }
+        }
+
+
+        function update2132(){
+            var table2132 = document.getElementById('ind2132Table');
+
+            var rowLength2132 = table2132.rows.length;
+            var idxRowInput = 0;
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+            var mtTot5 = 0;
+            var mtTot6 = 0;
+            var mtTot7 = 0;
+            var mtTot8 = 0;
+            var mtTot9 = 0;
+            var mtTot10 = 0;
+
+            for(var i=2; i<rowLength2132; i+=1){
+                // contenu de la ligne entière
+                var row = table2132.rows[i];
+                // nombre de cellule sur la ligne
+                var cellLength = row.cells.length;
+
+                var lineTotal = false;
+                var lineTot1 = 0;
+
+                if(row.id.substring(0, 5)=="total") {
+                    lineTotal = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1;
+                            lineTot1 += mtTot1;
+                            mtTot1 = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2;
+                            lineTot1 += mtTot2;
+                            mtTot2 = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = mtTot3;
+                            lineTot1 += mtTot3;
+                            mtTot3 = 0;
+                        }
+                        else if(y==4) {
+                            cell.innerHTML = mtTot4;
+                            lineTot1 += mtTot4;
+                            mtTot4 = 0;
+                        }
+                        else if(y==5) {
+                            cell.innerHTML = mtTot5;
+                            lineTot1 += mtTot5;
+                            mtTot5 = 0;
+                        }
+                        else if(y==6) {
+                            cell.innerHTML = mtTot6;
+                            lineTot1 += mtTot6;
+                            mtTot6 = 0;
+                        }
+                        else if(y==7) {
+                            cell.innerHTML = mtTot7;
+                            lineTot1 += mtTot7;
+                            mtTot7 = 0;
+                        }
+                        else if(y==8) {
+                            cell.innerHTML = mtTot8;
+                            lineTot1 += mtTot8;
+                            mtTot8 = 0;
+                        }
+                        else if(y==9) {
+                            cell.innerHTML = mtTot9;
+                            lineTot1 += mtTot9;
+                            mtTot9 = 0;
+                        }
+                        else if(y==10) {
+                            cell.innerHTML = mtTot10;
+                            lineTot1 += mtTot10;
+                            mtTot10 = 0;
+                        }
+                        else if (y == 11) {
+                            cell.innerHTML = lineTot1;
+                        }
+                    }
+                }
+
+                lineTot1 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 6)=="r21322") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21322').val()!="") {
+                            mtTot2 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21322').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21322').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21323") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21323').val()!="") {
+                            mtTot3 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21323').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21323').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21324") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21324').val()!="") {
+                            mtTot4 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21324').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21324').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21325") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21325').val()!="") {
+                            mtTot5 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21325').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21325').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21326") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21326').val()!="") {
+                            mtTot6 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21326').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21326').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21327") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21327').val()!="") {
+                            mtTot7 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21327').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21327').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21328") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21328').val()!="") {
+                            mtTot8 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21328').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21328').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21329") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21329').val()!="") {
+                            mtTot9 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21329').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21329').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 7)=="r213210") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r213210').val()!="") {
+                            mtTot10 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r213210').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r213210').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21321") {
+                        if($('#bscForm213_ind2132s_'+idxRowInput+'_r21321').val()!="") {
+                            mtTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21321').val());
+                            lineTot1 += parseInt($('#bscForm213_ind2132s_'+idxRowInput+'_r21321').val());
+                        }
+                    } else if (cell.id.substring(0, 8) == "lineTot1") {
+                        cell.innerHTML = lineTot1;
+                    }
+                }
+
+                if(!lineTotal) idxRowInput++;
+            }
+        }
+
+
+        function update2133(){
+            var table2133 = document.getElementById('ind2133Table');
+
+            var rowLength2133 = table2133.rows.length;
+            var idxRowInput = 0;
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+            var mtTot5 = 0;
+            var mtTot6 = 0;
+            var mtTot7 = 0;
+            var mtTot8 = 0;
+            var mtTot9 = 0;
+            var mtTot10 = 0;
+
+            for(var i=2; i<rowLength2133; i+=1){
+                // contenu de la ligne entière
+                var row = table2133.rows[i];
+                // nombre de cellule sur la ligne
+                var cellLength = row.cells.length;
+
+                var lineTotal = false;
+                var lineTot1 = 0;
+
+                if(row.id.substring(0, 5)=="total") {
+                    lineTotal = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1;
+                            lineTot1 += mtTot1;
+                            mtTot1 = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2;
+                            lineTot1 += mtTot2;
+                            mtTot2 = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = mtTot3;
+                            lineTot1 += mtTot3;
+                            mtTot3 = 0;
+                        }
+                        else if(y==4) {
+                            cell.innerHTML = mtTot4;
+                            lineTot1 += mtTot4;
+                            mtTot4 = 0;
+                        }
+                        else if(y==5) {
+                            cell.innerHTML = mtTot5;
+                            lineTot1 += mtTot5;
+                            mtTot5 = 0;
+                        }
+                        else if(y==6) {
+                            cell.innerHTML = mtTot6;
+                            lineTot1 += mtTot6;
+                            mtTot6 = 0;
+                        }
+                        else if(y==7) {
+                            cell.innerHTML = mtTot7;
+                            lineTot1 += mtTot7;
+                            mtTot7 = 0;
+                        }
+                        else if(y==8) {
+                            cell.innerHTML = mtTot8;
+                            lineTot1 += mtTot8;
+                            mtTot8 = 0;
+                        }
+                        else if(y==9) {
+                            cell.innerHTML = mtTot9;
+                            lineTot1 += mtTot9;
+                            mtTot9 = 0;
+                        }
+                        else if(y==10) {
+                            cell.innerHTML = mtTot10;
+                            lineTot1 += mtTot10;
+                            mtTot10 = 0;
+                        } else if (y == 11) {
+                            cell.innerHTML = lineTot1;
+                        }
+
+                    }
+                }
+
+                lineTot1 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 6)=="r21332") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21332').val()!="") {
+                            mtTot2 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21332').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21332').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21333") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21333').val()!="") {
+                            mtTot3 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21333').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21333').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21334") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21334').val()!="") {
+                            mtTot4 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21334').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21334').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21335") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21335').val()!="") {
+                            mtTot5 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21335').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21335').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21336") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21336').val()!="") {
+                            mtTot6 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21336').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21336').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21337") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21337').val()!="") {
+                            mtTot7 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21337').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21337').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21338") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21338').val()!="") {
+                            mtTot8 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21338').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21338').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21339") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21339').val()!="") {
+                            mtTot9 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21339').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21339').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 7)=="r213310") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r213310').val()!="") {
+                            mtTot10 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r213310').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r213310').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r21331") {
+                        if($('#bscForm213_ind2133s_'+idxRowInput+'_r21331').val()!="") {
+                            mtTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21331').val());
+                            lineTot1 += parseFloat($('#bscForm213_ind2133s_'+idxRowInput+'_r21331').val());
+                        }
+                    } else if (cell.id.substring(0, 8) == "lineTot1") {
+                        cell.innerHTML = lineTot1;
+                    }
+
+                }
+
+                if(!lineTotal) idxRowInput++;
+            }
+        }
+
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm213_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_tpstrav_ind213_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#ind213').load('{{ path('bilan_conso_tpstrav_ind213_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_remuneration_edit') }}';
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+
+

@@ -1,0 +1,123 @@
+<div class="modal fade" id="5113" tabindex="-1" role="dialog" aria-labelledby="5113" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="5113_title">Indicateur 5113 de l'année {{ indicateur_precedent.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #efefef">
+                {% if indicateur_precedent.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.annee }}
+                {% else %}
+                    <table width="100%" id="ind5113TablePrec" class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr entete="1">
+                                <th rowspan="4">Contractuels sur emploi permanent</th>
+                                <th style="text-align: center" colspan="6">Nombre total de journées de formation dispensées au cours de l'année par	</th>
+                                <th style="text-align: center" colspan="4">Nombre total d'agents occupant un emploi permanent ayant participé à un ou plusieurs types de formation dans l'année<br/>
+                                        ex : 1 agent a suivi 2 types de formations, il est comptabilisé dans chaque type de formation
+                                </th>
+                            </tr>
+
+
+
+                            <tr entete="1">
+                                <th style="text-align: center">CNFPT</th>
+                                <th style="text-align: center">CNFPT</th>
+                                <th rowspan="2" style="text-align: center">Collectivité</th>
+                                <th rowspan="2" style="text-align: center">Autres  organismes</th>
+                                <th rowspan="2" style="text-align: center">Total</th>
+                                <th rowspan="2" style="text-align: center">dont CPF (Compte Personnel de Formation)</th>
+                                <th rowspan="2" style="text-align: center">Hommes</th>
+                                <th rowspan="2" style="text-align: center">Femmes</th>
+                                <th rowspan="2" style="text-align: center">Total</th>
+                                <th rowspan="2" style="text-align: center">dont CPF</th>
+
+                            </tr>
+                            <tr entete="1">
+                                <th>au titre de la cotisation obligatoire</th>
+                                <th>au delà de la cotisation obligatoire</th>
+                            </tr>
+                            <tr entete="1">
+                                <th>5.1.1(1)</th>
+                                <th>5.1.1(2)</th>
+                                <th>5.1.1(3)</th>
+                                <th>5.1.1(4)</th>
+                                <th>5.1.1(5)</th>
+                                <th>5.1.1(6)</th>
+                                <th>5.1.1(7)</th>
+                                <th>5.1.1(8)</th>
+                                <th>5.1.1(9)</th>
+                                <th>5.1.1(10)</th>
+
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+
+                        {% set lastIdCate = '' %}
+                        {% for tag in indicateur_precedent.indicateur %}
+
+                            {% set totalLine1 = tag.R_51131 + tag.R_51132 + tag.R_51133 + tag.R_51134 %}
+                            {% set totalLine2 = tag.R_51135 + tag.R_51136 + tag.R_51137 %}
+
+                            {% if (tag.ID_CATE != lastIdCate) %}
+                                {% set lastIdCate = tag.ID_CATE %}
+                                <tr id="enteteCat" class="filiTable" >
+                                    {% if (lastIdCate == 1) %}
+                                        {% set CD_CATE = "A" %}
+                                    {% elseif (lastIdCate == 2) %}
+                                        {% set CD_CATE = "B" %}
+                                    {% elseif (lastIdCate == 3) %}
+                                        {% set CD_CATE = "C" %}
+                                    {% elseif (lastIdCate == 4) %}
+                                        {% set CD_CATE = "Agents et ouvriers territorriaux de Mayotte (AOTM)" %}
+                                    {% endif %}
+                                    <td colspan="11"><b>Pour les agents de catégorie {{ CD_CATE }}</b></td>
+                                </tr>
+                            {% endif %}
+
+                            <tr>
+                                <td style="min-width: 200px; text-align: center">
+                                    {{ tag.LB_FORM }}
+                                </td>
+                                <td id="r51131_prec">{{ tag.R_51131 }}</td>
+                                <td id="r51132_prec">{{ tag.R_51132 }}</td>
+                                <td id="r51133_prec">{{ tag.R_51133 }}</td>
+                                <td id="r51134_prec">{{ tag.R_51134 }}</td>
+                                <td class="filiTable" style="text-align: center">{{ totalLine1 }}</td>
+                                <td id="r51135_prec">{{ tag.R_51135 }}</td>
+                                <td id="r51136_prec">{{ tag.R_51136 }}</td>
+                                <td id="r51137_prec">{{ tag.R_51137 }}</td>
+                                <td class="filiTable" style="text-align: center">{{ totalLine2 }}</td>
+                                <td id="r51138_prec">{{ tag.R_51138 }}</td>
+                            </tr>
+
+                            {# {% if (tag.lastCateg.vars.value == true) %}
+                                <tr id="totalCateg5113_{{tag.refCategorie.vars.value}}" class="filiTable" >
+                                    <td><b>Total</b></td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                    <td style="text-align: center">0</td>
+                                </tr>
+                            {% endif %} #}
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

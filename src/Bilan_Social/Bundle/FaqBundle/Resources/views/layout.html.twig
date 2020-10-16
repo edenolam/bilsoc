@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('js/faqBundle/faq.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/faqBundle/question.js') }}"></script>
+
+
+{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('css/faq.css') }}" />
+{% endblock %}
+{% block header %}
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+    
+    
+{#<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Guide utilisateur</h2>
+      </div>
+      <div class="modal-body">
+          <p class='dlltext'>Cliquez sur l'image pour télécharger le Guide d'utilisateur PDF</p>
+        <a target="_blank" href="{{ asset("FAQ/guide_utilisateur.pdf") }}"> <img data-toggle="tooltip" data-placement="bottom" title="Guide utilisateur" src="{{ asset("img/icone/logo_guide_utilisateur.jpg") }}"/></a>
+      </div>
+    </div>
+  </div>
+</div>#}
+    
+{% endblock %}{# empty Twig template #}

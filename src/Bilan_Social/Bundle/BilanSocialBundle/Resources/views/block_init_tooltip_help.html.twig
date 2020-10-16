@@ -1,0 +1,8 @@
+{#
+ template du tooltip d'aide pour les blocs de la page d'initialisation du bilan social
+ #}
+{% if block.help_tooltip is defined %}
+    {% set tooltip_attr = "title='" ~ block.help_tooltip.txt|replace({"'":'"'})|raw ~ "' data-toggle='tooltip' " %}
+    {% set tooltip_attr = block.help_tooltip is defined and block.help_tooltip.html == true ? tooltip_attr ~ " data-html='true' " : tooltip_attr %}
+    <i class="fa fa-question-circle inti_tooltip_help" {{ tooltip_attr|raw }} ></i>
+{% endif %}

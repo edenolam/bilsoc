@@ -1,0 +1,28 @@
+refinaptitudeboeth_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefInaptitudeBoeth:index" }
+    methods:  GET
+
+refinaptitudeboeth_show:
+    path:     /{idInaptitudeboeth}/show
+    defaults: { _controller: "ReferencielBundle:RefInaptitudeBoeth:show" }
+    methods:  GET
+
+refinaptitudeboeth_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefInaptitudeBoeth:new" }
+    methods:  [GET, POST]
+
+refinaptitudeboeth_edit:
+    path:     /{idInaptitudeboeth}/edit
+    defaults: { _controller: "ReferencielBundle:RefInaptitudeBoeth:edit" }
+    methods:  [GET, POST]
+
+refinaptitudeboeth_delete:
+    path:     /{idInaptitudeboeth}/delete
+    defaults: { _controller: "ReferencielBundle:RefInaptitudeBoeth:delete" }
+    methods:  DELETE
+
+csv_export_refinaptitudeboeth:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefInaptitudeBoeth:generateCsv" }

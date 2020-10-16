@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\ParametrageAffichageCollectivite" repository-class="Bilan_Social\Bundle\CollectiviteBundle\Repository\ParametrageAffichageCollectiviteRepository" table="parametrage_affichage_collectivite">
+        <indexes>
+            <index name="FK_UTILISATEUR_PARAMETRAGE_AFFICHAGE_COLLECTIVITE" columns="ID_UTIL"/>
+        </indexes>
+        <id name="idParaAffiColl" type="integer" column="ID_PARA_AFFI_COLL">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="utilisateur" target-entity="Bilan_Social\Bundle\UserBundle\Entity\User">
+            <join-column name="ID_UTIL" referenced-column-name="ID_UTIL" nullable="true"/>
+        </many-to-one>
+        <field name="blTypeColl" type="boolean" column="BL_TYPE_COLL" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="blLibe" type="boolean" column="BL_LIBE" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="blSire" type="boolean" column="BL_SIRE" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="blAffiCdg" type="boolean" column="BL_AFFI_CDG" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="blDepa" type="boolean" column="BL_DEPA" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blCdPost" type="boolean" column="BL_CD_POST" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blLbVill" type="boolean" column="BL_LB_VILL" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blCdInse" type="boolean" column="BL_CD_INSE" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blNmPopuInse" type="boolean" column="BL_NM_POPU_INSE" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blSurclasDemo" type="boolean" column="BL_SURCLAS_DEMO" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blNmStratColl" type="boolean" column="BL_NM_STRAT_COLL" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blCtCdg" type="boolean" column="BL_CT_CDG" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blChsct" type="boolean" column="BL_CHSCT" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blCollDgcl" type="boolean" column="BL_COLL_DGCL" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field> 
+        <field name="blCdgColl" type="boolean" column="BL_CDG_COLL" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="blNbAgenPerm" type="boolean" column="BL_NB_AGEN_PERM" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="blNbAgenTitu" type="boolean" column="BL_NB_AGEN_TITU" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="blNbAgenContPerm" type="boolean" column="BL_NB_AGEN_CONT_PERM" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="blNbAgenContNonPerm" type="boolean" column="BL_NB_AGEN_CONT_NON_PERM" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="lbPara" type="string" column="LB_PARA" length="150" nullable="false">
+          <options>
+            <option name="fixed"/>
+          </options>
+        </field>
+        <field name="filtres" type="array" column="filtres" nullable="true"/>
+    </entity>
+</doctrine-mapping>

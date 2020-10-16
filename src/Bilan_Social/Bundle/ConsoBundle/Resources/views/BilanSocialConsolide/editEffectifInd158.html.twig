@@ -1,0 +1,476 @@
+{% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+    {% if formEffectif158 is defined %}
+        {% set bilan_social_consolide = formEffectif158.vars.data %}
+        {{ form_start(formEffectif158) }}
+
+            <h5>
+               Champ : le tableau qui suit concerne les agents titulaires
+            </h5>
+
+            <table width="100%" id="ind158Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center" rowspan="2">Nombre de fonctionnaires bénéficiant d'un avancement de grade en {{AnneeCamp}}</th>
+                        <th colspan="12" style="text-align: center">Suite à l'avancement de grade</th>
+                        <th rowspan="3" style="text-align: center">Total global</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" style="text-align: center">CATEGORIE A</th>
+                        <th colspan="3" style="text-align: center">CATEGORIE B</th>
+                        <th colspan="3" style="text-align: center">CATEGORIE C</th>
+                        <th colspan="3" style="text-align: center">Agents et Ouvriers territorriaux de Mayotte (AOTM)</th>
+                    </tr>
+                    <tr>
+                        <th>Filières</th>
+                        <th style="text-align: center">Hommes<br/>1.5.8 (1)</th>
+                        <th style="text-align: center">Femmes<br/>1.5.8 (2)</th>
+                        <th style="text-align: center">Total cat A</th>
+                        <th style="text-align: center">Hommes<br/>1.5.8 (3)</th>
+                        <th style="text-align: center">Femmes<br/>1.5.8 (4)</th>
+                        <th style="text-align: center">Total cat B</th>
+                        <th style="text-align: center">Hommes<br/>1.5.8 (5)</th>
+                        <th style="text-align: center">Femmes<br/>1.5.8 (6)</th>
+                        <th style="text-align: center">Total cat C</th>
+                        <th style="text-align: center">Hommes<br/>1.5.8 (7)</th>
+                        <th style="text-align: center">Femmes<br/>1.5.8 (8)</th>
+                        <th style="text-align: center">Total cat AOTM</th>
+                    </tr>
+                </thead>
+                <tbody class="ind_table_totaux">
+
+                {% for tag in formEffectif158.ind158sTemp %}
+                    {% set row_data = tag.vars.value %}
+                    {% set row_cata = row_data.r1581 + row_data.r1582 %}
+                    {% set row_catb = row_data.r1583 + row_data.r1584 %}
+                    {% set row_catc = row_data.r1585 + row_data.r1586 %}
+                    {% set row_aotm = row_data.r1587 + row_data.r1588 %}
+                    <tr id="158idTr_{{tag.refFiliere.vars.value}}" lineData="1">
+                        <td id="filiereTd" style="min-width: 200px">{{ form_widget(tag.refFiliere) }}
+                            {{ tag.refFiliere.vars.data.lbFili }}
+                        </td>
+                        <td id="r1581" data-col-group='row_cata'>{{ form_widget(tag.r1581) }}</td>
+                        <td id="r1582" data-col-group='row_cata'>{{ form_widget(tag.r1582) }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='row_cata' data-col-group='row_total'> {{ row_cata }} </td>
+                        <td id="r1583" data-col-group='row_catb'>{{ form_widget(tag.r1583) }}</td>
+                        <td id="r1584" data-col-group='row_catb'>{{ form_widget(tag.r1584) }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='row_catb' data-col-group='row_total'> {{ row_catb }} </td>
+                        <td id="r1585" data-col-group='row_catc'>{{ form_widget(tag.r1585) }}</td>
+                        <td id="r1586" data-col-group='row_catc'>{{ form_widget(tag.r1586) }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='row_catc' data-col-group='row_total'> {{ row_catc }} </td>
+                        <td id="r1587" data-col-group='row_aotm'>{{ form_widget(tag.r1587) }}</td>
+                        <td id="r1588" data-col-group='row_aotm'>{{ form_widget(tag.r1588) }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='row_aotm' data-col-group='row_total'> {{ row_aotm }} </td>
+                        <td style="text-align: center" class="filiTable" data-col-id='row_total'> {{ row_cata + row_catb + row_catc + row_aotm }} </td>
+                    </tr>
+                {% endfor %}
+
+                {% set total_fili = bilan_social_consolide.getIndPileForBy('ind158sTemp', ['refCadreEmploi','refFiliere','cdFili'],['AOTM','H','HH'],{'exclude':true}) %}
+                {% set total_fili_cata = total_fili.r1581 + total_fili.r1582 %}
+                {% set total_fili_catb = total_fili.r1583 + total_fili.r1584 %}
+                {% set total_fili_catc = total_fili.r1585 + total_fili.r1586 %}
+                {% set total_fili_aotm = total_fili.r1587 + total_fili.r1588 %}
+                    <tr class="filiTable row_totaux" id="totalFilGlo">
+                        <td><b>TOUTES FILIERES</b></td>
+                        <td style="text-align: center" data-col-group='total_fili_cata'>{{ total_fili.r1581 }}</td>
+                        <td style="text-align: center" data-col-group='total_fili_cata'>{{ total_fili.r1582 }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_fili_cata' data-col-group='fili_total'> {{ total_fili_cata }} </td>
+                        <td style="text-align: center" data-col-group='total_fili_catb'>{{ total_fili.r1583 }}</td>
+                        <td style="text-align: center" data-col-group='total_fili_catb'>{{ total_fili.r1584 }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_fili_catb' data-col-group='fili_total'> {{ total_fili_catb }} </td>
+                        <td style="text-align: center" data-col-group='total_fili_catc'>{{ total_fili.r1585 }}</td>
+                        <td style="text-align: center" data-col-group='total_fili_catc'>{{ total_fili.r1586 }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_fili_catc' data-col-group='fili_total'> {{ total_fili_catc }} </td>
+                        <td style="text-align: center" data-col-group='total_fili_aotm'>{{ total_fili.r1587 }}</td>
+                        <td style="text-align: center" data-col-group='total_fili_aotm'>{{ total_fili.r1588 }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_fili_aotm' data-col-group='fili_total'> {{ total_fili_aotm }} </td>
+                        <td style="text-align: center" class="filiTable" data-col-id='fili_total'> {{ total_fili_cata + total_fili_catb + total_fili_catc + total_fili_aotm }} </td>
+                    </tr>
+
+                    {% for tag in formEffectif158.ind158AotmsTemp %}
+                        {% set row_data = tag.vars.value %}
+                        {% set row_cata = row_data.r1581 + row_data.r1582 %}
+                        {% set row_catb = row_data.r1583 + row_data.r1584 %}
+                        {% set row_catc = row_data.r1585 + row_data.r1586 %}
+                        {% set row_aotm = row_data.r1587 + row_data.r1588 %}
+                        <tr id="158idTr_{{tag.refFiliere.vars.value}}" lineAotm="1">
+                            <td id="filiereTd" style="min-width: 200px">{{ form_widget(tag.refFiliere) }}
+                                {{ tag.refFiliere.vars.data.lbFili }}
+                            </td>
+                            <td id="r1581" data-col-group='total_row_cata'><span hidden>{{ form_widget(tag.r1581) }}</span></td>
+                            <td id="r1582" data-col-group='total_row_cata'><span hidden>{{ form_widget(tag.r1582) }}</span></td>
+                            <td style="text-align: center" class="filiTable" data-col-id='total_row_cata' data-col-group='total_row'><span hidden></span></td>
+                            <td id="r1583" data-col-group='total_row_catb'><span hidden>{{ form_widget(tag.r1583) }}</span></td>
+                            <td id="r1584" data-col-group='total_row_catb'><span hidden>{{ form_widget(tag.r1584) }}</span></td>
+                            <td style="text-align: center" class="filiTable" data-col-id='total_row_catb' data-col-group='total_row'><span hidden></span></td>
+                            <td id="r1585" data-col-group='total_row_catc'><span hidden>{{ form_widget(tag.r1585) }}</span></td>
+                            <td id="r1586" data-col-group='total_row_catc'><span hidden>{{ form_widget(tag.r1586) }}</span></td>
+                            <td style="text-align: center" class="filiTable" data-col-id='total_row_catc' data-col-group='total_row'><span hidden></span></td>
+                            <td id="r1587" data-col-group='total_row_aotm'>{{ form_widget(tag.r1587) }}</td>
+                            <td id="r1588" data-col-group='total_row_aotm'>{{ form_widget(tag.r1588) }}</td>
+                            <td style="text-align: center" class="filiTable" data-col-id='total_row_aotm' data-col-group='total_row'> {{ row_aotm }} </td>
+                            <td style="text-align: center" class="filiTable" data-col-id='total_row' > {{ row_aotm }} </td>
+                        </tr>
+                    {% endfor %}
+                {% set total_all_ind = bilan_social_consolide.getIndPileForBy('ind158s',['refCadreEmploi','refFiliere','cdFili'],['H','HH'],{'exclude':true}) %}
+                {% set total_all_ind_cata = total_all_ind.r1581 + total_all_ind.r1582 %}
+                {% set total_all_ind_catb = total_all_ind.r1583 + total_all_ind.r1584 %}
+                {% set total_all_ind_catc = total_all_ind.r1585 + total_all_ind.r1586 %}
+                {% set total_all_ind_aotm = total_all_ind.r1587 + total_all_ind.r1588 %}
+                    <tr class="filiTable row_totaux" id="totalGlo">
+                        <td><b>TOTAL</b></td>
+                        <td style="text-align: center" data-col-group='total_all_ind_cata'>{{ total_all_ind.r1581 }}</td>
+                        <td style="text-align: center" data-col-group='total_all_ind_cata'>{{ total_all_ind.r1582 }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_all_ind_cata' data-col-group='total_all'> {{ total_all_ind_cata }} </td>
+                        <td style="text-align: center" data-col-group='total_all_ind_catb'>{{ total_all_ind.r1583 }}</td>
+                        <td style="text-align: center" data-col-group='total_all_ind_catb'>{{ total_all_ind.r1584 }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_all_ind_catb' data-col-group='total_all'> {{ total_all_ind_catb }} </td>
+                        <td style="text-align: center" data-col-group='total_all_ind_catc'>{{ total_all_ind.r1585 }}</td>
+                        <td style="text-align: center" data-col-group='total_all_ind_catc'>{{ total_all_ind.r1586 }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_all_ind_catc' data-col-group='total_all'> {{ total_all_ind_catc }} </td>
+                        <td style="text-align: center" data-col-group='total_all_ind_aotm'>{{ total_all_ind.r1587 }}</td>
+                        <td style="text-align: center" data-col-group='total_all_ind_aotm'>{{ total_all_ind.r1588 }}</td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_all_ind_aotm' data-col-group='total_all'> {{ total_all_ind_aotm }} </td>
+                        <td style="text-align: center" class="filiTable" data-col-id='total_all' > {{ total_all_ind_cata + total_all_ind_catb + total_all_ind_catc + total_all_ind_aotm }} </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <br />
+
+            <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+            <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formEffectif158) }}
+
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            // TABLEAU 158
+            {% if questionCollectiviteConsolide.q1 == true    %}
+                $(document).change();
+                // update158(true);
+
+            {% endif %}
+
+        });
+
+
+        function changedR158(obj) {
+            // update158(false);
+        }
+
+        function update158(onInit){
+            var table158 = document.getElementById('ind158Table');
+
+            var rowLength158 = table158.rows.length;
+            var idxRowInput = 0;
+            var idxRowInputAotm = 0;
+
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+            var mtTot5 = 0;
+            var mtTot6 = 0;
+            var mtTot7 = 0;
+            var mtTot8 = 0;
+
+            var mtTot1FilGlo = 0;
+            var mtTot2FilGlo = 0;
+            var mtTot3FilGlo = 0;
+            var mtTot4FilGlo = 0;
+            var mtTot5FilGlo = 0;
+            var mtTot6FilGlo = 0;
+            var mtTot7FilGlo = 0;
+            var mtTot8FilGlo = 0;
+
+            var mtTot1Glo = 0;
+            var mtTot2Glo = 0;
+            var mtTot3Glo = 0;
+            var mtTot4Glo = 0;
+            var mtTot5Glo = 0;
+            var mtTot6Glo = 0;
+            var mtTot7Glo = 0;
+            var mtTot8Glo = 0;
+
+            for(var i=3; i<rowLength158; i+=1){
+                var row = table158.rows[i];
+
+                var lineAotm = false;
+                var lineData = false;
+
+                if(row.getAttribute("lineAotm") != undefined) {
+                    lineAotm = true;
+                }
+                if(row.getAttribute("lineData") != undefined) {
+                    lineData = true;
+                }
+
+                var cellLength = row.cells.length;
+
+                var lineTotalFilGlo = false;
+
+                if(row.id.substring(0, 11)=="totalFilGlo") {
+                    lineTotalFilGlo = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1FilGlo;
+                            mtTot1FilGlo = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2FilGlo;
+                            mtTot2FilGlo = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = mtTot3FilGlo;
+                            mtTot3FilGlo = 0;
+                        }
+                        else if(y==4) {
+                            cell.innerHTML = mtTot4FilGlo;
+                            mtTot4FilGlo = 0;
+                        }
+                        else if(y==5) {
+                            cell.innerHTML = mtTot5FilGlo;
+                            mtTot5FilGlo = 0;
+                        }
+                        else if(y==6) {
+                            cell.innerHTML = mtTot6FilGlo;
+                            mtTot6FilGlo = 0;
+                        }
+                        else if(y==7) {
+                            cell.innerHTML = mtTot7FilGlo;
+                            mtTot7FilGlo = 0;
+                        }
+                        else if(y==8) {
+                            cell.innerHTML = mtTot8FilGlo;
+                            mtTot8FilGlo = 0;
+                        }
+                    }
+                }
+
+                if(row.id.substring(0, 8)=="totalGlo") {
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1Glo;
+                            mtTot1Glo = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2Glo;
+                            mtTot2Glo = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = mtTot3Glo;
+                            mtTot3Glo = 0;
+                        }
+                        else if(y==4) {
+                            cell.innerHTML = mtTot4Glo;
+                            mtTot4Glo = 0;
+                        }
+                        else if(y==5) {
+                            cell.innerHTML = mtTot5Glo;
+                            mtTot5Glo = 0;
+                        }
+                        else if(y==6) {
+                            cell.innerHTML = mtTot6Glo;
+                            mtTot6Glo = 0;
+                        }
+                        else if(y==7) {
+                            cell.innerHTML = mtTot7Glo;
+                            mtTot7Glo = 0;
+                        }
+                        else if(y==8) {
+                            cell.innerHTML = mtTot8Glo;
+                            mtTot8Glo = 0;
+                        }
+                    }
+                }
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+                    var cellValue;
+
+                    if(cell.id.substring(0, 5)=="r1581") {
+                        cellValue = $('#bscForm158_ind158' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1581').val();
+                        if (cellValue != "") {
+                            cellValue = parseInt(cellValue);
+                            if(!lineAotm) {
+                                mtTot1 += cellValue;
+                                mtTot1FilGlo += cellValue;
+                            }
+                            mtTot1Glo += cellValue;
+                        }
+                        //if($('#bscForm158_ind158s_'+idxRowInput+'_r1581').val()!="") {
+                        //    mtTot1 += parseInt($('#bscForm158_ind158s_'+idxRowInput+'_r1581').val());
+                        //    mtTot1FilGlo += parseInt($('#bscForm158_ind158s_'+idxRowInput+'_r1581').val());
+                        //}
+                    }
+                    else if(cell.id.substring(0, 5)=="r1582") {
+                        cellValue = $('#bscForm158_ind158' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1582').val();
+                        if (cellValue != "") {
+                            cellValue = parseInt(cellValue);
+                            if(!lineAotm) {
+                                mtTot2 += cellValue;
+                                mtTot2FilGlo += cellValue;
+                            }
+                            mtTot2Glo += cellValue;
+                        }
+                    }
+                    else if(cell.id.substring(0, 5)=="r1583") {
+                        cellValue = $('#bscForm158_ind158' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1583').val();
+                        if (cellValue != "") {
+                            cellValue = parseInt(cellValue);
+                            if(!lineAotm) {
+                                mtTot3 += cellValue;
+                                mtTot3FilGlo += cellValue;
+                            }
+                            mtTot3Glo += cellValue;
+                        }
+                    }
+                    else if(cell.id.substring(0, 5)=="r1584") {
+                        cellValue = $('#bscForm158_ind158' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1584').val();
+                        if (cellValue != "") {
+                            cellValue = parseInt(cellValue);
+                            if(!lineAotm) {
+                                mtTot4 += cellValue;
+                                mtTot4FilGlo += cellValue;
+                            }
+                            mtTot4Glo += cellValue;
+                        }
+                    }
+                    else if(cell.id.substring(0, 5)=="r1585") {
+                        cellValue = $('#bscForm158_ind158' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1585').val();
+                        if (cellValue != "") {
+                            cellValue = parseInt(cellValue);
+                            if(!lineAotm) {
+                                mtTot5 += cellValue;
+                                mtTot5FilGlo += cellValue;
+                            }
+                            mtTot5Glo += cellValue;
+                        }
+                    }
+                    else if(cell.id.substring(0, 5)=="r1586") {
+                        cellValue = $('#bscForm158_ind158' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1586').val();
+                        if (cellValue != "") {
+                            cellValue = parseInt(cellValue);
+                            if(!lineAotm) {
+                                mtTot6 += cellValue;
+                                mtTot6FilGlo += cellValue;
+                            }
+                            mtTot6Glo += cellValue;
+                        }
+                    }
+                    else if(cell.id.substring(0, 5)=="r1587") {
+                        cellValue = $('#bscForm158_ind158' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1587').val();
+                        if (cellValue != "") {
+                            cellValue = parseInt(cellValue);
+                            if(!lineAotm) {
+                                mtTot7 += cellValue;
+                                mtTot7FilGlo += cellValue;
+                            }
+                            mtTot7Glo += cellValue;
+                        }
+                    }
+                    else if(cell.id.substring(0, 5)=="r1588") {
+                        cellValue = $('#bscForm158_ind158' + (lineAotm ? 'Aotm' : '') + 'sTemp_' + (lineAotm ? idxRowInputAotm : idxRowInput) + '_r1588').val();
+                        if (cellValue != "") {
+                            cellValue = parseInt(cellValue);
+                            if(!lineAotm) {
+                                mtTot8 += cellValue;
+                                mtTot8FilGlo += cellValue;
+                            }
+                            mtTot8Glo += cellValue;
+                        }
+                    }
+                }
+
+                if(lineData) idxRowInput++;
+                if(lineAotm) idxRowInputAotm++;
+            }// end for line
+
+        }
+
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscForm158_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_effectif_ind158_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+
+                            } else {
+                                $('#ind158').load('{{ path('bilan_conso_effectif_ind158_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        window.location.href = '{{ path('bilan_conso_tpstrav_edit') }}';
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+        </script>
+    {% endif %}

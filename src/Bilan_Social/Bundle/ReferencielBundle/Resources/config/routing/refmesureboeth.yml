@@ -1,0 +1,28 @@
+refmesureboeth_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMesureBoeth:index" }
+    methods:  GET
+
+refmesureboeth_show:
+    path:     /{idMesureboeth}/show
+    defaults: { _controller: "ReferencielBundle:RefMesureBoeth:show" }
+    methods:  GET
+
+refmesureboeth_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMesureBoeth:new" }
+    methods:  [GET, POST]
+
+refmesureboeth_edit:
+    path:     /{idMesureboeth}/edit
+    defaults: { _controller: "ReferencielBundle:RefMesureBoeth:edit" }
+    methods:  [GET, POST]
+
+refmesureboeth_delete:
+    path:     /{idMesureboeth}/delete
+    defaults: { _controller: "ReferencielBundle:RefMesureBoeth:delete" }
+    methods:  DELETE
+
+csv_export_refmesureboeth:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMesureBoeth:generateCsv" }

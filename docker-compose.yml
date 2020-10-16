@@ -1,0 +1,97 @@
+version: '2.2'
+
+services:
+  web:
+    build:
+      context: docker/apache-php7/
+    ports:
+      - "8000:80"
+    environment:
+      - ENTRYPOINT_KEY=012F3C2256F2D1D8C3B2B0020AA28C4E678CC60788EFB17400A6B55892347817
+      #- "PHP_OPCACHE_ENABLED": 'false'
+      #- "PHP_IDE_CONFIG": serverName=bilan_social
+
+    links:
+      - mysql
+      - bsfm
+    volumes:
+      - .:/var/www/html/iorga
+    depends_on:
+      mysql:
+        condition: service_started
+    networks:
+      - cig
+
+  mysql:
+    image: mysql:5.7.20
+    environment:
+      - MYSQL_DATABASE=bs
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=
+    command: --sql-mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+    ports:
+      - "13306:3306"
+    volumes:
+      - ~/.docker_local_folders/bilansocial/mysql:/var/lib/mysql
+    networks:
+      - cig
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8082:80"
+    links:
+      - mysql:db
+    networks:
+      - cig
+
+  bsfm:
+    build:
+      context: ../bilan_social_filemanager/
+    environment:
+      - SPRING_PROFILES_ACTIVE=localdocker
+      - SERVER_PORT=8081
+      - MYSQL_DATABASE=bsfm
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=bs
+      - MYSQL_ROOT_PASSWORD=bs
+    ports:
+      - "8081:8081"
+    links:
+      - mysql:mysql
+    volumes:
+      - ~/.docker_local_folders/bilansocial/bsfm/logs:/logs
+      - ~/.docker_local_folders/bilansocial/bsfm/nas-drive:/nas-drive
+    depends_on:
+      mysql:
+        condition: service_started
+      clamav:
+        condition: service_started
+    networks:
+      - cig
+
+  clamav:
+    container_name: clamav
+    image: mkodockx/docker-clamav
+    networks:
+      - cig
+
+#  gpeec:
+#    build:
+#      context: ../gpeec/docker
+#    environment:
+#      - ENTRYPOINT_KEY=012F3C2256F2D1D8C3B2B0020AA28C4E678CC60788EFB17400A6B55892347817
+#      - BACK_TO_BS_URL=http://localhost:8000/app_dev.php
+#      - SHOW_DEVHOME=1
+#      - DATABASE_GPEEC_URL=mysql://root:bs@mysql:3306/gpeec
+#      - DATABASE_BS_URL=mysql://root:bs@mysql:3306/bs
+#    ports:
+#      - "8080:8000"
+#    command: bash -c 'cd /app; yarn install && yarn encore dev --watch & php composer.phar install && php bin/console cache:clear && symfony server:start --no-tls'
+#    volumes:
+#      - ../gpeec/:/app
+#    networks:
+#      - cig
+
+networks:
+  cig:

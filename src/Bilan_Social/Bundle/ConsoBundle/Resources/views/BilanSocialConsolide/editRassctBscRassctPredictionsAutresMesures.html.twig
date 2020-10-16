@@ -1,0 +1,138 @@
+
+    {% if formRassctBscRassctPredictionsAutresMesures is defined %}
+
+        {{ form_start(formRassctBscRassctPredictionsAutresMesures) }}
+
+            <div id="PredictionsAutresMesures">
+                {% form_theme formRassctBscRassctPredictionsAutresMesures '@Conso/fields_child.html.twig' %}
+                <table class="table" id="mytablepredictionsautresmesures">
+                    <thead>
+                        <tr>
+                            <th>Mesures techniques</th>
+                            <th>Mesures organisationnelles</th>
+                            <th id="button"><button id="add-PredictionsAutresMesures" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></th>
+                        </tr>
+                    </thead>
+{#                    {{ dump(formRassctBscRassctPredictionsAutresMesures) }}s#}
+                    <tbody class="tablepredictionsautresmesures" data-prototype="{{ form_widget(formRassctBscRassctPredictionsAutresMesures.bscRassctPredictionsAutresMesures.vars.prototype)|e ('html_attr') }}">
+                        {% for PredictionsAutreMesure in formRassctBscRassctPredictionsAutresMesures.bscRassctPredictionsAutresMesures %}
+                            <tr>
+                                {{ form(PredictionsAutreMesure) }}<td><button type="button" class="remove btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>
+
+                            <tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <br/>
+
+            <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                    $('#progImg').show();" data-valide="1" />
+
+            <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formRassctBscRassctPredictionsAutresMesures) }}
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            $(document).change();
+            var button = '<td><button type="button" class="remove btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>';
+            $('#add-PredictionsAutresMesures').on('click', function () {
+                // console.log("test");
+                /* get the number of lign tr inside the form  */
+                var indexTr = $(document).find('.tablepredictionsautresmesures tr').length;
+                indexTr += 1;
+                /* get the prototype of the current form */
+                var formLine = $('.tablepredictionsautresmesures').data('prototype');
+                /* replace all __name__ in prototype by the current index */
+                var newFormLine = formLine.replace(/__name__/g, indexTr)
+
+                $('.tablepredictionsautresmesures').append('<tr>' + newFormLine + button + '</tr>');
+                {#$(document).change();#}
+            });
+
+            $(document).on('click', '.remove', function (e) {
+                $(this).closest('tr').remove();
+            });
+
+        });
+
+        function changedR224(obj) {
+        }
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscFormRassctPredictionsAutresMesures_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_rassct_bscRassctPredictionsAutresMesures_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#predictions_autres_mesures').load('{{ path('bilan_conso_rassct_bscRassctPredictionsAutresMesures_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        if (blHand == true) {
+                                            window.location.href = '{{ path('bilan_conso_handitorial_edit') }}';
+                                        } else if (blGpeec == true) {
+                                            window.location.href = '{{ path('bilan_conso_gpeec_edit') }}';
+                                        }
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+
+

@@ -1,0 +1,78 @@
+.bodyBilanSocial h1 {
+    margin-top: 0 !important;
+}
+
+
+/* FORM */
+
+.containerFormCompte {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.containerFormCompte label {
+    color: #1a355d;
+    font-weight: 400;
+}
+
+.containerFormCompte button {
+    background-color: #df4e4e;
+    color: white;
+    border-color: #df4e4e;
+}
+
+.containerFormCompte .form-group:first-child, .containerFormCompte .form-group:nth-child(5), .containerFormCompte .form-group:nth-child(6) {
+    width: 25%;
+}
+
+.containerFormCompte .form-group:nth-child(2) {
+    width: 50%;
+}
+
+.containerFormCompte .form-group:nth-child(3), .containerFormCompte .form-group:nth-child(4) {
+    width: 25%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.containerButton button {
+    padding: 0 10px;
+}
+
+.containerForm {
+    margin-top: 20px;
+}
+
+
+/* TABLE */
+
+
+.containerForm thead {
+    background-color: #df4e4e;
+    color: white;
+}
+
+.containerForm th:first-child {
+    border-radius: 5px 0 0 0;
+}
+
+.containerForm th:last-child {
+    border-radius: 0 5px 0 0;
+
+}
+
+.table>thead>tr>th {
+    text-align: center;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th  {
+    text-align: center;
+}
+
+.table>tbody>tr>td:first-child {
+    text-align: left;
+}

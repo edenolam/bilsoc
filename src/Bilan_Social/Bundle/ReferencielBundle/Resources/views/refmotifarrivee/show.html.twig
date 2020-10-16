@@ -1,0 +1,48 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refmotifarrivee_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refMotifArrivee.cdMotiarri }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refMotifArrivee.lbMotiarri }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        {% for statut in refMotifArrivee.statutMotifArrivees %}
+                            - {{ statut.lbStat }}
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Code N4DS</th>
+                    <td>{{ refMotifArrivee.cdMotiN4ds }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refMotifArrivee.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refMotifArrivee} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refmotifarrivee_edit', { 'idMotiarri': refMotifArrivee.idMotiarri }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+        </ul>
+    {% endblock %}

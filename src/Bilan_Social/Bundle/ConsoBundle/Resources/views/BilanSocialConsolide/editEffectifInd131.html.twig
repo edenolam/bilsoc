@@ -1,0 +1,705 @@
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% set AnneeCamp1 = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+        {% set AnneeCamp1 = campagne.nmAnne -1%}
+    {% endif %}
+
+    {% if formEffectif131 is defined %}
+
+        {% if indicateur_precedent.0 is defined and indicateur_precedent.0 is not null %}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/btn_modal.html.twig', { 'indicateur_precedent': indicateur_precedent.0, 'name' : 1311 }) }}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/modal_1311.html.twig', { 'indicateur_precedent': indicateur_precedent.0 }) }}
+        {% endif %}
+
+        {{ form_start(formEffectif131) }}
+
+                    <h4>
+               Champ : recenser les agents contractuels exerçant sur un emploi non permanent, qu'ils soient de droit public ou de droit privé.<br/>
+                Ces agents ne doivent pas avoir été recensés à l'indicateur 1.2.1.
+            </h4>
+
+            <h4>
+               1.3.1 (1)  - Autres contractuels sur emploi non permanent en effectif physique
+            </h4>
+
+            <h5>
+                Remarque : si une personne a exercé au cours de plusieurs périodes distinctes, ne la compter qu’une fois.
+            </h5>
+
+            <table width="100%" id="ind1311Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center"></th>
+
+                        {% if questionCollectiviteConsolide.q6 == true  %}
+                        <th colspan="3" style="text-align: center">Effectifs rémunérés au 31 décembre {{AnneeCamp}}</th>
+                        {% endif %}
+
+                        <th style="text-align: center"></th>
+
+                        {% if questionCollectiviteConsolide.q5 == true  %}
+                        <th colspan="3" style="text-align: center">Effectifs ayant été rémunéré au moins un jour entre le 1er janvier {{AnneeCamp}} et le 31 décembre {{AnneeCamp}}</th>
+                        {% endif %}
+
+                    </tr>
+
+                    <tr>
+                        <th style="text-align: center"></th>
+
+                        {% if questionCollectiviteConsolide.q6 == true  %}
+                        <th style="text-align: center">Hommes 1.3.1(1.1)</th>
+                        <th style="text-align: center">Femmes 1.3.1(1.2)</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        {% endif %}
+
+                        <th style="text-align: center"></th>
+
+                        {% if questionCollectiviteConsolide.q5 == true  %}
+                        <th style="text-align: center">Hommes 1.3.1(1.3)</th>
+                        <th style="text-align: center">Femmes 1.3.1(1.4)</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        {% endif %}
+
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                {% for tag in formEffectif131.ind1311sTemp %}
+                    <tr id="1311idTr_{{tag.refEmploiNonPermanent.vars.value}}" idEmpl="{{tag.refEmploiNonPermanent.vars.value}}">
+                        <td id="emplTd" style="min-width: 200px">{{ form_widget(tag.refEmploiNonPermanent) }}</td>
+
+                        {% if questionCollectiviteConsolide.q6 == true  %}
+                        <td id="r13111">{{ form_widget(tag.r13111) }}</td>
+                        <td id="r13112">{{ form_widget(tag.r13112) }}</td>
+                        <td class="filiTable" id="lineTot1" style="text-align: center">0</td>
+                        {% endif %}
+
+                        <td></td>
+
+                        {% if questionCollectiviteConsolide.q5 == true  %}
+                        <td id="r13113">{{ form_widget(tag.r13113) }}</td>
+                        <td id="r13114">{{ form_widget(tag.r13114) }}</td>
+                        <td class="filiTable" id="lineTot2" style="text-align: center">0</td>
+                        {% endif %}
+
+                    </tr>
+                {% endfor %}
+
+                 {% if formEffectif131.ind1311sTemp.count() > 0  %}
+                    <tr class="filiTable" id="totalGlo">
+                        <td><b>TOTAL</b></td>
+
+                        {% if questionCollectiviteConsolide.q6 == true  %}
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        {% endif %}
+
+                        <td style="text-align: center"></td>
+
+                        {% if questionCollectiviteConsolide.q5 == true  %}
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        {% endif %}
+
+                    </tr>
+                {% endif %}
+
+                </tbody>
+            </table>
+
+            <br/>
+
+            <h4>
+               1.3.1 (2)  - Autres contractuels sur emploi non permanent en Equivalent Temps Plein Rémunéré
+            </h4>
+
+            <h5>
+                Champ : les tableaux qui suivent concernent les agents contractuels sur emploi non permanent ayant Rémunéré au moins un jour durant l'année {{AnneeCamp}} et {{AnneeCamp1}} (hors heures supplémentaires et/ou complémentaires)<br/>
+                <br/>
+                Définition : L'Equivalent Temps Plein Rémunéré (ETPR) est proportionnel à l'activité d'un agent, mesuré par sa quotité de temps de travail et par sa période d'activité sur l'année. Par contre, il ne tient pas compte des heures supplémentaires et/ou complémentaires effectuées par l'agent.<br/>
+                La base de calcul pour un agent à temps plein (35 heures), ayant été en activité toute l'année {{AnneeCamp}} correspond au nombre total d'heures payées soit 1 820 heures pour une année.<br/>
+                Les périodes d'activités rémunérées sont incluses dans cette base de calcul (congés, absence, etc...).<br/>
+                Le nombre d'heures payées à prendre en compte pour un agent, est le nombre d'heures annuelles cumulées au dernier jour de l'année ou au dernier jour de travail de l'agent.<br/>
+                <br/>
+                Exemple : <br/>
+                - pour un  agent à temps complet, soit 1 820 heures Rémunérées > 1 ETPR<br/>
+                - pour un agent à temps non complet, par exemple à 1 204 heures Rémunérées > 1 204 / 1 820 = 0,66 ETPR<br/>
+            </h5>
+
+            {% if indicateur_precedent.1 is defined and indicateur_precedent.1 is not null %}
+                {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/btn_modal.html.twig', { 'indicateur_precedent': indicateur_precedent.1, 'name' : 1312 }) }}
+                {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/modal_1312.html.twig', { 'indicateur_precedent': indicateur_precedent.1 }) }}
+            {% endif %}
+
+            <table width="100%" id="ind1312Table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center"></th>
+
+{#                        {% if questionCollectiviteConsolide.q6 == true  %}#}
+{#                        <th colspan="3" style="text-align: center">Nombre de contractuels sur emploi non permanent en Equivalent Temps Plein Rémunéré sur l'année {{AnneeCamp1}}</th>#}
+{#                        {% endif %}#}
+
+                        <th style="text-align: center"></th>
+
+                        {% if questionCollectiviteConsolide.q5 == true  %}
+                        <th colspan="3" style="text-align: center">Nombre de contractuels sur emploi non permanent en Equivalent Temps Plein Rémunéré sur l'année {{AnneeCamp}}</th>
+                        {% endif %}
+
+                    </tr>
+
+                    <tr>
+                        <th style="text-align: center"></th>
+
+{#                        {% if questionCollectiviteConsolide.q6 == true  %}#}
+{#                        <th style="text-align: center">Hommes 1.3.1(2.1)</th>#}
+{#                        <th style="text-align: center">Femmes 1.3.1(2.2)</th>#}
+{#                        <th class="filiTable" style="text-align: center">Total</th>#}
+{#                        {% endif %}#}
+
+                        <th style="text-align: center"></th>
+
+                        {% if questionCollectiviteConsolide.q5 == true  %}
+                        <th style="text-align: center">Hommes 1.3.1(2.3)</th>
+                        <th style="text-align: center">Femmes 1.3.1(2.4)</th>
+                        <th class="filiTable" style="text-align: center">Total</th>
+                        {% endif %}
+
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                {% for tag in formEffectif131.ind1312sTemp %}
+                    <tr id="1312idTr_{{tag.refEmploiNonPermanent.vars.value}}" idEmpl="{{tag.refEmploiNonPermanent.vars.value}}">
+                        <td id="emplTd" style="min-width: 200px">{{ form_widget(tag.refEmploiNonPermanent) }}</td>
+
+{#                        {% if questionCollectiviteConsolide.q6 == true  %}#}
+{#                        <td id="r13121">{{ form_widget(tag.r13121) }}</td>#}
+{#                        <td id="r13122">{{ form_widget(tag.r13122) }}</td>#}
+{#                        <td class="filiTable" id="lineTot1" style="text-align: center">0</td>#}
+{#                        {% endif %}#}
+
+                        <td></td>
+
+                        {% if questionCollectiviteConsolide.q5 == true  %}
+                        <td id="r13123">{{ form_widget(tag.r13123) }}</td>
+                        <td id="r13124">{{ form_widget(tag.r13124) }}</td>
+                        <td class="filiTable" id="lineTot2" style="text-align: center">0</td>
+                        {% endif %}
+
+                    </tr>
+                {% endfor %}
+
+                 {% if formEffectif131.ind1312sTemp.count() > 0  %}
+                    <tr class="filiTable" id="totalGlo">
+                        <td><b>TOTAL</b></td>
+
+{#                        {% if questionCollectiviteConsolide.q6 == true  %}#}
+{#                        <td style="text-align: center">0</td>#}
+{#                        <td style="text-align: center">0</td>#}
+{#                        <td style="text-align: center">0</td>#}
+{#                        {% endif %}#}
+
+                        <td style="text-align: center"></td>
+
+                        {% if questionCollectiviteConsolide.q5 == true  %}
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        {% endif %}
+
+                    </tr>
+                {% endif %}
+
+                </tbody>
+            </table>
+
+        <br/>
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formEffectif131) }}
+
+
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function ()
+            {
+                changeDetect = false;
+                // TABLEAU 131X
+                {% if questionCollectiviteConsolide.q5 == true or questionCollectiviteConsolide.q6 == true  %}
+                    // Manip pour cacher la liste des Empl Fct pour en afficher que le libellé tout en conservant l'id à  submit
+
+                    putSelectOnText131('ind1311sTemp', 'refEmploiNonPermanent');
+                    putSelectOnText131('ind1312sTemp', 'refEmploiNonPermanent');
+                    $(document).change();
+                    update1311(true);
+                    update1312(true);
+                {% endif %}
+
+            });
+                /**
+                 * Symfony met les entity many to one en select
+                 *       - Impossibilité de mettre en dsabled car à  l'envoi du form, no ne récup plus la valeur du référentiel
+                 * => Solution temporaire :
+                 *       - Cacher le select de l'entity référentiel
+                 *       - récupérer le text sélectionné par défaut du référentiel
+                 *       - ajouter ce texte à  la colonne du tab correpondant
+                 */
+                function putSelectOnText131(listName, referentielName, withCompl, withNoLibelle) {
+                    var count = $('#bscForm131_' + listName + '_0_' + referentielName + ' option').length;
+                    for (var i = 0; i < count; i++) {
+                        $('#bscForm131_' + listName + '_' + i + '_' + referentielName + '').hide();
+                        if (withNoLibelle == undefined) {
+                            var val = $('#bscForm131_' + listName + '_' + i + '_' + referentielName + ' option:selected').val();
+                            var tex = $('#bscForm131_' + listName + '_' + i + '_' + referentielName + ' option:selected').text();
+                            $('#bscForm131_' + listName + '_' + i + '_' + referentielName + '').parent().append(tex);
+                        }
+
+
+                        if (withCompl != undefined) {
+                            $('#bscForm131_' + listName + '_' + i + '_' + referentielName + '').parent().append(' '
+                                    + '<span id="bscForm131_' + listName + '_' + i + '_' + referentielName + '_' + val + '"></span>');
+                        }
+                    }
+                }
+
+
+/*
+         * METHODES Tableau 1.3.1 et 2
+         */
+        {% if questionCollectiviteConsolide.q5 == true or questionCollectiviteConsolide.q6 == true  %}
+
+        function changedR1311(obj) {
+            update1311(false);
+        }
+
+        function changedR1312(obj) {
+            update1312(false);
+        }
+
+        function getCoherence1311() {
+            var table1311 = document.getElementById('ind1311Table');
+            var rowLength1311 = table1311.rows.length;
+            var idxRowInput = 0;
+
+            var coherenceError = "";
+            var coherenceErrorJson = '"incoherences1311": [';
+
+            for(var i=2; i<rowLength1311; i+=1){
+                var row = table1311.rows[i];
+                var cellLength = row.cells.length;
+
+                var lineTot1 = 0
+                var lineTot2 = 0
+
+                var empl = $('#bscForm131_'+'ind1311s'+'_'+idxRowInput+'_'+'refEmploiNonPermanent'+' option:selected').text();
+
+                if(row.id.substring(0, 8)=="totalGlo") {
+                    continue;
+                }
+
+                lineTot1 = 0;
+                lineTot2 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 8)=="lineTot1") {
+                        lineTot1 = parseInt(cell.innerHTML);
+                    }
+                    else if(cell.id.substring(0, 8)=="lineTot2") {
+                        lineTot2 = parseInt(cell.innerHTML);
+                    }
+
+                }
+
+                if(lineTot1>lineTot2) {
+                    // incoherence
+                    var error = "Emploi non permanent  " + empl + " : " + "Totaux non correspondants";
+                    coherenceError += error+"\n";
+
+                    coherenceErrorJson += '{"indicateur":"1.3.1.1",'+
+                                           '"idToggle1":"toggle131",'+
+                                           '"idToggle2":"",'+
+                                           '"message":"'+error+'",'+
+                                           '"idField":"'+row.id+'"},' // Ici on recup l'id de la ligne du tableau
+                                           ;
+                }
+                idxRowInput++;
+
+            }// end for line
+
+            if(coherenceError!="") coherenceErrorJson = coherenceErrorJson.substr(0, coherenceErrorJson.length-1);
+            coherenceErrorJson += ']';
+
+            return coherenceErrorJson;
+        }
+
+        function getCoherence1312() {
+            var table1312 = document.getElementById('ind1312Table');
+            var rowLength1312 = table1312.rows.length;
+            var idxRowInput = 0;
+
+            var coherenceError = "";
+            var coherenceErrorJson = '"incoherences1312": [';
+
+            for(var i=2; i<rowLength1312; i+=1){
+                var row = table1312.rows[i];
+                var cellLength = row.cells.length;
+
+                var lineTot1 = 0
+                var lineTot2 = 0
+
+                var empl = $('#bscForm131_'+'ind1312s'+'_'+idxRowInput+'_'+'refEmploiNonPermanent'+' option:selected').text();
+
+                if(row.id.substring(0, 8)=="totalGlo") {
+                    continue;
+                }
+
+                lineTot1 = 0;
+                lineTot2 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 8)=="lineTot1") {
+                        lineTot1 = parseInt(cell.innerHTML);
+                    }
+                    else if(cell.id.substring(0, 8)=="lineTot2") {
+                        lineTot2 = parseInt(cell.innerHTML);
+                    }
+
+                }
+
+                if(lineTot1>lineTot2) {
+                    // incoherence
+                    var error = "Emploi non permanent  " + empl + " : " + "Totaux non correspondants";
+                    coherenceError += error+"\n";
+
+                    coherenceErrorJson += '{"indicateur":"1.3.1.2",'+
+                                           '"idToggle1":"toggle131",'+
+                                           '"idToggle2":"",'+
+                                           '"message":"'+error+'",'+
+                                           '"idField":"'+row.id+'"},' // Ici on recup l'id de la ligne du tableau
+                                           ;
+                }
+                idxRowInput++;
+
+            }// end for line
+
+            if(coherenceError!="") coherenceErrorJson = coherenceErrorJson.substr(0, coherenceErrorJson.length-1);
+            coherenceErrorJson += ']';
+
+            return coherenceErrorJson;
+
+        }
+
+        function update1311(onInit){
+            var table1311 = document.getElementById('ind1311Table');
+
+            var rowLength1311 = table1311.rows.length;
+            var idxRowInput = 0;
+
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+
+            var mtTot1Glo = 0;
+            var mtTot2Glo = 0;
+            var mtTot3Glo = 0;
+            var mtTot4Glo = 0;
+
+            for(var i=2; i<rowLength1311; i+=1){
+                var row = table1311.rows[i];
+                var cellLength = row.cells.length;
+
+                var lineTotalGlo = false;
+                var lineTot1 = 0
+                var lineTot2 = 0
+
+                if(row.id.substring(0, 8)=="totalGlo") {
+                    lineTotalGlo = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1Glo;
+                            lineTot1+= mtTot1Glo;
+                            mtTot1Glo = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2Glo;
+                            lineTot1+= mtTot2Glo;
+                            mtTot2Glo = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = lineTot1;
+                        }
+                        else if(y==5) {
+                            cell.innerHTML = mtTot3Glo;
+                            lineTot2+= mtTot3Glo;
+                            mtTot3Glo = 0;
+                        }
+                        else if(y==6) {
+                            cell.innerHTML = mtTot4Glo;
+                            lineTot2+= mtTot4Glo;
+                            mtTot4Glo = 0;
+                        }
+                        else if(y==7) {
+                            cell.innerHTML = lineTot2;
+                        }
+                    }
+                }
+
+                lineTot1 = 0;
+                lineTot2 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 6)=="r13111") {
+                        if($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13111').val()!="") {
+                            mtTot1 += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13111').val());
+                            mtTot1Glo += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13111').val());
+                            lineTot1 += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13111').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r13112") {
+                        if($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13112').val()!="") {
+                            mtTot2 += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13112').val());
+                            mtTot2Glo += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13112').val());
+                            lineTot1 += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13112').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r13113") {
+                        if($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13113').val()!="") {
+                            mtTot3 += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13113').val());
+                            mtTot3Glo += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13113').val());
+                            lineTot2 += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13113').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r13114") {
+                        if($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13114').val()!="") {
+                            mtTot4 += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13114').val());
+                            mtTot4Glo += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13114').val());
+                            lineTot2 += parseInt($('#bscForm131_ind1311sTemp_'+idxRowInput+'_r13114').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 8)=="lineTot1") {
+                        cell.innerHTML = lineTot1;
+                    }
+                    else if(cell.id.substring(0, 8)=="lineTot2") {
+                        cell.innerHTML = lineTot2;
+                    }
+
+                }
+
+                if(!lineTotalGlo) idxRowInput++;
+            }// end for line
+
+        }
+
+        function update1312(onInit){
+            var table1312 = document.getElementById('ind1312Table');
+
+            var rowLength1312 = table1312.rows.length;
+            var idxRowInput = 0;
+
+            var mtTot1 = 0;
+            var mtTot2 = 0;
+            var mtTot3 = 0;
+            var mtTot4 = 0;
+
+            var mtTot1Glo = 0;
+            var mtTot2Glo = 0;
+            var mtTot3Glo = 0;
+            var mtTot4Glo = 0;
+
+            for(var i=2; i<rowLength1312; i+=1){
+                var row = table1312.rows[i];
+                var cellLength = row.cells.length;
+
+                var lineTotalGlo = false;
+                var lineTot1 = 0
+                var lineTot2 = 0
+
+                if(row.id.substring(0, 8)=="totalGlo") {
+                    lineTotalGlo = true;
+
+                    for(var y=0; y<cellLength; y+=1){
+                        var cell = row.cells[y];
+                        if(y==1) {
+                            cell.innerHTML = mtTot1Glo;
+                            lineTot1+= mtTot1Glo;
+                            mtTot1Glo = 0;
+                        }
+                        else if(y==2) {
+                            cell.innerHTML = mtTot2Glo;
+                            lineTot1+= mtTot2Glo;
+                            mtTot2Glo = 0;
+                        }
+                        else if(y==3) {
+                            cell.innerHTML = lineTot1;
+                        }
+                        else if(y==5) {
+                            cell.innerHTML = mtTot3Glo;
+                            lineTot2+= mtTot3Glo;
+                            mtTot3Glo = 0;
+                        }
+                        else if(y==6) {
+                            cell.innerHTML = mtTot4Glo;
+                            lineTot2+= mtTot4Glo;
+                            mtTot4Glo = 0;
+                        }
+                        else if(y==7) {
+                            cell.innerHTML = lineTot2;
+                        }
+                    }
+                }
+
+                lineTot1 = 0;
+                lineTot2 = 0;
+
+                for(var y=0; y<cellLength; y+=1){
+                    var cell = row.cells[y];
+
+                    if(cell.id.substring(0, 6)=="r13121") {
+                        if($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13121').val()!="") {
+                            mtTot1 += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13121').val());
+                            mtTot1Glo += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13121').val());
+                            lineTot1 += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13121').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r13122") {
+                        if($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13122').val()!="") {
+                            mtTot2 += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13122').val());
+                            mtTot2Glo += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13122').val());
+                            lineTot1 += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13122').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r13123") {
+                        if($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13123').val()!="") {
+                            mtTot3 += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13123').val());
+                            mtTot3Glo += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13123').val());
+                            lineTot2 += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13123').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 6)=="r13124") {
+                        if($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13124').val()!="") {
+                            mtTot4 += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13124').val());
+                            mtTot4Glo += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13124').val());
+                            lineTot2 += parseFloat($('#bscForm131_ind1312sTemp_'+idxRowInput+'_r13124').val());
+                        }
+                    }
+                    else if(cell.id.substring(0, 8)=="lineTot1") {
+                        cell.innerHTML = lineTot1;
+                    }
+                    else if(cell.id.substring(0, 8)=="lineTot2") {
+                        cell.innerHTML = lineTot2;
+                    }
+
+                }
+
+                if(!lineTotalGlo) idxRowInput++;
+            }// end for line
+
+        }
+
+
+        var dialogFiche131= $("#dialog-fiche-131").dialog({
+            autoOpen: false,
+            resizable: true,
+            height: "auto",
+            width: 800,
+            modal: true,
+            buttons: {
+                "OK": function () {
+                    dialogFiche131.dialog("close");
+                }
+            },
+            close: function () {
+            }
+        });
+
+        {% endif %}
+
+                /*
+                 * METHODE AJAX SUBMIT
+                 */
+                $(function () {
+                    // Enregistrement en ajax
+                    $('form').on('submit', function (e) {
+                        var $this = $(this).closest('div');
+                        var btn = $(this).find("input[type=submit]:focus");
+                        var value_valide = $(btn).data('valide');
+                        $('#bscForm131_valide').val(value_valide);
+
+                        // Submit en ajax pour le fonctionnement d'appel par onglet // $('form').serialize(), 'valide': test
+                        e.preventDefault();
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ path('bilan_conso_effectif_ind131_edit') }}',
+                            data: $('form').serialize(),
+                            success: function (responsejson) {
+                                if (responsejson.data == 1) {
+                                    if (recordAuto) {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement automatique réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                    } else {
+                                        $('#ind131').load('{{ path('bilan_conso_effectif_ind131_edit') }}', function () {
+                                            $('#progImg').hide();
+                                            $('#messageJS').html("Enregistrement réussi");
+                                            messageJS.dialog("open");
+                                            setIncoherenceTable(responsejson);
+
+                                            var next = $($this).next('.panel-heading');
+                                            if(next.length == 0) {
+                                                window.location.href = '{{ path('bilan_conso_mouv_edit') }}';
+                                            }
+
+                                        });
+                                    }
+                                } else if (responsejson.data == "-3") {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                    messageJS.dialog("open");
+                                } else {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Une erreur s'est produite dans l'enregistrement");
+                                    messageJS.dialog("open");
+                                }
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(xhr);
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement : ");
+                                messageJS.dialog("open");
+                            }
+
+                        });
+                    });
+                }
+                )
+                        ;
+
+        </script>
+    {% endif %}

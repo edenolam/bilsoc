@@ -1,0 +1,36 @@
+{% block formulaire_dgcl %}
+    <div class="col-xs-12">
+        <div class="col-xs-6">
+            {% if fichier_dgcl is not null %}
+                <a href="{{ fichier_dgcl }}">
+                    <button type="button" class="btn button-tableau">Télécharger le fichier DGCL actuel</button>
+                </a>
+            {% else %}
+                <p> il n'y a aucun fichier DGCL rattaché à cette année </p>
+            {% endif %}
+        </div>
+        <div class="col-xs-6">
+            {% if fichier_pdf is not null %}
+                <a href="{{ fichier_pdf }}">
+                    <button type="button" class="btn button-tableau">Télécharger le fichier PDF actuel</button>
+                </a>
+            {% else %}
+                <p> il n'y a aucun fichier PDF rattaché à cette année </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-xs-12 padTop20">
+        {{ form_start(form) }}
+        <div class="col-xs-6">
+            {{ form_row(form.modele_dgcl) }}
+        </div>
+        <div class="col-xs-6">
+            {{ form_row(form.pdf_aide) }}
+        </div>
+        <div class="col-xs-12 hidden">
+            {{ form_row(form.year) }}
+        </div>
+        <input class="pull-right btn btn-primary " type="submit" value="Modifier" />
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

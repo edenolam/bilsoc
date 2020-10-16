@@ -1,0 +1,32 @@
+analyse_analyse:
+    resource: "@AnalyseBundle/Resources/config/routing/analyse.yml"
+    prefix:   /analyse
+
+call_export_hrg:
+    path:     /call_export.{_format}
+    defaults: { _controller: AnalyseBundle:Default:callExportHRG }
+    requirements:
+        _format: csv|xls|xlsx
+
+call_export_agent_par_agent:
+    path:     /call_export_agent_par_agent.{_format}
+    defaults: { _controller: AnalyseBundle:Default:callExportAgentParAgent }
+    requirements:
+        _format: csv|xls|xlsx
+
+export_handi_rassct_gpeec_excel:
+    path:     /export_excel.{_format}
+    defaults:
+        _controller: AnalyseBundle:Default:exportHandiRassctGpeecExcel
+        _format: xls
+    requirements:
+        _format: csv|xls|xlsx
+        
+export_handi_gpeec_agent_excel:
+    path:     /export_agent_excel.{_format}
+    defaults:
+        _controller: AnalyseBundle:Default:exportHandiGpeecAgentExcel
+        _format: xls
+    requirements:
+        _format: csv|xls|xlsx
+        

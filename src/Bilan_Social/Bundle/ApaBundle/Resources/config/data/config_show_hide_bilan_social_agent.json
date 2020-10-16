@@ -1,0 +1,780 @@
+{
+    "bilan_social_bundle_apabundle_bilansocialagent_blAgenremu3112": {
+        "entity_field_key": "blAgenremu3112",
+        "conditions" : [
+            {
+
+                "condition": "(:current_value === 0) && :current_value !== ''",
+                "to_show": [
+                    "#agent_remunere",
+                    "#bilan_social_bundle_apabundle_bilansocialagent_blAgenremu3112no"
+
+                ],
+                "to_hide": [
+                    "#yesPartiTemp",
+                    "#infotextTemp"
+                ]
+            },
+            {
+                "condition":  ":current_value === 2",
+                "to_show": ["#infotextTemp"],
+                "to_hide": ["#agent_remunere", "#bilan_social_bundle_apabundle_bilansocialagent_blAgenremu3112no"]
+            },
+            {
+                "condition": "DEFAULT",
+                "to_show": [],
+                "to_hide": [
+                    "#agent_remunere",
+                    "#bilan_social_bundle_apabundle_bilansocialagent_blAgenremu3112no",
+                    "#yesPartiTemp",
+                    "#infotextTemp"
+                ],
+                "to_show_php": ["blAgenremuanne","blPosiactinonremu","refPositionStatutairenonremu"]
+            }
+        ]
+    },
+    "bilan_social_bundle_apabundle_bilansocialagent_blAgenremuanne": [
+        {
+           
+            "condition": ":current_value === 0 && :current_value !== ''",
+            "to_show": [
+                "#Agenremuanne"
+            ],
+            "to_hide": ["#q42Non"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": ["#q42Non"],
+            "to_hide": [
+                "#Agenremuanne"
+            ]
+        }
+    ],
+
+    "bilan_social_bundle_apabundle_bilansocialagent_blPosiacti": [
+        {
+          
+            "condition": ":current_value === 0 && :current_value !== '' && :current_value != null",
+            "to_show": [
+                "#particuliere"
+            ],
+            "to_hide": []
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": [
+                "#particuliere"
+            ]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blPosiactinonremu": [
+        {
+           
+            "condition": ":current_value === 0 && :current_value !== ''",
+            "to_show": [
+                "#particuliereNonRemu"
+            ],
+            "to_hide": []
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": [
+                "#particuliereNonRemu"
+            ]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_refStatut": [
+        {
+           
+            
+            "condition": ":current_value === 1 || :current_value === 2",
+            "to_show": [
+                "#stagtituPerm", "#blPromavanstaganne", "#stagtitu", "#cet", "#mtTotaremubrutnbi", "#EmploiPermanent", "#EmploiPermanent2", "#grade_emploi_perm"
+            ],
+            "to_hide": [
+                "#nonPermanent", "#permanent", "#perm"
+            ]
+        },
+        {
+            "condition": ":current_value === 3",
+            "to_show": [
+                "#stagtituPerm", "#cet", "#permanent", "#perm", "#EmploiPermanent2", "#stagtitu"
+            ],
+            "to_hide": [
+                "#blPromavanstaganne", "#nonPermanent", "#mtTotaremubrutnbi", "#EmploiPermanent", "#grade_emploi_perm"
+            ]
+        },
+        {
+            "condition": ":current_value === 4",
+            "to_show": [
+                "#nonPermanent", "#EmploiPermanent", "#EmploiPermanent2"
+            ],
+            "to_hide": [
+                "#blPromavanstaganne", "#cet", "#stagtituPerm", "#permanent", "#perm", "#mtTotaremubrutnbi"
+            ]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": [
+                "#blPromavanstaganne", "#cet", "#stagtituPerm", "#permanent", "#perm", "#nonPermanent", "#stagtitu", "#mtTotaremubrutnbi"
+            ]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blAgenabse": [
+        {
+           
+            "condition": ":current_value === 1",
+            "to_show": ["#AbsenceArret"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value === 0 || :current_value === ''",
+            "to_show": [],
+            "to_hide": ["#AbsenceArret"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": [
+                "#AbsenceArret"
+            ]
+        }
+        
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blFormsuiv": [
+        {
+            
+            "condition": ":current_value === 1",
+            "to_show": ["#FormationAgent"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value === 0 || :current_value === ''",
+            "to_show": [],
+            "to_hide": ["#FormationAgent"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": [
+                "#FormationAgent"
+            ]
+        }
+    ],
+
+    "bilan_social_bundle_apabundle_bilansocialagent_blAgenarriannecoll": [
+        {
+            "condition": ":current_value === 1",
+            "to_show": ["#refMotifArrivee"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#refMotifArrivee"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": [
+                "#refMotifArrivee"
+            ]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blEmplfonc": [
+        {
+           
+
+            "condition": ":current_value === 1",
+            "to_show": [
+                "#blEmplfoncyes",
+                "#graddeta"
+            ],
+            "to_hide": ["#blEmplfoncno"]
+        },
+        {
+            "condition": ":current_value === 0",
+            "to_show": ["#blEmplfoncno"],
+            "to_hide": ["#blEmplfoncyes", "#graddeta"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": [
+                "#blEmplfoncyes","#graddeta", "#blEmplfoncno"
+            ]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_refFonctionPublique": [
+        {
+           
+
+            "condition": ":current_value === 2 || :current_value === 3",
+            "to_show": ["#fonctionpublique"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 2 && :current_value !== 3  ",
+            "to_show": [],
+            "to_hide": ["#fonctionpublique"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": ["#fonctionpublique"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blAcqustatanne": [
+        {
+           
+
+            "condition": ":current_value === 1",
+            "to_show": ["#blAcqustatanne"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blAcqustatanne"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": ["#blAcqustatanne"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blAgentitustaganne": [
+        {
+          
+
+            "condition": ":current_value === 1",
+            "to_show": ["#blAgentitustaganne"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blAgentitustaganne"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": ["#blAgentitustaganne"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blPromavanstaganne": [
+        {
+          
+
+            "condition": ":current_value === 1",
+            "to_show": ["#blPromavanstaganneyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blPromavanstaganneyes"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": ["#blPromavanstaganneyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blTempcomp": [
+        {
+            
+
+            "condition": ":current_value === 0",
+            "to_show": ["#refTempsNonComplet"],
+            "to_hide": ["#q11non"]
+        },
+        {
+            "condition": ":current_value === 1",
+            "to_show": ["#q11non"],
+            "to_hide": ["#refTempsNonComplet"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": ["#refTempsNonComplet", "#q11non"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blTempplein": [
+        {
+           
+            "condition": ":current_value === 0",
+            "to_show": ["#refTempsPartiel"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 0",
+            "to_show": [],
+            "to_hide": ["#refTempsPartiel"]
+        },
+        {
+            "condition": "DEFAULT",
+            "to_show": [],
+            "to_hide": ["#refTempsPartiel"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blDemapart": [
+        {
+            
+            "condition": ":current_value == 1",
+            "to_show": ["#Demapart"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value === undefined || :current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#Demapart"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blCdi": [
+        {
+           
+
+            "condition": ":current_value === 0",
+            "to_show": ["#refTypeCdd"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 0",
+            "to_show": [],
+            "to_hide": ["#refTypeCdd"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_refEmploiNonPermanent": [
+        {
+           
+
+            "condition": ":current_value === 1",
+            "to_show": ["#refEmploiNonPermanent"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#refEmploiNonPermanent"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blEntrretocong": [
+        {
+           
+
+            "condition": ":current_value === 1",
+            "to_show": ["#blEntrretocong"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blEntrretocong"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blEntrdepacong": [
+        {
+           
+
+            "condition": ":current_value === 1",
+            "to_show": ["#blEntrdepacong"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blEntrdepacong"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blVae": [
+        {
+            
+
+            "condition": ":current_value === 1",
+            "to_show": ["#bilan_social_bundle_apabundle_bilansocialagent_blVaeyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#bilan_social_bundle_apabundle_bilansocialagent_blVaeyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blBilacomp": [
+        {
+            
+
+            "condition": ":current_value === 1",
+            "to_show": ["#bilan_social_bundle_apabundle_bilansocialagent_blBilacompyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#bilan_social_bundle_apabundle_bilansocialagent_blBilacompyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blCongpateaccuenfa": [
+        {
+            
+
+            "condition": ":current_value === 1",
+            "to_show": ["#congepatea"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#congepatea"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blDemainap": [
+        {
+            
+
+            "condition": ":current_value === 1",
+            "to_show": ["#inapdema"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#inapdema"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blDeciinap": [
+        {
+           
+            "condition": ":current_value === 1",
+            "to_show": ["#inapdeci"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#inapdeci"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blDocurisqpro": [
+        {
+           
+
+            "condition": ":current_value === 1",
+            "to_show": ["#blDocurisqpro"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blDocurisqpro"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blActeviolphys": [
+        {
+            
+
+            "condition": ":current_value === 1",
+            "to_show": ["#blActeviolphys"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blActeviolphys"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blGrev": [
+        {
+            
+
+            "condition": ":current_value === 1",
+            "to_show": ["#blGrev"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blGrev"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blCtsiegmissdevo": [
+        {
+            
+            "condition": ":current_value === 1",
+            "to_show": ["#blCtsiegmissdevo"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#blCtsiegmissdevo"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantcontregl": [
+        {
+            
+            "condition": ":to_check_0 === 1 || :to_check_1 === 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantconvparti",
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantcontregl"
+            ],
+            "to_show": ["#blSantyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":to_check_0 !== 1 && :to_check_1 !== 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantconvparti",
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantcontregl"
+            ],
+            "to_show": [],
+            "to_hide": ["#blSantyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantconvparti": [
+        {
+            
+            "condition": ":to_check_0 === 1 || :to_check_1 === 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantconvparti",
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantcontregl"
+            ],
+            "to_show": ["#blSantyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":to_check_0 !== 1 && :to_check_1 !== 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantconvparti",
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blSantcontregl"
+            ],
+            "to_show": [],
+            "to_hide": ["#blSantyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevoconvparti": [
+        {
+           
+
+            "condition": ":to_check_0 === 1 || :to_check_1 === 1",
+            "ids_to_check": [
+                "'bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevoconvparti",
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevocontregl"
+            ],
+            "to_show": ["#blPrevyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":to_check_0 !== 1 && :to_check_1 !== 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevoconvparti",
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevocontregl"
+            ],
+            "to_show": [],
+            "to_hide": ["#blPrevyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevocontregl": [
+        {
+            
+
+            "condition": ":to_check_0 === 1 || :to_check_1 === 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevoconvparti",
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevocontregl"
+            ],
+            "to_show": ["#blPrevyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":to_check_0 !== 1 && :to_check_1 !== 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevoconvparti",
+                "bilan_social_bundle_apabundle_informationcolectiviteagent_blPrevocontregl"
+            ],
+            "to_show": [],
+            "to_hide": ["#blPrevyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blCet": [
+        {
+
+
+            "condition": ":to_check_0 === 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_bilansocialagent_blCet"
+            ],
+            "to_show": ["#blCetyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":to_check_0 !== 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_bilansocialagent_blCet"
+            ],
+            "to_show": [],
+            "to_hide": ["#blCetyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blAgenprev": [
+        {
+          
+
+            "condition": ":to_check_0 === 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_bilansocialagent_blAgenprev"
+            ],
+            "to_show": ["#blAgenprevyes"],
+            "to_hide": []
+        },
+        {
+            "condition": ":to_check_0 !== 1",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_bilansocialagent_blAgenprev"
+            ],
+            "to_show": [],
+            "to_hide": ["#blAgenprevyes"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_blRecPersTemp": [
+        {
+           
+
+            "condition": ":current_value === 1",
+            "to_show": ["#infocoll132"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#infocoll132"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationgenerale_q1": [
+        {
+           
+
+            "condition": ":current_value === 0",
+            "to_show": ["#q1"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 0",
+            "to_show": [],
+            "to_hide": ["'#q1"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_blBoeth": [
+        {
+          
+            "condition": ":current_value === 1",
+            "to_show": ["#handitorial"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#handitorial"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_Handitorials_blAvisInaptitudeEnCours": [
+        {
+           
+            "condition": ":current_value === 1",
+            "to_show": ["#b2_2"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#b2_2"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_Handitorials_blAvisInaptitudeAvant": [
+        {
+           
+            "condition": ":current_value === 1",
+            "to_show": ["#b2_3"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#b2_3"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_handMesureAmenaPosteCondTrav": [
+        {
+            "condition": ":current_value === 1",
+            "to_show": ["#A6"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#A6"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_handMesureChangAffec": [
+        {
+            "condition": ":current_value === 1",
+            "to_show": ["#A7"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#A7"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_informationcolectiviteagent_handDispoOffice": [
+        {
+            "condition": ":current_value === 1",
+            "to_show": ["#A8"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 1",
+            "to_show": [],
+            "to_hide": ["#A8"]
+        }
+    ],
+    "bilan_social_bundle_apabundle_bilansocialagent_refTypeCdd": [
+        {
+            "condition": ":current_value == 8 ",
+            "to_show": ["#refMotifArrivee"],
+            "to_hide": []
+        },
+        {
+            "condition": ":current_value !== 8",
+            "to_show": [],
+            "to_hide": ["#refMotifArrivee"]
+        }
+    ],
+     "bilan_social_bundle_apabundle_bilansocialagent_refMotifArrivee": [
+        {
+            
+
+            "condition": "(:to_check_0 !== 12 || :to_check_0 !== 14) && (:to_check_1 !== 1 || :to_check_1 !== 2)",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_bilansocialagent_refMotifArrivee",
+                "bilan_social_bundle_apabundle_bilansocialagent_refStatut"
+            ],
+            "to_show": ["#motiArrietStat"],
+            "to_hide": []
+        },
+        {
+            "condition": "(:to_check_0 === 12 || :to_check_0 === 14) && (:to_check_1 === 1 || :to_check_1 === 2)",
+            "ids_to_check": [
+                "bilan_social_bundle_apabundle_bilansocialagent_refMotifArrivee",
+                "bilan_social_bundle_apabundle_bilansocialagent_refStatut"
+            ],
+            "to_show": [],
+            "to_hide": ["#motiArrietStat"]
+        }
+    ]
+}

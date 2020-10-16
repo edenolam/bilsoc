@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\InfoColl_215" table="infocoll_215">
+        <indexes>
+            <index name="FK_ETPR131EMPLNONPERM_INFOCOLLAGENT" columns="ID_INFOCOLLAGEN"/>
+            <index name="FK_infocoll215_CATE" columns="ID_CATE"/>
+        </indexes>
+        <id name="idInfoColl_215" type="integer" column="ID_INFOCOLL_215">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="idInfocollagen" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationColectiviteAgent" inversed-by="infocoll_215">
+            <join-column name="ID_INFOCOLLAGEN" referenced-column-name="ID_INFOCOLLAGEN" />
+        </many-to-one>
+        <many-to-one field="refCategorie" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorie">
+            <join-column name="ID_CATE" referenced-column-name="ID_CATE" nullable="false"/>
+        </many-to-one>
+
+        <field name="r2151" type="integer" column="R_2151" nullable="true"/>
+        <field name="r2152" type="integer" column="R_2152" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

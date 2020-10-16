@@ -1,0 +1,4 @@
+services:
+#    import_carriere.example:
+#        class: Bilan_Social\Bundle\ImportCarriereBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

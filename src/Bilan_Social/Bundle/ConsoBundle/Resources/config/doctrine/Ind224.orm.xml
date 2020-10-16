@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind224" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind224Repository" table="ind_224">
+        <indexes>
+            <index name="FK_224_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+        <id name="id224" type="integer" column="ID_224">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind224s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <field name="r2241" type="integer" column="R_2241" nullable="true" />
+        <field name="r2242" type="integer" column="R_2242" nullable="true"/>
+        <field name="r2243" type="integer" column="R_2243" nullable="true"/>
+        <field name="r2244" type="integer" column="R_2244" nullable="true"/>
+        <field name="r2245" type="integer" column="R_2245" nullable="true"/>
+        <field name="r2246" type="integer" column="R_2246" nullable="true"/>
+        <field name="r2247" type="integer" column="R_2247" nullable="true"/>
+        <field name="r2248" type="integer" column="R_2248" nullable="true"/>
+        <field name="r2249" type="integer" column="R_2249" nullable="true"/>
+        <field name="r22410" type="integer" column="R_22410" nullable="true"/>
+        <field name="r22411" type="integer" column="R_22411" nullable="true"/>
+        <field name="r22412" type="integer" column="R_22412" nullable="true"/>
+        <field name="r22413" type="integer" column="R_22413" nullable="true"/>
+        <field name="r22414" type="integer" column="R_22414" nullable="true"/>
+        <field name="r22415" type="integer" column="R_22415" nullable="true"/>
+        <field name="r22416" type="integer" column="R_22416" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

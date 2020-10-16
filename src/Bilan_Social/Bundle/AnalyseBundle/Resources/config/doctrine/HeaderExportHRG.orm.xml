@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\AnalyseBundle\Entity\HeaderExportHRG" table="header_export_hrg">
+    <id name="id" type="bigint" column="ID">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="pid" type="integer" column="PID" nullable="true"/>
+    <field name="status" type="integer" column="STATUS" nullable="false"/>
+    <field name="idUtil" type="integer" column="ID_UTIL" nullable="true"/>
+    <field name="codeExport" type="string" column="CODE_EXPORT" nullable="false"/>
+    <field name="dateStart" type="datetime" column="DATE_START" nullable="false"/>
+    <field name="dateEnd" type="datetime" column="DATE_END" nullable="true"/>
+    <!-- <field name="fileKey" type="string" column="FILE_KEY" nullable="true"/> -->
+    <many-to-many field="fileKeys" target-entity="Bilan_Social\Bundle\FileManagerBundle\Entity\Fichier">
+        <cascade>
+            <cascade-all/>
+        </cascade>
+        <join-table name="export_hrg_fichiers">
+            <join-columns>
+                <join-column name="id_header" referenced-column-name="ID" />
+            </join-columns>
+            <inverse-join-columns>
+                <join-column name="id_fichier" referenced-column-name="ID_FICHIER" />
+            </inverse-join-columns>
+        </join-table>
+    </many-to-many>
+    <one-to-one field="poolExport" target-entity="Bilan_Social\Bundle\InfoCentreBundle\Entity\PoolExport" inversed-by="headerExportHRG">
+      <cascade>
+        <cascade-persist/>
+        <cascade-merge/>
+        <cascade-remove/>
+      </cascade>
+      <join-column name="ID_POOL_EXPORT" referenced-column-name="ID_POOL_EXPORT" on-delete="CASCADE" />
+    </one-to-one>
+  </entity>
+</doctrine-mapping>

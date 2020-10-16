@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind1512" table="ind_151_2">
+        <indexes>
+            <index name="FK_1512_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+            <index name="FK_1512_EMPLOIFONCTIONNEL" columns="ID_EMPLFONC"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_EMPLFONC" name="IDXU1_IND_1512"/>
+		</unique-constraints>
+        <id name="id1512" type="integer" column="ID_1512">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind1512s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refEmploiFonctionnel" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiFonctionnel">
+            <join-column name="ID_EMPLFONC" referenced-column-name="ID_EMPLFONC" nullable="false"/>
+        </many-to-one>
+
+        <field name="r15121" type="integer" column="R_15121" nullable="true"/>
+        <field name="r15122" type="integer" column="R_15122" nullable="true"/>
+        <field name="r15123" type="integer" column="R_15123" nullable="true"/>
+        <field name="r15124" type="integer" column="R_15124" nullable="true"/>
+        <field name="r15125" type="integer" column="R_15125" nullable="true"/>
+        <field name="r15126" type="integer" column="R_15126" nullable="true"/>
+        <field name="r15127" type="integer" column="R_15127" nullable="true"/>
+        <field name="r15128" type="integer" column="R_15128" nullable="true"/>
+        <field name="r15129" type="integer" column="R_15129" nullable="true"/>
+        <field name="r151210" type="integer" column="R_151210" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

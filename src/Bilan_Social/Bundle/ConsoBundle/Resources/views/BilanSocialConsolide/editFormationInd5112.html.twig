@@ -1,0 +1,441 @@
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+    {% if formFormation5112 is defined %}
+
+        {% if indicateur_precedent is defined and indicateur_precedent is not null %}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/btn_modal.html.twig', { 'indicateur_precedent': indicateur_precedent, 'name' : 5112 }) }}
+            {{ include('ConsoBundle:BilanSocialConsolide:modals_ind_precedents/modal_5112.html.twig', { 'indicateur_precedent': indicateur_precedent }) }}
+        {% endif %}
+
+        {{ form_start(formFormation5112) }}
+
+        <h5>5.1.1.2 - Journées de formation suivies par les agents titulaires, stagiaires présents au 31/12/{{AnneeCamp}} et nombre d'agents sur emploi permanent ayant participé à au moins une journée de formation en {{AnneeCamp}}</h5>
+
+        <table width="100%" id="ind5112Table" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr entete="1">
+                    <th rowspan="4">Titulaires et stagiaires</th>
+                    <th style="text-align: center" colspan="6">Nombre total de journées de formation dispensées au cours de l'année par	</th>
+                    <th style="text-align: center" colspan="4">Nombre total d'agents occupant un emploi permanent ayant participé à un ou plusieurs types de formation dans l'année<br/>
+                            ex : 1 agent a suivi 2 types de formations, il est comptabilisé dans chaque type de formation
+                    </th>
+                </tr>
+
+
+
+                <tr entete="1">
+                    <th style="text-align: center">CNFPT</th>
+                    <th style="text-align: center">CNFPT</th>
+                    <th rowspan="2" style="text-align: center">Collectivité</th>
+                    <th rowspan="2" style="text-align: center">Autres  organismes</th>
+                    <th rowspan="2" style="text-align: center">Total</th>
+                    <th rowspan="2" style="text-align: center">dont CPF (Compte Personnel de Formation)</th>
+                    <th rowspan="2" style="text-align: center">Hommes</th>
+                    <th rowspan="2" style="text-align: center">Femmes</th>
+                    <th rowspan="2" style="text-align: center">Total</th>
+                    <th rowspan="2" style="text-align: center">dont CPF</th>
+
+                </tr>
+                <tr entete="1">
+                    <th>au titre de la cotisation obligatoire</th>
+                    <th>au delà de la cotisation obligatoire</th>
+                </tr>
+                <tr entete="1">
+                    <th>5.1.1(1)</th>
+                    <th>5.1.1(2)</th>
+                    <th>5.1.1(3)</th>
+                    <th>5.1.1(4)</th>
+                    <th>5.1.1(5)</th>
+                    <th>5.1.1(6)</th>
+                    <th>5.1.1(7)</th>
+                    <th>5.1.1(8)</th>
+                    <th>5.1.1(9)</th>
+                    <th>5.1.1(10)</th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+
+            {% for tag in formFormation5112.ind5112s %}
+
+                {% if (tag.newCateg.vars.value == true )%}
+                    <tr id="enteteCat" class="filiTable" >
+                        <td colspan="11"><b>Pour les agents de catégorie {{ tag.refCategorie.vars.data.lbCate}}</b></td>
+                    </tr>
+                {% endif %}
+
+                <tr id="5112idTr_{{tag.refCategorie.vars.value}}_{{tag.refFormation.vars.value}}">
+                    <td style="min-width: 200px; text-align: center">
+                        {{ form_widget(tag.refCategorie) }}
+                        {{ form_widget(tag.refFormation) }}
+                        {{ form_widget(tag.newCateg) }}
+                        {{ form_widget(tag.lastCateg) }}
+                        {{ tag.refFormation.vars.data.lbForm}}
+                    </td>
+                    <td id="r51121">{{ form_widget(tag.r51121) }}</td>
+                    <td id="r51122">{{ form_widget(tag.r51122) }}</td>
+                    <td id="r51123">{{ form_widget(tag.r51123) }}</td>
+                    <td id="r51124">{{ form_widget(tag.r51124) }}</td>
+                    <td class="filiTable" id="lineTot1" style="text-align: center">0</td>
+                    <td id="r51125">{{ form_widget(tag.r51125) }}</td>
+                    <td id="r51126">{{ form_widget(tag.r51126) }}</td>
+                    <td id="r51127">{{ form_widget(tag.r51127) }}</td>
+                    <td class="filiTable" id="lineTot2" style="text-align: center">0</td>
+                    <td id="r51128">{{ form_widget(tag.r51128) }}</td>
+                </tr>
+
+                {% if (tag.lastCateg.vars.value == true )%}
+                    <tr id="totalCateg5112_{{tag.refCategorie.vars.value}}" class="filiTable" >
+                        <td><b>Total</b></td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                        <td style="text-align: center">0</td>
+                    </tr>
+                {% endif %}
+
+            {% endfor %}
+
+            <tr id="totalCatGlo" class="filiTable" >
+                <td><b>TOTAL Toutes catégories</b> </td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+                <td style="text-align: center">0</td>
+            </tr>
+
+
+            </tbody>
+        </table>
+
+
+        <br/>
+
+
+
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formFormation5112) }}
+
+        <script type="text/javascript">
+
+            $(document).ready(function ()
+            {
+                {% include 'stickyheader.txt' %}
+                getBrowserSetSticky(ind5112Table);
+                
+                changeDetect = false;
+                $(document).change();
+
+                update5112();
+
+            });
+
+
+
+            function changedR5112(obj) {
+                update5112(false);
+            }
+
+
+            function update5112(onInit) {
+                var table5112 = document.getElementById('ind5112Table');
+
+                var rowLength5112 = table5112.rows.length;
+                var idxRowInput = 0;
+
+                var mtTot1 = 0;
+                var mtTot2 = 0;
+                var mtTot3 = 0;
+                var mtTot4 = 0;
+                var mtTot5 = 0;
+                var mtTot6 = 0;
+                var mtTot7 = 0;
+                var mtTot8 = 0;
+
+
+                var mtTot1CatGlo = 0;
+                var mtTot2CatGlo = 0;
+                var mtTot3CatGlo = 0;
+                var mtTot4CatGlo = 0;
+                var mtTot5CatGlo = 0;
+                var mtTot6CatGlo = 0;
+                var mtTot7CatGlo = 0;
+                var mtTot8CatGlo = 0;
+
+
+                for (var i = 0; i < rowLength5112; i += 1) {
+                    var row = table5112.rows[i];
+
+                    if(row.getAttribute("entete") != undefined && row.getAttribute("entete") == "1") {
+                        continue;
+                    }
+
+                    var cellLength = row.cells.length;
+
+                    var lineTotalCat = false;
+
+                    var lineTot1 = 0;
+                    var lineTot2 = 0;
+
+                    if (row.id.substring(0, 9) == "enteteCat") {
+                        continue;
+                    }
+
+                    if (row.id.substring(0, 10) == "totalCateg") {
+                        lineTotalCat = true;
+
+                        for (var y = 0; y < cellLength; y += 1) {
+                            var cell = row.cells[y];
+                            if (y == 1) {
+                                cell.innerHTML = mtTot1;
+                                lineTot1 += mtTot1;
+                                mtTot1 = 0;
+                            } else if (y == 2) {
+                                cell.innerHTML = mtTot2;
+                                lineTot1 += mtTot2;
+                                mtTot2 = 0;
+                            } else if (y == 3) {
+                                cell.innerHTML = mtTot3;
+                                lineTot1 += mtTot3;
+                                mtTot3 = 0;
+                            } else if (y == 4) {
+                                cell.innerHTML = mtTot4;
+                                lineTot1 += mtTot4;
+                                mtTot4 = 0;
+                            } else if (y == 5) {
+                                cell.innerHTML = lineTot1;
+                            } else if (y == 6) {
+                                cell.innerHTML = mtTot5;
+                                mtTot5 = 0;
+                            } else if (y == 7) {
+                                cell.innerHTML = mtTot6;
+                                lineTot2 += mtTot6;
+                                mtTot6 = 0;
+                            } else if (y == 8) {
+                                cell.innerHTML = mtTot7;
+                                lineTot2 += mtTot7;
+                                mtTot7 = 0;
+                            } else if (y == 9) {
+                                cell.innerHTML = lineTot2;
+                            } else if (y == 10) {
+                                cell.innerHTML = mtTot8;
+                                mtTot8= 0;
+                            }
+                        }
+                    }
+
+                    lineTot1 = 0;
+                    lineTot2 = 0;
+
+                    if (row.id.substring(0, 11) == "totalCatGlo") {
+
+
+                        for (var y = 0; y < cellLength; y += 1) {
+                            var cell = row.cells[y];
+                            if (y == 1) {
+                                cell.innerHTML = mtTot1CatGlo;
+                                lineTot1 += mtTot1CatGlo;
+                                mtTot1CatGlo = 0;
+                            } else if (y == 2) {
+                                cell.innerHTML = mtTot2CatGlo;
+                                lineTot1 += mtTot2CatGlo;
+                                mtTot2CatGlo = 0;
+                            } else if (y == 3) {
+                                cell.innerHTML = mtTot3CatGlo;
+                                lineTot1 += mtTot3CatGlo;
+                                mtTot3CatGlo = 0;
+                            } else if (y == 4) {
+                                cell.innerHTML = mtTot4CatGlo;
+                                lineTot1 += mtTot4CatGlo;
+                                mtTot4CatGlo = 0;
+                            } else if (y == 5) {
+                                cell.innerHTML = lineTot1;
+                            } else if (y == 6) {
+                                cell.innerHTML = mtTot5CatGlo;
+                                mtTot5CatGlo = 0;
+                            } else if (y == 7) {
+                                cell.innerHTML = mtTot6CatGlo;
+                                lineTot2 += mtTot6CatGlo;
+                                mtTot6CatGlo = 0;
+                            } else if (y == 8) {
+                                cell.innerHTML = mtTot7CatGlo;
+                                lineTot2 += mtTot7CatGlo;
+                                mtTot7CatGlo = 0;
+                            } else if (y == 9) {
+                                cell.innerHTML = lineTot2;
+                            } else if (y == 10) {
+                                cell.innerHTML = mtTot8CatGlo;
+                                mtTot8CatGlo = 0;
+                            }
+                        }
+                    }
+
+                    lineTot1 = 0;
+                    lineTot2 = 0;
+
+                    for (var y = 0; y < cellLength; y += 1) {
+                        var cell = row.cells[y];
+                        var cellValue;
+
+                        if (cell.id.substring(0, 6) == "r51121") {
+                            cellValue = $('#bscForm_ind5112s_' + idxRowInput + '_r51121').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                mtTot1 += cellValue;
+                                lineTot1 += cellValue;
+                                mtTot1CatGlo += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 6) == "r51122") {
+                            cellValue = $('#bscForm_ind5112s_' + idxRowInput + '_r51122').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                mtTot2 += cellValue;
+                                lineTot1 += cellValue;
+                                mtTot2CatGlo += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 6) == "r51123") {
+                            cellValue = $('#bscForm_ind5112s_' + idxRowInput + '_r51123').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                mtTot3 += cellValue;
+                                lineTot1 += cellValue;
+                                mtTot3CatGlo += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 6) == "r51124") {
+                            cellValue = $('#bscForm_ind5112s_' + idxRowInput + '_r51124').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                mtTot4 += cellValue;
+                                lineTot1 += cellValue;
+                                mtTot4CatGlo += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 8) == "lineTot1") {
+                            cell.innerHTML = lineTot1;
+                        } else if (cell.id.substring(0, 6) == "r51125") {
+                            cellValue = $('#bscForm_ind5112s_' + idxRowInput + '_r51125').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                mtTot5 += cellValue;
+                                mtTot5CatGlo += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 6) == "r51126") {
+                            cellValue = $('#bscForm_ind5112s_' + idxRowInput + '_r51126').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                mtTot6 += cellValue;
+                                lineTot2 += cellValue;
+                                mtTot6CatGlo += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 6) == "r51127") {
+                            cellValue = $('#bscForm_ind5112s_' + idxRowInput + '_r51127').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                mtTot7 += cellValue;
+                                lineTot2 += cellValue;
+                                mtTot7CatGlo += cellValue;
+                            }
+                        } else if (cell.id.substring(0, 8) == "lineTot2") {
+                            cell.innerHTML = lineTot2;
+                        } else if (cell.id.substring(0, 6) == "r51128") {
+                            cellValue = $('#bscForm_ind5112s_' + idxRowInput + '_r51128').val();
+                            if (cellValue != "") {
+                                cellValue = parseInt(cellValue);
+                                mtTot8 += cellValue;
+                                mtTot8CatGlo += cellValue;
+                            }
+                        }
+                    }
+
+                    if (!lineTotalCat)
+                        idxRowInput++;
+                }// end for line
+
+            }
+
+
+
+
+            /*
+             * METHODE AJAX SUBMIT
+             */
+            $(function () {
+                // Enregistrement en ajax
+                $('form').on('submit', function (e) {
+                    var $this = $(this).closest('div');
+                    var btn = $(this).find("input[type=submit]:focus");
+                    var value_valide = $(btn).data('valide');
+                    $('#bscForm_valide').val(value_valide);
+                    // Submit en ajax pour le fonctionnement d'appel par onglet
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ path('bilan_conso_formation_ind5112_edit') }}',
+                        data: $('form').serialize(),
+                        success: function (responsejson) {
+
+                            if (responsejson.data == 1) {
+                                if (recordAuto) {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement automatique réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+                                } else {
+                                    $('#ind5112').load('{{ path('bilan_conso_formation_ind5112_edit') }}', function () {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                        var next = $($this).next('.panel-heading');
+                                        if(next.length == 0) {
+                                            window.location.href = '{{ path('bilan_conso_droit_edit') }}';
+                                        }
+                                    });
+                                }
+                            } else if (responsejson.data == "-3") {
+                                $('#progImg').hide();
+                                $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                messageJS.dialog("open");
+                            } else {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                messageJS.dialog("open");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(xhr);
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                            messageJS.dialog("open");
+                        }
+                    });
+                });
+            });
+
+
+
+        </script>
+    {% endif %}

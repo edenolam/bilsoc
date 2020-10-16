@@ -1,0 +1,25 @@
+cdg_fiche:
+    path:     /fiche
+    defaults: { _controller: CollectiviteBundle:Cdg:fiche }
+
+cdg_index_departements:
+    path:     /departements
+    defaults: { _controller: CollectiviteBundle:Cdg:indexDepartements }
+
+cdg_infos_departements_ajax:
+    path:     /infos-departements
+    defaults: { _controller: CollectiviteBundle:Cdg:infosDepartementAjax }
+    options:
+        expose: true
+
+cdg_enregistrer_departements_ajax:
+    path:     /enregistrer-departements
+    defaults: { _controller: CollectiviteBundle:Cdg:enregistrerDepartementAjax }
+    options:
+        expose: true
+
+collectivite_bloque:
+    path:   /CollectiviteBloquee
+    defaults: {_controller: CollectiviteBundle:Collectivite:CollectiviteBloque }
+    options:
+        expose: true

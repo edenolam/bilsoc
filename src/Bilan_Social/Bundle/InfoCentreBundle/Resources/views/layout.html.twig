@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('node_modules/moment/moment.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/infoCentre.css') }}"/>
+
+{% endblock %}
+{% block header %}
+       {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+
+
+{% endblock %}{# empty Twig template #}

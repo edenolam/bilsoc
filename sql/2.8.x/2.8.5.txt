@@ -1,0 +1,4 @@
+/*
+*   correction inversion R_1321_2 et R_1322_1
+*/
+Procedures-stockees\apa2cons\V1_10__IND-132

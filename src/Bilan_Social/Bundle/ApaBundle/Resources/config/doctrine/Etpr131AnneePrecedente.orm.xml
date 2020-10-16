@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\Etpr131AnneePrecedente" table="etpr_131_annee_precedente">
+        <indexes>
+            <index name="FK_ETPR131EMPLNONPERM_EMPLOINONPERMANENT" columns="ID_EMPLNONPERM"/>
+            <index name="FK_ETPR131EMPLNONPERM_INFOCOLLAGENT" columns="ID_INFOCOLLAGEN"/>
+        </indexes>
+        <id name="id1312" type="integer" column="ID_1312">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="RefEmploiNonPermanent" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiNonPermanent" inversed-by="Etpr131AnneePrecedente">
+            <join-column name="ID_EMPLNONPERM" referenced-column-name="ID_EMPLNONPERM"/>
+        </many-to-one>
+        <many-to-one field="idInfocollagen" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationColectiviteAgent" inversed-by="Etpr131AnneePrecedente">
+            <join-column name="ID_INFOCOLLAGEN" referenced-column-name="ID_INFOCOLLAGEN" />
+        </many-to-one>
+
+
+<!--        <field name="r13121" type="decimal" column="R_13121" nullable="true" precision="10" scale="2"/>-->
+<!--        <field name="r13122" type="decimal" column="R_13122" nullable="true" precision="10" scale="2"/>-->
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

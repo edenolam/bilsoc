@@ -1,0 +1,246 @@
+[
+	{
+		"key":"part_1_simple",
+		"tag":"fieldset",
+		"title_tag":"legend",
+		"content":"Recherche simple",
+		"collapse":"true",
+		"fields_groups":[
+			{
+				"nomColl":{},
+				"siretColl":{},
+				"codeInseeColl":{},
+				"nomContactColl":{}
+			},{
+				"sirenRattachColl":{
+					"prototype":true
+				}
+			},{
+				"adresseColl":{},
+				"villeColl":{},
+				"codePostalColl":{}
+			},{
+				"dateLastCoRange":{
+					"__sub_fields":{
+						"dateLastCoMin":{
+							"preceded_by":"de ",
+							"extra_wrapper_class":"inline_widget_element",
+							"label_outside_form_group":true
+						},
+						"dateLastCoMax":{
+							"preceded_by":"à ",
+							"extra_wrapper_class":"inline_widget_element no_label"
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"6"
+					}
+				}
+			}
+		]
+	},{
+		"key":"part_2_multiple",
+		"tag":"fieldset",
+		"title_tag":"legend",
+		"content":"Recherche multiple",
+		"collapse":"true",
+		"fields_groups":[
+			{
+				"affiColl":{},
+				"chsctColl":{},
+				"attachCtColl":{}
+			},{
+				"typeColl":{"select_all_btn":true,"label_collabse":true}
+			},{
+				"depaColl":{"select_all_btn":true,"label_collabse":true}
+			},{
+				"cdgColl":{"select_all_btn":true,"label_collabse":true}
+			},{
+				"zoneEmploiColl":{"select_all_btn":true,"label_collabse":true}
+			},{
+				"typeSurclDemoColl":{"select_all_btn":true,"label_collabse":true}
+			},{
+				"statutBilan":{"select_all_btn":true,"label_collabse":true}
+			},{
+				"typeInitBilan":{"select_all_btn":true},
+				"paramEnquCol":{"select_all_btn":true}
+			},{
+				"saisieApa":{},
+				"echantillonDgcl":{},
+				"cdgAccesBilan":{},
+				"nbIncoherenceBilanRange":{
+					"__sub_fields":{
+						"nbIncoherenceBilanMin":{
+							"preceded_by":"entre ",
+							"followed_by":"et ",
+							"extra_wrapper_class":"inline_widget_element"
+						},
+						"nbIncoherenceBilanMax":{
+							"extra_wrapper_class":"inline_widget_element no_label"
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"6"
+					}
+				},
+				"nbPopulationRange":{
+					"__sub_fields":{
+						"nbPopulationMin":{
+							"preceded_by":"entre ",
+							"extra_wrapper_class":"inline_widget_element"
+						},
+						"nbPopulationMax":{
+							"preceded_by":"et ",
+							"extra_wrapper_class":"inline_widget_element no_label"
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"6"
+					}
+				}
+			},{
+				"nbAgentRange":{
+					"__sub_fields":{
+						"nbAgentMin":{
+							"preceded_by":"entre ",
+							"extra_wrapper_class":"inline_widget_element"
+						},
+						"nbAgentMax":{
+							"preceded_by":"et ",
+							"followed_by":" pour les ",
+							"extra_wrapper_class":"inline_widget_element no_label"
+						},
+						"statutRangeNbAgent":{
+							"extra_wrapper_class":"inline_widget_element no_label",
+							"select_all_btn":true
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"12"
+					}
+				}
+			},{
+				"nbAgentEtprRange":{
+					"__sub_fields":{
+						"nbAgentEtprMin":{
+							"preceded_by":"entre ",
+							"extra_wrapper_class":"inline_widget_element"
+						},
+						"nbAgentEtprMax":{
+							"preceded_by":"et ",
+							"followed_by":" pour les ",
+							"extra_wrapper_class":"inline_widget_element no_label"
+						},
+						"statutRangeNbAgentEtpr":{
+							"extra_wrapper_class":"inline_widget_element no_label",
+							"select_all_btn":true
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"12"
+					}
+				}
+			},{
+				"moyenneHanditorialRange":{
+					"__sub_fields":{
+						"pourcentHanditorialMin":{
+							"extra_wrapper_class":"inline_widget_element hidden"
+						},
+						"pourcentHanditorialMax":{
+							"extra_wrapper_class":"inline_widget_element no_label hidden"
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"6",
+						"extra_attr":"data-role=rangeslider data-target=Handitorial"
+					}
+				}
+			},{
+				"moyenneRassctRange":{
+					"__sub_fields":{
+						"pourcentRassctMin":{
+							"extra_wrapper_class":"inline_widget_element hidden"
+						},
+						"pourcentRassctMax":{
+							"extra_wrapper_class":"inline_widget_element no_label hidden"
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"6",
+						"extra_attr":"data-role=rangeslider data-target=Rassct"
+					}
+				}
+			},{
+				"moyenneGpeecRange":{
+					"__sub_fields":{
+						"pourcentGpeecMin":{
+							"extra_wrapper_class":"inline_widget_element hidden"
+						},
+						"pourcentGpeecMax":{
+							"extra_wrapper_class":"inline_widget_element no_label hidden"
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"6",
+						"extra_attr":"data-role=rangeslider data-target=Gpeec"
+					}
+				},
+				"moyenneGpeecPlusRange":{
+					"__sub_fields":{
+						"pourcentGpeecPlusMin":{
+							"extra_wrapper_class":"inline_widget_element hidden"
+						},
+						"pourcentGpeecPlusMax":{
+							"extra_wrapper_class":"inline_widget_element no_label hidden"
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"6",
+						"extra_attr":"data-role=rangeslider data-target=GpeecPlus"
+					}
+				}
+			},{
+				"moyenneBilanSocialConsoRange":{
+					"__sub_fields":{
+						"pourcentBilanSocialConsoMin":{
+							"extra_wrapper_class":"inline_widget_element hidden"
+						},
+						"pourcentBilanSocialConsoMax":{
+							"extra_wrapper_class":"inline_widget_element no_label hidden"
+						}
+					},
+					"__wrapping_group":true,
+					"__wrapping_options":{
+						"nb_col":"6",
+						"extra_attr":"data-role=rangeslider data-target=BilanSocialConso"
+					}
+				}
+			}
+		]
+	}
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

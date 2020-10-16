@@ -1,0 +1,18 @@
+import_carriere_test:
+    path:     /test
+    defaults: { _controller: ImportCarriereBundle:Default:test }
+import_carriere_persist:
+    path:     /import
+    defaults: { _controller: ImportCarriereBundle:Default:import }
+    options:
+        expose: true
+import_carriere_homepage:
+    path:     /
+    defaults: { _controller: ImportCarriereBundle:Default:importFichierCarriere }
+    options:
+        expose: true
+import_carriere_selectcoll:
+    path:     /select_coll
+    defaults: { _controller: ImportCarriereBundle:Default:selectCollToImport }
+    options:
+        expose: true

@@ -1,0 +1,276 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+    <script type="text/javascript">
+        function selectAll(){ 
+            $('#liste-champs-coll-export option').prop('selected',true);
+        }
+        window.onmousedown = function (e) {
+            var el = e.target;
+            if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                e.preventDefault();
+
+                // toggle selection
+                if (el.hasAttribute('selected'))
+                    el.removeAttribute('selected');
+                else
+                    el.setAttribute('selected', '');
+
+                // hack to correct buggy behavior
+                var select = el.parentNode.cloneNode(true);
+                el.parentNode.parentNode.replaceChild(select, el.parentNode);
+            }
+        };
+
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="#">Collectivités</a></li>
+                <li class="active">Recherche personnalisée des collectivités</li>
+            </ol>
+        </div>
+        <h1>Recherche personnalisée des collectivités</h1>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+       <div class="panel panel-default">
+                        <div class='panel-heading'>
+                            <a class="displayToggle" data-toggle="collapse" href="#colonnes">
+                                <h3 style="display: inline-block;" class="panel-title">Afficher colonnes</h3>
+                                <span class="buttonplus" title="Agrandir"></span>
+                            </a>
+                        </div>
+                        <div id="colonnes" class="panel-collapse collapse">
+                            <div class='panel-body'>
+                                <div class='row' id='ajout-colonnes'>
+                                    <div class='col-md-5'>
+                                        {{ form_row(formCol.colonnes) }}
+                                    </div>
+                                    <div class='col-md-1' style="    margin-top: 17px; position: relative; left: 12px;"><br>
+                                        <p class='btn btn-default' id='ajouter-colonne'>+</p>
+                                    </div>
+                                    <div class='col-md-1' style="    margin-top: 17px; position: relative; left: 12px;"><br>
+                                        <p class='btn btn-default' id='enlever-colonne' style="padding: 6px 14px">-</p>
+                                    </div>
+                                    <div class='col-md-5 form-group'>
+                                        <select id='liste-colonnes' size='5' class='form-control'></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="panel panel-default">
+                        <div class='panel-heading'>
+                            <a class="displayToggle" data-toggle="collapse" href="#search">
+                                <h3 style="display: inline-block;" class="panel-title">Affiner recherche</h3>
+                                <span class="buttonplus" title="Agrandir"></span>
+                            </a>
+                        </div>
+                        <div id="search" class="panel-collapse collapse">
+                            <div class='panel-body'>
+                                <div id='param-filtre'>
+                                    <div class='row' id='param-filtre'>
+                                        <div class="col-md-4">
+                                            {{ form_row(formCol.filtres) }}
+                                        </div>
+                                       <div class="col-md-4">
+                                             <select id="conditions" name="condition" size="5" class="form-control">
+                                                    <option value="0">Choisir une condition</option>
+                                                </select>
+                                           {# {{ form_row(form.conditions) }}#}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select id="parametres" name="parametres" size="5" class="form-control">
+                                                    <option value="0">Choisir un filtre</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-12'>
+                                            <p class='btn btn-default pull-right' id='add-filtre'>Ajouter</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class='row'>
+                                    <div class='col-md-12' id='liste-filtres'>
+                                        <label>Liste des filtres</label>
+                                        <table></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        <div class="panel panel-default">
+            <div class='panel-heading'>
+                <h3 class="panel-title">Paramétrage</h3>
+            </div>
+            <div class='panel-body'>
+                <div id="messageJS" class="" style="display:none"></div>
+                <div id="form-params">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" name="lbPara" placeholder="Nom du paramétrage" class="form-control">
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn button-tableau" id="save-param">Sauvegarder ce paramétrage</button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div id="liste-params">
+                    <p>Paramètre appliqué : <span style="font-weight:bold;" id="param-applique"></span><button id="reinit-params" class="btn button-tableau pull-right">Réinitialiser</button></p>
+                    <hr>
+                    <table>
+                        {% for param in params %}
+                            <tr class="param">
+                                <td class="suppr-param" id="{{ param.idParaAffiColl }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
+                                <td><a href="" class="appl-param" id="{{ param.idParaAffiColl }}">{{ param.lbPara }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table> 
+                </div>
+            </div>
+        </div>
+        <div id='table-rech-coll-wrapper'>
+            
+            <table class="table table-hover align-center" id='table-rech-coll'>
+                <thead>
+                    <tr>
+                        <th class='col-hidden col-blSire'><input type="hidden" value="0" name="champ-nmSire">SIRET</th>
+                        <th class='col-hidden col-blLibe'><input type="hidden" value="0" name="champ-lbColl">Libellé de la collectivité</th>
+                        <th class='col-lbMail'><input type="hidden" value="1" name="champ-lbMail">Email</th>
+                        <th class='col-lbPassTemp'><input type="hidden" value="1" name="champ-lbPassTemp">Mot de passe temporaire</th>
+                        <th class='col-hidden col-blTypeColl'><input type="hidden" value="0" name="champ-refTypeCollectivite">Type de la collectivité</th>
+                        <th class='col-hidden col-blAffiCdg'><input type="hidden" value="0" name="champ-blAffiColl">Affilié</th>
+                        <th class='col-lbAdresse'><input type="hidden" value="1" name="champ-lbAdre">Adresse</th>
+                        <th class='col-hidden col-blDepa'><input type="hidden" value="0" name="champ-departement">Département</th>
+                        <th class='col-hidden col-blCdPost'><input type="hidden" value="0" name="champ-cdPost">Code postal</th>
+                        <th class='col-hidden col-blLbVill'><input type="hidden" value="0" name="champ-lbVill">Ville</th>
+                        <th class='col-hidden col-blCdInse'><input type="hidden" value="0" name="champ-cdInse">Code INSEE</th>
+                        <th class='col-hidden col-blNmPopuInse'><input type="hidden" value="0" name="champ-nmPopuInse">Population totale INSEE</th>
+                        <th class='col-hidden col-blSurclasDemo'><input type="hidden" value="0" name="champ-blSurclasDemo">Sur-classement démographique</th>
+                        <th class='col-hidden col-blNmStratColl'><input type="hidden" value="0" name="champ-nmStratColl">Strate de sur-classement</th>
+                        <th class='col-hidden col-blCtCdg'><input type="hidden" value="0" name="champ-blCtCdg">Rattachement au comité technique</th>
+                        <th class='col-hidden col-blChsct'><input type="hidden" value="0" name="champ-blChsct">CHSCT propre à la collectivité</th>
+                        <th class='col-hidden col-blCollDgcl'><input type="hidden" value="0" name="champ-blCollDgcl">Echantillon DGCL</th>
+                        <th class='col-hidden col-cdg_is_authorized_by_collectivity'><input type="hidden" value="0" name="champ-cdg_is_authorized_by_collectivity">CDG autorisé à prendre la place</th>
+                        <th class='col-hidden col-blNbAgenPerm'><input type="hidden" value="0" name="champ-blNbAgenPerm">Nombre total d'agents sur emploi permanent</th>
+                        <th class='col-hidden col-blNbAgenTitu'><input type="hidden" value="0" name="champ-blNbAgenTitu">Nombre total d'agents titulaires</th>
+                        <th class='col-hidden col-blNbAgenContPerm'><input type="hidden" value="0" name="champ-blNbAgenContPerm">Nombre total d'agents contractuels sur emploi permanent</th>
+                        <th class='col-hidden col-blNbAgenContNonPerm'><input type="hidden" value="0" name="champ-blNbAgenContNonPerm">Nombre total d'agents contractuels sur emploi non permanent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            {#<table class="table table-hover align-center" id='table-rech-coll'>
+                <thead>
+                    <tr>
+                        <th class='col-hidden col-blSire'><input type="hidden" value="1" name="champ-nmSire">SIRET</th>
+                        <th class='col-hidden col-blLibe'><input type="hidden" value="1" name="champ-lbColl">Libellé de la collectivité</th>
+                        <th class='col-hidden col-blTypeColl'><input type="hidden" value="1" name="champ-refTypeCollectivite">Type de la collectivité</th>
+                        <th class='col-hidden col-blAffiCdg'><input type="hidden" value="1" name="champ-blAffiColl">Affilié</th>
+                        <th class='col-hidden col-blDepa'><input type="hidden" value="0" name="champ-departement">Département</th>
+                        <th class='col-hidden col-blCdPost'><input type="hidden" value="0" name="champ-cdPost">Code postal</th>
+                        <th class='col-hidden col-blLbVill'><input type="hidden" value="0" name="champ-lbVill">Ville</th>
+                        <th class='col-hidden col-blCdInse'><input type="hidden" value="0" name="champ-cdInse">Code INSEE</th>
+                        <th class='col-hidden col-blNmPopuInse'><input type="hidden" value="0" name="champ-nmPopuInse">Population totale INSEE</th>
+                        <th class='col-hidden col-blSurclasDemo'><input type="hidden" value="0" name="champ-blSurclasDemo">Sur-classement démographique</th>
+                        <th class='col-hidden col-blNmStratColl'><input type="hidden" value="0" name="champ-nmStratColl">Strate de sur-classement</th>
+                        <th class='col-hidden col-blCtCdg'><input type="hidden" value="0" name="champ-blCtCdg">Rattachement au comité technique</th>
+                        <th class='col-hidden col-blChsct'><input type="hidden" value="0" name="champ-blChsct">CHSCT propre à la collectivité</th>
+                        <th class='col-hidden col-blCollDgcl'><input type="hidden" value="0" name="champ-blCollDgcl">Echantillon DGCL</th>
+                        <th class='col-hidden col-blCdgColl'><input type="hidden" value="0" name="champ-cdg_is_authorized_by_collectivity">CDG autorisé à prendre la place</th>
+                        <th class='col-hidden col-blNbAgenPerm'><input type="hidden" value="0" name="champ-blNbAgenPerm">Nombre total d'agents sur emploi permanent</th>
+                        <th class='col-hidden col-blNbAgenTitu'><input type="hidden" value="0" name="champ-blNbAgenTitu">Nombre total d'agents titulaires</th>
+                        <th class='col-hidden col-blNbAgenContPerm'><input type="hidden" value="0" name="champ-blNbAgenContPerm">Nombre total d'agents contractuels sur emploi permanent</th>
+                        <th class='col-hidden col-blNbAgenContNonPerm'><input type="hidden" value="0" name="champ-blNbAgenContNonPerm">Nombre total d'agents contractuels sur emploi non permanent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if collectivites != null %}
+                        {% for coll in collectivites %}
+                            {% set effectifs = attribute(effectifsArr, coll.idColl) %}
+                            {% set emplPerm = '' %}
+                            {% set emplTitu = '' %}
+                            {% set emplContPerm = '' %}
+                            {% set emplContNonPerm = '' %}
+                            {% if effectifs is not null %}
+                                {% set emplPerm = effectifs['val1'] + effectifs['val2'] + effectifs['val3'] + effectifs['val4'] + effectifs['val5'] + effectifs['val6'] %}
+                                {% set emplTitu = effectifs['val1'] + effectifs['val2'] %}
+                                {% set emplContPerm = effectifs['val3'] + effectifs['val4'] + effectifs['val5'] + effectifs['val6'] %}
+                                {% set emplContNonPerm = effectifs['val7'] + effectifs['val8'] + effectifs['val9'] + effectifs['val10'] + effectifs['val11'] + effectifs['val12'] %}
+                            {% endif %}
+                            <tr>
+                                <td class='col-hidden col-blSire'>{{ coll.nmSire }}</td>
+                                <td class='col-hidden col-blLibe'>{{ coll.lbColl }}</td>
+                                <td class='col-hidden col-blTypeColl'>{% if coll.refTypeCollectivite is defined %}{{ coll.refTypeCollectivite.lbTypeColl }}{% elseif coll.lbTypeColl is defined %}{{ coll.lbTypeColl }}{% endif %}</td>
+                                <td class='col-hidden col-blAffiCdg'>{% if coll.blAffiColl is same as(0) or coll.blAffiColl is same as(false) %}Non{% elseif coll.blAffiColl is same as(1) or coll.blAffiColl is same as(true) %}Oui{% else %}Non renseigné{% endif %}</td>
+                                <td class='col-hidden col-blDepa'>{% if coll.departement is defined %}{{ coll.departement.cdDepa }} - {{ coll.departement.lbDepa }}{% elseif coll.cdDepa is defined %}{{ coll.cdDepa }} - {{ coll.lbDepa }}{% endif %}</td>
+                                <td class='col-hidden col-blCdPost'>{{ coll.cdPost }}</td>
+                                <td class='col-hidden col-blLbVill'>{{ coll.lbVill }}</td>
+                                <td class='col-hidden col-blCdInse'>{{ coll.cdInse }}</td>
+                                <td class='col-hidden col-blNmPopuInse'>{{ coll.nmPopuInse }}</td>
+                                <td class='col-hidden col-blSurclasDemo'>{% if coll.blSurclasDemo is same as(0) or coll.blSurclasDemo is same as(false) %}Non{% elseif coll.blSurclasDemo is same as(1) or coll.blSurclasDemo is same as(true) %}Oui{% else %}Non renseigné{% endif %}</td>
+                                <td class='col-hidden col-blNmStratColl'>{{ coll.nmStratColl }}</td>
+                                <td class='col-hidden col-blCtCdg'>{% if coll.blCtCdg is same as(0) or coll.blCtCdg is same as(false) %}Non{% elseif coll.blCtCdg is same as(1) or coll.blCtCdg is same as(true) %}Oui{% else %}Non renseigné{% endif %}</td>
+                                <td class='col-hidden col-blChsct'>{% if coll.blChsct is same as(0) or coll.blChsct is same as(false) %}Non{% elseif coll.blChsct is same as(1) or coll.blChsct is same as(true) %}Oui{% else %}Non renseigné{% endif %}</td>
+                                <td class='col-hidden col-blCollDgcl'>{% if coll.blCollDgcl is same as(0) or coll.blCollDgcl is same as(false) %}Non{% elseif coll.blCollDgcl is same as(1) or coll.blCollDgcl is same as(true) %}Oui{% else %}Non renseigné{% endif %}</td>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <td class='col-hidden col-blCdgColl'>{% if coll.cdgIsAuthorizedByCollectivity is same as(0) or coll.cdgIsAuthorizedByCollectivity is same as(false) %}Non{% elseif coll.cdgIsAuthorizedByCollectivity is same as(1) or coll.cdgIsAuthorizedByCollectivity is same as(true) %}Oui{% else %}Non renseigné{% endif %}</td>
+                                {% elseif is_granted('ROLE_CDG') %}
+                                    <td class='col-hidden col-blCdgColl'>{% if coll.cdg_is_authorized_by_collectivity is same as(0) or coll.cdg_is_authorized_by_collectivity is same as(false) %}Non{% elseif coll.cdg_is_authorized_by_collectivity is same as(1) or coll.cdg_is_authorized_by_collectivity is same as(true) %}Oui{% else %}Non renseigné{% endif %}</td>
+                                {% endif %}
+                                <td class='col-hidden col-blNbAgenPerm'>{{ emplPerm }}</td>
+                                <td class='col-hidden col-blNbAgenTitu'>{{ emplTitu }}</td>
+                                <td class='col-hidden col-blNbAgenContPerm'>{{ emplContPerm }}</td>
+                                <td class='col-hidden col-blNbAgenContNonPerm'>{{ emplContNonPerm }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>#}
+            </div>
+        <div class="modal fade text-center" id='confirm-suppr-params-wrapper'>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                        <p>Ce paramétrage va être supprimé, souhaitez-vous continuer ?</p>
+                        <input type="hidden" name="idPara" value="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id='confirm-suppr-params' class="btn btn-primary pull-right">Oui</button>
+                        <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Non</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

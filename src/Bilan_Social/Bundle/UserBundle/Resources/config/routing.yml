@@ -1,0 +1,102 @@
+homepage:
+    path:     /
+    defaults: { _controller: CoreBundle:Default:index }
+    # options:
+    #     expose: true
+
+login:
+    path:     /utilisateur/login
+    defaults: { _controller: UserBundle:Security:login }
+
+login_check:
+    path: /user/login_check
+
+admin_user:
+    resource: "@UserBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin/
+
+reset_password_ajax:
+    path:     /utilisateur/reset-ajax
+    defaults: { _controller: UserBundle:Security:resetPasswordAjax }
+    options:
+        expose: true
+
+change_password:
+    path:     /utilisateur/change/{code}
+    defaults: { _controller: UserBundle:Security:changePassword }
+    methods: [GET, POST]
+    
+forgot_password_step1:
+    path:     /forgotpassword
+    defaults: { _controller: UserBundle:Security:firstChangePassword }
+    methods: [GET, POST]
+    
+change_password_by_user:
+    path:     /changemdp/
+    defaults: { _controller: UserBundle:Utilisateur:changePasswordByUser }
+    methods: [GET, POST]
+
+reinit_account:
+    path:     /utilisateur/reinitialisation
+    defaults: { _controller: UserBundle:Security:reinitAccount }
+    methods: [GET, POST]
+
+utilisateur_recherche:
+    path:     /utilisateur/recherche
+    defaults: { _controller: UserBundle:Utilisateur:index }
+
+utilisateur_fiche:
+    path:     /utilisateur/fiche/{id}
+    defaults: { _controller: UserBundle:Utilisateur:fiche, id: null }
+
+utilisateur_gestion_profil:
+    path:     /utilisateur/gestion-profil/{id}
+    defaults: { _controller: UserBundle:Utilisateur:gestionProfil, id: null }
+
+utilisateur_create_profil:
+  path:     /create_profil
+  defaults: { _controller: UserBundle:Utilisateur:createProfil }
+
+utilisateur_delete_profil:
+  path:     /delete_profil
+  defaults: { _controller: UserBundle:Utilisateur:deleteProfil }
+  options:
+    expose: true
+
+utilisateur_profil_export_admin:
+  path:     /profil_export_admin
+  defaults: { _controller: UserBundle:Utilisateur:profilExportAdmin }
+  options:
+    expose: true
+    
+user_infocentre_edit:
+    path:     /user_infocentre/edit/{id}
+    defaults: { _controller: UserBundle:Utilisateur:editUserInfoCentre }
+
+get_lbcdg_ajax:
+    path:     /utilisateur/getlbcdg-ajax
+    defaults: { _controller: UserBundle:Utilisateur:getLbCdgAjax }
+    condition: "request.isXmlHttpRequest()"
+    options:
+        expose: true
+
+get_cdgreferent_ajax:
+    path:     /utilisateur/getcdgreferent-ajax
+    defaults: { _controller: UserBundle:Utilisateur:getCdgReferentAjax }
+    condition: "request.isXmlHttpRequest()"
+    options:
+        expose: true
+
+get_username_ajax:
+    path:     /utilisateur/getusername-ajax
+    defaults: { _controller: UserBundle:Utilisateur:getUsernameAjax }
+    condition: "request.isXmlHttpRequest()"
+    options:
+        expose: true
+
+get_departements_ajax:
+    path:     /utilisateur/getdepartements-ajax
+    defaults: { _controller: UserBundle:Utilisateur:getDepartementsAjax }
+    condition: "request.isXmlHttpRequest()"
+    options:
+        expose: true

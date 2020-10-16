@@ -1,0 +1,57 @@
+<div class="modal fade" id="331" tabindex="-1" role="dialog" aria-labelledby="331" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="331">Indicateur 331 de l'année {{ indicateur_precedent.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #efefef">
+                {% if indicateur_precedent.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.annee }}
+                {% else %}
+                    <table width="100%" id="ind331Table_ind_precedent" class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style="text-align: center"></th>
+                                <th colspan="2" style="text-align: center">Montant total des rémunérations annuelles brutes</th>
+                            </tr>
+
+                            <tr>
+                                <th style="text-align: center">Hommes</th>
+                                <th style="text-align: center">Femmes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set total1 = 0%}
+                        {% set total2 = 0%}
+                        {% set totalGlo = 0%}
+
+                        {% for tag in indicateur_precedent.indicateur %}
+                            {% set total1 = total1 + tag.R_3311 %}
+                            {% set total2 = total2 + tag.R_3312 %}
+                            {% set totalGlo =  tag.R_3311 + tag.R_3312 %}
+                            <tr>
+                                <td style="min-width: 400px">
+                                    {{ tag.LB_EMPLNONPERM }}
+                                </td>
+                                <td id="r3311_ind_precedent" style="text-align: center">{{ tag.R_3311 }}</td>
+                                <td id="r3312_ind_precedent" style="text-align: center">{{ tag.R_3312 }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        {% if indicateur_precedent.indicateur|length > 0  %}
+                            <tr id="total331_ind_precedent">
+                                <td style="min-width: 400px"><b>TOTAL</b></td>
+                                <td style="text-align: center">{{ total1 }}</td>
+                                <td style="text-align: center">{{ total2 }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

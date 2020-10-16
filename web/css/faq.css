@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16 juil. 2018, 09:15:11
+    Author     : mbusson
+*/
+
+#helppdf {
+    position: fixed;
+    top: 20px;
+    background-color: #4CAF50;
+    right: 0px; /* Position them outside of the screen */
+    transition: 0.8s; /* Add transition on hover */
+    width: 150px; /* Set a specific width */
+    text-decoration: none; /* Remove underline */
+    font-size: 20px; /* Increase font size */
+    color: white; /* White text color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+    cursor: pointer;
+    z-index: 1000;
+    padding: 15px;
+    text-align: center;
+}
+.dlltext{
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.img-pdf{
+    height: 220px;
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}

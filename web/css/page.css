@@ -1,0 +1,6 @@
+.mail{border:1px #cccccc solid;background:#ffffff;margin:5px 0;}
+#objet-mail{padding:10px;}
+#objet-mail p{margin-bottom:0;}
+#objet-mail label{color:#cccccc;margin-right:8px;margin-bottom:0;}
+#contenu-mail{height:350px;padding:20px;overflow:auto;}
+#table-page li{list-style:none;}

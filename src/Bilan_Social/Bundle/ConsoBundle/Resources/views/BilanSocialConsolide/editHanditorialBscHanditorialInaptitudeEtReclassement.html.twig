@@ -1,0 +1,443 @@
+
+    {% if formHanditorialBscHanditorialInaptitudeEtReclassement is defined %}
+
+            {% set campagne = campagne_service.GetCurrentCampagne() %}
+            {% set AnneeCamp = '' %}
+            {% if campagne is not null %}
+                {% set AnneeCamp = campagne.nmAnne %}
+            {% endif %}
+
+        {{ form_start(formHanditorialBscHanditorialInaptitudeEtReclassement) }}
+
+        <table width="100%" id="bscHanditorialInaptitudeEtReclassementTable" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center">Libellés</th>
+                    <th style="text-align: center">Réponses</th>
+                </tr>
+            </thead>
+           <!--  <tbody> -->                
+                <tr id="idTrA511">
+                    <td style="min-width: 500px">
+                        A5-1-1 - Combien d'avis d'inaptitude temporaire ont été délivrés au cours de l'année {{campagne.nmAnne}} ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA511) }}</td>
+                </tr>
+                <tr id="idTrA512">
+                    <td style="min-width: 500px">
+                        A5-1-2 - Combien d'avis d'inaptitude définitive à ses fonctions ont été délivrés au cours de l'année {{campagne.nmAnne}} ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA512) }}</td>
+                </tr>
+                <tr id="idTrA513">
+                    <td style="min-width: 500px">
+                        A5-1-3 - Combien d'avis d'inaptitude définitive à toutes fonctions ont été délivrés au cours de l'année {{campagne.nmAnne}} ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA513) }}</td>
+                </tr>
+                <tr id="idTr8">
+                    <td style="min-width: 500px">
+                        A5-2-0 - Combien de reclassements ont été demandés au cours de l'année {{AnneeCamp}} ?
+                        <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qA9Handitorial" aria-hidden="true"></span>
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.rA9) }}</td>
+                </tr>
+                <tr id="rA91">
+                    <td style="min-width: 500px">A5-2-0-1 - Combien faisaient suite à une inaptitude liée à un acident du travail ou une maladie professionnelle ?</td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.rA91) }}</td>
+                </tr>
+                <tr id="idTrA521">
+                    <td style="min-width: 500px">
+                        A5-2-1 - Combien de reclassements (arrêtés) ont été prononcés au cours de l'année {{campagne.nmAnne}} ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA521) }}</td>
+                </tr>
+                <tr id="rA101">
+                    <td style="min-width: 500px">A5-2-1-1 - Combien faisaient suite à une inaptitude liée à un accident du travail ou une maladie professionnelle ?</td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.rA101) }}</td>
+                </tr>
+                <tr id="idTrA522">
+                    <td style="min-width: 500px">
+                        A5-2-2 - Combien de retraites pour invalidité ont été prononcés au cours de l'année {{campagne.nmAnne}} ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA522) }}</td>
+                </tr>
+                <tr id="idTrA523">
+                    <td style="min-width: 500px">
+                        A5-2-3 - Combien de licenciements pour inaptitude physique ont été prononcés au cours de l'année {{campagne.nmAnne}} ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA523) }}</td>
+                </tr>
+                <tr id="qA62">
+                    <td style="min-width: 500px">
+                        A6-2 - Combien de mesures d'aménagement de poste ou des conditions de travail (hors avis de reclassement) ont-elles été prononcées au cours l'année {{campagne.nmAnne}} au bénéfice de B.O.E.T.H. ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA62) }}</td>
+                </tr>
+                <tr id="qA72">
+                    <td style="min-width: 500px">
+                        A7-2 - Combien de mesures de changement d'affectation (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{campagne.nmAnne}} au bénéfice de B.O.E.T.H. ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA72) }}</td>
+                </tr>
+                <tr id="idTr6">
+                    <td style="min-width: 500px">
+                        A8 - Des mesures de disponibilités d'office (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{AnneeCamp}} ?
+                        <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qA8Handitorial" aria-hidden="true"></span>
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA8) }}</td>
+                </tr>
+                <tr id="rA82">
+                    <td style="min-width: 500px">
+                        A8-2 - Combien de mesures de disponibilité d'office (hors avis de reclassement) ont-elles été prononcées au cours de l'année {{campagne.nmAnne}} au bénéfice de B.O.E.T.H. ?
+                    </td>
+                    <td>{{ form_widget(formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialInaptitudeEtReclassement.qA82) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="panel-body whiteBackGround">
+            <label>
+                Des agents ont-ils bénéficiés d'un avis d'inaptitude au cours de l'année {{AnneeCamp}} ?
+                <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qAgentAvisInapHanditorial" aria-hidden="true"></span>
+            </label>
+            {{ form_row(formHanditorialBscHanditorialInaptitudeEtReclassement.qHandiB22) }}
+        </div>
+        <div class="panel panel-default" id="inaptitudePanel">
+            <div class="panel-heading">
+                <p style="text-align:center"> Tableaux Avis inaptude au cours de l'année {{AnneeCamp}} </p>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="panel-body">
+                <table style="display: none" width="100%" id="bscHanditorialAvisInaptitudeTable" class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Avis Inaptitude au cours de l'année {{AnneeCamp}}</th>
+                            <th style="text-align: center">Homme</th>
+                            <th style="text-align: center">Femme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialAvisInaptitudes %}
+                        <tr id="{{ tag.refInaptitudeBoeth.vars.value }}">
+                            <td style="min-width: 400px">
+                                {{ form_widget(tag.refInaptitudeBoeth) }}
+                                {{ tag.refInaptitudeBoeth.vars.data.lbInaptitudeboeth }}
+                            </td>
+
+                           <td>
+                                 {{ form_row(tag.avisInaptitudeH) }}
+                            </td>
+                            <td>
+                                 {{ form_row(tag.avisInaptitudeF )}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel-body">
+                <table style="display: none" width="100%" id="bscHanditorialMesureInaptitudeTable" class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mesure Inaptitude au cours de l'année {{AnneeCamp}}</th>
+                            <th style="text-align: center">Homme</th>
+                            <th style="text-align: center">Femme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialMesureInaptitudes %}
+                        <tr id="{{ tag.refMesureBoeth.vars.value }}">
+                            <td style="min-width: 400px">
+                                {{ form_widget(tag.refMesureBoeth) }}
+                                {{ tag.refMesureBoeth.vars.data.lbMesureboeth }}
+                            </td>
+
+                           <td>
+                                 {{ form_row(tag.mesureInaptitudeH) }}
+                            </td>
+                            <td>
+                                 {{ form_row(tag.mesureInaptitudeF )}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel-body whiteBackGround">
+            <label>
+                Des agents ont-ils bénéficiés d'un avis d'inaptitude avant l'année {{AnneeCamp}} ?
+                <span style="cursor: pointer" class="glyphicon glyphicon-question-sign" data-toggle="modal" alt="Cliquer pour plus d'information" title="Cliquer pour plus d'information" data-target="#qAgentAvisInapAvantHanditorial" aria-hidden="true"></span>
+            </label>
+            {{ form_row(formHanditorialBscHanditorialInaptitudeEtReclassement.qHandiB23) }}
+        </div>
+        <div class="panel panel-default" id="inaptitudeAvantPanel">
+            <div class="panel-heading">
+                <p style="text-align:center"> Tableaux Avis inaptude avant l'année {{AnneeCamp}} </p>
+            </div>
+            <div class="clearfix"></div>
+            <div class="panel-body">
+                <table style="display: none" width="100%" id="bscHanditorialAvisInaptitudeAvantTable" class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Avis Inaptitude avant l'année {{AnneeCamp}}</th>
+                            <th style="text-align: center">Homme</th>
+                            <th style="text-align: center">Femme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialAvisInaptitudesAvant %}
+                        <tr id="{{ tag.refInaptitudeBoeth.vars.value }}">
+                            <td style="min-width: 400px">
+                                {{ form_widget(tag.refInaptitudeBoeth) }}
+                                {{ tag.refInaptitudeBoeth.vars.data.lbInaptitudeboeth }}
+                            </td>
+
+                           <td>
+                                 {{ form_row(tag.avisInaptitudeAvantH) }}
+                            </td>
+                            <td>
+                                 {{ form_row(tag.avisInaptitudeAvantF )}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel-body">
+                <table style="display: none" width="100%" id="bscHanditorialMesureInaptitudeAvantTable" class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mesure Inaptitude avant l'année {{AnneeCamp}}</th>
+                            <th style="text-align: center">Homme</th>
+                            <th style="text-align: center">Femme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialMesureInaptitudesAvant %}
+                        <tr id="{{ tag.refMesureBoeth.vars.value }}">
+                            <td style="min-width: 400px">
+                                {{ form_widget(tag.refMesureBoeth) }}
+                                {{ tag.refMesureBoeth.vars.data.lbMesureBoeth }}
+                            </td>
+
+                           <td>
+                                 {{ form_row(tag.mesureInaptitudeAvantH) }}
+                            </td>
+                            <td>
+                                 {{ form_row(tag.mesureInaptitudeAvantF )}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+         <div class="panel-body">
+            <table width="100%" id="bscHanditorialAncienneteAgentsTable" class="table table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th colspan='10'>Ancienneté des agents</th>
+                </tr>
+                <tr>
+                    <th colspan='2'>Moins de 1 an</th>
+                    <th colspan='2'>Entre 1 et 3 ans</th>
+                    <th colspan='2'>Entre 4 et 6 ans</th>
+                    <th colspan='2'>Entre 7 et 12 ans</th>
+                    <th colspan='2'>Plus de 12 ans</th>
+                </tr>
+                <tr>
+                    <th>Hommes</th>
+                    <th>Femmes</th>
+                    <th>Hommes</th>
+                    <th>Femmes</th>
+                    <th>Hommes</th>
+                    <th>Femmes</th>
+                    <th>Hommes</th>
+                    <th>Femmes</th>
+                    <th>Hommes</th>
+                    <th>Femmes</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for tag in formHanditorialBscHanditorialInaptitudeEtReclassement.bscHanditorialAncienneteAgents %}
+                    <tr>
+                        <td>
+                            {{ form_row(tag.moinsUnAnH) }}
+                        </td>
+                        <td>
+                            {{ form_row(tag.moinsUnAnF )}}
+                        </td>
+                        <td>
+                            {{ form_row(tag.entreUnEtTroisH) }}
+                        </td>
+                        <td>
+                            {{ form_row(tag.entreUnEtTroisF )}}
+                        </td>
+                        <td>
+                            {{ form_row(tag.entreQuatreEtSixH) }}
+                        </td>
+                        <td>
+                            {{ form_row(tag.entreQuatreEtSixF)}}
+                        </td>
+                        <td>
+                            {{ form_row(tag.entreSeptEtDouzeH) }}
+                        </td>
+                        <td>
+                            {{ form_row(tag.entreSeptEtDouzeF)}}
+                        </td>
+                        <td>
+                            {{ form_row(tag.plusDouzeH) }}
+                        </td>
+                        <td>
+                            {{ form_row(tag.plusDouzeF )}}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+   
+        <br />
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display: none"/>
+
+        {{ form_end(formHanditorialBscHanditorialInaptitudeEtReclassement) }}
+
+        <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            changeDetect = false;
+            $(document).change();
+            {% include 'stickyheader.txt' %}
+            getBrowserSetSticky(bscHanditorialAncienneteAgentsTable);
+
+            initNumber("bscFormHanditorialInaptitudeEtReclassement[bscHanditorialInaptitudeEtReclassement][rA9]", "rA91", "bscFormHanditorialInaptitudeEtReclassement_bscHanditorialInaptitudeEtReclassement_rA91");
+
+            $('#bscFormHanditorialInaptitudeEtReclassement_bscHanditorialInaptitudeEtReclassement_rA9').on('change', function() {
+                initNumber("bscFormHanditorialInaptitudeEtReclassement[bscHanditorialInaptitudeEtReclassement][rA9]", "rA91", "bscFormHanditorialInaptitudeEtReclassement_bscHanditorialInaptitudeEtReclassement_rA91");
+            });
+
+            initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB22]", "inaptitudePanel","bscHanditorialAvisInaptitudeTable input");
+            initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB22]", "bscHanditorialAvisInaptitudeTable", "bscHanditorialAvisInaptitudeTable input");
+            initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB22]", "bscHanditorialMesureInaptitudeTable", "bscHanditorialMesureInaptitudeTable input");
+            initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB23]", "bscHanditorialAvisInaptitudeAvantTable", "bscHanditorialAvisInaptitudeAvantTable input");
+            initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB23]", "bscHanditorialAvisInaptitudeAvantTable", "bscHanditorialAvisInaptitudeAvantTable input");
+            initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB23]", "inaptitudeAvantPanel", "bscHanditorialAvisInaptitudeAvantTable input");
+
+            $('input[name="bscFormHanditorialInaptitudeEtReclassement[qHandiB22]"]').click(function() {
+                initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB22]", "inaptitudePanel","bscHanditorialAvisInaptitudeTable input");
+                initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB22]", "bscHanditorialAvisInaptitudeTable", "bscHanditorialAvisInaptitudeTable input");
+                initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB22]", "bscHanditorialMesureInaptitudeTable", "bscHanditorialMesureInaptitudeTable input");
+
+            });
+
+            $('input[name="bscFormHanditorialInaptitudeEtReclassement[qHandiB23]"]').click(function() {
+                initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB23]", "bscHanditorialAvisInaptitudeAvantTable", "bscHanditorialAvisInaptitudeAvantTable input");
+                initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB23]", "bscHanditorialMesureInaptitudeAvantTable", "bscHanditorialMesureInaptitudeAvantTable input");
+                initRadio("bscFormHanditorialInaptitudeEtReclassement[qHandiB23]", "inaptitudeAvantPanel", "bscHanditorialAvisInaptitudeAvantTable input");
+            });
+        });
+
+        function initRadio(nameInput, divToShow, inputValue) {
+            var qA6 = $('input[name="'+nameInput+'"]').filter(':checked').val();
+            if (qA6 == "1") {
+                $('#' + divToShow).show();
+            } else {
+                $('#' + divToShow).hide();
+                $('#' + inputValue).val('0');
+            }
+        }
+
+        function initNumber(nameInput, divToShow, inputValue) {
+            var qA9 = $('input[name="'+nameInput+'"]').val();
+            if(qA9 == '' || qA9 == '0') {
+                $('#' + divToShow).hide();
+                $('#' + inputValue).val('0');
+            } else {
+                $('#' + divToShow).show();
+            }
+        }
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                var regex = /\,(?!\s*?[\{\[\"\'\w])/g;
+                $('#bscFormHanditorialInaptitudeEtReclassement_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_handitorial_bscHanditorialInaptitudeEtReclassement_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        // console.log(responsejson);
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#inaptitude_et_reclassement').load('{{ path('bilan_conso_handitorial_bscHanditorialInaptitudeEtReclassement_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        if (blGpeec == true) {
+                                            window.location.href = '{{ path('bilan_conso_gpeec_edit') }}';
+                                        }
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+

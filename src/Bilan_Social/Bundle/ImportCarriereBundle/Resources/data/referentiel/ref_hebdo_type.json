@@ -1,0 +1,20 @@
+{
+	"data":[
+		{
+			"code":"TNC001",
+			"lbl":"Moins de 17h30",
+			"cd_hebdo_type":"TNC001",
+			"lbl_hebdo_type":"Moins de 17h30"
+		},{
+			"code":"TNC002",
+			"lbl":"Entre 17h30 et moins de 28h",
+			"cd_hebdo_type":"TNC002",
+			"lbl_hebdo_type":"Entre 17h30 et moins de 28h"
+		},{
+			"code":"TNC003",
+			"lbl":"28h et plus",
+			"cd_hebdo_type":"TNC003",
+			"lbl_hebdo_type":"28h et plus"
+		}
+	]
+}

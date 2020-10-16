@@ -1,0 +1,25 @@
+{
+	"data":[
+		{
+			"code":"C2",
+			"lbl":"Titulaire",
+			"cd_quali_statut":"TITU",
+			"lbl_quali_statut":"Titulaire"
+		},{
+			"code":"C1",
+			"lbl":"Stagiaire",
+			"cd_quali_statut":"STAG",
+			"lbl_quali_statut":"Stagiaire"
+		},{
+			"code":"C3",
+			"lbl":"Non titulaire de droit public",
+			"cd_quali_statut":"CONTPERM",
+			"lbl_quali_statut":"Contractuel sur emploi permanent"
+		},{
+			"code":"C4",
+			"lbl":"Non titulaire de droit privé",
+			"cd_quali_statut":"CONTNONPERM",
+			"lbl_quali_statut":"Contractuel sur emploi non permanent"
+		}
+	]
+}

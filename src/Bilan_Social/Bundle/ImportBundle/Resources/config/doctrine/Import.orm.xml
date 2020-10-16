@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ImportBundle\Entity\Import" table="IMPORT"
+        repository-class="Bilan_Social\Bundle\ImportBundle\Repository\ImportRepository">
+        <indexes>
+            <index name="FK_IMPO_COLL" columns="ID_COLL"/>
+            <index name="FK_IMPO_ENQU" columns="ID_ENQU"/>
+        </indexes>
+        <id name="idImpo" type="integer" column="ID_IMPO">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" />
+        </many-to-one>
+
+        <many-to-one field="enquete" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+            <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" />
+        </many-to-one>
+
+        <field name="nmAnnee" type="integer" column="NM_ANNEE" nullable="true"/>
+        <field name="fgTypeimpo" type="integer" column="FG_TYPEIMPO" nullable="true"/>
+        <field name="dtImpo" type="datetime" column="DT_IMPO" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+
+
+    </entity>
+</doctrine-mapping>

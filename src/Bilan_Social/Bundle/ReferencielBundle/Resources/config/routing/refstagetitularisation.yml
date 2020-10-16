@@ -1,0 +1,28 @@
+refstagetitularisation_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefStageTitularisation:index" }
+    methods:  GET
+
+refstagetitularisation_show:
+    path:     /{idStagtitu}/show
+    defaults: { _controller: "ReferencielBundle:RefStageTitularisation:show" }
+    methods:  GET
+
+refstagetitularisation_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefStageTitularisation:new" }
+    methods:  [GET, POST]
+
+refstagetitularisation_edit:
+    path:     /{idStagtitu}/edit
+    defaults: { _controller: "ReferencielBundle:RefStageTitularisation:edit" }
+    methods:  [GET, POST]
+
+refstagetitularisation_delete:
+    path:     /{idStagtitu}/delete
+    defaults: { _controller: "ReferencielBundle:RefStageTitularisation:delete" }
+    methods:  DELETE
+
+csv_export_refstagetitularisation:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefStageTitularisation:generateCsv" }

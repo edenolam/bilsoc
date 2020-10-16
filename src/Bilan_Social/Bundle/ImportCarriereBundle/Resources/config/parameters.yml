@@ -1,0 +1,22 @@
+parameters:
+  import_carriere:
+    config_base_dir: ..\src\Bilan_Social\Bundle\ImportCarriereBundle\Resources\config\import_blocs
+    config_files :
+      agent_ciril : agent_import_carriere_ciril.json
+      absences_ciril : abscence_import_carriere_ciril.json
+      formations_ciril : formation_import_carriere_ciril.json
+      agent_agirhe : agent_import_carriere_agirhe.json
+      absences_agirhe : abscence_import_carriere_agirhe.json
+      formations_agirhe : formation_import_carriere_agirhe.json
+      collectivite_agirhe : collectivite_import_carriere_agirhe.json
+    ref_base_dir: ..\src\Bilan_Social\Bundle\ImportCarriereBundle\Resources\data\referentiel
+    ref_files : 
+      ref_sexe : ref_sexe.json
+      ref_temps_travail : ref_temps_travail.json
+      ref_type_contrat : ref_type_contrat.json
+      ref_modalite_entre_coll : ref_modalite_entre_coll.json
+      ref_modalite_sortie_coll : ref_modalite_sortie_coll.json
+      ref_type_formation : ref_type_formation.json
+      ref_organisme_formation : ref_organisme_formation.json
+      ref_qualite_statutaire : ref_qualite_statutaire_agirhe.json
+      ref_domaine_diplome : ref_domaine_diplome.json

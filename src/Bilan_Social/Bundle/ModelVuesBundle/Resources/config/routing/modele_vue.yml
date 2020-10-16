@@ -1,0 +1,25 @@
+model_vues_homepage:
+    path:     /
+    defaults: { _controller: ModelVuesBundle:ModelVues:index }
+
+model_vues_enquete:
+    path:     /enquete
+    defaults: { _controller: ModelVuesBundle:ModelVues:enquete }
+
+model_vues_collectivite:
+    path:     /collectivite
+    defaults: { _controller: ModelVuesBundle:ModelVues:collectivite }
+
+model_vues_recherche:
+    path:     /recherche
+    defaults: { _controller: ModelVuesBundle:ModelVues:recherche }
+ 
+model_vues_analyse:
+    path:     /analyse
+    defaults: { _controller: ModelVuesBundle:ModelVues:analyse }
+
+get_model_vue:
+    path: /get-model-vue
+    defaults: {_controller: ModelVuesBundle:ModelVues:getModelVuesAjax }
+    options:
+        expose: true

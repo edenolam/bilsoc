@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\ConflitTravail" table="conflit_travail">
+        <indexes>
+            <index name="FK_CONFLITRAVAIL_INFOCOLLAGEN" columns="ID_INFOCOLLAGEN"/>
+            <index name="FK_CONFLITRAVAIL_MOTIFGREVE" columns="ID_MOTIGREV"/>
+        </indexes>
+        <id name="idConftrav" type="integer" column="ID_CONFTRAV">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationColectiviteAgent" inversed-by="ConflitTravail">
+            <join-column name="ID_INFOCOLLAGEN" referenced-column-name="ID_INFOCOLLAGEN" />
+        </many-to-one>
+        <many-to-one field="RefMotifGreve" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifGreve" inversed-by="MotifGreve">
+            <join-column name="ID_MOTIGREV" referenced-column-name="ID_MOTIGREV"/>
+        </many-to-one>
+        <!--<field name="idMotigrev" type="integer" column="ID_MOTIGREV" nullable="true"/>-->
+        <field name="r7131" type="integer" column="R_7131" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

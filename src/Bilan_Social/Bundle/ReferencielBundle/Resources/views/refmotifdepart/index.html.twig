@@ -1,0 +1,53 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des motifs de départ</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refmotifdepart_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refmotifdepart') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Statut</th>
+                    <th>Code N4DS</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refMotifDepart in refMotifDeparts %}
+                    <tr>
+                        <td><a href="{{ path('refmotifdepart_show', { 'idMotidepa': refMotifDepart.idMotidepa }) }}">{{ refMotifDepart.cdMotidepa }}</a></td>
+                        <td>{{ refMotifDepart.lbMotidepa }}</td>
+                        <td>
+                            {% for statut in refMotifDepart.StatutMotifDeparts %}
+                                - {{ statut.lbStat }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ refMotifDepart.cdMotiN4ds }}</td>
+                        <td>{% if refMotifDepart.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refMotifDepart} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refmotifdepart_show', { 'idMotidepa': refMotifDepart.idMotidepa }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refmotifdepart_edit', { 'idMotidepa': refMotifDepart.idMotidepa }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

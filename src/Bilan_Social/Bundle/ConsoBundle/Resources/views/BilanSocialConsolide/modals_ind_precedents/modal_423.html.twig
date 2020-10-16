@@ -1,0 +1,59 @@
+<div class="modal fade" id="423" tabindex="-1" role="dialog" aria-labelledby="423" aria-hidden="true">
+    <div class="modal-dialog autoSizeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="423">Indicateur 423 de l'année {{ indicateur_precedent.ind_423.annee }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #efefef">
+                {% if indicateur_precedent.ind_423.indicateur is empty %}
+                  Aucunes valeurs n'étaient présentes pour l'année {{ indicateur_precedent.ind_423.annee }}
+                {% else %}
+                    <table width="100%" id="ind423Table" class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="2"></th>
+                                <th style="text-align: center">Nombre total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set total1 = 0%}
+                        {% set totalGlo = 0%}
+
+                        {% for tag in indicateur_precedent.ind_423.indicateur %}
+                            {% set total1 = total1 + tag.R_4231 %}
+                            {% set totalGlo =  tag.R_4231 %}
+                            <tr>
+                                {% if tag.ID_INAP == 1 %}
+                                    <td rowspan="{{ ancienNbDem }}">Demandes</td>
+                                {% elseif tag.ID_INAP == 3 %}
+                                    <td rowspan="{{ ancienNbDeci }}">Décisions</td>
+                                {% endif %}
+                                <td {% if tag.BL_FILI == 1 %} colspan="2" {% endif%} style="min-width: 200px;">
+                                    {{ tag.LB_INAP }}
+                                </td>
+                                <td id="r4231" class="{% if tag.BL_FILI == 1 %} hidden {% endif%}" >{{ tag.R_4231 }}</td>
+                            </tr>
+                        {% endfor %}
+                        {% if indicateur_precedent.ind_423Fili.indicateur|length > 0 %}
+
+                            {% for tagF in indicateur_precedent.ind_423Fili.indicateur %}
+                                <tr>
+                                    {% if loop.first %}<td rowspan="{{ nbFili }}">Décisions d'inaptitude</td>{% endif %}
+                                    <td style="min-width: 200px;">
+                                        <span class="text-uppercase" style="margin-left: 45px">Filière {{ tagF.LB_FILI }}</span>
+                                    </td>
+                                    <td id="r4231">{{ tagF.R_4231Fili }}</td>
+                                </tr>
+                            {% endfor %}
+
+                        {% endif %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

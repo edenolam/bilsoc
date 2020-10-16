@@ -1,0 +1,21 @@
+admin_user_list:
+    path:     /user/list
+    defaults: { _controller: UserBundle:UserAdmin:list }
+
+admin_user_edit:
+    path:     /user/edit/{user}
+    defaults: { _controller: UserBundle:UserAdmin:edit }
+
+admin_user_delete:
+    path:     /user/delete/{user}
+    defaults: { _controller: UserBundle:UserAdmin:deleteUser }
+
+admin_gestion_fichier_dgcl:
+    path:     /gestion_file_export_dgcl
+    defaults: { _controller: UserBundle:UserAdmin:fileExportDgcl }
+
+admin_gestion_fichier_dgcl_year:
+    path:     /gestion_file_export_dgcl_year/{annee}
+    defaults: { _controller: UserBundle:UserAdmin:loadFileDgclByYear }
+    options:
+        expose: true

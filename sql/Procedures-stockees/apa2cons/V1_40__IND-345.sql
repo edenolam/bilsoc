@@ -1,0 +1,27 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS apa2cons_ind345
+$$
+
+CREATE PROCEDURE apa2cons_ind345(idBilaSociCons INT, idColl INT, idEnqu INT)
+COMMENT ''
+LANGUAGE SQL
+NOT DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+BEGIN
+
+	declare vR3451 int(11);
+	declare vR3452 int(11);
+	
+	SELECT MT_DEPEFONCCOLL, MT_CHARPERS INTO vR3451, vR3452
+	FROM information_colectivite_agent
+	WHERE ID_COLL = idColl
+	AND ID_ENQU = idEnqu;
+	
+	UPDATE bilan_social_consolide SET R_3451 = vR3451, R_3452 = vR3452
+	WHERE ID_BILASOCICONS = idBilaSociCons; 
+	
+	
+END
+$$

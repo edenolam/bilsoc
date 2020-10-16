@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind344" table="ind_344" >
+    <indexes>
+      <index name="FK_344_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+      <index name="FK_344_CADREMPL" columns="ID_CADREMPL"/>
+    </indexes>
+	<unique-constraints>
+		<unique-constraint columns="ID_BILASOCICONS,ID_CADREMPL" name="IDXU1_IND_344"/>
+	</unique-constraints>
+    <id name="id344" type="integer" column="ID_344">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind344s">
+        <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+    </many-to-one>
+
+    <many-to-one field="refCadreEmploi" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCadreEmploi">
+        <join-column name="ID_CADREMPL" referenced-column-name="ID_CADREMPL" nullable="false"/>
+    </many-to-one>
+
+    <field name="r3441" type="decimal" column="R_3441" nullable="true" precision="10" scale="2"/>
+    <field name="r3442" type="decimal" column="R_3442" nullable="true" precision="10" scale="2"/>
+    <field name="r3443" type="decimal" column="R_3443" nullable="true" precision="10" scale="2"/>
+    <field name="r3444" type="decimal" column="R_3444" nullable="true" precision="10" scale="2"/>
+
+    <field name="r3445" type="decimal" column="R_3445" nullable="true" precision="10" scale="2"/>
+    <field name="r3446" type="decimal" column="R_3446" nullable="true" precision="10" scale="2"/>
+    <field name="r3447" type="decimal" column="R_3447" nullable="true" precision="10" scale="2"/>
+    <field name="r3448" type="decimal" column="R_3448" nullable="true" precision="10" scale="2"/>
+
+    <field name="r3449" type="decimal" column="R_3449" nullable="true" precision="10" scale="2"/>
+    <field name="r34410" type="decimal" column="R_34410" nullable="true" precision="10" scale="2"/>
+    <field name="r34411" type="decimal" column="R_34411" nullable="true" precision="10" scale="2"/>
+    <field name="r34412" type="decimal" column="R_34412" nullable="true" precision="10" scale="2"/>
+
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,50 @@
+{
+	"data":[
+		{
+			"code":"-1",
+			"lbl":"Non communiqué",
+			"cd_domaine_diplome":"",
+			"lbl_domaine_diplome":""
+		},{
+			"code":"-2",
+			"lbl":"Non connu",
+			"cd_domaine_diplome":"",
+			"lbl_domaine_diplome":""
+		},{
+			"code":"1",
+			"lbl":"Niveau I : bac+5 (diplôme d'ingénieur, master professionnel)",
+			"cd_domaine_diplome":"Niveau I",
+			"lbl_domaine_diplome":"Master, DEA, DESS, diplôme de grande école de niveau bac+5, doctorat de santé ; Doctorat de recherche (hors santé)"
+		},{
+			"code":"2",
+			"lbl":"Niveau II : bac + 3 (licence) ou bac + 4 (maîtrise)",
+			"cd_domaine_diplome":"Niveau II",
+			"lbl_domaine_diplome":"licence, licence professionnelle, maîtrise, diplôme équivalent de niveau bac+3 ou bac+4 ;"
+		},{
+			"code":"3",
+			"lbl":"Niveau III : bac + 2 (BTS, DUT)",
+			"cd_domaine_diplome":"Niveau III",
+			"lbl_domaine_diplome":"BTS, DUT, Deug, Deust, diplôme de la santé ou du social de niveau bac+2, diplôme équivalent ;"
+		},{
+			"code":"4",
+			"lbl":"Niveau IV : bac, bac professionnel, brevet professionnel, brevet de technicien",
+			"cd_domaine_diplme":"Niveau IV",
+			"lbl_domaine_diplome":"baccalauréat, brevet professionnel"
+		},{
+			"code":"5",
+			"lbl":"Niveau V : BEP, CAP",
+			"cd_domaine_diplome":"Niveau V",
+			"lbl_domaine_diplome":"CAP, BEP ou diplôme de niveau équivalent ;"
+		},{
+			"code":"6",
+			"lbl":"(Supprimé) Niveau VI (BEPC)",
+			"cd_domaine_diplome":"Niveau VI",
+			"lbl_domaine_diplome":"BEPC, brevet élémentaire, brevet des collèges, DNB ;"
+		},{
+			"code":"7",
+			"lbl":"(Supprimé) Niveau VI (BEPC)",
+			"cd_domaine_diplome":"",
+			"lbl_domaine_diplome":"Aucun diplôme"
+		}
+	]
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\AgentRemunerationContractuelNonPermanent" table="Agent_Remuneration_Contractuel_Non_Permanent">
+        <indexes>
+            <index name="FK_AGENT_REMUNERATION_CONTRACTUEL_NON_PERMANENT_EMPLNONPERM" columns="ID_EMPLNONPERM"/>
+            <index name="FK_AGENT_REMUNERATION_CONTRACTUEL_NON_PERMANENT_INFOGENE" columns="ID_INFOGENE"/>
+        </indexes>
+        <id name="idAgentRemunerationContratuelNonPermanent" type="integer" column="ID_AGENT_REMUNERATION_CONTRACTUEL_NON_PERMANENT">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="idInfoGene" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\InformationGenerale" inversed-by="agentremucontnonperm">
+            <join-column name="ID_INFOGENE" referenced-column-name="ID_INFOGENE" />
+        </many-to-one>
+        <many-to-one field="refEmploiNonPermanent" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiNonPermanent" inversed-by="agentremucontnonperm_EmploiNonPermanent">
+            <join-column name="ID_EMPLNONPERM" referenced-column-name="ID_EMPLNONPERM"/>
+        </many-to-one>
+        <field name="r331h" type="integer" column="R331h" nullable="true"/>
+        <field name="r331f" type="integer" column="R331f" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

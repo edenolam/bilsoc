@@ -1,0 +1,68 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"  type="text/css" href="{{ asset('css/ajoutEnquete.css') }}">
+    <link rel="stylesheet"  type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet"  type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+    <link  type="text/css" href="{{ asset('node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script  type="text/javascript" src="{{ asset('js/EnqueteBundle/Enquete.js') }}"></script>
+    <script  type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+    <script  type="text/javascript" src="{{ asset('node_modules/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+    <input class="cdgName" type="hidden" value="{{ app.user.username }}" />
+    <input class="dtDebutCampagne" type="hidden" value="{{ dtDebutCampagne}}" />
+    <div class="col-lg-9">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Créer une enquête</h3>
+            </div>
+            <div class="panel-body">
+                {% if form is defined %}
+                    {{ form_start(form) }}
+                    {{ form_row(form.lbEnqu) }}
+                    {{ form_row(form.cmDesc) }}
+                    {{ form_row(form.dtDebu) }}
+                    {{ form_row(form.departements) }}
+                    {% if form.departements.vars.choices is empty %}
+                        <div class="alert alert-danger fade in" role="alert">
+                            <p>Vous n'avez pas les droits nécessaires pour créer des enquêtes.</p>
+                        </div>
+                    {% endif %}
+                    {{ form_row(form.reinitMdp) }}
+                    {% if form.departements.vars.choices is not empty %}
+                        <div class="alert alert-danger fade in" role="alert" style='display:none;'>
+                            <p>Attention, lorsque que vous cliquez sur "Télécharger", les mots de passe seront réinitialisés, l'action n'est pas réversible.</p>
+                        </div>
+                        <button type='submit' class='btn button-tableau {# workinprogress #}' id='telecharger-csv'>Créer</button>
+                    {% endif %}
+                    {{ form_end(form) }}
+                    <button class='btn button-tableau workinprogress' id='creer-enquete' style='display:none;margin-top:20px;' disabled>Créer</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

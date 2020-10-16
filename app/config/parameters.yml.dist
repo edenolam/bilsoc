@@ -1,0 +1,143 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    host_prefix: http://cig-bs.local
+    app.version: 1.7.0
+    validator.translation_domain: messages
+    database_host: localhost
+    database_port: ~
+    database_name: bilan_social
+    database_user: root
+    database_password: ~
+    # You should uncomment this if you want to use pdo_sqlite
+    #database_path: "%kernel.root_dir%/data.db3"
+
+
+    mailer_user: devteam-iorga@hotmail.com
+    mailer_user_no_reply: nepasrepondre@donnees-sociales.fr
+    mailer_password: "iorga+2017"
+    mailer_host: smtp-mail.outlook.com
+    mailer_port: 587
+    mailer_transport: smtp
+    mailer_encryption: tls
+
+    # TODO A VIRER apres traitement sources
+    file_manager.default_upload_dir:
+        file_dgcl: DGCL/model_dgcl/
+        file_dgcl_upload: MODEL_DGCL
+        file_pdf_upload: AIDE_PDF
+        file_dgcl_temp: DGCL/model_dgcl_temp/
+        action_log_dgcl: DGCL/action_log_dgcl/
+
+    file_manager:
+        service_little_url: 'http://localhost:8081/bsfm'
+        service_root_url : http://localhost:8081/bsfm/api/v1/
+        public_url_mask : http://localhost:8081/bsfm/api/v1/publicContent/{fileKey}
+        file_url_mask : /fileContent/{fileKey}
+
+    # A secret key that's used to generate certain security-related tokens
+    secret: ThisTokenIsNotSoSecretChangeIt
+
+    form_flow:
+            1:
+                entity: Bilan_Social\Bundle\CoreBundle\Entity\Social
+                formType: Bilan_Social\Bundle\CoreBundle\Form\SocialType
+                view: CoreBundle:social:edit.html.twig
+            2:
+                entity: Bilan_Social\Bundle\CoreBundle\Entity\SocialStep2
+                formType: Bilan_Social\Bundle\CoreBundle\Form\SocialStep2Type
+                view: CoreBundle:social:edit.html.twig
+    etat.saisie.bilan.social:
+        0: 'En cours de saisie'
+        1: 'Transmis'
+        2: 'Validé'
+        3: 'Non validé'
+        4: 'En cours de saisie suite à non validation'
+        5: 'Nouvelle transmission en attente de validation'
+        6: 'Non connecté'
+        7: 'Non saisie'
+        8: 'Saisie réinitialisée'
+
+    utilisateur.civilite:
+        1 : "Homme"
+        2 : "Femme"
+
+    type.bilan.social:
+        0: "Agent par agent"
+        1: "Consolidé"
+        2: "Agent par agent en consolidé"
+        3: "Aucune saisie"
+
+    champs.collectivite:
+        "lbColl" : "Nom de la collectivité (Raison Sociale)"
+        "lbAdre" : "Adresse"
+        "cdPost" : "Code postal"
+        "lbVill" : "Ville"
+        "lbAdresse" : "Adresse"
+        "cdInse" : "Code INSEE"
+        "nmSire" : "Numéro de SIRET"
+        "nmSireRata" : "SIRET de rattachement"
+        "lbTele" : "Téléphone"
+        "lbMail" : "Adresse e-mail"
+        "nmPopuInse" : "Population totale INSEE"
+        "dtPopuInse" : "Date de population totale INSEE"
+        "lbContColl" : "Contact de la personne qui renseigne le bilan social"
+        "blTranBs" : "Bilan social transmis"
+        "blSurclasDemo" : "Sur-classement démographique"
+        "nmStratColl" : "Strate de sur-classement"
+        "blAffiColl" : "La collectivité est-elle affiliée au CDG ?"
+        "blCtCdg" : "Rattachement au comité technique (CT) du CDG"
+        "blChsct" : "La collectivité a-t-elle son propre CHSCT ?"
+        "blCollDgcl" : "La collectivité fait-elle partie de l’échantillon de la DGCL ?"
+        "lbZoneEmplColl" : "Zone d’emploi de la collectivité"
+        "nmLogeOphlmOdhlm" : "Nombre de logements gérés pour les OPHLM et les ODHLM"
+        "blActi" : "Collectivité active"
+        "blDiss" : "Collectivité dissoute ?"
+        "dtDiss" : "Date de dissolution"
+        "blFusi" : "Collectivité fusionnée ?"
+        "dtFusi" : "Date de fusion"
+        "blAbso" : "Collectivité absorbée ?"
+        "dtAbso" : "Date d'absorption"
+        "cmInfoComp" : "Informations complémentaires"
+        "cmMoti" : "Motif de création de la collectivité"
+        "change_request" : "Demande de modification"
+        "cdg_is_authorized_by_collectivity" : "Autorisation du centre gestion à prendre la place"
+        "cdUtilcrea" : "Utlisateur ayant créé la collectivité"
+        "dtCrea" : "Date de création"
+        "cdUtilmodi" : "Utlisateur ayant modifié la collectivité"
+        "dtModi" : "Date de modification"
+        "refTypeCollectivite" : "Type de collectivité"
+        "categorie" : "Catégorie juridique"
+        "cdg" : "Centre de gestion de la collectivité"
+        "departement" : "Département"
+    # config JasperServer
+    jasper_host: http://localhost:8080/jasperserver
+    jasper_user: jasperadmin
+    jasper_password: jasperadmin
+    jasper_org_id:
+    jasper_bs_report_id : cig_bs_demo
+    jasper_bs_report_path : /reports/
+    # config CAS
+    cas_bs_login: 'https://bs-recette.donnees-sociales.fr/'
+    cas_host: sso.donnees-sociales.fr
+    cas_port: 443
+    cas_path: /cas
+    cas_ca: false
+    cas_handleLogoutRequest: true
+    cas_casLogoutTarget: https://bs.donnees-sociales.fr
+    cas_force: true
+
+    matomo_url : "//localhost/matomo/"
+    matomo_id_site : 1
+    debug: true
+    isLocked: false
+    app_dev_enabled: false
+    parameters:
+    long_task_manager:
+        host : http://192.168.2.25:8090
+        base_url : /bsltm/api/v1/
+    ENTRYPOINT_KEY: '%env(ENTRYPOINT_KEY)%'
+    app.entrypoint_key: '%env(ENTRYPOINT_KEY)%'
+    GPEEC_ENTRYPOINT_URL: '%env(GPEEC_ENTRYPOINT_URL)%'
+    app.gpeec_entrypoint_url: '%env(GPEEC_ENTRYPOINT_URL)%'

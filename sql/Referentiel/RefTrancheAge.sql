@@ -1,0 +1,10 @@
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA001', 'moins de 25 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA002', '25 & 29 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA003', '30 & 34 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA004', '35 & 39 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA005', '40 & 44 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA006', '45 & 49 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA007', '50 & 54 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA008', '55 & 59 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA009', '60 & 64 ans', 0, 'ADMIN', now());
+INSERT INTO ref_tranche_age (CD_TRANAGE, LB_TRANAGE, BL_VALI, CD_UTILCREA, created_at) VALUES ('TA010', '65 ans et plus', 0, 'ADMIN', now());

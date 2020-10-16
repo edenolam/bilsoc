@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\BscHanditorialStatutAgents" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\BscHanditorialStatutAgentsRepository" table="bsc_handitorial_statut_agents">
+        <indexes>
+            <index name="FK_BSC_HANDITORIAL_STATUT_AGENTS_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+		<unique-constraints>
+			<unique-constraint columns="ID_BILASOCICONS,ID_STAT" name="IDXU1_BSCHANDITORIALSTATUTAGENTS"/>
+		</unique-constraints>
+        <id name="idBscHanditorialStatutAgents" type="integer" column="ID_BSC_HANDITORIAL_STATUT_AGENTS">
+            <generator strategy="IDENTITY"/>
+        </id>
+        
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="bscHanditorialStatutAgents">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <many-to-one field="refStatut" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStatut">
+            <join-column name="ID_STAT" referenced-column-name="ID_STAT" nullable="false"/>
+        </many-to-one>
+        
+        <field name="statutAgentH" type="integer" column="STATUT_AGENT_H" nullable="true"/>
+        <field name="statutAgentF" type="integer" column="STATUT_AGENT_F" nullable="true"/>
+        <field name="fgStat" type="string" column="FG_STAT" length="1" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

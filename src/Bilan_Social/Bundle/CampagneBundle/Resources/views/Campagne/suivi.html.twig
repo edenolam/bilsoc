@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var enquetes_ouvertes = {{ enquetes_ouvertes|json_encode|raw }}
+        var enquetes_lancees = {{ enquetes_lancees|json_encode|raw }}
+        var enquetes_clotures = {{ enquetes_clotures|json_encode|raw }}
+        var enquetes_archivees = {{ enquetes_archivees|json_encode|raw }}
+        var enquetes_non_crees = {{ enquetes_non_crees|json_encode|raw }}
+    </script>
+
+    <script  type="text/javascript" src="{{ asset('js/CampagneBundle/gestionCampagne.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/moment/moment.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/ajoutEnquete.css') }}">
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/datatable/customStyle.css') }}">
+    <link  type="text/css" href="{{ asset('node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css') }}" rel="stylesheet">
+    <link  type="text/css" href="{{ asset('css/enquetesAdmin.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+
+
+    <div class="col-lg-9">
+        <h2>Suivi d'une campagne</h2>
+
+        <div id="exTab2">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#1"  data-toggle="tab">Enquêtes non crées</a>
+                </li>
+                <li>
+                    <a href="#2"  data-toggle="tab">Enquêtes ouvertes</a>
+                </li>
+                <li><a href="#3" data-toggle="tab">Enquêtes lancées</a>
+                </li>
+                <li><a href="#4" data-toggle="tab">Enquêtes clôturées</a>
+                </li>
+                <li><a href="#5" data-toggle="tab">Enquêtes Archivées</a>
+                </li>
+            </ul>
+
+            <div class="tab-content ">
+                <div class="tab-pane active" id="1">
+
+                    <table id="enquetesnoncrees" class="table table-striped">
+                        <thead>
+                        <tr class="text-center">
+                            <th class='checkbox-selected no-sort'>Selectionner<br><button type='button' class="check-all all vertical btn btn-sm check-all-select" id="example-select-all-export">Tous</button></th>
+                            <th>Nom du CDG</th>
+                            <th>Numéro Departements</th>
+                            <th>Departements</th>
+                            <th>Date de relance</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn button-tableau button-submit" name="id" value="export-collectivite" id="export-collectivite">Relancer</button>
+                </div>
+                <div class="tab-pane" id="2">
+
+                    <table id="enquetesOuvertes" class="table table-striped">
+                        <thead class="text-center">
+                        <tr>
+                            <th>Numéro Departements</th>
+                            <th>Departements</th>
+                            <th>Libellé</th>
+                          {#  <th>Action</th>#}
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="3">
+                    <table id="enquetesLancees" class="table table-striped">
+                        <thead class="text-center">
+                        <tr>
+                            <th class='checkbox-selected'>Selectionner<br><button type='button' class="check-all all vertical btn btn-sm check-all-select" id="example-select-all-export">Tous</button></th>
+                            <th>Numéro Departements</th>
+                            <th>Departements</th>
+                            <th>Libellé</th>
+                            <th>Clôture de l'enquête</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn button-tableau button-submit" name="id" value="export-collectivite" id="editAutorisationCloture">Modifier autorisation de clôture</button>
+                </div>
+                <div class="tab-pane" id="4">
+                    <table id="enquetesClotures" class="table table-striped">
+                        <thead class="text-center">
+                        <tr>
+                            <th>Numéro Departements</th>
+                            <th>Departements</th>
+                            <th>Libellé</th>
+                            {#<th>Action</th>#}
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="5">
+                    <table id="enquetesArchivees" class="table table-striped">
+                        <thead class="text-center">
+                        <tr>
+                            <th>Numéro Departements</th>
+                            <th>Departements</th>
+                            <th>Libellé</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade align-center" id='relance-mail'>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {{ form_start(formRelance) }}
+                <div class="modal-body">
+                    <p><i class="glyphicon glyphicon-info-sign"></i></p>
+                    <div id="messageJS" class="alert alert-danger fade in" style="display:none"></div>
+                    <p>Un mail de relance sera envoyé aux collectivités sélectionnées. Veuillez renseigner le message à envoyer ci-dessous.</p>
+                    {{ form_row(formRelance.lbMessrela) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-right btn-relance">Envoyer</button>
+                    <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Annuler</button>
+                </div>
+                {{ form_end(formRelance) }}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+{%  endblock  %}

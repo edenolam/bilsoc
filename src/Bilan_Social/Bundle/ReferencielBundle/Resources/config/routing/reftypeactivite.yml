@@ -1,0 +1,28 @@
+reftypeactivite_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefTypeActivite:index" }
+    methods:  GET
+
+reftypeactivite_show:
+    path:     /{idTypeActi}/show
+    defaults: { _controller: "ReferencielBundle:RefTypeActivite:show" }
+    methods:  GET
+
+reftypeactivite_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefTypeActivite:new" }
+    methods:  [GET, POST]
+
+reftypeactivite_edit:
+    path:     /{idTypeActi}/edit
+    defaults: { _controller: "ReferencielBundle:RefTypeActivite:edit" }
+    methods:  [GET, POST]
+
+reftypeactivite_delete:
+    path:     /{idTypeActi}/delete
+    defaults: { _controller: "ReferencielBundle:RefTypeActivite:delete" }
+    methods:  DELETE
+
+csv_export_reftypeactivite:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefTypeActivite:generateCsv" }

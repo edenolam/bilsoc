@@ -1,0 +1,152 @@
+    {% set campagne = campagne_service.GetCurrentCampagne() %}
+    {% set AnneeCamp = '' %}
+    {% if campagne is not null %}
+        {% set AnneeCamp = campagne.nmAnne %}
+    {% endif %}
+
+    {% if formFormation514 is defined %}
+
+        {{ form_start(formFormation514) }}
+
+        Champ : le tableau qui suit concerne les agents titulaires, stagiaires et contractuels
+
+        <br/>
+
+        <table width="100%" id="ind514Table" class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align: center"></th>
+                    <th style="text-align: center">Montants pour l'année {{AnneeCamp}} en euros</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="idTr1">
+                    <td style="min-width: 200px">5.1.4.1</td>
+                    <td style="min-width: 500px">CNFPT au titre de la cotisation obligatoire</td>
+                    <td>{{ form_widget(formFormation514.r5141) }}</td>
+                </tr>
+                <tr id="idTr2">
+                    <td style="min-width: 200px">5.1.4.2</td>
+                    <td style="min-width: 500px">CNFPT au delà de la cotisation obligatoire (formations payantes)</td>
+                    <td>{{ form_widget(formFormation514.r5142) }}</td>
+                </tr>
+                <tr id="idTr3">
+                    <td style="min-width: 200px">5.1.4.3</td>
+                    <td style="min-width: 500px">Autres organismes</td>
+                    <td>{{ form_widget(formFormation514.r5143) }}</td>
+                </tr>
+                <tr id="idTr4">
+                    <td style="min-width: 200px">5.1.4.4</td>
+                    <td style="min-width: 500px">Frais de déplacement à la charge de la collectivité</td>
+                    <td>{{ form_widget(formFormation514.r5144) }}</td>
+                </tr>
+                <tr class="filiTable" id="totalGlo">
+                    <td colspan="2"><b>Coût total des actions de formation</b></td>
+                    <td id="total" style="text-align: center">0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        Comptabiliser les coûts directs de formation d'une part (5.1.4.1, 5.1.4.2 et 5.1.4.3) et les frais de déplacement liés à la formation d'autre part (5.1.4.4).<br/>
+        5.1.4.2	Coûts des actions de formation prises en charge par les collectivités territoriales (coûts pédagogiques des actions organisées par les collectivités, frais d'inscription à des stages, colloques...) avec mention des versements au Centre national de la fonction publique territoriale au titre des actions organisées en partenariat.<br/>
+
+        <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                $('#progImg').show();" data-valide="1" />
+
+        <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formFormation514) }}
+
+        <script type="text/javascript">
+
+            $(document).ready(function ()
+            {
+                changeDetect = false;
+                $(document).change();
+                update514();
+            });
+
+
+            function changedR514() {
+                update514();
+            }
+
+
+            function update514() {
+                var mtTot = 0;
+
+                for (var y = 1; y < 5; y += 1) {
+                    var cellValue = $('#bscForm_r514' + y).val();
+                    if (cellValue != "") {
+                        cellValue = parseFloat(cellValue);
+                        mtTot += cellValue;
+                    }
+                }
+                var roundedTotal = (Math.round(mtTot * 100) / 100).toFixed(2)
+                $('#total').html(roundedTotal);
+            }
+
+
+            /*
+             * METHODE AJAX SUBMIT
+             */
+            $(function () {
+                // Enregistrement en ajax
+                $('form').on('submit', function (e) {
+                    var $this = $(this).closest('div');
+                    var btn = $(this).find("input[type=submit]:focus");
+                    var value_valide = $(btn).data('valide');
+                    $('#bscForm_valide').val(value_valide);
+                    // Submit en ajax pour le fonctionnement d'appel par onglet
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ path('bilan_conso_formation_ind514_edit') }}',
+                        data: $('form').serialize(),
+                        success: function (responsejson) {
+                            if (responsejson.data == 1) {
+                                if (recordAuto) {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement automatique réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+                                } else {
+                                    $('#ind514').load('{{ path('bilan_conso_formation_ind514_edit') }}', function () {
+                                        $('#progImg').hide();
+                                        $('#messageJS').html("Enregistrement réussi");
+                                        messageJS.dialog("open");
+                                        setIncoherenceTable(responsejson);
+
+                                        var next = $($this).next('.panel-heading');
+                                        if(next.length == 0) {
+                                            window.location.href = '{{ path('bilan_conso_droit_edit') }}';
+                                        }
+                                    });
+                                }
+                            } else if (responsejson.data == "-3") {
+                                $('#progImg').hide();
+                                $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                                messageJS.dialog("open");
+                            } else {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                                messageJS.dialog("open");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(xhr);
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                            messageJS.dialog("open");
+                        }
+                    });
+                });
+            });
+
+
+
+        </script>
+    {% endif %}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTempsPartiel" table="ref_temps_partiel"
+        repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefTempsPartielRepository" >
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_TEMPPART" name="cdTemppart"/>
+        </unique-constraints>
+        <id name="idTemppart" type="integer" column="ID_TEMPPART">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="cdTemppart" type="string" column="CD_TEMPPART" length="50" nullable="true"/>
+        <field name="lbTemppart" type="string" column="LB_TEMPPART" length="150" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="cdModaN4ds" type="string" column="CD_MODA_N4DS" length="255" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refTempsPartiel" />
+    </entity>
+</doctrine-mapping>

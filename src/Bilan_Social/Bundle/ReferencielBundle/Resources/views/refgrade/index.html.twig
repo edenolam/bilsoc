@@ -1,0 +1,48 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des grades</h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refgrade_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refgrade') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Cadre Emploi</th>
+                    <th>Détachement</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refGrade in refGrades %}
+                    <tr>
+                        <td><a href="{{ path('refgrade_show', { 'idGrad': refGrade.idGrad }) }}">{{ refGrade.cdGrad }}</a></td>
+                        <td>{{ refGrade.lbGrad }}</td>
+                        <td>{{ refGrade.RefCadreEmploi.lbCadrempl }}</td>
+                        <td>{% if refGrade.blDeta %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refGrade.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refGrade} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refgrade_show', { 'idGrad': refGrade.idGrad }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refgrade_edit', { 'idGrad': refGrade.idGrad }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

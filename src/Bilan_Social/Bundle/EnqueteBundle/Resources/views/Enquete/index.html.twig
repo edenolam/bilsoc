@@ -1,0 +1,151 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/ajoutEnquete.css') }}">
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+
+    {% set idCamp = '' %}
+    <div class="col-xs-9">
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        <div class="panel panel-default contentConsolide">
+
+
+            <div class="panel-heading">
+                <h3 class="noMargin">Enquête</h3>
+            </div>
+
+
+            <div class="panel-body">
+
+                <h3>Campagne en cours</h3>
+
+                {% set idCamp = campagne.idCamp %}
+                <p><span class='bold'>Titre de la campage : </span>{{ campagne.lbCamp }}</p>
+                <p><span class='bold'>Année de référence : </span>{{ campagne.nmAnne }}</p>
+                <p><span class='bold'>Date de début : </span>{{ campagne.dtDebu|date("d/m/Y") }}</p>
+
+                {% if noenquete == true %}
+                    {% if createEnqueteEnable == true %}
+                        <div id="admin">
+                            <a href="{{ path('enquete_gestion_creation') }}"><button type="submit" class="btn btn-primary">Ajouter une enquête</button></a>
+                        </div>
+                    {% else %}
+                         <div class="alert alert-warning fade in" role="alert">
+                            Pour créer une enquête, vous devez mettre à jour les SIRET de vos collectivités
+                        </div>
+                    {% endif %}
+                {% endif %}
+                <hr>
+                <h3>Enquête en cours</h3>
+
+    {% set index = '' %}
+    {% set li = '' %}
+    {% for enquetes in listeEnquetesActive|group_by(=> _.idEnqu)  %}
+        {% set li = '' %}
+        {% set index = loop.index0 %}
+                {% for enquete in enquetes %}
+
+                    {% set check = check_droit_service.checkDroitEcritureEnquete(enquete['fgDroits']) %}
+
+                        {% if index == index%}
+                            {% set li = li ~ "<li>" ~  enquete['cdDepa']  ~ " - " ~  enquete['lbDepa']  ~ "</li>" %}
+                        {% endif %}
+                    {% if (enquete['fgStat'] == 0 or enquete['fgStat'] == 1) and loop.last %}
+                        <div style='margin-top:30px;'>
+                            {% if enquete['blReinitPassword'] == 1 %}
+                                <p><a class='pull-right margin10' href="{{ path('enquete_generer', {'id': enquete['idEnqu']}) }}"><button type="submit" {% if check == false %}disabled {% endif %} class="btn btn-primary">Télécharger</button></a></p>
+                            {% endif %}
+                            <p><span class='bold'>Titre de l'enquête : </span>{{ enquete['lbEnqu'] }}{% if enquete['fgStat'] == "0" or enquete['fgStat'] == "1" %}<a class='pull-right margin10' href="{{ path('enquete_gestion_edition', {'idEnqu': enquete['idEnqu']}) }}"><button {% if check == false %}disabled {% endif %} type="submit" class="btn btn-primary">Modifier</button></a>{% endif %}</p>
+                            <p><span class='bold'>Description de l'enquête : </span>{{ enquete['cmDesc'] }}</p>
+                            <p><span class='bold'>Département(s) lié(s) à l'enquête :</span>
+                                <ul>
+                                    {{li|raw}}
+                                </ul>
+                            <p><span class='bold'>Statut : </span>{% if enquete['fgStat'] == "0" %} ouverte {% elseif enquete['fgStat'] == "1" %} lancée {% elseif enquete['fgStat'] == "2" %} clôturée {% elseif enquete['fgStat'] == "3" %} archivée {% endif %}</p>
+                            {% if enquete['fgStat'] == "0" %}<a href="{{ path('enquete_lancer', {'id': enquete['idEnqu']}) }}"><button {% if check == false %}disabled {% endif %} type="submit" class="btn btn-success btn-outline btn-sm {% if enquete['blReinitPassword'] == 1 %} workinprogressMdpUpdate {% else %}workinprogress{% endif %}">Lancer</button></a>{% endif %}
+
+                            {% if enquete['blCloture'] == "1" %}
+                                {% if enquete['fgStat'] == "1" %}<a href="{{ path('enquete_cloturer', {'id': enquete['idEnqu']}) }}"><button {% if check == false %}disabled {% endif %} type="submit" class="btn btn-danger btn-outline btn-sm workinprogress">Cloturer</button></a>{% endif %}
+                            {% endif %}
+                            {% if enquete['fgStat'] == "2" %}<a href="{{ path('enquete_archiver', {'id': enquete['idEnqu']}) }}"><button {% if check == false %}disabled {% endif %} type="submit" class="btn btn-warning btn-outline btn-sm workinprogress">Archiver</button></a>{% endif %}
+                            {% if enquete['blReinitPassword'] == 1 and enquete['fgStat'] == "0" %}
+                                <div class="alert alert-info" style="display: inline-block">
+                                    <strong>Attention</strong> La réinitialisation des mots de passes prendra quelques instants.
+                                </div>
+                            {% endif %}
+                                {% if enquete['fgStat'] == "2" %}<a href="{{ path('enquete_ouvrir', {'id': enquete['idEnqu'], 'idCamp': idCamp}) }}"><button type="submit" {% if check == false %}disabled {% endif %} class="btn btn-info btn-outline btn-sm workinprogress">Rouvrir</button></a>{% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+    {% endfor %}
+                <hr>
+                <h3>Enquêtes archivées ou clôturées</h3>
+    {% set index = '' %}
+    {% set li = '' %}
+    {% for enquetes in listeEnquetesActive|group_by(=> _.idEnqu)  %}
+                {% set li = '' %}
+        {% set index = loop.index0 %}
+                {% for enquete in enquetes %}
+                    {% set check = check_droit_service.checkDroitEcritureEnquete(enquete['fgDroits']) %}
+                        {% if index == index%}
+                            {% set li = li ~ "<li>" ~  enquete['cdDepa']  ~ " - " ~  enquete['lbDepa']  ~ "</li>" %}
+                        {% endif %}
+                    {% if (enquete['fgStat'] != 0 and enquete['fgStat'] != 1) and loop.last %}
+                        <div style='margin-top:30px;'>
+                            {% if enquete['blReinitPassword'] == 1 %}
+                                <p><a class='pull-right margin10' href="{{ path('enquete_generer', {'id': enquete['idEnqu']}) }}"><button type="submit" {% if check == false %}disabled {% endif %} class="btn btn-primary">Télécharger</button></a></p>
+                            {% endif %}
+                            <p><span class='bold'>Titre de l'enquête : </span>{{ enquete['lbEnqu'] }}{% if enquete['fgStat'] == "0" or enquete['fgStat'] == "1" %}<a class='pull-right margin10' href="{{ path('enquete_modifier', {'id': enquete['idEnqu']}) }}"><button {% if check == false %}disabled {% endif %} type="submit" class="btn btn-primary">Modifier</button></a>{% endif %}</p>
+                            <p><span class='bold'>Description de l'enquête : </span>{{ enquete['cmDesc'] }}</p>
+                            <p><span class='bold'>Département(s) lié(s) à l'enquête :</span>
+                                <ul>
+                                    {{li|raw}}
+                                </ul>
+                            <p><span class='bold'>Statut : </span>{% if enquete['fgStat'] == "0" %} ouverte {% elseif enquete['fgStat'] == "1" %} lancée {% elseif enquete['fgStat'] == "2" %} clôturée {% elseif enquete['fgStat'] == "3" %} archivée {% endif %}</p>
+                            {% if enquete['fgStat'] == "0" %}<a href="{{ path('enquete_lancer', {'id': enquete['idEnqu']}) }}"><button {% if check == false %}disabled {% endif %} type="submit" class="btn btn-success btn-outline btn-sm {% if enquete['blReinitPassword'] == 1 %} workinprogressMdpUpdate {% else %}workinprogress{% endif %}">Lancer</button></a>{% endif %}
+                            {% if enquete['fgStat'] == "1" %}<a href="{{ path('enquete_cloturer', {'id': enquete['idEnqu']}) }}"><button {% if check == false %}disabled {% endif %} type="submit" class="btn btn-danger btn-outline btn-sm workinprogress">Cloturer</button></a>{% endif %}
+                            {% if enquete['fgStat'] == "2" %}<a href="{{ path('enquete_archiver', {'id': enquete['idEnqu']}) }}"><button {% if check == false %}disabled {% endif %} type="submit" class="btn btn-warning btn-outline btn-sm workinprogress">Archiver</button></a>{% endif %}
+                            {% if enquete['blReinitPassword'] == 1 and enquete['fgStat'] == "0" %}
+                                <div class="alert alert-info" style="display: inline-block">
+                                    <strong>Attention</strong> La réinitialisation des mots de passes prendra quelques instants.
+                                </div>
+                            {% endif %}
+                                {% if enquete['fgStat'] == "2" %}<a href="{{ path('enquete_ouvrir', {'id': enquete['idEnqu'], 'idCamp': idCamp}) }}"><button type="submit" {% if check == false %}disabled {% endif %} class="btn btn-info btn-outline btn-sm workinprogress">Rouvrir</button></a>{% endif %}
+                        </div>
+                    {% endif %}
+
+
+                {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

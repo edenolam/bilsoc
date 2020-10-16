@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="Bilan_Social\Bundle\ApaBundle\Repository\HanditorialRepository" name="Bilan_Social\Bundle\ApaBundle\Entity\Handitorial" table="Bilan_Social_Agent_Handitorial">
+        
+        <indexes>
+            <index name="FK_MESURE_INAPTITUDE_AVANT_MESUREBOETH" columns="id_mesure_inaptitude_avant_annne"/>
+            <index name="FK_MESURE_INAPTITUDE_ENCOURS_MESUREBOETH" columns="id_mesure_inaptitude_encours_annne"/>
+            <index name="FK_INAPTITUDE_AVANT_MESUREBOETH" columns="id_inaptitude_avant_annne"/>
+            <index name="FK_INAPTITUDE_ENCOURS_MESUREBOETH" columns="id_inaptitude_encours_annne"/>
+            <index name="FK_NATURE_HANDICAP_BOETH" columns="id_nature_handicap_boeth"/>
+            <index name="FK_CATEGORIE_BOETH" columns="id_categorie_boeth"/>
+        </indexes>
+      
+        <id name="id" type="integer" column="id">
+          <generator strategy="AUTO"/>
+        </id>
+        
+                
+        <one-to-one field="BilanSocialAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" inversed-by="Handitorials">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN" />
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
+
+        <many-to-one field="idMesureInaptitudeEnCoursAnnee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMesureBoeth" inversed-by="idMesureInaptitudeEnCoursAnnee">
+            <join-column name="id_mesure_inaptitude_encours_annne" referenced-column-name="ID_MESURE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idMesureInaptitudeAvantAnnee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMesureBoeth" inversed-by="idMesureInaptitudeAvantAnnee">
+            <join-column name="id_mesure_inaptitude_avant_annne" referenced-column-name="ID_MESURE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idInaptitudeEnCoursAnnee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefInaptitudeBoeth" inversed-by="idInaptitudeEnCoursAnnee">
+            <join-column name="id_inaptitude_encours_annne" referenced-column-name="ID_INAPTITUDE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idInaptitudeAvantAnnee" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefInaptitudeBoeth" inversed-by="idInaptitudeAvantAnnee">
+            <join-column name="id_inaptitude_avant_annne" referenced-column-name="ID_INAPTITUDE_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idNatureHandicapBoeth" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefNatureHandicapBoeth" inversed-by="idNatureHandicapBoeth">
+            <join-column name="id_nature_handicap_boeth" referenced-column-name="ID_NATURE_HANDICAP_BOETH" />
+        </many-to-one>
+        
+        <many-to-one field="idCategorieHanditorialBoeth" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefCategorieBoeth" inversed-by="idCategorieHanditorial">
+            <join-column name="id_categorie_boeth" referenced-column-name="ID_CATEGORIE_BOETH" />
+        </many-to-one>
+        
+        <field name="blAvisInaptitudeEnCours" type="boolean" column="bl_avis_inaptitude_en_cours" nullable="true"/>
+        <field name="blAvisInaptitudeAvant" type="boolean" column="bl_avis_inaptitude_avant" nullable="true"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,29 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-lg-9">
+        <a class="btn button pull-right margin10" href="{{ path('refspecialite_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th>Code</th>
+                <td>{{ refSpecialite.cdSpecialite }}</td>
+            </tr>
+            <tr>
+                <th>Libellé</th>
+                <td>{{ refSpecialite.lbSpecialite }}</td>
+            </tr>
+            <tr>
+                <th>Archivé</th>
+                <td>{% if refSpecialite.blVali %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+            {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refSpecialite} %}
+            </tbody>
+        </table>
+
+        <a class="btn button pull-right margin10" href="{{ path('refspecialite_edit', { 'idSpecialite': refSpecialite.idSpecialite }) }}">Modifier</a>
+
+    </div>
+{% endblock %}

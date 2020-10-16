@@ -1,0 +1,28 @@
+refcategorie_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefCategorie:index" }
+    methods:  GET
+
+refcategorie_show:
+    path:     /{idCate}/show
+    defaults: { _controller: "ReferencielBundle:RefCategorie:show" }
+    methods:  GET
+
+refcategorie_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefCategorie:new" }
+    methods:  [GET, POST]
+
+refcategorie_edit:
+    path:     /{idCate}/edit
+    defaults: { _controller: "ReferencielBundle:RefCategorie:edit" }
+    methods:  [GET, POST]
+
+refcategorie_delete:
+    path:     /{idCate}/delete
+    defaults: { _controller: "ReferencielBundle:RefCategorie:delete" }
+    methods:  DELETE
+
+csv_export_refcategorie:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefCategorie:generateCsv" }

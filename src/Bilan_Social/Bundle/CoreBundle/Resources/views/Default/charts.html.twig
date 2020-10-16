@@ -1,0 +1,212 @@
+<script>
+    
+    var language = {
+        processing: "Traitement en cours...",
+        search: "Rechercher&nbsp;:",
+        lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+        info: "Affichage bilan _START_ &agrave; _END_ sur _TOTAL_ bilans",
+        infoEmpty: "Affichage bilan 0 &agrave; 0 sur 0 bilans",
+        infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+        infoPostFix: "",
+        loadingRecords: "Chargement en cours...",
+        zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+        emptyTable: "Aucune donnée disponible dans le tableau",
+        paginate: {
+            first: "Premier",
+            previous: "Pr&eacute;c&eacute;dent",
+            next: "Suivant",
+            last: "Dernier"
+        },
+        aria: {
+            sortAscending: ": activer pour trier la colonne par ordre croissant",
+            sortDescending: ": activer pour trier la colonne par ordre décroissant"
+        }
+    };
+    $('.transmis').DataTable({
+        stateSave: true,
+        language: language,
+        order: [["3", "asc"]]
+    });
+    $('.valide').DataTable({
+        stateSave: true,
+        language: language,
+        order: [["3", "asc"]]
+    });
+
+
+
+    $( "td.tooltilpc" )
+        .mouseover(function() {
+            var bsc = $( this ).find( "span" ).data("bsc");
+            var hand = $( this ).find( "span" ).data("hand");
+            var gpeec = $( this ).find( "span" ).data("gpeec");
+            var rassct = $( this ).find( "span" ).data("rassct");
+            $( this ).find( "span" ).html( 'Bilan Social : '+ bsc +'<br/>Handitorial : '+ hand +'<br/>Gpeec : '+gpeec +'<br/>Rassct : ' +rassct);
+        })
+        .mouseout(function() {
+
+            var total = $( this ).find( "span" ).data("total");
+            $( this ).find( "span" ).html( total );
+        });
+       /* $('.tooltilpc').mouseenter(function() {
+            $( this ).parent('td').text( "mouse enter x ");
+        });
+        $('.tooltilpc').mouseleave(function() {
+            $( this ).parent('td').text( "mouse leave" );
+        });*/
+
+</script>
+{% if departements != false %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="noMargin">Cartes</h3>
+            </div>
+            <div class="panel-body">
+                <div id="map">
+                    {% for array_url in url_maps %}
+                        {% for url in array_url %}
+                            {% if (array_url|length > 1) or ( url_maps|length > 1) %}
+                                {% set a_wrapper_col_class = "col-sm-6" %}
+                            {% else %}
+                                {% set a_wrapper_col_class = "col-sm-12" %}
+                            {% endif %}
+                        {% set src_map = "img/cartes/" ~ url %}
+                            <div class='carte_img_wrapper image_wrapper {{ a_wrapper_col_class }}'>   
+                                <img class='carte_img' src='{{ asset(src_map) }}' alt='map_{{ loop.index0 }}'/>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>Nombre de Bilans Sociaux "Transmis"</h3>
+        <div class='white-background'>
+            {% if nbBsTransmis > 0 %}
+                <p>Il vous reste <span class='nb-bs-transmis'>{{ nbBsTransmis }}</span> {% if nbBsTransmis == 1 %}bilan social{% else %}bilans sociaux{% endif %} en attente de validation.</p>
+                <a href='{{ path('enquete_suivi') }}'>Suivi de votre enquête</a>
+            {% else %}
+                <p>Vous n'avez aucun bilan social en attente de validation.</p>
+            {% endif %}
+        </div>
+        <div>
+            <h3 style='text-align:center;'>Bilans Sociaux par statut</h3>
+            <div id='piechart' class='white-background' style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        {#<div class="row">
+            <div class="col-sm-6">#}
+                <h3 style='text-align:center;'>Taux de Bilans Sociaux "Validés"</h3>
+                <div id="tauxBS" class='white-background' style="width: 300px; height: 200px;margin:0 auto;"></div>
+            {#</div>
+            <div class="col-sm-6">#}
+                <h3 style='text-align:center;'>Taux de Retour Effectif</h3>
+                <div id="compteurEff" class='white-background' style="width: 300px; height: 200px;margin:0 auto;"></div>
+            {#</div>
+        </div>#}
+    </div>
+</div>
+<div class='row'>
+    <div class="col-sm-12">
+        <h3>Liste des Bilans Sociaux "Transmis"</h3>
+        <table class='table table-hover transmis'>
+            <thead>
+                <tr>
+                    <th style="width:110px;">Siret</th>
+                    <th>Collectivité</th>
+                    <th style="width:100px;">Incohérences</th>
+                    <th style="width:100px;">Date de transmission</th>
+                    <th style="width:100px;">Mode de remplissage</th>
+                    <th style="width:100px;">Taux de remplissage</th>
+                    <th style="width:100px;">Accéder au Bilan Social</th>
+                    <th style="width:100px;">CT départemental</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for coll in bsTransmisArr %}
+
+                    {% set date_array = coll.date|split('/') %}
+                    {% set date_temp = date_array.2 ~ '-' ~ date_array.1 ~ '-' ~ date_array.0 %}
+                  
+                    <tr>
+                        <td><a href="{{ path('get_historique_echange_by_collectivite', { 'idColl': coll.idColl }) }}" target="_blank">{{ coll.siret}}</a></td>
+                        <td>{{ coll.lbColl}}</td>
+                        <td>{{ coll.incoherences}}</td>
+                        <td data-order={{ date_temp|date("Y/m/d") }}>{{ coll.date }}</td>
+                        <td>{{ coll.type_init}}</td>
+                        <td class="tooltilpc">
+                            <span data-total="{{ (coll.nb_bsc + coll.nb_rassct + coll.nb_hand + coll.nb_gpeec)/4 }}%" data-bsc="{{ coll.nb_bsc }}%" data-hand = "{{ coll.nb_hand }}%" data-rassct=" {{ coll.nb_rassct}}%" data-gpeec="{{ coll.nb_gpeec}}%">
+                                {{ (coll.nb_bsc + coll.nb_rassct + coll.nb_hand + coll.nb_gpeec)/4 }}%
+                            </span>
+                        </td>
+                        <td>
+                            <a href='{{ path('show_bilan_cons', {'userId':  coll.idUtil, 'idColl' : coll.idColl, 'return': 'accueil'  }) }}' target="_blank"><img src="{{ asset("img/icone/DescriptionSite-26-g.png") }}" style='height:30px;'/></a>
+                            {# <a href='{{ path('homepage', {'_switch_user': coll.siret }) }}' target="_blank"><img src="{{ asset("img/icone/DescriptionSite-26-g.png") }}" style='height:30px;'/></a> #}
+                            <a href='{{ path('collectivite_fiche', { 'id': coll.idColl }) ~ "#historiqueEcha" }}' target="_blank"><span class='glyphicon glyphicon-info-sign' style='height:30px;'></span></a>
+                        </td>
+                        <td>{% if coll.blCtCdg == 1 %}
+                                    {{"Oui"}}
+                            {%else%}
+                                    {{"Non"}}
+                            {%endif%}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+            
+<div class='row'>
+    <div class="col-sm-12">
+        <h3>Liste des Bilans Sociaux "Validés"</h3>
+        <table class='table table-hover valide'>
+            <thead>
+                <tr>
+                    <th style="width:110px;">Siret</th>
+                    <th>Collectivité</th>
+                    <th style="width:100px;">Incohérences</th>
+                    <th style="width:100px;">Date de validation</th>
+                    <th style="width:100px;">Mode de remplissage</th>
+                    <th style="width:100px;">Taux de remplissage</th>
+                    <th style="width:100px;">Accéder au Bilan Social</th>
+                    <th style="width:100px;">CT départemental</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for coll in bsValidArr %}
+                    {% set date_array = coll.date|split('/') %}
+                    {% set date_temp = date_array.2 ~ '-' ~ date_array.1 ~ '-' ~ date_array.0 %}
+                    <tr>
+                        <td>{{ coll.siret}}</td>
+                        <td>{{ coll.lbColl}}</td>
+                        <td>{{ coll.incoherences}}</td>
+                        <td data-order={{ date_temp|date("Y/m/d") }}>{{ coll.date }}</td>
+                        <td>{{ coll.type_init}}</td>
+                        <td class="tooltilpc">
+                            <span data-total="{{ (coll.nb_bsc + coll.nb_rassct + coll.nb_hand + coll.nb_gpeec)/4 }}%" data-bsc="{{ coll.nb_bsc }}%" data-hand = "{{ coll.nb_hand }}%" data-rassct=" {{ coll.nb_rassct}}%" data-gpeec="{{ coll.nb_gpeec}}%">
+                                {{ (coll.nb_bsc + coll.nb_rassct + coll.nb_hand + coll.nb_gpeec)/4 }}%
+                            </span>
+                        </td>
+                        <td><a href='{{ path('show_bilan_cons', {'userId':  coll.idUtil, 'idColl' : coll.idColl, 'return': 'accueil'  }) }}' target="_blank"><img src="{{ asset("img/icone/DescriptionSite-26-g.png") }}" style='height:30px;'/></a></td>
+                        {# <td><a href='{{ path('homepage', {'_switch_user': coll.siret }) }}' target="_blank"><img src="{{ asset("img/icone/DescriptionSite-26-g.png") }}" style='height:30px;'/></a></td> #}
+                        <td>
+                            {% if coll.blCtCdg == 1 %}
+                                    {{"Oui"}}
+                            {%else%}
+                                    {{"Non"}}
+                            {%endif%}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,12 @@
+#5124
+sql/Procedures-stockees/apa2cons/V1_27__IND-211.sql
+sql/Procedures-stockees/apa2cons/V1_28__IND-212.sql
+sql/Procedures-stockees/apa2cons/V1_29__IND-213.sql
+
+#
+# modifiction de la génération des DGCL
+#
+sql/Procedures-stockees/flyway/sqls/bilan_consolide/DGCL/V2.9__DGCL_BSLTM.sql
+sql/Procedures-stockees/flyway/sqls/bilan_consolide/DGCL/R__35-DGCL-export-process.sql
+sql/Procedures-stockees/flyway/sqls/bilan_consolide/DGCL/R__45-DGCL_GROUP-export-process.sql
+

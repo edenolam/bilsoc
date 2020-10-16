@@ -1,0 +1,42 @@
+{% extends '@User/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+
+        <div class="row bodyBilanSocial">
+            <h1>Liste des utilisateurs</h1>
+
+            <h3>CDG</h3>
+            <table class="table">
+                <tr>
+                    <th>Identifiant</th>
+                    <th>Département</th>
+                    <th>Code postale</th>
+                    <th>Validation des comptes utilisateur</th>
+                    <th>Lecture</th>
+                    <th>Saisie</th>
+                    <th>Gestion</th>
+                </tr>
+
+                {% for user in users %}
+
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.department }}</td>
+                        <td>{{ user.postalCode }}</td>
+                        <td>{% if user.canValidUserAccount == true %} oui {% else %} non {% endif %}</td>
+                        <td>{% if user.canView == true %} oui {% else %} non {% endif %}</td>
+                        <td>{% if user.canEdit == true %} oui {% else %} non {% endif %}</td>
+                        <td><a href="{{ path('admin_user_edit', {'user':  user.idUtil  }) }}">Editer</a> -
+                            <a href="{{ path('admin_user_delete', {'user':  user.idUtil  }) }}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+{% endblock %}

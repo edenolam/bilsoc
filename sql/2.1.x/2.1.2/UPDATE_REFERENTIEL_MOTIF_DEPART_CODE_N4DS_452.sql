@@ -1,0 +1,1 @@
+UPDATE `ref_motif_depart` SET `CD_MOTI_N4DS` = '452' WHERE `ref_motif_depart`.`CD_MOTIDEPA` = 'MD005';

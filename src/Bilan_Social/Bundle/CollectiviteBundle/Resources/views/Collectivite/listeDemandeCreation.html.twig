@@ -1,0 +1,67 @@
+{% extends '@Collectivite/coll_layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/CollectiviteBundle/modificationCollectivite.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('input,select').removeAttr('disabled');
+            $('input,select').removeAttr('readonly');
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                    <li><a href="#">Collectivités</a></li>
+                    <li class="active">Création d'une collectivité</li>
+            </ol>
+        </div>
+        <h3>Valider la création d'une collectivité</h3>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div id='table-crea-coll-wrapper'>
+            <table class="table table-hover align-center" id='table-crea-coll'>
+                <thead>
+                    <tr>
+                        <th>SIRET</th>
+                        <th>Libellé de la collectivité</th>
+                        <th>Type de la collectivité</th>
+                        <th>Affilié</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if collectivites != null %}
+                        {% for coll in collectivites %}
+                            <tr>
+                                <td><a href="{{ path('collectivite_valider_demande_creation', {'id':  coll.idColl  }) }}">{{ coll.nmSire }}</a></td>
+                                <td>{{ coll.lbColl }}</td>
+                                <td>{{ coll.refTypeCollectivite.lbTypeColl }}</td>
+                                <td>{% if coll.blAffiColl is same as(0) or coll.blAffiColl is same as(false) %}Non{% elseif coll.blAffiColl is same as(1) or coll.blAffiColl is same as(true) %}Oui{% else %}Non renseigné{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

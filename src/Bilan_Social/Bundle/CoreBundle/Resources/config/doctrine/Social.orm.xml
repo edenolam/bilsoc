@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\CoreBundle\Entity\Social" repository-class="Bilan_Social\Bundle\CoreBundle\Repository\SocialRepository" table="social">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <one-to-one field="user" target-entity="Bilan_Social\Bundle\UserBundle\Entity\User">
+            <join-column name="ID_UTIL" referenced-column-name="ID_UTIL" unique="false" />
+        </one-to-one>
+        <!--        <field name="idColl" type="integer" column="ID_COLL" nullable="true"/>
+        <field name="idCdg" type="integer" column="ID_CDG" nullable="true"/>
+        <field name="username" type="string" column="USERNAME" length="50" nullable="false"/>
+        <field name="password" type="string" column="PASSWORD" length="100" nullable="false"/>
+        <field name="fgTypeutil" type="string" column="FG_TYPEUTIL" length="50" nullable="true"/>
+        <field name="isActive" type="boolean" column="IS_ACTIVE" nullable="true"/>
+        <field name="roles" type="array" column="roles" nullable="false"/>
+        <field name="change_request" type="boolean" column="change_request" nullable="true"/>
+        <field name="can_valid_user_account" type="boolean" column="can_valid_user_account" nullable="true"/>
+        <field name="can_view" type="boolean" column="can_view" nullable="true"/>
+        <field name="can_edit" type="boolean" column="can_edit" nullable="true"/>
+        <field name="cdg_is_authorized_by_collectivity" type="boolean" column="cdg_is_authorized_by_collectivity" nullable="true"/>-->
+        <field name="field1" type="string" column="field_1" length="255" nullable="true"/>
+        <field name="field2" type="integer" column="field_2"  nullable="true"/>
+        <field name="field3" type="integer" column="field_3"  nullable="true"/>
+    </entity>
+</doctrine-mapping>
+
+

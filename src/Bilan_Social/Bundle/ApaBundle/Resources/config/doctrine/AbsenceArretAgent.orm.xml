@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ApaBundle\Entity\AbsenceArretAgent" table="absence_arret_agent">
+        <indexes>
+            <index name="FK_ABSENCEARRETAGENT_BILANSOCIALAGENT" columns="ID_BILASOCIAGEN"/>
+            <index name="FK_ABSENCEARRETAGENT_MOTIFABSENCE" columns="ID_MOTIABSE"/>
+        </indexes>
+        <id name="idAbsearreagen" type="integer" column="ID_ABSEARREAGEN">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="BilanSocialAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" inversed-by="AbsenceArretAgents">
+            <join-column name="ID_BILASOCIAGEN" referenced-column-name="ID_BILASOCIAGEN" />
+        </many-to-one>
+
+        <many-to-one field="RefMotifAbsence" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMotifAbsence" inversed-by="AbsenceArretAgents">
+            <join-column name="ID_MOTIABSE" referenced-column-name="ID_MOTIABSE" />
+        </many-to-one>
+        
+         <many-to-one field="idNatureLesion" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefNatureLesion" inversed-by="idNatureLesion">
+            <join-column name="id_nature_lesion" referenced-column-name="ID_NATURE_LESION" />
+        </many-to-one>
+        
+        <many-to-one field="idSiegeLesion" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefSiegeLesion" inversed-by="idSiegeLesion">
+            <join-column name="id_siege_lesion" referenced-column-name="ID_SIEGE_LESION" />
+        </many-to-one>
+        
+        <many-to-one field="idElementMateriel" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefElementMateriel" inversed-by="idElementMateriel">
+            <join-column name="id_element_materiel" referenced-column-name="ID_ELEMENT_MATERIEL" />
+        </many-to-one>
+        
+        <many-to-one field="idMaladieProfessionnelle" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefMaladieProfessionnelle" inversed-by="idMaladieProfessionnelle">
+            <join-column name="id_maladie_professionnelle" referenced-column-name="ID_MALADIE_PROFESSIONNELLE" />
+        </many-to-one>
+        
+        <many-to-one field="idTypeActiviteMaladiePro" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTypeActivite" inversed-by="idTypeActiviteMaladiePro">
+            <join-column name="id_type_activite_maladie_pro" referenced-column-name="ID_TYPE_ACTIVITE" />
+        </many-to-one>
+    
+        <many-to-one field="idTypeActiviteArretTravail" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTypeActivite" inversed-by="idTypeActiviteArretTravail">
+            <join-column name="id_type_activite_arret_travail" referenced-column-name="ID_TYPE_ACTIVITE" />
+        </many-to-one>
+<!--        <one-to-one field="AbsenceRasscts" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\AbsenceRassct" mapped-by="AbsenceArretAgents">
+            <join-column name="ID_ABSEARREAGEN" referenced-column-name="ID_ABSEARREAGEN"/>
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>-->
+
+        <field name="nbJourabse" type="float" column="NB_JOURABSE" precision="4" scale="1" nullable="true"/>
+        <field name="accidentAvecArret" type="boolean" column="ACCIDENT_AVEC_ARRET" nullable="true"/>
+        <field name="nbArre" type="integer" column="NB_ARRE" nullable="true"/>
+        <field name="anneeEvenement" type="integer" column="ANNEE_EVENEMENT" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="lbMotiAbseN4ds" type="string" column="LB_MOTIABSEN4DS" length="255" nullable="true">
+        </field>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+
+    </entity>
+</doctrine-mapping>

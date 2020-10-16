@@ -1,0 +1,88 @@
+{% extends '@Apa/layout.html.twig' %}
+
+{% block body %}
+    <h1>Informationgenerale</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Idenqu</th>
+                <td>{{ informationGenerale.idEnqu }}</td>
+            </tr>
+            <tr>
+                <th>Idcoll</th>
+                <td>{{ informationGenerale.idColl }}</td>
+            </tr>
+            <tr>
+                <th>Q1</th>
+                <td>{% if informationGenerale.q1 %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Q2</th>
+                <td>{% if informationGenerale.q2 %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Q3</th>
+                <td>{% if informationGenerale.q3 %}Yes{% else %}No{% endif %}</td>
+            </tr>
+{#            <tr>#}
+{#                <th>Q4</th>#}
+{#                <td>{% if informationGenerale.q4 %}Yes{% else %}No{% endif %}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Q5</th>#}
+{#                <td>{% if informationGenerale.q5 %}Yes{% else %}No{% endif %}</td>#}
+{#            </tr>#}
+            <tr>
+                <th>Q6</th>
+                <td>{% if informationGenerale.q6 %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Q7</th>
+                <td>{% if informationGenerale.q7 %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blheursupp</th>
+                <td>{% if informationGenerales.blHeursupp %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Blheurcomp</th>
+                <td>{% if informationGenerales.blHeurcomp %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if informationGenerale.createdAt %}{{ informationGenerale.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cdutilcrea</th>
+                <td>{{ informationGenerale.cdUtilcrea }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if informationGenerale.updatedAt %}{{ informationGenerale.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cdutilmodi</th>
+                <td>{{ informationGenerale.cdUtilmodi }}</td>
+            </tr>
+            <tr>
+                <th>Idinfogene</th>
+                <td>{{ informationGenerale.idInfogene }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('informationgenerale_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('informationgenerale_edit', { 'idInfogene': informationGenerale.idInfogene }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

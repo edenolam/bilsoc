@@ -1,0 +1,19 @@
+apa_index:
+    path:     /
+    defaults: { _controller: "ApaBundle:AgentParAgent:index" }
+
+apa_new_bilan:
+    path:     /nouveau_bilan/
+    defaults: { _controller: "ApaBundle:AgentParAgent:NewBilanSocial" }
+    methods:  [GET, POST]
+
+apa_edit_bilan:
+    path: /modification_bilan/{id}
+    defaults: { _controller: "ApaBundle:AgentParAgent:EditBilanSocial" }
+    methods:  [GET, POST]
+
+
+
+
+
+

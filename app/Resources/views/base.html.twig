@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=10; IE=EDGE"/>
+    <title>{% block title %}Enquête données sociales{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('node_modules/jquery-ui-dist/jquery-ui.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('node_modules/jquery-ui-dist/jquery-ui.theme.min.css') }}" />
+{#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />#}
+        <link rel="stylesheet" type="text/css" href="{{ asset('node_modules/font-awesome/css/font-awesome.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset("css/main.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/helper.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset("css/stickysort.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/datatables.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('node_modules/bootstrap-select/dist/css/bootstrap-select.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tipso/1.0.8/tipso.min.css" />
+{#        <link rel="stylesheet" href="{{ asset('node_modules/datatables/media/css/jquery.dataTables.min.css') }}" />#}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/override_boostrap.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/longTaskManager.css') }}"/>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <script>
+        {% if is_granted("ROLE_DGCL") %}
+            var nbLetterMdp = 15;
+        {% else %}
+            var nbLetterMdp = 8;
+        {% endif %}
+    </script>
+</head>
+<body>
+
+{% block header %}
+{% endblock %}
+    {# Déclaration des variables et des querys pour l'ensemble de l'application #}
+    {% set enqueteExist = '' %}
+    {% set info_saisie = '' %}
+    {% set idColl = '' %}
+    {% set currentEnquete = '' %}
+    {% set currentUserCdg = '' %}
+    {% set cdg = '' %}
+    {% set InformationgeneraleExist  = '' %}
+    {% set InformationCollectiviteExist  = '' %}
+    {% set EnqueteCollectiviteparam  = '' %}
+    {% set consolideApaExist = '' %}
+    {% set AnneeCamp = '' %}
+    {% set blAnalyse = false %}
+    {% set url = null %}
+    {% set bilanConso = null %}
+    {% set user_cdg_for_droit = '' %}
+    {% set user_droit = '' %}
+    {% set idDepartement = '' %}
+    {% set blGpeec = false %}
+
+    {# <a target="_blank" href="{{ path('homepage', { '_switch_user': '20000056000025' }) }}">Se connecter en tant que</a> #}
+
+
+    {% if firstconn is not defined %}
+        {% set firstconn = false %}
+    {% endif %}
+
+    {% set user_cdg_for_droit = utilisateur_cdg.findByUtilisateur(app.user) %}
+    {% set user_droit = utilisateur_droits.getDroitByCdg(user_cdg_for_droit) %}
+    {% for value in user_droit %}
+        {% if(loop.last) %}
+            {% set idDepartement = idDepartement ~ value.cdgDepartement.departement.idDepa %}
+        {% else %}
+            {% set idDepartement = idDepartement ~ value.cdgDepartement.departement.idDepa ~ ',' %}
+        {% endif %}
+    {% endfor %}
+
+    {% set currentCampagne = campagne_service.GetCurrentCampagne() %}
+    {% if currentCampagne == null %}
+        {% set currentCampagne = '' %}
+    {% endif %}
+
+    {% if app.user is not null %}
+        {# Utilisateur authentifié #}
+        {% if app.user.collectivite is not null and is_granted("ROLE_COLLECTIVITY")  %}
+            {# Collectivité #}
+            {% set idColl = app.user.collectivite.idColl %}
+            {% set blGpeec = app.user.collectivite.getGpeecAcceder() %}
+        {% else %}
+            {# Admin ou CDG #}
+            {% set blGpeec = app.user.getBlGpeec() %}
+            {% set idColl = app.session.get('coll_id') %}
+        {% endif %}
+
+        {% if is_granted("ROLE_INFOCENTRE")  %}
+            {% set idUtil = app.user.idUtil %}
+        {% endif %}
+    {% endif %}
+
+    {% if currentCampagne is not empty %}
+        {% set AnneeCamp = currentCampagne.nmAnne %}
+        {% if idColl != '' %}
+            {% set enqueteExist = current_enquete.getEnqueteActive(idColl, currentCampagne.idCamp) %}
+            {% set contactPrincipalCollectivite = user_collectivite.GetContactPrincipal(idColl) %}
+            {% set EnqueteCollectiviteparam = enquete_Collectivite.getEnqueteCollectiviteActive(idColl, currentCampagne.idCamp,enqueteExist) %}
+            {% include '@Core/modal_contact_par_defaut_null.html.twig' %}
+            {% include '@Core/firstconnection.html.twig' %}
+        {% endif %}
+        {% if idColl != '' and enqueteExist != '' %}
+            {% set consolideApaExist = information_bilansocial_saisie.getCurrentInfoBilanSocial(idColl, enqueteExist.idEnqu) %}
+            {% set QuestionnaireExist = collectivite_consolide_service.findQuestionnaire(idColl, enqueteExist.idEnqu) %}
+            {% set info_saisie = information_bilansocial_saisie.getCurrentInfoBilanSocial(idColl, enqueteExist) %}
+            {% set bilanConso = consolide_service.findByTransmis(idColl, enqueteExist.idEnqu) %}
+            {% set InformationgeneraleExist = information_generale_agent.GetInformationGenerale(idColl, enqueteExist, currentCampagne.idCamp) %}
+            {% set InformationCollectiviteExist = information_collectivite_agent.GetInformationCollectivite(idColl, enqueteExist, currentCampagne.idCamp) %}
+
+
+{#            {% set InformationCollectiviteExist = information_collectivite_agent.GetInformationCollectivite(idColl, enqueteExist, currentCampagne.idCamp) %}#}
+        {% endif %}
+
+
+        {% if is_granted("ROLE_CDG") %}
+            {% set collectivites = user_collectivite.getCollectiviteByUtilisateurAnalyse(app.user, currentCampagne.idCamp) %}
+            {% if collectivites is not empty %}
+                {% set blAnalyse = true %}
+            {% endif %}
+             {% set currentEnquete = current_enquete_departement.getDepartementsWithEnqueteByUtilisateurAndDroitFormStatement(app.user.idUtil) %}
+        {% elseif is_granted("ROLE_COLLECTIVITY") %}
+            {% if currentCampagne is defined and currentCampagne is not empty and currentCampagne is not null %}
+                {% set cdg = user_cdg.findCdgByCollectivite(app.user) %}
+                {% set blAnalyse = modele_analyse_service.checkIfShowAnalyseLink(cdg,idColl,currentCampagne) %}
+            {% endif %}
+            {% set currentEnquete = current_enquete.getEnqueteActive(idColl, currentCampagne.idCamp) %}
+            {% set hasCurrentEnqueteParam = currentEnquete is empty ? null :enquete_Collectivite.findHasParamCollectiviteEnqueteLancee(app.user.collectivite, currentEnquete.idEnqu) %}
+        {% endif %}
+    {% endif %}
+    {% if info_saisie != '' %}
+        {% if info_saisie.initSource == 'n4ds' and info_saisie.blCons == 0 %}
+            {% set url =  path('bilansocialagent_index')  %}
+        {% elseif info_saisie.initSource == 'n4ds' and info_saisie.blCons == 1 %}
+            {% set url =  path('bilan_conso_edit')  %}
+        {% elseif info_saisie.initSource == 'basecarr' and info_saisie.blCons == 0 %}
+            {% set url =  path('bilansocialagent_index')  %}
+        {% elseif info_saisie.initSource == 'basecarr' and info_saisie.blCons == 1%}
+            {% set url =  path('bilan_conso_edit')  %}
+        {% elseif info_saisie.initSource == 'bs-vide' %}
+            {% set url =  path('bilan_conso_edit')  %}
+        {% elseif info_saisie.initSource == 'bs-dgcl' %}
+            {% set url =  path('bilan_conso_edit')  %}
+        {% elseif info_saisie.initSource == 'manu' and info_saisie.blApa == true  and info_saisie.blCons == false%}
+            {% set url =  path('bilansocialagent_index')  %}
+        {% elseif info_saisie.initSource == 'manu' and info_saisie.blApa == false and (info_saisie.blCons == true or info_saisie.blCons is null ) %}
+             {% set url =  path('bilan_conso_edit')  %}
+        {% elseif info_saisie.initSource == 'manu' and info_saisie.blApa == true and info_saisie.blCons == true %}
+             {% set url =  path('bilan_conso_edit')  %}
+        {% endif %}
+    {% endif %}
+
+
+
+
+
+{% block body %}
+    {% block menu %}
+        <div id="wrapper" class="col-md-3">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="clearfix">
+            <div class="menu-header noPadding consolideHeader">
+                {% set Fgstat = "" %}
+                {% if bilanConso is defined and bilanConso is not null%}
+                    {% set Fgstat = bilanConso.fgstat %}
+
+                {% endif %}
+
+                {% if app.user.username is defined %}
+
+                    <div class="align-center">
+                    {% if(not is_granted("ROLE_ADMIN")) %}
+                        {{ render(controller(
+                               'CoreBundle:AbstractBS:renderLogo'
+                           ))
+                        }}
+                    {% endif %}
+                    {% if is_granted("ROLE_DGCL") %}
+                        <img class="logo_cdg img-responsive center-block" src="{{ asset("img/logos/logo_dgcl.jpg") }}"/>
+                    {% endif %}
+                    </div>
+                    <label class="raisonSociale">
+                        {% if (is_granted("ROLE_COLLECTIVITY")) %}
+                            {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+                                <strong>{{ collectiviteinfo.lbColl }} </strong>
+                            {% endfor %}
+                            {# {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+                                    <p>Connecté en tant que {{ collectiviteinfo.nmSire }} </p>
+                                {% endfor %}
+                                <a href="{{ path('enquete_suivi', {'_switch_user': '_exit'}) }}">Se déconnecter</a>
+
+                                {% if contactPrincipalCollectivite is not null %}
+                                    <p>Nom : {{ contactPrincipalCollectivite.lbNom }}</p>
+                                    <p>Prénom : {{ contactPrincipalCollectivite.lbPren }}</p>
+                                    <p>Nom de la collectivité : {{ contactPrincipalCollectivite.collectivite.lbColl }} </p>
+                                    <p>Fonction : {{ contactPrincipalCollectivite.lbFonc }}</p>
+                                    <p>Téléphone : {{ contactPrincipalCollectivite.lbTele }}</p>
+                                    <p>Email : {{ contactPrincipalCollectivite.lbMail }}</p>
+                                {% endif %}
+                            {% endif %} #}
+                        {% elseif (is_granted("ROLE_CDG")) %}
+                            {% for cdginfo in user_cdg.findOneByCdgByUtilisateur(app.user) %}
+                                <strong>Raison sociale : {{ cdginfo.lbCdg }} </strong>
+                                <br>
+                                <strong>Nom utilisateur: {{ app.user.username }}</strong>
+                            {% endfor %}
+                            {% if app.session.get('user_siret') is defined and app.session.get('user_siret') is not null %}
+                                Connecté en tant que {{ app.session.get('user_siret') }}<br>
+                                <span class="remove_cdg_session" href="{{ path('remove_cdg_session') }}" onclick="window.close()">Se déconnecter</span>
+                            {% endif %}
+                        {% elseif (is_granted("ROLE_ADMIN")) %}
+                            <strong> Identifiant:  ADMIN  </strong>
+                            <label>Dernière connexion le {{app.user.dtlastconn|localizeddate('none', 'none', app.request.locale, "Europe/Paris", 'dd MMM Y')}} <br> à {{app.user.dtlastconn|date('H:i:s')}}</label>
+                        {% elseif (is_granted("ROLE_INFOCENTRE")) %}
+                            <strong>Identifiant: {{ app.user.username }}</strong>
+                            <p>
+                                Dernière connnexion le {{ app.user.dtlastconn|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "dd MMM Y") }}<br />
+                                à {{ app.user.dtlastconn|date('H:i:s') }}
+                            </p>
+                        {% endif %}
+
+                    </label>
+                    {% if is_granted("ROLE_COLLECTIVITY") %}
+                        <br /><label>Siret : {{ app.user.username }}</label>
+                        <br>
+                        <label>Dernière connexion le {{app.user.dtlastconn|localizeddate('none', 'none', app.request.locale, "Europe/Paris", 'dd MMM Y')}} <br> à {{app.user.dtlastconn|date('H:i:s', "Europe/Paris")}}</label>
+                    {% endif %}
+
+                    <div>
+
+                            <a href="{{ path('logout') }}" class='logout'><span class="glyphicon glyphicon-off" aria-hidden="true"></span>Déconnexion</a>
+
+                    </div>
+
+
+                {% endif %}
+            </div>
+            <ul class="sidebar-nav">
+                {% if not is_granted("ROLE_DGCL") %}
+                <li class="sidebar-brand menu-li" >
+
+                    <div class="col-xs-12 menu-div menu-accueil"  style="display: flex;">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-01.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <a class="lien-menu" href="{{ path('homepage') }}"><span>Accueil</span> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+                {% endif %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-02.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Mon compte</span>
+                                <div class="sous-menu-accueil">
+                                    {% if is_granted("ROLE_COLLECTIVITY") %}
+                                        <a href="{{ path('collectivite_edit', {'id':  idColl}) }}"><span>Mes informations</span></a>
+                                    {% endif %}
+                                    {% if is_granted("ROLE_INFOCENTRE") %}
+                                        <a href="{{ path('user_infocentre_edit', { 'id': idUtil }) }}"><span>Mes informations</span></a>
+                                    {% endif %}
+                                    {% if is_granted("ROLE_CDG") %}
+                                        <a href="{{ path('cdg_fiche') }}"><span>Mes informations</span></a>
+                                        <a href="{{ path('message_reset_password') }}"><span>Modifier le message de réinitialisation du mot de passe</span></a>
+                                    {% endif %}
+                                    {% if is_granted("ROLE_DGCL") %}
+
+                                    {% endif %}
+
+                                    {% if is_granted("ROLE_ADMIN") %}
+                                        <a href="{{ path('message_reset_password_by_admin') }}"><span>Modifier le message de réinitialisation du mot de passe</span></a>
+                                    {% endif %}
+                                    <a class="lien-menu" href="{{ path('change_password_by_user') }}"><span>Mon mot de passe</span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+
+                {% if is_granted("ROLE_DGCL") %}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-11.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+{#                                    <a class="lien-menu" href="{{ path('dashboard_enquete_dgcl') }}"><span class="titre-menu-accueil">Enquête {{ currentCampagne.nmAnne }}</span> </a>#}
+                                    <a class="lien-menu" href="{{ path('homepage') }}"><span class="titre-menu-accueil">Bilan Social {{ currentCampagne.nmAnne }}</span></a>
+                                    <div class="sous-menu-accueil">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                   {#  <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="center-block">
+                               <a class="lien-menu" href="{{ path('bilan_social_export_dgcl') }}"><span>Télécharger BS</span></a>
+                            </div>
+
+                        </div>
+
+                    </li>#}
+
+                {% endif %}
+                {% if is_granted("ROLE_ADMIN")%}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-10.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Comptes utilisateurs</span>
+                                    <div class="sous-menu-accueil">
+                                        <a class="lien-menu" href="{{ path('utilisateur_recherche') }}"><span>Rechercher un utilisateur</span> </a>
+                                        <a class="lien-menu" href="{{ path('utilisateur_fiche') }}"><span>Ajouter un utilisateur</span> </a>
+                                        <a class="lien-menu" href="{{ path('utilisateur_gestion_profil') }}"><span>Gestion des profils infocentre département</span> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-03.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Référentiels</span>
+                                    <div class="sous-menu-accueil">
+                                        <a class="lien-menu" href="{{ path('referenciel_homepage') }}"><span>Liste des référentiels</span> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                {% endif %}
+
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_CDG") %}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-05.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Actualités générales</span>
+                                    <div class="sous-menu-accueil">
+                                        <a class="lien-menu" href="{{ path('actualite_new') }}"><span>Ajouter une actualité</span> </a>
+                                        <a class="lien-menu" href="{{ path('actualite_index') }}"><span>Liste des actualités</span> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                {% endif %}
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-04.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">CMS</span>
+                                    <div class="sous-menu-accueil">
+                                        <a class="lien-menu" target="_blank" href="{{cms_url}}"><span>Gérer le site institutionnel</span> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+
+
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-06.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Campagne</span>
+                                    <div class="sous-menu-accueil">
+                                        <a class="lien-menu" href="{{ path('campagne_homepage') }}"><span>Gérer mes campagnes</span> </a>
+                                        {% if currentCampagne is not empty %}
+                                            <a class="lien-menu" href="{{ path('campagne_suivi') }}"><span>Suivi d'une campagne</span> </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_CDG") %}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-08.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Compte collectivités</span>
+                                    <div class="sous-menu-accueil">
+
+                                        <a class="lien-menu" href="{{ path('index_historisation') }}"><span>Gestion des SIRETS collectivités</span> </a>
+                                       {% if is_granted("ROLE_ADMIN") %}
+                                        <a class="lien-menu" href="{{ path('historisation_import_admin') }}"><span>Import fichier siret historisation</span> </a>
+                                        {% endif %}
+                                        <a class="lien-menu" href="{{ path('collectivite_homepage') }}"><span>Gestion des comptes collectivités</span> </a>
+                                        <a class="lien-menu" href="{{ path('collectivite_recherche') }}"><span>Recherche personnalisée de comptes collectivités</span> </a>
+                                        <a class="lien-menu" href="{{ path('collectivite_modification_masse_import') }}"><span>Modification en masse des collectivités</span> </a>
+                                        <a class="lien-menu" href="{{ path('index_modifications') }}"><span class="badge badge-light" style='background-color:#1a355d;'>{% if is_granted('ROLE_CDG') %}{{ user_collectivite.getCollectiviteModifieesByCdg(app.user)|length }}{% elseif is_granted('ROLE_ADMIN') %}{{ user_collectivite.getAllCollectivitesModifiees()|length }}{% endif %}</span> <span>Liste des demandes de modifications des collectivités</span> </a>
+                                        {#<a class="lien-menu" href="{{ path('collectivite_fiche') }}"><span>Ajouter une collectivité</span> </a>#}
+                                        <a class="lien-menu" href="{{ path('collectivite_bloque') }}"><span class="badge badge-light" style='background-color:#1a355d;'>{% if is_granted('ROLE_CDG') %}{{ user_collectivite.getCollectiviteBloqueByCdg(app.user)|length }}{% elseif is_granted('ROLE_ADMIN') %}{{ user_collectivite.getCollectiviteBloque()|length }}{% endif %}</span> <span>Débloquer collectivité</span> </a>
+                                        {#<a href="{{ path('bilan_social_historique') }}"><span>Historique des bilans sociaux</span></a>#}
+                                        {% if is_granted("ROLE_ADMIN") %}<a class="lien-menu" href="{{ path('collectivite_liste_demande_creation') }}"><span>Liste des demandes de création</span> </a>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                {% endif %}
+                {% if is_granted("ROLE_COLLECTIVITY") %}
+                    {% if currentCampagne is not empty and blAnalyse is defined %}
+                        {% if blAnalyse is not null and blAnalyse.blAffi == true %}
+                            <li class="sidebar-brand menu-li">
+                                <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                        <img src="{{ asset("img/icone/DescriptionSite-25.png") }}" class="icone-menu"/>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div>
+                                            <span class="titre-menu-accueil">Analyses</span>
+                                            <div class="sous-menu-accueil">
+                                                <a class="lien-menu" href="{{ path('analyse_demande') }}"><span>Mes analyses</span> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                {% if is_granted("ROLE_CDG") %}
+                    {% if currentCampagne is not empty and blAnalyse is defined %}
+                        {% if blAnalyse is not null and blAnalyse == true %}
+                            <li class="sidebar-brand menu-li">
+                                <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                                    <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                        <img src="{{ asset("img/icone/DescriptionSite-25.png") }}" class="icone-menu"/>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div>
+                                            <span class="titre-menu-accueil">Analyses</span>
+                                            <div class="sous-menu-accueil">
+                                                    <a class="lien-menu" href="{{ path('analyse_homepage') }}"><span>Gestion des analyses
+                                                    </span> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                {% if is_granted("ROLE_ADMIN") or ( is_granted("ROLE_CDG") and app.user.droitMails == true )%}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-09.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Modèles de mails</span>
+                                    <div class="sous-menu-accueil">
+                                         {% if is_granted("ROLE_ADMIN")  %}
+                                        <a class="lien-menu" href="{{ path('modelmail_index') }}"><span>Gestion des modèles de mails partagés</span> </a>
+                                        <a class="lien-menu" href="{{ path('modelmailinterneappli_index') }}"><span>Gestion des modèles de mails interne à l'application</span> </a>
+                                        {% endif %}
+                                          {% if is_granted("ROLE_CDG")  %}
+                                               <a class="lien-menu" href="{{ path('modelmail_index') }}"><span>Gestion des modèles de mails partagés</span> </a>
+                                               <a class="lien-menu" href="{{ path('modelmailinterneappli_index') }}"><span>Gestion des modèles de mails internes partagés</span> </a>
+                                          {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                {% endif %}
+                {% if is_granted("ROLE_ADMIN")  %}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-10.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Comptes CDG</span>
+                                    <div class="sous-menu-accueil">
+                                        <a class="lien-menu" href="{{ path('cdg_index_departements') }}"><span>Affectation des départements</span> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-26.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Modèles de vues</span>
+                                    <div class="sous-menu-accueil">
+                                        <a class="lien-menu" href="{{ path('model_vues_homepage') }}"><span>Gérer les modèles de vues</span> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                {% endif %}
+
+                {% if is_granted("ROLE_CDG") %}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-11.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Import base carrière</span>
+                                    <div class="sous-menu-accueil">
+                                        {% if currentCampagne is empty %}
+                                            <p>Aucune campagne courante</p>
+                                        {% else %}
+                                            <a class="lien-menu" href="{{ path('import_carriere_homepage') }}"><span>Importer les données d’une base carrière</span> </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+
+                {% endif %}
+                {% if is_granted("ROLE_COLLECTIVITY") or is_granted("ROLE_CDG") %}
+                    <li class="sidebar-brand menu-li">
+
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-11.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Enquête</span>
+
+                                    <div class="sous-menu-accueil">
+                                        {% if currentCampagne is empty %}
+                                            <p>Aucune campagne courante</p>
+                                        {% endif %}
+                                        {% if is_granted("ROLE_COLLECTIVITY") %}
+                                            {% if currentEnquete is not empty and hasCurrentEnqueteParam is empty %}
+                                                Enquête non paramétrée
+                                            {% elseif currentEnquete is not empty and bilanConso is null%}
+                                                <a class="lien-menu {% if contactPrincipalCollectivite is not defined or contactPrincipalCollectivite is null %} blocktoinfocoll{% endif%} " href="{{ path('bilan_social_homepage') }}"><span>Mon enquête {{ currentCampagne.nmAnne }}</span> </a>
+                                            {% elseif  currentEnquete is not empty and bilanConso is not null and (bilanConso.fgStat == 0 or bilanConso.fgStat == 4 or bilanConso.fgStat == 3)   %}
+                                                <a class="lien-menu {% if contactPrincipalCollectivite is not defined or contactPrincipalCollectivite is null %} blocktoinfocoll {% endif%}" href="{{ path('bilan_social_homepage') }}"><span>Mon enquête {{ currentCampagne.nmAnne }}</span> </a>
+                                            {% elseif currentEnquete is not empty and bilanConso is not null and (bilanConso.fgStat == 2 or bilanConso.fgStat == 1) %}
+
+                                            {% elseif currentEnquete is empty %}
+                                                Aucune enquête en cours
+                                            {% endif %}
+                                            {% if (url is not null)%}
+                                                    <a class="lien-menu {% if contactPrincipalCollectivite is not defined or contactPrincipalCollectivite is null %} blocktoinfocoll{% endif%}" href="{{ url }}"><span>Saisie de l'enquête</span> </a>
+                                            {% endif %}
+                                            {% if (info_saisie != '')%}
+                                                <a href="{{ path('bilan_social_historique_collectivite') }}"><span>Historique du bilan social</span></a>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if is_granted("ROLE_CDG") %}
+                                            {% if currentCampagne is not empty %}
+                                                <a class="lien-menu" href="{{ path('enquete_homepage') }}"><span>Gestion des enquêtes</span> </a>
+                                            {% endif %}
+                                            {% if currentEnquete is not empty and currentCampagne is not empty %}
+                                                <a class="lien-menu" href="{{ path('enquete_suivi') }}"><span>Suivi des enquêtes</span> </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+                {% endif %}
+
+                {% if is_granted("ROLE_COLLECTIVITY") and blGpeec %}
+                        <li class="sidebar-brand menu-li">
+                            <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <img src="{{ asset("img/icone/DescriptionSite-25.png") }}" class="icone-menu"/>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div>
+                                    <span class="titre-menu-accueil">
+                                        <a  href="{{ path('gpeec_entry_point' , {'targetRoute':'collectivite_mapping'}) }}">
+                                           Module GPEEC
+                                        </a>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                {% endif %}
+
+
+                {% if not is_granted("ROLE_DGCL") %}
+                <li class="sidebar-brand menu-li">
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/DescriptionSite-Faq.png") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Aide</span>
+                                <div class="sous-menu-accueil">
+                                    {% if is_granted("ROLE_ADMIN") %}
+                                        <a class="lien-menu" href="{{ path('faq_new') }}"><span>Ajouter une FAQ</span> </a>
+                                        <a class="lien-menu" href="{{ path('faq_index_administration') }}"><span>FAQ</span> </a>
+                                    {% else %}
+                                        <a class="lien-menu" href="{{ path('faq_index_client') }}"><span>FAQ</span> </a>
+                                    {% endif %}
+                                    {% if  not is_granted("ROLE_ADMIN") %}
+                                        {% if is_granted("ROLE_COLLECTIVITY") %}
+                                            <a class="lien-menu" href="{{ path('question_new_collectivite') }}"><span>Poser une question</span></a>
+                                            <a class="lien-menu" href="{{ path('historique_echanges') }}"><span>Mes réponses</span></a>
+                                        {% elseif is_granted("ROLE_CDG")%}
+                                            <a class="lien-menu" href="{{ path('question_new_cdg') }}"><span>Poser une question</span></a>
+                                            <a class="lien-menu" href="{{ path('question_index') }}"><span class="badge badge-light" style='background-color:#1a355d;'>{% if is_granted('ROLE_CDG') %}{{ question_collectivite.getQuestionsActive(app.user)|length }}{% endif %}</span> <span>Historique des questions collectivité</span></a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if is_granted("ROLE_CDG") and blGpeec %}
+                        <li class="sidebar-brand menu-li">
+                            <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                                <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                    <img src="{{ asset("img/icone/DescriptionSite-25.png") }}" class="icone-menu"/>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div>
+                                    <span class="titre-menu-accueil">
+                                        <a  href="{{ path('gpeec_entry_point' , {'targetRoute':'cdg_mapping'}) }}">
+                                           Module GPEEC
+                                        </a>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                {% endif %}
+
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li class="sidebar-brand menu-li">
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-25.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">
+                                        <a  href="{{ path('gpeec_entry_point' , {'targetRoute':'admin_mapping'}) }}">
+                                           Module GPEEC
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+
+
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li class="sidebar-brand menu-li">
+                        <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                            <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                                <img src="{{ asset("img/icone/DescriptionSite-Faq.png") }}" class="icone-menu"/>
+                            </div>
+                            <div class="col-xs-9">
+                                <div>
+                                    <span class="titre-menu-accueil">Info</span>
+                                    <div class="sous-menu-accueil">
+                                        <a class="lien-menu" href="{{ path('admin_gestion_fichier_dgcl') }}"><span>Export DGCL</span> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_CDG") or is_granted("ROLE_INFOCENTRE") %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <img src="{{ asset("img/icone/logo_infocentre.jpg") }}" class="icone-menu"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <span class="titre-menu-accueil">Infocentre Données sociales</span>
+
+                                <div class="sous-menu-accueil">
+
+                                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_CDG") %}
+                                        <a class="lien-menu" href="{{ path('info_centre_index') }}"><span>Données par collectivité</span> </a>
+                                    {% endif %}
+                                    <a class="lien-menu" href="{{ path('info_centre_departement_index') }}"><span>Données par département</span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+                {% endif %}
+                <li class="sidebar-brand menu-li">
+
+                    <div class="col-xs-12 menu-div menu-application" style="display: flex ">
+                        <div class="col-xs-9">
+                          <div>
+                              <span class="titre-menu titre-menu-application">Application Bilan Social</span>
+                              <div class="sous-menu sous-menu-application">
+                                  <p> version {{ app_version }} </p>
+                              </div>
+                          </div>
+                          </div>
+                    </div>
+                </li>
+
+
+            </ul>
+        </div>
+
+    </div>
+    {% endblock menu %}
+    {% block header_app %}
+        <div id="titleConsolide" class="col-md-12 col-md-9" style="text-align: center"> <img src="{{ asset('img/logos/Logo_Application_BS.png') }}" alt="Logo_Application_BS.png" class="img-responsive logo_application center-block"/></div>
+        <div class="col-md-9">
+            {% for flash_message in app.session.flashBag.get('action') %}
+                <div>
+                    <div class="alert alert-success" role="alert">{{ flash_message }}</div>
+                </div>
+            {% endfor %}
+            {% for flash_message in app.session.flashBag.get('error') %}
+                <div>
+                    <div class="alert alert-danger" role="alert">{{ flash_message }}</div>
+                </div>
+            {% endfor %}
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="alert alert-success text-center fade in">
+                    <strong>{{ flash_message }}</strong>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock header_app %}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('node_modules/jquery-form/dist/jquery.form.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('node_modules/jquery-ui-dist/jquery-ui.min.js') }}" ></script>
+
+{#    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>#}
+    <script type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/helper.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script type="text/javascript" src="{{ path('bazinga_jstranslation_js') }}"></script>
+    <script type="text/javascript" src="{{ path('bazinga_jstranslation_js', { 'domain': 'modal' }) }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/date-euro.js"></script>
+    {% if app.debug %}
+    {# si mode de dev charger les routes dynamiquement #}
+    <script type="application/javascript" src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    {% else %}
+    {# sinon charger le fichier static /!\ penser à exécuter la commande fos:js-routing:dump /!\  #}
+    <script type="text/javascript" src="{{ asset('js/fos_js_routes.js') }}"></script>
+    {% endif %}
+    <script type="text/javascript" src="{{ asset('node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('node_modules/bootstrap-select/dist/js/bootstrap-select.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('js/notify.min.js') }}" ></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tipso/1.0.8/tipso.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/date_format.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('js/LongTaskManagerBundle/longTaskManager.js') }}"></script>
+    <script type="text/javascript" async src="{{ asset('js/inputGestion.js') }}"></script>
+
+    {# <script src="https://gist.github.com/jhbsk/4690754.js"></script> #}
+{#    <script src="{{ asset('node_modules/datatables/media/js/jquery.dataTables.min.js') }}" ></script>#}
+    <!-- Matomo -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="{{ matomo_url }}";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', {{ matomo_id_site }}]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+
+    {% if firstconn is defined and firstconn == true %}
+        <script type="text/javascript">
+                $('#informationCollectiviteRequired').modal('show');
+        </script>
+    {% endif %}
+    <!-- End Matomo Code -->
+{% endblock %}
+<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+</body>
+</html>

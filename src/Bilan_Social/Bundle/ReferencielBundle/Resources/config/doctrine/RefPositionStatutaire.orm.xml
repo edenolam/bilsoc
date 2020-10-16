@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefPositionStatutaire" table="ref_position_statutaire"
+         repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefPositionStatutaireRepository">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_POSISTAT" name="cdPosistat"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idPosistat" type="integer" column="ID_POSISTAT">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <many-to-one field="refGroupePositionStatutaire" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefGroupePositionStatutaire">
+            <join-column name="ID_GROUPOSISTAT" referenced-column-name="ID_GROUPOSISTAT" nullable="true"/>
+        </many-to-one>
+
+        <field name="cdPosistat" type="string" column="CD_POSISTAT" length="50" nullable="true"/>
+        <field name="lbPosistat" type="string" column="LB_POSISTAT" length="200" nullable="true"/>
+        <field name="lbCompl" type="string" column="LB_COMPL" length="200" nullable="true"/>
+        <field name="lbComm" type="string" column="LB_COMM" length="200" nullable="true"/>
+        <field name="blCdg" type="boolean" column="BL_CDG" nullable="true"/>
+
+        <field name="blInd142" type="boolean" column="BL_IND142" nullable="true"/>
+        <field name="blInd143" type="boolean" column="BL_IND143" nullable="true"/>
+        <field name="blInd144" type="boolean" column="BL_IND144" nullable="true"/>
+
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="cdMotiN4ds" type="string" column="CD_MOTI_N4DS" length="255" nullable="true"/>
+
+         <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refPositionStatutaire" />
+        <one-to-many field="bilanSocialAgentsNonRemu" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refPositionStatutairenonremu" />
+        <many-to-many field="statutPositionStatutaires" inversed-by="refPositionStatutaires" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefStatut">
+            <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+            <join-table name="statut_positionstatutaire">
+                <join-columns>
+                    <join-column name="positionstatutaire_id" referenced-column-name="ID_POSISTAT" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="statut_id" referenced-column-name="ID_STAT" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

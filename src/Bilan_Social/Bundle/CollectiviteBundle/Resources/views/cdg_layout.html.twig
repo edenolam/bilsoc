@@ -1,0 +1,16 @@
+{% extends '@Collectivite/layout.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cdg.css') }}">
+{% endblock %}
+{% block header %}
+
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+{% endblock %}

@@ -1,0 +1,263 @@
+{% extends 'CoreBundle::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/analyse.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/AnalyseBundle/Analyse.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9 flash">
+        <div>
+            <ol class="breadcrumb">
+                <li class="active">Gestion des analyses</li>
+            </ol>
+        </div>
+        <h3 class='title'>Gestion des analyses</h3>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="panel panel-default" id='ajout-colonnes'>
+            <div class='panel-heading'>
+                <h3 class="panel-title">Ajouter un critère</h3>
+            </div>
+            <div class='row panel-body'>
+                <div class='col-md-5'>
+                    {{ form_row(formCol.colonnes) }}
+                </div>
+                <div class='col-md-1'>
+                    <label>Ajouter</label><br>
+                    <p class='btn btn-default' id='ajouter-colonne'>+</p>
+                </div>
+                <div class='col-md-1'>
+                    <label>Enlever</label><br>
+                    <p class='btn btn-default' id='enlever-colonne'>-</p>
+                </div>
+                <div class='col-md-5 form-group'>
+{#                    <label>Colonnes affichées</label>#}
+                    <select id='liste-colonnes' size='5' class='form-control'></select>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class='panel-heading'>
+                <h3 class="panel-title">Filtres</h3>
+            </div>
+            <div class='panel-body'>
+                <div id='param-filtre'>
+                    <div class='row' id='param-filtre'>
+                        <div class="col-md-4">
+                            {{ form_row(formCol.filtres) }}
+                        </div>
+                       <div class="col-md-4">
+                                             <select id="conditions" name="condition" size="5" class="form-control">
+                                                    <option value="0">Choisir une condition</option>
+                                                </select>
+                                           {# {{ form_row(form.conditions) }}#}
+                                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+{#                                <label class="control-label" for="parametres">Liste des paramètres</label>#}
+                                <select id="parametres" name="parametres" size="5" class="form-control">
+                                    <option value="0">Choisir un filtre</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-12'>
+                            <p class='btn btn-default pull-right' id='add-filtre'>Ajouter le filtre</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class='row'>
+                    <div class='col-md-12' id='liste-filtres'>
+                       {# <label>Liste des filtres</label>#}
+                        <table></table>
+                    </div>
+                </div>
+                {# <div class='row' id='appl-filtre-wrapper'>
+                    <div class='col-md-12'>
+                        <p class='btn btn-default pull-right suivi' id='appl-filtre' disabled>Appliquer les filtres</p>
+                    </div>
+                </div> #}
+            </div>
+        </div>
+        {{ form_start(formAnalyse) }}
+                
+        <div id='table-anal-coll-wrapper'>
+            <table class="table table-hover align-center" id='table-anal-coll'>
+                <thead>
+                    <tr>
+                        <th>
+                            Sélectionner
+                            <button class="check-all all vertical btn btn-sm" id="select" type='button'>Tous</button>
+                        </th>
+                        <th class='col-hidden col-blSire'><input type="hidden" value="0" name="champ-nmSire">SIRET</th>
+                        <th class='col-hidden col-blLibe'><input type="hidden" value="0" name="champ-lbColl">Libellé de la collectivité</th>
+                        <th class='col-hidden col-blTypeColl'><input type="hidden" value="0" name="champ-refTypeCollectivite">Type de la collectivité</th>
+                        <th class='col-hidden col-blLbAdresse'><input type="hidden" value="0" name="champ-adresse">Adresse</th>
+                        <th class='col-hidden col-blDepa'><input type="hidden" value="0" name="champ-departement">Département</th>
+                        <th class='col-hidden col-blCdPost'><input type="hidden" value="0" name="champ-cdPost">Code postal</th>
+                        <th class='col-hidden col-blLbVill'><input type="hidden" value="0" name="champ-lbVill">Ville</th>
+                        <th class='col-hidden col-blCdInse'><input type="hidden" value="0" name="champ-cdInse">Code INSEE</th>
+                        <th class='col-hidden col-blNmPopuInse'><input type="hidden" value="0" name="champ-nmPopuInse">Population totale INSEE</th>
+                        <th class='col-hidden col-blSurclasDemo'><input type="hidden" value="0" name="champ-blSurclasDemo">Sur-classement démographique</th>
+                        <th class='col-hidden col-blNmStratColl'><input type="hidden" value="0" name="champ-nmStratColl">Strate de sur-classement</th>
+                        <th class='col-hidden col-blAffiCdg'><input type="hidden" value="0" name="champ-blAffiColl">Affilié</th>
+                        <th class='col-hidden col-blCtCdg'><input type="hidden" value="0" name="champ-blCtCdg">Rattachement au comité technique</th>
+                        <th class='col-hidden col-blChsct'><input type="hidden" value="0" name="champ-blChsct">CHSCT propre à la collectivité</th>
+                        <th class='col-hidden col-blCollDgcl'><input type="hidden" value="0" name="champ-blCollDgcl">Echantillon DGCL</th>
+                        <th class='col-hidden col-cdg_is_authorized_by_collectivity'><input type="hidden" value="0" name="champ-cdg_is_authorized_by_collectivity">CDG autorisé à prendre la place</th>
+                        <th class='col-hidden col-blNbAgenPerm'><input type="hidden" value="0" name="champ-blNbAgenPerm">Nombre total d'agents sur emploi permanent</th>
+                        <th class='col-hidden col-blNbAgenTitu'><input type="hidden" value="0" name="champ-blNbAgenTitu">Nombre total d'agents titulaires</th>
+                        <th class='col-hidden col-blNbAgenContPerm'><input type="hidden" value="0" name="champ-blNbAgenContPerm">Nombre total d'agents contractuels sur emploi permanent</th>
+                        <th class='col-hidden col-blNbAgenContNonPerm'><input type="hidden" value="0" name="champ-blNbAgenContNonPerm">Nombre total d'agents contractuels sur emploi non permanent</th>
+                        <th class='col-hidden col-blBilaSoci allBilaSoci'>
+                            <input type="hidden" value="0" name="champ-blBilaSoci">
+                            <p class='dt-text-header-wrapper'>Bilan Social</p>
+                        </th>
+                        <th class='col-hidden col-blRass allRast'>
+                            <input type="hidden" value="0" name="champ-blRass">
+                            <p class='dt-text-header-wrapper'>RASSCT</p>
+                        </th>
+                        <th class='col-hidden col-blHand allHand'>
+                            <input type="hidden" value="0" name="champ-blHand">
+                            <p class='dt-text-header-wrapper'>Handitorial</p>
+                        </th>
+                        <th class='col-hidden col-blGpee allGpee'>
+                            <input type="hidden" value="0" name="champ-blGpee">
+                            <p class='dt-text-header-wrapper'>GPEEC</p>
+                        </th>
+                        <th class='col-hidden col-blApa allApa'>
+                            <input type="hidden" value="0" name="champ-blApa">
+                            <p class='dt-text-header-wrapper'>Agent par agent</p>
+                        </th>
+                        <th class='col-hidden col-blCons allCons'>
+                            <input type="hidden" value="0" name="champ-blCons">
+                            <p class='dt-text-header-wrapper'>Consolidé</p>
+                        </th>
+                        <th class='col-hidden col-blN4ds allN4ds'>
+                            <input type="hidden" value="0" name="champ-blN4ds">
+                            <p class='dt-text-header-wrapper'>N4DS</p>
+                        </th>
+                        <th class='col-hidden col-blBaseCarr allBaseCarr'>
+                            <input type="hidden" value="0" name="champ-blBaseCarr">
+                            <p class='dt-text-header-wrapper'>Base carrière</p>
+                        </th>
+                        <th class='col-hidden col-blBilaSociVide allBilansocivide'>
+                            <input type="hidden" value="0" name="champ-blBilaSociVide">
+                            <p class='dt-text-header-wrapper'>Bilan Social Vide</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Gestion de l'affichage de l'espace d'analyse</h3>
+            </div>
+            <div class="panel-body">
+                <p>Afficher l'espace d'analyse pour les collectivités sélectionnées</p>
+                {# {{ form_row(formAnalyse.blAffi) }} #}
+                {{ form_row(formAnalyse.cmPresentation) }}
+                {{ form_row(formAnalyse.idColl) }}
+                {{ form_row(formAnalyse.enregistrer) }}
+            </div>
+        </div>
+        {{ form_end(formAnalyse) }}
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Dépôt d’une analyse partagée générique</h3>
+            </div>
+            <div class="panel-body">
+                    {% if form is defined %}
+                        {{ form_start(form) }}
+                        <label>Import de l'analyse</label>
+                        {{ form_row(form.importAnalyse) }}
+                        <button type="submit" class='btn button-tableau pull-right' id="btn-import-masse-coll">Déposer</button>
+                        {{ form_end(form) }}
+                    {% endif %}
+                    {% if infosFichier is not empty %}
+                        {% for fichier in infosFichier %}
+    
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>{{ fichier.nom }}
+                                    <span class="delete-file" id="{{ fichier.fileKey }}" style="margin-left:20px;cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="margin-right:5px;"></span>Supprimer</span></p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+            </div>
+        </div>
+        <div class="panel panel-default contentConsolide">
+            <div class="panel-heading">
+                <h3 class="noMargin">Demandes d'analyses personnalisées</h3>
+            </div>
+            <div class="panel-body">
+                <table id='table_demande_analyse' class='table table-hover'>
+                    <thead>
+                        <tr>
+                            <th>SIRET</th>
+                            <th>Libellé</th>
+                            <th>Département</th>
+                            <th>Type d'analyse</th>
+                            <th>Date de la demande</th>
+                            <th>Statut</th>
+                            <th>Fichier</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {# {% for demande in demandesAnalyse %}
+                            <tr>
+                                <td><a href="{{ path('fiche_demande_analyse', {'id':  demande.idDemandeAnalyse }) }}">{{ demande.collectivite.nmSire }}</a></td>
+                                <td>{{ demande.collectivite.lbColl }}</td>
+                                <td>{{ demande.collectivite.departement.cdDepa }} - {{ demande.collectivite.departement.lbDepa }}</td>
+                                <td></td>
+                                <td>{{ demande.dtCrea|date('d/m/Y') }}</td>
+                                <td>{% if demande.fgStat is same as (0) %}En attente{% else %}Analyse déposée{% endif %}</td>
+                            </tr>
+                        {% endfor %} #}
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delDemandeAnalyseModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Attention, vous allez supprimer cette demande d'analyse.<br><br>Souhaitez-vous continuer ? </p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" id="confirmDelDemandeAnalyseModalNo">Non</a>
+                    <a href="#" class="btn btn-primary" id="confirmDelDemandeAnalyseModalYes">Oui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends '@Core/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/modelvues.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/ModelVues/ModelVues.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('model_vues_homepage') }}">Gestion des modèles de vue</a></li>
+                <li class="active">Gestion des collectivités</li>
+            </ol>
+        </div>
+        <h3 class='title'>Paramétrage de la vue : Gestion des collectivités</h3>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div id="messageJS" class="alert alert-danger fade in" style="display:none"></div>
+        
+        {% if form is defined %}
+            {{ form_start(form) }}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="noMargin">Liste des colonnes</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class='row'>
+                            {% for ligne in form %}
+                                {% if loop.first or loop.index == 6  or loop.index == 11 %}
+                                    <div class='col-sm-4'>
+                                {% endif %}
+                                {{ form_row(ligne) }}
+                                {% if loop.index == 5 or loop.index == 10 or loop.last %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <button class='btn button-tableau pull-right' id='submit-modele'>Enregistrer</button>
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
+{% endblock %}

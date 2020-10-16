@@ -1,0 +1,92 @@
+<label>Droits de l'utilisateur</label>
+{% if departements is defined and departements is not empty %}
+    <table class='table table-hover' id='table-droits'>
+        <thead>
+            <tr>
+                <th>Département</th>
+                <th>Gestion des comptes collectivité</th>
+                <th>Administrer les enquêtes</th>
+                <th>Prendre la place de la collectivité</th>
+                <th>Gérer l'espace analyse RH</th>
+                <th>Gérer accès Module GPEEC</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dept in departements %}
+                {% set comptecoll = '0' %}
+                {% set gestenqu = '0' %}
+                {% set placecoll = '0' %}
+                {% set mail = '0' %}
+                {% set analyse = '0' %}
+                {% set gpeec = '0' %}
+                {% if droits is defined and droits %}
+
+                    {% for key,droit in droits %}
+                        {% if key == dept.idCdgDepartement %}
+                            {% set comptecoll = droit.comptecoll %}
+                            {% set gestenqu = droit.gestenqu %}
+                            {% set placecoll = droit.placecoll %}
+                            {% set mail = droit.mail %}
+                            {% set analyse = droit.analyse %}
+                            {% set gpeec = droit.analyse %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <tr>
+                    <td>{{ dept.departement.cdDepa }}<br>{{ dept.departement.lbDepa }}</td>
+                    <td><input type="text"
+                               data-provide="slider"
+                               data-slider-ticks="[0, 1, 2]"
+                               data-slider-ticks-labels='["Aucun", "Lecture", "Saisie"]'
+                               data-slider-min="0"
+                               data-slider-max="2"
+                               data-slider-step="1"
+                               data-slider-value="{{ comptecoll }}"
+                               data-slider-tooltip="hide"
+                               name="slide_comptecoll_{{ dept.idCdgDepartement }}" /></td>
+                    <td><input type="text"
+                               data-provide="slider"
+                               data-slider-ticks="[0, 1, 2]"
+                               data-slider-ticks-labels='["Aucun", "Lecture", "Saisie"]'
+                               data-slider-min="0"
+                               data-slider-max="2"
+                               data-slider-step="1"
+                               data-slider-value="{{ gestenqu }}"
+                               data-slider-tooltip="hide"
+                               name="slide_gestenqu_{{ dept.idCdgDepartement }}" /></td>
+                    <td><input type="text"
+                               data-provide="slider"
+                               data-slider-ticks="[0, 1]"
+                               data-slider-ticks-labels='["Non", "Oui"]'
+                               data-slider-min="0"
+                               data-slider-max="1"
+                               data-slider-value="{{ placecoll }}"
+                               data-slider-tooltip="hide"
+                               name="slide_placecoll_{{ dept.idCdgDepartement }}" /></td>
+                    <td><input type="text"
+                               data-provide="slider"
+                               data-slider-ticks="[0, 1]"
+                               data-slider-ticks-labels='["Non", "Oui"]'
+                               data-slider-min="0"
+                               data-slider-max="1"
+                               data-slider-value="{{ analyse }}"
+                               data-slider-tooltip="hide"
+                               name="slide_analyse_{{ dept.idCdgDepartement }}" /></td>
+                    <td><input type="text"
+                               data-provide="slider"
+                               data-slider-ticks="[0, 1]"
+                               data-slider-ticks-labels='["Non", "Oui"]'
+                               data-slider-min="0"
+                               data-slider-max="1"
+                               data-slider-value="{{ gpeec }}"
+                               data-slider-tooltip="hide"
+                               name="slide_analyse_{{ dept.idCdgDepartement }}" /></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% elseif departements is not null %}
+    <p>Aucun département n'est attribué à ce Centre de Gestion. Vous pouvez les définir à l'adresse suivant : <a href='{{ path('cdg_index_departements') }}'>Attribuer des départements</a></p>
+{% else %}
+    <p>Veuillez sélectionner un Centre de gestion.</p>
+{% endif %}

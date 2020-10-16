@@ -1,0 +1,9 @@
+{#
+    indexListRefSharedFieldsTbodyLayout.html.twig
+
+    layout générique pour le crop des champs communs des référentiel pour la route index d'un referentiel donné
+    @Param
+        - ref : le referentiel a afficher
+#}
+<td>{% if ref.blExclutotal %}Oui{% else %}Non{% endif %}</td>
+<td>{{ ref.nmOrdre }}</td>

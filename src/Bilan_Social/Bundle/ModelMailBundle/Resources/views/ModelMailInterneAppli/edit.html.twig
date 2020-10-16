@@ -1,0 +1,75 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-xs-9">
+        <div>
+            <ol class="breadcrumb">
+                <li>Gestion des modèles de mail internes à l'application</li>
+                <li class="active">Modifier un modèle de mail interne à l'application</li>
+            </ol>
+        </div>
+        {% if app.session.flashBag.has('notice') %}
+            <div class="alert alert-success fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('notice') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            <div class="alert alert-danger fade in" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for msg in app.session.flashBag.get('error') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h3>Modification d'un modèle de mail interne à l'application<a href="{{ path('modelmailinterneappli_index') }}"><button class="btn btn-default pull-right">Retour à la liste</button></a></h3>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+            aide
+        </button>
+        <hr>
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Modifier" class="btn button-tableau"/>
+        {{ form_end(edit_form) }}
+        {% if is_granted("ROLE_CDG") %}
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Supprimer" class="btn button-tableau">
+            {{ form_end(delete_form) }}
+        {% endif %}
+        <hr>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Mots clés disponibles</h4>
+                </div>
+                <div class="modal-body">
+                    <p>__NAME__ sera remplacé par le numéro de siret ou par son nom dans le cas d'un CDG</p>
+                    <p>__MAIL__ sera remplacé l'adresse email</p>
+                    {% if (ModelMailInterneAppli.codeApp in ['SOUMVALIDCOLL', 'TRANSBLC', 'NEWQUESTIONCOLLECTIVITE']) %}
+                        <p>__NAMECOLLECTIVITE__ sera remplacé par le nom de la collectivité concernée</p>
+                    {% endif %} 
+                    {% if (ModelMailInterneAppli.codeApp in ['REFUSMODIF', 'VALIDEMODIF', 'VALIDEBLC', 'REFUSBLC', 'NEWQUESTIONCDG', 'NEWREPONSE']) %}
+                        <p>__NAMECDG__ sera remplacé par le libellé du CDG concerné</p>
+                    {% endif %}
+                    {% if (ModelMailInterneAppli.codeApp in ['NEWQUESTIONCDG']) %}
+                        <p>__QUESTION__ sera remplacé par la question posée</p>
+                    {% endif %}                              
+                    {% if (ModelMailInterneAppli.codeApp in ['NEWREPONSE']) %}
+                        <p>__QUESTION__ sera remplacé par la question posée par la collectivité</p>
+                        <p>__REPONSE__ sera remplacé par la réponse du CDG</p>
+                       
+                    {% endif %}                              
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

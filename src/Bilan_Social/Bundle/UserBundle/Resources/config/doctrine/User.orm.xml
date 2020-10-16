@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\UserBundle\Entity\User" repository-class="Bilan_Social\Bundle\UserBundle\Repository\UserRepository" table="utilisateur">
+        <!--        <indexes>
+            <index name="FK_COLLECTIVITE_UTILISATEUR" columns="ID_COLL"/>
+            <index name="FK_UTILISATEUR_CDG" columns="ID_CDG"/>
+        </indexes>-->
+        <unique-constraints>
+            <unique-constraint columns="USERNAME" name="username" />
+        </unique-constraints>
+        <id name="idUtil" type="integer" column="ID_UTIL">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="username" type="string" column="USERNAME" length="50" nullable="false"/>
+        <field name="password" type="string" column="PASSWORD" length="100" nullable="false"/>
+        <field name="lbPassTemp" type="string" column="LB_PASS_TEMP" length="100" nullable="true"/>
+        <field name="fgTypeutil" type="string" column="FG_TYPEUTIL" length="50" nullable="true"/>
+        <field name="isActive" type="boolean" column="IS_ACTIVE" nullable="true"/>
+        <field name="roles" type="array" column="roles" nullable="false"/>
+        <field name="change_request" type="boolean" column="change_request" nullable="true"/>
+        <field name="can_valid_user_account" type="boolean" column="can_valid_user_account" nullable="true"/>
+        <field name="can_view" type="boolean" column="can_view" nullable="true"/>
+        <field name="can_edit" type="boolean" column="can_edit" nullable="true"/>
+        <field name="droitMails" type="boolean" column="BL_DROITMAIL" nullable="true"/>
+        <field name="blGpeec" type="boolean" column="BL_GPEEC" nullable="true"/>
+        <field name="cdg_is_authorized_by_collectivity" type="boolean" column="cdg_is_authorized_by_collectivity" nullable="true"/>
+        <field name="email" type="string" column="email" length="255" nullable="true"/>
+        <field name="postal_code" type="string" column="postal_code" length="5" nullable="true"/>
+        <field name="department" type="string" column="department" length="5" nullable="true"/>
+        <field name="dtLastconn" type="datetime" column="DT_LASTCONN" nullable="true"/>
+        <field name="nmErreconn" type="integer" column="NM_ERRECONN" nullable="true"/>
+        <field name="fgStat" type="boolean" column="FG_STAT" nullable="true"/>
+        <field name="confirmCode" type="string" column="confirm_code" length="32" unique="true" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="dtBlocage" type="datetime" column="DT_BLOCAGE" nullable="true"/>
+        <field name="fgBlocage" type="integer" column="FG_BLOCAGE" nullable="true"/>
+
+
+        <many-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite" inversed-by="utilisateurs">
+            <join-column name="ID_COLL" referenced-column-name="ID_COLL" />
+        </many-to-one>
+
+        <!--<one-to-many field="utilisateurDroits" target-entity="Bilan_Social\Bundle\UserBundle\Entity\UtilisateurDroits" mapped-by="utilisateur" />-->
+
+        <one-to-many field="utilisateurCdgs" target-entity="Bilan_Social\Bundle\UserBundle\Entity\UtilisateurCdg" mapped-by="utilisateur"/>
+
+        <many-to-one field="profils" target-entity="Bilan_Social\Bundle\UserBundle\Entity\Profil" inversed-by="utilisateurs">
+            <join-column  name="ID_PROFIL" referenced-column-name="ID_PROFIL"/>
+        </many-to-one> 
+
+        <!--<one-to-many field="utilisateur" target-entity="Bilan_Social\Bundle\FaqBundle\Entity\Question" mapped-by="utilisateur"/>-->
+        <!--        <field name="cdgIsAuthorizedByCollectivity" type="boolean" column="cdg_is_authorized_by_collectivity" nullable="false"/>
+        <field name="change_request" type="boolean" column="change_request" nullable="false"/>
+        <field name="department" type="string" column="department" nullable="false"/>-->
+        <one-to-many field="pools" target-entity="Bilan_Social\Bundle\InfoCentreBundle\Entity\Pool" mapped-by="utilisateur" />
+
+        <many-to-many field="departements" inversed-by="user" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement">
+            <join-table name="user_departement">
+                <join-columns>
+                    <join-column name="ID_UTIL" referenced-column-name="ID_UTIL" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="ID_DEPA" referenced-column-name="ID_DEPA" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+        <many-to-many field="campagnes" inversed-by="users" target-entity="Bilan_Social\Bundle\CampagneBundle\Entity\Campagne">
+            <join-table name="user_campagne">
+                <join-columns>
+                    <join-column name="ID_UTIL" referenced-column-name="ID_UTIL" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="ID_CAMP" referenced-column-name="ID_CAMP" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+    </entity>
+</doctrine-mapping>

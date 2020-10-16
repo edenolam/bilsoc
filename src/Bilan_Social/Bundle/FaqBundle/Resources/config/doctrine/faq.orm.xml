@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="Bilan_Social\Bundle\FaqBundle\Repository\faqRepository" name="Bilan_Social\Bundle\FaqBundle\Entity\faq">
+    <id name="id" type="integer" column="id">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="question" type="string" column="question" length="1000"/>
+    <field name="reponse" type="text" column="reponse" />
+    <field name="profil" type="string" column="profil" length="255"/>
+    <field name="categorie" type="string" column="categorie" length="255"/>
+
+    <indexes>
+      <index name="faq_idx_4" columns="profil"/>
+    </indexes>
+  </entity>
+</doctrine-mapping>

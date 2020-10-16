@@ -1,0 +1,115 @@
+{% extends "base.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var informations_generales = '';
+        var $user = "{{ app.user }}";
+        {% if stepIndex is defined %}
+            var index = {{ stepIndex }};
+        {% else %}
+            var index = 0;
+        {% endif %}
+
+        {% if anne_campagne is defined %}
+            var anne_campagne = {{ anne_campagne }};
+        {% else %}
+            var anne_campagne = 'Non définie';
+        {% endif %}
+        {% if informationGenerales is defined %}
+            informations_generales = {{ informationGenerales|json_encode()|raw }};
+        {% endif %}
+    </script>
+
+    <script type="text/javascript" src="{{ asset('js/ApaBundle/jquery.ui.monthpicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/datatables-scroller/js/dataTables.scroller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ApaBundle/Apa.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ApaBundle/script_hide_show.js') }}"></script>
+    {#    <script type="text/javascript" src="{{ asset('js/ApaBundle/jquery.alphanum.js') }}"></script>#}
+    <script type="text/javascript" src="{{ asset('js/ApaBundle/jquery.masknumber.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/title-string.js"></script>
+
+    <script type="text/javascript" src="{{ asset('js/inputGestion.js') }}"></script>
+    <script>
+        {# APA - Informations générales #}
+            createBtpModal("q2infoGene", "Aide Question Cycle de Travail", sfTrans("info_gen_apa.q2infogene", "", [], "modal"));
+            createBtpModal("q3", "Aide Question 2", sfTrans("info_gen_apa.q3", "", [], "modal"));
+            createBtpModal("q4", "Aide Question 3", sfTrans("info_gen_apa.q4", "", [], "modal"));
+            createBtpModal("q4", "Aide Question 3", sfTrans("info_gen_apa.q4", "", [], "modal"));
+            createBtpModal("q6", "Aide Question 5", sfTrans("info_gen_apa.q6", "", [], "modal"));
+            createBtpModal("q7", "Aide Question 6", sfTrans("info_gen_apa.q7", "", [], "modal"));
+        {# APA - Informations collectivités #}
+            createBtpModal("q114", "Aide Question 1.1.4(1)", sfTrans("info_coll_apa.q114", "", [], "modal"));
+            createBtpModal("q124", "Aide Question 1.2.4", sfTrans("info_coll_apa.q124", "", [], "modal"));
+            createBtpModal("q131", "Aide Question 1.3.1", sfTrans("info_coll_apa.q131", "", [], "modal"));
+            createBtpModal("q132", "Aide Question 1.3.2", sfTrans("info_coll_apa.q132", "", [], "modal"));
+            createBtpModal("q162", "Aide Question 1.6.2", sfTrans("info_coll_apa.q162", "", [], "modal"));
+            createBtpModal("mtDepetota", "Aide Réponse", sfTrans("info_coll_apa.mtDepetota", "", [], "modal"));
+            createBtpModal("mtDepeinsepershand", "Aide Réponse", sfTrans("info_coll_apa.mtDepeinsepershand", "", [], "modal"));
+            createBtpModal("mtRealemplpershand", "Aide Réponse", sfTrans("info_coll_apa.mtRealemplpershand", "", [], "modal"));
+            createBtpModal("mtDepeamentrav", "Aide Réponse", sfTrans("info_coll_apa.mtDepeamentrav", "", [], "modal"));
+            createBtpModal("r2102", "Aide Réponse", sfTrans("info_coll_apa.r2102", "", [], "modal"));
+            createBtpModal("q225", "Aide Question 2.2.5", sfTrans("info_coll_apa.q225", "", [], "modal"));
+            createBtpModal("q341", "Aide Question 3.4.1", sfTrans("info_coll_apa.q341", "", [], "modal"));
+            createBtpModal("q342", "Aide Question 3.4.2", sfTrans("info_coll_apa.q342", "", [], "modal"));
+            createBtpModal("q344", "Aide Question 3.4.4", sfTrans("info_coll_apa.q344", "", [], "modal"));
+            createBtpModal("mtCharpers", "Aide Réponse", sfTrans("info_coll_apa.mtCharpers", "", [], "modal"));
+            createBtpModal("mtDepefonccoll", "Aide Réponse", sfTrans("info_coll_apa.mtDepefonccoll", "", [], "modal"));
+            createBtpModal("q412", "Aide Question 4.1.2", sfTrans("info_coll_apa.q412", "", [], "modal"));
+            createBtpModal("q414", "Aide Question 4.1.4", sfTrans("info_coll_apa.q414", "", [], "modal"));
+            createBtpModal("q415", "Aide Question 4.1.5", sfTrans("info_coll_apa.q415", "", [], "modal"));
+            createBtpModal("q416", "Aide Question 4.1.6", sfTrans("info_coll_apa.q416", "", [], "modal"));
+            createBtpModal("q43", "Aide Question 4.3", sfTrans("info_coll_apa.q43", "", [], "modal"));
+            createBtpModal("mtFraidepla", "Aide Réponse", sfTrans("info_coll_apa.mtFraidepla", "", [], "modal"));
+            createBtpModal("q611", "Aide Question 6.1.1", sfTrans("info_coll_apa.q611", "", [], "modal"));
+            createBtpModal("nbHeurd", "Aide Réponse", sfTrans("info_coll_apa.nbHeurd", "", [], "modal"));
+            createBtpModal("nbProtacco", "Aide Réponse", sfTrans("info_coll_apa.nbProtacco", "", [], "modal"));
+            createBtpModal("nbjourgreve", "Aide Réponse", sfTrans("info_coll_apa.nbjourgreve", "", [], "modal"));
+            createBtpModal("q714", "Aide Question 7.1.4", sfTrans("info_coll_apa.q714", "", [], "modal"));
+            createBtpModal("qA3Handitorial", "Aide Question A3", sfTrans("info_coll_apa.qA3Handitorial", "", [], "modal"));
+            createBtpModal("qA51Handitorial", "Aide Question A5-1", sfTrans("info_coll_apa.qA51Handitorial", "", [], "modal"));
+            createBtpModal("qA520Handitorial", "Aide Question A5-2-0", sfTrans("info_coll_apa.qA520Handitorial", "", [], "modal"));
+            createBtpModal("qA521Handitorial", "Aide Question A5-2-1", sfTrans("info_coll_apa.qA521Handitorial", "", [], "modal"));
+            createBtpModal("qA62Handitorial", "Aide Question A62", sfTrans("info_coll_apa.qA62Handitorial", "", [], "modal"));
+            createBtpModal("qA72Handitorial", "Aide Question A72", sfTrans("info_coll_apa.qA72Handitorial", "", [], "modal"));
+            createBtpModal("qA8Handitorial", "Aide Question A8", sfTrans("info_coll_apa.qA8Handitorial", "", [], "modal"));
+        {# APA - bilan social #}
+            createBtpModal("q121", "Aide Question Q12.1", sfTrans("info_bs_apa.q121", "", [], "modal"));
+            createBtpModal("q28_1", "Aide Question 28.1", sfTrans("info_bs_apa.q28_1", "", [], "modal"));
+            createBtpModal("q28_2", "Aide Question 28.2", sfTrans("info_bs_apa.q28_2", "", [], "modal"));
+            createBtpModal("q28_4", "Aide Question 28.4", sfTrans("info_bs_apa.q28_4", "", [], "modal"));
+            createBtpModal("q28_5", "Aide Question 28.5", sfTrans("info_bs_apa.q28_5", "", [], "modal"));
+            createBtpModal("qTypeCdd", "Aide - Quel est le type de CDD ?", sfTrans("info_bs_apa.qTypeCdd", "", [], "modal"));
+            createBtpModal("q26RefEmpNonPerma", "Aide - Quel est le type de contrat non permanent ?", sfTrans("info_bs_apa.q26RefEmpNonPerma", "", [], "modal"));
+            createBtpModal("q122TempsPartiel", "Aide - Quel est le type de temps partiel ?", sfTrans("info_bs_apa.q122TempsPartiel", "", [], "modal"));
+            createBtpModal("q270RefPosistat", "Aide - Quelle est sa position particulière ?", sfTrans("info_bs_apa.q270RefPosistat", "", [], "modal"));
+            createBtpModal("q201NbJourAbs", "Aide - Nombre de jours d'absence", sfTrans("info_bs_apa.q201NbJourAbs", "", [], "modal"));
+            createBtpModal("q33Formation", "Aide - Est-ce que l'agent a suivi une formation au cours de l'année ?", sfTrans("info_bs_apa.q33Formation", "", [], "modal"));
+            createBtpModal("q341Vae", "Aide - L'agent a-t-il sollicité une VAE ?", sfTrans("info_bs_apa.q341Vae", "", [], "modal"));
+            createBtpModal("q351BilaComp", "Aide - L'agent a-t-il effectué un bilan de compétences ?", sfTrans("info_bs_apa.q351BilaComp", "", [], "modal"));
+            createBtpModal("q19Boeth", "Aide - L'agent est-il B.O.E.T.H ?", sfTrans("info_bs_apa.q19Boeth", "", [], "modal"));
+            createBtpModal("qB21bHanditorial", "Aide - Quelle est la nature de son (ses) handicap(s) ?", sfTrans("info_bs_apa.qB21bHanditorial", "", [], "modal"));
+            createBtpModal("q26Cet", "Aide - L'agent a-t-il un CET ?", sfTrans("info_bs_apa.q26Cet", "", [], "modal"));
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable/customStyle.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/monthPicker.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('node_modules/jquery-steps/demo/css/jquery.steps.css') }}" />
+{% endblock stylesheets %}
+
+{% block header %}
+{% endblock %}
+
+{% block body %}
+    {#{{parent()}}#}
+
+    {% block menu %}
+        {% include '@Apa/menu.html.twig' %}
+    {% endblock menu%}
+    {% block header_app %}
+        {{parent()}}
+    {% endblock header_app%}
+{% endblock %}

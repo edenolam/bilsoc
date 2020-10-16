@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind2261" repository-class="Bilan_Social\Bundle\ConsoBundle\Repository\Ind2261Repository" table="ind_2261">
+        <indexes>
+            <index name="FK_2261_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+        <id name="id2261" type="integer" column="ID_2261">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind2261s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <field name="r22611" type="integer" column="R_22611" nullable="true" />
+        <field name="r22612" type="integer" column="R_22612" nullable="true"/>
+        <field name="r22613" type="integer" column="R_22613" nullable="true"/>
+        <field name="r22614" type="integer" column="R_22614" nullable="true"/>
+        <field name="r22615" type="integer" column="R_22615" nullable="true"/>
+        <field name="r22616" type="integer" column="R_22616" nullable="true"/>
+        <field name="cdJourCarence" type="string" column="CD_JOUR_CARENCE" length="50" nullable="true"/>
+        <field name="order" type="integer" column="ORDRE" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,28 @@
+refgroupepositionstatutaire_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefGroupePositionStatutaire:index" }
+    methods:  GET
+
+refgroupepositionstatutaire_show:
+    path:     /{idGrouPosistat}/show
+    defaults: { _controller: "ReferencielBundle:RefGroupePositionStatutaire:show" }
+    methods:  GET
+
+refgroupepositionstatutaire_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefGroupePositionStatutaire:new" }
+    methods:  [GET, POST]
+
+refgroupepositionstatutaire_edit:
+    path:     /{idGrouPosistat}/edit
+    defaults: { _controller: "ReferencielBundle:RefGroupePositionStatutaire:edit" }
+    methods:  [GET, POST]
+
+refgroupepositionstatutaire_delete:
+    path:     /{idGrouPosistat}/delete
+    defaults: { _controller: "ReferencielBundle:RefGroupePositionStatutaire:delete" }
+    methods:  DELETE
+
+csv_export_refgroupepositionstatutaire:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefGroupePositionStatutaire:generateCsv" }

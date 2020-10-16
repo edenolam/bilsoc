@@ -1,0 +1,48 @@
+{% extends '@Faq/layout.html.twig' %}
+
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="col-xs-9">
+
+        <table>
+            <tbody>
+                <tr>
+                    <th>Question</th>
+                    <td>{{ faq.question }}</td>
+                </tr>
+                <tr>
+                    <th>Reponse</th>
+                    <td>{{ faq.reponse }}</td>
+                </tr>
+                <tr>
+                    <th>Profil</th>
+                    <td>{{ faq.profil }}</td>
+                </tr>
+                <tr>
+                    <th>Categorie</th>
+                    <td>{{ faq.categorie }}</td>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ faq.id }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('faq_index_administration') }}">Back to the list</a>
+            </li>
+            <li>
+                <a href="{{ path('faq_edit', { 'id': faq.id }) }}">Edit</a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    </div>
+{% endblock %}

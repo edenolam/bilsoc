@@ -1,0 +1,29 @@
+actualite_index:
+    path:     /
+    defaults: { _controller: "ActualiteBundle:Actualite:index" }
+    methods:  GET
+
+actualite_show:
+    path:     /{id}/show
+    defaults: { _controller: "ActualiteBundle:Actualite:show" }
+    methods:  GET
+
+actualite_show_admin_cdg:
+    path:     /{id}/apercu
+    defaults: { _controller: "ActualiteBundle:Actualite:showadmincdg" }
+    methods:  GET
+
+actualite_new:
+    path:     /new
+    defaults: { _controller: "ActualiteBundle:Actualite:new" }
+    methods:  [GET, POST]
+
+actualite_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ActualiteBundle:Actualite:edit" }
+    methods:  [GET, POST]
+
+actualite_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ActualiteBundle:Actualite:delete" }
+    methods:  DELETE

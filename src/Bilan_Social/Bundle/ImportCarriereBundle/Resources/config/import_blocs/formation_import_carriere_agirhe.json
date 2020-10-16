@@ -1,0 +1,39 @@
+{
+	"to_entity" : "Bilan_Social\\Bundle\\ApaBundle\\Entity\\FormationAgent",
+	"bloc_name" : "formations_agirhe",
+	"fields":{
+		"nb_jours":{
+			"left_key":"nombre_jours",
+			"right_key":"NbjourForm",
+			"type":"integer"
+		},
+		"type_formation":{
+			"left_key":"formation_type",
+			"right_key":"RefFormation",
+			"type":"string",
+			"back_ref":false,
+			"transform":[
+				{
+					"name":"get_from_base_ref",
+					"entity_field":"cdForm",
+					"by_col":"CD_FORM",
+					"from_repository":"ReferencielBundle:RefFormation"
+				}
+			]
+		},
+		"organisme_formation":{
+			"left_key":"formation_organisme",
+			"right_key":"RefOrganismeFormation",
+			"type":"boolean",
+			"back_ref":false,
+			"transform":[
+				{
+					"name":"get_from_base_ref",
+					"entity_field":"cdOrgaform",
+					"by_col":"CD_ORGAFORM",
+					"from_repository":"ReferencielBundle:RefOrganismeFormation"
+				}
+			]
+		}
+	}
+}

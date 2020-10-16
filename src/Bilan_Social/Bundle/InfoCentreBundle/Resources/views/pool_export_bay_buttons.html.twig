@@ -1,0 +1,86 @@
+{#
+	fichier du template des boutons d'exports de l'infocentre
+#}
+<div id="export_bouttons_wrapper">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Nom de l'export</th>
+				<th>Description</th>
+				<th>Thème</th>
+				<th>Date de création du job</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody id="pool_export_bouttons_table_receiver">
+			{% for export_key, export in export_available %}
+				{% set long_task = export.long_task is defined and export.long_task == true %}
+				{% set form_target = "_blank" %}
+				{% set html_attr_str = "" %}
+				{% set label_logo_str = "" %}
+				{% if export.label_logo is defined and export.label_logo is not empty %}
+					{% set logo_attr_str = "" %}
+					{% for attr_name, attr_value in export.label_logo.attr %}
+						{% set logo_attr_str = logo_attr_str ~ attr_name ~ '="' ~ attr_value ~ '"' %}
+					{% endfor %}
+					{% set label_logo_str = '<span class="export_logo_wrapper">' %}
+					{% if export.label_logo.src is defined %}
+						{% set label_logo_str = label_logo_str ~ '<img class="img-responsive image_btn_export" src="' ~ export.label_logo.src ~ '" ' ~ logo_attr_str ~ ' />' %}
+					{% elseif export.label_logo.raw is defined %}
+						{% if logo_attr_str is not empty %}
+							{% set label_logo_str = label_logo_str ~ '<span  ' ~ logo_attr_str ~ '>' %}
+						{% endif %}
+						{% set label_logo_str = label_logo_str ~ export.label_logo.raw %}
+						{% if logo_attr_str is not empty %}
+							{% set label_logo_str = label_logo_str ~ '</span>' %}
+						{% endif %}
+					{% endif %}
+					{% set label_logo_str = label_logo_str ~ '</span>' %}
+				{% endif %}
+				{% if export.html_attr is defined %}
+					{% for attr_name, attr_value in export.html_attr %}
+						{% set html_attr_str = html_attr_str ~ attr_name ~ '="' ~ attr_value ~ '"' %}
+					{% endfor %}
+				{% endif %}
+				{% if long_task or export_key == 'hrgExport' %}
+					{% set form_target = "_self" %}
+					{# {% set title = "Cet export peut durer plusieurs jours selon l'échantillon sélectionné" %} #}
+				{% endif %}
+				{% for line in export_echantillon %}
+					{% if export.refs is defined and line.refs is defined %}
+						{% if line.refs == export.refs %}
+						<tr>
+							<td>{{ line.name }}</td>
+							<td>{{ line.description }}</td>
+							<td>{{ line.theme }}</td>
+							<td>{{ line.date|date('d-m-Y') }}</td>
+							<td class="export_pool_cell">
+								<button type="submit" class='btn btn-primary export_pool_btn' value='{{ export_key }}' name='export_action' formtarget="{{ form_target }}" data-export-name="{{ export.name }}" data-ajax-submit="{{ long_task }}">
+									{{ line.name }}
+								</button>
+							</td>
+						</tr>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+
+			{% for line in export_echantillon %}
+				{% if line.refs == null %}
+					<tr>
+						<td>{{ line.name }}</td>
+						<td>{{ line.description }}</td>
+						<td>{{ line.theme }}</td>
+						<td>{{ line.date|date('d-m-Y') }}</td>
+						<td class="export_pool_cell">
+							<button type="button" disabled class='btn btn-primary export_pool_btn' name='export_action'>
+								{{ line.name }}
+							</button>
+						</td>
+					</tr>
+				{% endif %}					
+			{% endfor %}			
+			
+        </tbody>
+    </table>
+</div>

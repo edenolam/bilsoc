@@ -1,0 +1,28 @@
+refvalidationexperience_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefValidationExperience:index" }
+    methods:  GET
+
+refvalidationexperience_show:
+    path:     /{idEbcf}/show
+    defaults: { _controller: "ReferencielBundle:RefValidationExperience:show" }
+    methods:  GET
+
+refvalidationexperience_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefValidationExperience:new" }
+    methods:  [GET, POST]
+
+refvalidationexperience_edit:
+    path:     /{idEbcf}/edit
+    defaults: { _controller: "ReferencielBundle:RefValidationExperience:edit" }
+    methods:  [GET, POST]
+
+refvalidationexperience_delete:
+    path:     /{idEbcf}/delete
+    defaults: { _controller: "ReferencielBundle:RefValidationExperience:delete" }
+    methods:  DELETE
+
+csv_export_refvalidationexperience:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefValidationExperience:generateCsv" }

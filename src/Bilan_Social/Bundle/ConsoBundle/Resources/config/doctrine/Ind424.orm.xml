@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ConsoBundle\Entity\Ind424" table="ind_424">
+        <indexes>
+            <index name="FK_424_BILANSOCIALCONSOLIDE" columns="ID_BILASOCICONS"/>
+        </indexes>
+        <id name="id424" type="integer" column="ID_424">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="bilanSocialConsolide" target-entity="Bilan_Social\Bundle\ConsoBundle\Entity\BilanSocialConsolide" inversed-by="ind424s">
+            <join-column name="ID_BILASOCICONS" referenced-column-name="ID_BILASOCICONS" nullable="false"/>
+        </many-to-one>
+
+        <field name="rTS4241" type="integer" column="R_TS4241" nullable="true" />
+        <field name="rTS4242" type="integer" column="R_TS4242" nullable="true"/>
+        <field name="rTS4243" type="integer" column="R_TS4243" nullable="true"/>
+        <field name="rTS4244" type="integer" column="R_TS4244" nullable="true"/>
+        <field name="rTS4245" type="integer" column="R_TS4245" nullable="true"/>
+        <field name="rTS4246" type="integer" column="R_TS4246" nullable="true"/>
+        <field name="rEMP4241" type="integer" column="R_EMP4241" nullable="true" />
+        <field name="rEMP4242" type="integer" column="R_EMP4242" nullable="true"/>
+        <field name="rEMP4243" type="integer" column="R_EMP4243" nullable="true"/>
+        <field name="rEMP4244" type="integer" column="R_EMP4244" nullable="true"/>
+        <field name="rEMP4245" type="integer" column="R_EMP4245" nullable="true"/>
+        <field name="rEMP4246" type="integer" column="R_EMP4246" nullable="true"/>
+        <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+    </entity>
+</doctrine-mapping>

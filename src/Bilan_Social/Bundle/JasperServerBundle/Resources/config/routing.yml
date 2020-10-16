@@ -1,0 +1,4 @@
+test_jasperserver:
+    path:     /jasper_report
+    defaults: { _controller: "JasperServerBundle:Default:jasperReportTest" }
+    methods:  [GET, POST]

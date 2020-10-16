@@ -1,0 +1,22 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="col-lg-9">
+        <div class='clearfix margin10'>
+            <a class="btn button pull-right" href="{{ path('refspecialite_index') }}"><span
+                        class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Retour à la liste</a>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Modification d'une spécialité</h3>
+            </div>
+            <div class="panel-body">
+                {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <input class="btn button pull-right margin10" type="submit" value="Modifier" />
+                {{ form_end(edit_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

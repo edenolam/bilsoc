@@ -1,0 +1,23 @@
+
+{% set urlImport = path('apa_import_courtier', {'_format' : 'csv'})  %}
+
+    <div class="modal fade" id="import_courtier">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4>Choisisez le type d'import</h4>
+                    {{ form_start(form) }}
+                        <div>
+                            <label>upload du fichier csv</label>
+                            {{ form_widget(form.fileCourtier, {'attr': {'id': 'import_file', 'name':'import_file', '_format' : 'csv'} }) }}
+                        </div>
+                        <button class="btn button-tableau" id="import_courtier">Importer</button>
+                    {{ form_end(form) }}
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">Annuler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+

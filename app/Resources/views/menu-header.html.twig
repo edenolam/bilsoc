@@ -1,0 +1,57 @@
+<div class="col-xs-12 noPadding">
+    <div class="noPadding consolideHeader col-md-3">
+        <div class="menu-header">
+            {% if app.user.username is defined %}
+                <img src="{{ asset("img/logo.jpg") }}"/>
+
+                <label class="raisonSociale"> <strong>Raison sociale :
+                        {% if (is_granted("ROLE_COLLECTIVITY")) %}
+
+                            {% for collectiviteinfo in user_collectivite.findByIdColl(app.user.collectivite.idColl) %}
+
+                                {{ collectiviteinfo.lbColl }}
+                            {% endfor %}
+
+                        {% elseif(is_granted("ROLE_CDG")) %}
+                            {% for cdginfo in user_cdg.findByIdCdg(app.user.idcdg) %}
+
+                                {{ cdginfo.lbCdg }}
+                            {% endfor %}
+
+                        {% elseif (is_granted("ROLE_ADMIN")) %}
+                            ADMIN
+                        {% endif %}
+                    </strong>
+                </label>
+
+
+                {% if is_granted("ROLE_COLLECTIVITY") %}
+                    <label>Siret : {{ app.user.username }}</label>
+                {% endif %}
+                <label>Identifiant : {{ app.user.username }}</label>
+                <label>Dernière connexion le {{app.user.dtlastconn|date('d M Y')}} <br> à {{app.user.dtlastconn|date('H:i:s')}}</label>
+
+                <div>
+                    <span class="glyphicon glyphicon-off logout" aria-hidden="true">
+                        <a href="{{ path('logout') }}">Déconnexion</a>
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand menu-li">
+                <a href="{{ path('homepage') }}">
+                    <div class="col-xs-12 menu-div accueil" style="display: flex ">
+                        <div class="col-xs-3" style="display: flex; justify-content: center; align-items: center">
+                            <i class="fa fa-home fa-2x" aria-hidden="true" ></i>
+                        </div>
+                        <div class="col-xs-9 spanAcc">
+                            <div>
+                                <span>Accueil</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>

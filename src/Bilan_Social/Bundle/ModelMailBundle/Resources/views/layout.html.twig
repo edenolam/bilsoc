@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script  type="text/javascript" src="{{ asset('js/ModelMail/ModelMailCdg.js') }}"></script>
+    <script  type="text/javascript" src="{{ asset('js/ModelMail/ModelMailInterneAppliCdg.js') }}"></script>
+    <script  type="text/javascript" src="{{ asset('node_modules/clipboard/dist/clipboard.min.js') }}"></script>
+    <script  type="text/javascript" src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
+
+{% endblock %}
+{% block header %}
+    {#   {{ parent() }}#}
+
+{% endblock %}
+
+{% block body %}
+    {{parent()}}
+
+
+{% endblock %}{# empty Twig template #}

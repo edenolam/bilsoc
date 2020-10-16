@@ -1,0 +1,13 @@
+collectivity_list:
+    path: /
+    defaults: { _controller: "CoreBundle:Collectivity:list" }
+#       * @Security("has_role('ROLE_CDG')")
+
+collectivity_show:
+    path: /bilan_collectivite/{userId}
+    defaults: { _controller: "CoreBundle:Collectivity:showCollectivityBilan" }
+#       * @Security("has_role('ROLE_CDG')")
+
+collectivity_remove_session:
+    path: /remove/session
+    defaults: { _controller: "CoreBundle:Collectivity:removeCollectivitySession" }

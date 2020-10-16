@@ -1,0 +1,51 @@
+campagne_homepage:
+    path:     /
+    defaults: { _controller: CampagneBundle:Campagne:index }
+    
+campagne_ajouter:
+    path:     /ajouter
+    defaults: { _controller: CampagneBundle:Campagne:ajout }
+    
+campagne_modifier:
+    path:     /modifier
+    defaults: { _controller: CampagneBundle:Campagne:ajout }
+    
+campagne_cloturer:
+    path:     /cloturer/{id}
+    defaults: { _controller: CampagneBundle:Campagne:cloturer }
+    
+campagne_ouvrir:
+    path:     /ouvrir/{id}
+    defaults: { _controller: CampagneBundle:Campagne:ouvrir }
+    
+campagne_archiver:
+    path:     /archiver/{id}
+    defaults: { _controller: CampagneBundle:Campagne:archiver }
+    
+campagne_create:
+    path:     /create
+    defaults: { _controller: CampagneBundle:Campagne:create }
+    
+campagne_suivi:
+    path:     /suivi
+    defaults: { _controller: CampagneBundle:Campagne:suivi }
+    
+campagne_relancer:
+    path:     /relancer
+    defaults: { _controller: CampagneBundle:Campagne:relancer }
+    options:
+        expose: true
+    
+campagne_dashboard:
+    path:     /tableau-de-bord
+    defaults: { _controller: CampagneBundle:Campagne:dashboardCampagne }
+    
+get_campagnecourante:
+    path:     /api/talend/campagneCourante
+    defaults: { _controller: "CampagneBundle:Campagne:GetCampagneCourante" }
+    methods:  [GET]
+    
+save_data_agents:
+    path:     /saveDataAgents
+    defaults: { _controller: "CampagneBundle:Campagne:saveDataAgents" }
+    methods:  [GET, POST]

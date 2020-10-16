@@ -1,0 +1,86 @@
+{% extends '@Actualite/layout.html.twig' %}
+{#{% extends '@Core/layout.html.twig' %}#}
+
+
+{% block body %}
+    {{parent()}}
+{#    {% form_theme form 'requiredFields.html.twig' %}#}
+    <div class="col-lg-9" >
+        <h1>Création d'une actualité</h1>
+        <a href="{{ path('actualite_index') }}" class="btn button-tableau pull-right margin10" role="button">Retour à la liste d'actualités</a>
+        <div class="clearfix"></div>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+
+        {{ form_row(form.titreActu) }}
+        {{ form_row(form.texteActu) }}
+
+
+
+        <div class="col-xs-12">
+            <div class="col-xs-6">
+                {{ form_row(form.image) }}
+            </div>
+            <div class="col-xs-6">
+                {{ form_row(form.document) }}
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-6">
+                {{ form_row(form.DtDebut) }}
+            </div>
+            <div class="col-xs-6">
+                {{ form_row(form.DtFin) }}
+            </div>
+        </div>
+
+
+        {{ form_row(form.blPublish) }}
+
+        {% if is_granted("ROLE_CDG") %}
+            <div id='table-cdg-suivi-inner'>
+                <table class="table table-hover align-center" id='cdgs'>
+                    <thead>
+                        <tr>
+                            <th>Départements</th>
+                            <th><p>Tout cocher</p><input type='checkbox' class='all' name='all'></th>
+                        </tr>
+                    </thead>
+                    <tbody id='listeCdg'>
+                        {% for liste in form.cdgDepartements%}
+                            <tr>
+                                <td>{{ liste.vars.label}}</td>
+                                <td>{{ form_row(liste,{'label':false}) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% elseif is_granted("ROLE_ADMIN") %}
+            <div id='table-cdg-suivi-inner'>
+                <table class="table table-hover align-center" id='cdgs'>
+                    <thead>
+                        <tr>
+                            <th>Centre de gestions</th>
+                            <th><p>Tout cocher</p><input type='checkbox' class='all' name='all'></th>
+                        </tr>
+                    </thead>
+                    <tbody id='listeCdg'>
+                        {% for liste in form.cdgs%}
+                            <tr>
+                                <td>{{ liste.vars.label}}</td>
+                                <td>{{ form_row(liste,{'label':false}) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        <input class="btn button-tableau pull-right margin10" type="submit" value="Valider" />
+        {{ form_end(form) }}
+    </div>
+
+
+{% endblock %}

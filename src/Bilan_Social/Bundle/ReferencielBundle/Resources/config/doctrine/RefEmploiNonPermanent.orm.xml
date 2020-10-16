@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Bilan_Social\Bundle\ReferencielBundle\Entity\RefEmploiNonPermanent" table="ref_emploi_non_permanent"
+            repository-class="Bilan_Social\Bundle\ReferencielBundle\Repository\RefEmploiNonPermanentRepository">
+        <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+        <unique-constraints>
+            <unique-constraint columns="CD_EMPLNONPERM" name="cdEmplnonperm"/>
+            <!-- <unique-constraint columns="CD_DGCL" name="cdDGCL"/> -->
+        </unique-constraints>
+        <id name="idEmplnonperm" type="integer" column="ID_EMPLNONPERM">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="lbEmplnonperm" type="string" column="LB_EMPLNONPERM" nullable="true"/>
+        <field name="cdEmplnonperm" type="string" column="CD_EMPLNONPERM" nullable="true"/>
+        <field name="blCdg" type="boolean" column="BL_CDG" nullable="true"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="true"/>
+        <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+        <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true"/>
+        <field name="cdMotiN4ds" type="string" column="CD_MOTI_N4DS" length="255" nullable="true"/>
+        <field name="cdMotiBcCiril" type="string" column="CD_MOTI_BC_CIRIL" length="255" nullable="true"/>
+        <field name="blApa" type="boolean" column="BL_APA" nullable="false">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>
+
+        <field name="cdDGCL" type="string" column="CD_DGCL" length="10" nullable="true" >
+            <options>
+                <option name="comment">Mapping 1-1</option>
+            </options>
+        </field>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+            <lifecycle-callback type="preUpdate" method="setUpdateDateValue" />
+        </lifecycle-callbacks>
+        <one-to-many field="bilanSocialAgents" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\BilanSocialAgent" mapped-by="refEmploiNonPermanent"/>
+        <one-to-many field="Etpr131AnneePrecedente" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\Etpr131AnneePrecedente" mapped-by="RefEmploiNonPermanent"/>
+        <one-to-many field="agentremucontnonperm_EmploiNonPermanent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\AgentRemunerationContractuelNonPermanent" mapped-by="refEmploiNonPermanent" />
+        <one-to-many field="EtprAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\EtprAgent" mapped-by="refEmploiNonPermanent">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="RemunerationAgent" target-entity="Bilan_Social\Bundle\ApaBundle\Entity\RemunerationAgent" mapped-by="refEmploiNonPermanent">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

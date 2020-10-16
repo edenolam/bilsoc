@@ -1,0 +1,48 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste des statuts </h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refstatut_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refstatut') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Code N4DS</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refStatut in refStatuts %}
+                    <tr>
+                        <td><a href="{{ path('refstatut_show', { 'idStat': refStatut.idStat }) }}">{{ refStatut.cdStat }}</a></td>
+                        <td>{{ refStatut.lbStat }}</td>
+                        <td>{{ refStatut.cdMotiN4ds }}</td>
+                        <td>{% if refStatut.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refStatut} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refstatut_show', { 'idStat': refStatut.idStat }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refstatut_edit', { 'idStat': refStatut.idStat }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+

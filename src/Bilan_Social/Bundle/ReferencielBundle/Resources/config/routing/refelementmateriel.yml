@@ -1,0 +1,28 @@
+refelementmateriel_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefElementMateriel:index" }
+    methods:  GET
+
+refelementmateriel_show:
+    path:     /{idElementmat}/show
+    defaults: { _controller: "ReferencielBundle:RefElementMateriel:show" }
+    methods:  GET
+
+refelementmateriel_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefElementMateriel:new" }
+    methods:  [GET, POST]
+
+refelementmateriel_edit:
+    path:     /{idElementmat}/edit
+    defaults: { _controller: "ReferencielBundle:RefElementMateriel:edit" }
+    methods:  [GET, POST]
+
+refelementmateriel_delete:
+    path:     /{idElementmat}/delete
+    defaults: { _controller: "ReferencielBundle:RefElementMateriel:delete" }
+    methods:  DELETE
+
+csv_export_refelementmateriel:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefElementMateriel:generateCsv" }

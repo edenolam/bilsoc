@@ -1,0 +1,28 @@
+refactionprevention_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefActionPrevention:index" }
+    methods:  GET
+
+refactionprevention_show:
+    path:     /{idActionprev}/show
+    defaults: { _controller: "ReferencielBundle:RefActionPrevention:show" }
+    methods:  GET
+
+refactionprevention_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefActionPrevention:new" }
+    methods:  [GET, POST]
+
+refactionprevention_edit:
+    path:     /{idActionprev}/edit
+    defaults: { _controller: "ReferencielBundle:RefActionPrevention:edit" }
+    methods:  [GET, POST]
+
+refactionprevention_delete:
+    path:     /{idActionprev}/delete
+    defaults: { _controller: "ReferencielBundle:RefActionPrevention:delete" }
+    methods:  DELETE
+
+csv_export_refactionprevention:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefActionPrevention:generateCsv" }

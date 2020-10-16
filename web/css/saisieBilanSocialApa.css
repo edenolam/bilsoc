@@ -1,0 +1,17 @@
+
+/*.fond {
+    background-color:white;
+    border-radius: 10px;
+    padding: 20px;
+}*/
+.selectEntity{
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    pointer-events: none;
+
+
+}
+select::-ms-expand {
+    display: none;
+}

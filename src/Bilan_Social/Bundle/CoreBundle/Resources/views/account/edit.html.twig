@@ -1,0 +1,37 @@
+{% extends '@Core/layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+
+
+        <div class="row">
+            <div class="row bodyBilanSocial">
+
+                <div class="col-lg-6 col-lg-offset-3">
+
+                    <div class="row">
+
+                        {% if change_request == true %}
+                            <p>Votre demande de modification à été soumise au CDG</p>
+                        {%else%}
+                            {{ form_start(edit_form) }}
+                            {{ form_row(edit_form.commun.username) }}
+                            {{ form_row(edit_form.commun.email) }}
+                            {{ form_row(edit_form.commun.postalCode) }}
+                            {{ form_row(edit_form.commun.department) }}
+
+                            {% if not is_granted("ROLE_ADMIN") %}
+                                {{ form_row(edit_form.cdgIsAuthorizedByCollectivity) }}
+                            {% endif %}
+                            <input type="submit" value="Edit" />
+                            {{ form_end(edit_form, {'render_rest': false }) }}
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <h1>Liste N4DS </h1>
+        <div class="clearfix">
+            <a class="btn button pull-right margin10" href="{{ path('refn4ds_new') }}">Ajouter une donnée au référentiel</a>
+            <a class="btn button pull-right margin10" href="{{ path('csv_export_refn4ds') }}">export csv</a>
+            <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+        </div>
+        <table class="table table-striped" id="index">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Obligatoire</th>
+                    <th>Archivé</th>
+                    {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refn4ds in refN4dss %}
+                    <tr>
+                        <td><a href="{{ path('refn4ds_show', { 'idN4ds': refn4ds.idN4ds }) }}">{{ refn4ds.cdValeur }}</a></td>
+                        <td>{{ refn4ds.cdN4ds }}</td>
+                        <td>{% if refn4ds.blObligatoire %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if refn4ds.blVali %}Oui{% else %}Non{% endif %}</td>
+                        {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refn4ds} %}
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('refn4ds_show', { 'idN4ds': refn4ds.idN4ds }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('refn4ds_edit', { 'idN4ds': refn4ds.idN4ds }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,52 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+<div class="col-lg-9" >
+    <h1>Liste des métiers</h1>
+    <div class="clearfix">
+        <a class="btn button pull-right margin10" href="{{ path('refmetier_new') }}">Ajouter une donnée au référentiel</a>
+        <a class="btn button pull-right margin10" href="{{ path('csv_export_refmetier') }}">export csv</a>
+        <a class="btn button margin10" href="{{ path('referenciel_homepage') }}">Retour à la liste des référentiels</a>
+    </div>
+    <table class="table table-striped" id="index">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Libellé</th>
+                <th>Autre appellation collectivité</th>
+                <th>Code n4ds</th>
+                <th>Métier principal</th>
+                <th>Bilan consolidé</th>
+                <th>Archivé</th>
+                {% include '@Referenciel/indexListRefSharedFieldsTheadLayout.html.twig' %}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for refMetier in refMetiers %}
+            <tr>
+                <td><a href="{{ path('refmetier_show', { 'idMetier': refMetier.idMetier }) }}">{{ refMetier.cdMetier }}</a></td>
+                <td>{{ refMetier.lbMetier }}</td>
+                <td>{{ refMetier.lbAutAppColl }}</td>
+                <td>{{ refMetier.cdN4ds }}</td>
+                <td>{% if refMetier.blMetiPrinc %}Oui{% else %}Non{% endif %}</td>
+                <td>{% if refMetier.blCons %}Oui{% else %}Non{% endif %}</td>
+                <td>{% if refMetier.blVali %}Oui{% else %}Non{% endif %}</td>
+                {% include '@Referenciel/indexListRefSharedFieldsTbodyLayout.html.twig' with {'ref':refMetier} %}
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('refmetier_show', { 'idMetier': refMetier.idMetier }) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ path('refmetier_edit', { 'idMetier': refMetier.idMetier }) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

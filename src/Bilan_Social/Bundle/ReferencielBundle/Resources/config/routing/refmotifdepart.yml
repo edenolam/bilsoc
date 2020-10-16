@@ -1,0 +1,28 @@
+refmotifdepart_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefMotifDepart:index" }
+    methods:  GET
+
+refmotifdepart_show:
+    path:     /{idMotidepa}/show
+    defaults: { _controller: "ReferencielBundle:RefMotifDepart:show" }
+    methods:  GET
+
+refmotifdepart_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefMotifDepart:new" }
+    methods:  [GET, POST]
+
+refmotifdepart_edit:
+    path:     /{idMotidepa}/edit
+    defaults: { _controller: "ReferencielBundle:RefMotifDepart:edit" }
+    methods:  [GET, POST]
+
+refmotifdepart_delete:
+    path:     /{idMotidepa}/delete
+    defaults: { _controller: "ReferencielBundle:RefMotifDepart:delete" }
+    methods:  DELETE
+
+csv_export_refmotifdepart:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefMotifDepart:generateCsv" }

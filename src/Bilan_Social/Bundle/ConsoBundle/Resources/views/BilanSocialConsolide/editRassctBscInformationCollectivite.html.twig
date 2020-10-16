@@ -1,0 +1,203 @@
+
+    {% if formRassctQuestionsCollectivites is defined %}
+
+        {% set campagne = campagne_service.GetCurrentCampagne() %}
+        {% set AnneeCamp = '' %}
+        {% if campagne is not null %}
+            {% set AnneeCamp = campagne.nmAnne %}
+        {% endif %}
+
+        {{ form_start(formRassctQuestionsCollectivites) }}
+
+        {% set ref = ["Nombre d'accidents sans arrêt",
+            "Nombre d'accidents avec arrêt entre 1 et 3 jours",
+            "Nombre d'accidents avec arrêt entre 4 et 21 jours",
+            "Nombre d'accidents avec arrêt entre 22 et 89 jours",
+            "Nombre d'accidents avec arrêt de 90 jours ou plus"] %}
+
+
+        <table width="100%" id="bscRassctInformationCollectiviteTable" class="table table-striped table-hover table-bordered">
+            <thead>
+            <tr>
+                <th style="text-align: center">Libellés</th>
+                <th style="text-align: center">Réponses</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="idTr1">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistEvalRPS) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistEvalRPS) }}</td>
+            </tr>
+            <tr id="idTr2">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctMajEvalRPS) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctMajEvalRPS) }}</td>
+            </tr>
+            <tr id="rA61">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctDiagRPS) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctDiagRPS) }}</td>
+            </tr>
+            <tr id="idTr4">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistPrevActionSante) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistPrevActionSante) }}</td>
+            </tr>
+            <tr id="rA71">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctActiMedecPrev) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctActiMedecPrev) }}</td>
+            </tr>
+            <tr id="idTr6">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctDesiACFI) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctDesiACFI) }}</td>
+            </tr>
+            <tr id="rA81">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctNbVisitACFI) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctNbVisitACFI) }}</td>
+            </tr>
+            <tr id="idTr8">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctNbCtChsct) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctNbCtChsct) }}</td>
+            </tr>
+            <tr id="rA91">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistDiagPeniAnnex) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistDiagPeniAnnex) }}</td>
+            </tr>
+            <tr id="idTr10">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctNeceFicheSuiviFact) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctNeceFicheSuiviFact) }}</td>
+            </tr>
+            <tr id="rA101">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistFicheExpoPeni) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistFicheExpoPeni) }}</td>
+            </tr>
+            <tr id="rA101">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctNeceFicheAmiante) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctNeceFicheAmiante) }}</td>
+            </tr>
+            <tr id="rA101">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistFicheAmiante) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistFicheAmiante) }}</td>
+            </tr>
+            <tr id="rA101">
+                <td style="min-width: 500px">
+                    {{ form_label(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistPrevEntreExte) }}
+                </td>
+                <td>{{ form_widget(formRassctQuestionsCollectivites.BscRassctInformationCollectivite.rassctExistPrevEntreExte) }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+            <br/>
+
+            <input class="btn button-tableau pull-right" type="submit" value="Enregistrer et valider les contrôles de cohérence" name="valider" onclick="recordAuto = false;
+                    $('#progImg').show();" data-valide="1" />
+
+            <img id="progImg" src="{{ asset("img/progress.gif") }}" style="display:none"/>
+
+        {{ form_end(formRassctQuestionsCollectivites) }}
+
+        <script type="text/javascript">
+
+
+
+
+
+
+        /*
+         * METHODE AJAX SUBMIT
+         */
+        $(function () {
+            // Enregistrement en ajax
+            $('form').on('submit', function (e) {
+                var $this = $(this).closest('div');
+                var btn = $(this).find("input[type=submit]:focus");
+                var value_valide = $(btn).data('valide');
+                $('#bscFormRassctAccidentTravail_valide').val(value_valide);
+                // Submit en ajax pour le fonctionnement d'appel par onglet
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('bilan_conso_rassct_bscRassctinformationCollectivite_edit') }}',
+                    data: $('form').serialize(),
+                    success: function (responsejson) {
+
+                        if (responsejson.data == 1) {
+                            if (recordAuto) {
+                                $('#progImg').hide();
+                                $('#messageJS').html("Enregistrement automatique réussi");
+                                messageJS.dialog("open");
+                                setIncoherenceTable(responsejson);
+                            } else {
+                                $('#information_collectivite').load('{{ path('bilan_conso_rassct_bscRassctinformationCollectivite_edit') }}', function () {
+                                    $('#progImg').hide();
+                                    $('#messageJS').html("Enregistrement réussi");
+                                    messageJS.dialog("open");
+                                    setIncoherenceTable(responsejson);
+
+                                    var next = $($this).next('.panel-heading');
+                                    if(next.length == 0) {
+                                        if (blHand == true) {
+                                            window.location.href = '{{ path('bilan_conso_handitorial_edit') }}';
+                                        } else if (blGpeec == true) {
+                                            window.location.href = '{{ path('bilan_conso_gpeec_edit') }}';
+                                        }
+                                    }
+                                });
+
+                            }
+                        } else if (responsejson.data == "-3") {
+                            $('#progImg').hide();
+                            $('#messageJS').html("{{'erreur.unique.violation'|trans}}");
+                            messageJS.dialog("open");
+                        } else {
+                            $('#progImg').hide();
+                            $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 1");
+                            messageJS.dialog("open");
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(xhr);
+                        $('#progImg').hide();
+                        $('#messageJS').html("Une erreur s'est produite dans l'enregistrement 2 ");
+                        messageJS.dialog("open");
+                    }
+
+                });
+
+            });
+
+        });
+
+        </script>
+    {% endif %}
+
+

@@ -1,0 +1,36 @@
+{% extends '@Referenciel/layout.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="col-lg-9" >
+        <a class="btn button pull-right margin10" href="{{ path('refstagetitularisation_index') }}">Retour à la liste</a>
+
+        <table class="table table-striped"
+               <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ refStageTitularisation.cdStagtitu }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ refStageTitularisation.lbStagtitu }}</td>
+                </tr>
+                <tr>
+                    <th>Archivé</th>
+                    <td>{% if refStageTitularisation.blVali %}Oui{% else %}Non{% endif %}</td>
+                </tr>
+                {% include '@Referenciel/showRefSharedFieldsLayout.html.twig' with {'ref':refStageTitularisation} %}
+            </tbody>
+        </table>
+
+
+        <a class="btn button pull-right margin10" href="{{ path('refstagetitularisation_edit', { 'idStagtitu': refStageTitularisation.idStagtitu }) }}">Modifier</a>
+
+        {{ form_start(delete_form) }}
+        
+        {{ form_end(delete_form) }}
+
+
+
+        </ul>
+    {% endblock %}

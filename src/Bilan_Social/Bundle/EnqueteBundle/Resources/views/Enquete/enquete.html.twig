@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+		$(document).ready(function(){
+			var date_str = "2007-06-09T17:46:21"
+			console.log(bsDateFormat(date_str,"short"));
+		});
+	</script>
+    <script type="text/javascript" src="{{ asset('js/ImportCarriereBundle/ImportCarriere.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/DataTable/datatables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/ajoutEnquete.css') }}">
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/datatable/customStyle.css') }}">
+    <link  type="text/css" href="{{ asset('node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+{{parent()}}
+<div class="col-lg-9" id='enquete'>
+    <div class="panel panel-default contentConsolide">
+        <div id='contentAjax'>
+            <div class="panel-heading">
+                <div class="flex">
+                    <div class="step-width">
+                        <div class="craue_formflow_current_step">
+                            <p>Etape 1<br>Gestion de l'enquête</p>
+                        </div>
+                    </div>
+                    <div class="step-width">
+                        <div>
+                            <p>Etape 2<br>Import base carrière</p>
+                        </div>
+                    </div>
+                    <div class="step-width">
+                        <div>
+                            <p>Etape 3<br>Paramétrage de l'enquête</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-enquete panel-body">
+                {% if form is defined %}
+                    {{ form_start(form,{'attr':{'id':'enquete_gestion_form_'~status }}) }}
+                    {{ form_row(form.lbEnqu) }}
+                    {{ form_row(form.cmDesc) }}
+                    {{ form_row(form.dtDebu) }}
+                    {{ form_row(form.departements) }}
+                    {% if form.departements.vars.choices is empty %}
+                        <div class="alert alert-danger fade in" role="alert">
+                            <p>Vous n'avez pas les droits nécessaires pour créer des enquêtes.</p>
+                        </div>
+                    {% endif %}
+                    {{ form_row(form.reinitMdp) }}
+                    {% if form.departements.vars.choices is not empty %}
+                        <div class="alert alert-danger fade in" role="alert" style='display:none;'>
+                            <p>Attention, lorsque que vous cliquez sur "Télécharger", les mots de passe seront réinitialisés, l'action n'est pas réversible.</p>
+                        </div>
+        {#                <button type='submit' class='btn button-tableau' id='telecharger-csv'>Suivant</button>#}
+                    {% endif %}
+
+                    <input class='left btn btn-primary pull-right' type='submit' value='Suivant'/>
+
+
+                    {{ form_end(form) }}
+                    {% if enquete is not null %}
+                        <input id="idEnquHidden" class="hidden" value="{{ enquete.idEnqu }}">
+                    {% endif %}
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+    {% endblock %}

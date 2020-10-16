@@ -1,0 +1,40 @@
+{
+	"data":[
+		{
+			"code":-1,
+			"lbl":"Non communiqué",
+			"cd_temps_comp":null,
+			"cd_temps_plein":null
+		},
+		{
+			"code":1,
+			"lbl":"Temps complet à temps plein",
+			"cd_temps_comp":1,
+			"cd_temps_plein":1
+		},
+		{
+			"code":-2,
+			"lbl":"Non connu",
+			"cd_temps_comp":null,
+			"cd_temps_plein":null
+		},
+		{
+			"code":2,
+			"lbl":"Temps complet à temps partiel",
+			"cd_temps_comp":1,
+			"cd_temps_plein":0
+		},
+		{
+			"code":3,
+			"lbl":"Temps non complet à temps plein",
+			"cd_temps_comp":0,
+			"cd_temps_plein":1
+		},
+		{
+			"code":4,
+			"lbl":"Temps non complet à temps partiel",
+			"cd_temps_comp":0,
+			"cd_temps_plein":0
+		}
+	]
+}

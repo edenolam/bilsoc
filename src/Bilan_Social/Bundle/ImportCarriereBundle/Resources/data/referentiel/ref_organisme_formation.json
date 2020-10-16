@@ -1,0 +1,53 @@
+{
+	"data":[
+		{
+			"code":-1,
+			"lbl":"Non communiqué",
+			"cd_orga":null
+		},{
+			"code":1,
+			"lbl":"CNFPT au titre de la cotisation obligatoire",
+			"cd_orga":"ORG001",
+			"lbl_orga":"CNFPT au titre de la cotisation obligatoire"
+		},{
+			"code":-2,
+			"lbl":"Non connu",
+			"cd_orga":null	
+		},{
+			"code":2,
+			"lbl":"CNFPT au delà de la cotisation obligatoire",
+			"cd_orga":"ORG002",
+			"lbl_orga":"CNFPT au-delà de la cotisation obligatoire"
+		},{
+			"code":3,
+			"lbl":"Collectivité, animée par des agents de la collectivité",
+			"cd_orga":"ORG004",
+			"lbl_orga":"Autres organismes"
+		},{
+			"code":4,
+			"lbl":"Collectivité, animée par des intervenants extérieurs",
+			"cd_orga":"ORG004",
+			"lbl_orga":"Autres organismes"
+		},{
+			"code":5,
+			"lbl":"Collectivité, réalisée par le CNFPT en intra",
+			"cd_orga":"ORG002",
+			"lbl_orga":"CNFPT au-delà de la cotisation obligatoire"
+		},{
+			"code":6,
+			"lbl":"CDG",
+			"cd_orga":"ORG004",
+			"lbl_orga":"Autres organismes"
+		},{
+			"code":7,
+			"lbl":"Autres organismes",
+			"cd_orga":"ORG004",
+			"lbl_orga":"Autres organismes"
+		},{
+			"code":8,
+			"lbl":"Collectivité",
+			"cd_orga":"ORG004",
+			"lbl_orga":"Autres organismes"
+		}
+	]
+}

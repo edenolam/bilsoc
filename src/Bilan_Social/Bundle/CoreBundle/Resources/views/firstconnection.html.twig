@@ -1,0 +1,22 @@
+<div id="firsconnectioncoll" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Bienvenue</h4>
+          </div>
+          <div class="modal-body">
+
+              <p>Pour votre première connection, il est important de renseigner toutes les informations relatives à votre collectivité.</p>
+             
+             
+          </div>
+          <div class="modal-footer">
+              <p>Cliquez sur le lien "Continuer" afin d'accéder à vos informations et de les renseigner.</p>
+           <a href="{{ path('collectivite_edit', { 'id': idColl }) }}"> <button type="button" class="btn btn-primary">Continuer</button></a>
+          </div>
+    </div>
+  </div>
+</div>

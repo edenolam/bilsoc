@@ -1,0 +1,28 @@
+refacteviolencephysique_index:
+    path:     /
+    defaults: { _controller: "ReferencielBundle:RefActeViolencePhysique:index" }
+    methods:  GET
+
+refacteviolencephysique_show:
+    path:     /{idActeviolphys}/show
+    defaults: { _controller: "ReferencielBundle:RefActeViolencePhysique:show" }
+    methods:  GET
+
+refacteviolencephysique_new:
+    path:     /new
+    defaults: { _controller: "ReferencielBundle:RefActeViolencePhysique:new" }
+    methods:  [GET, POST]
+
+refacteviolencephysique_edit:
+    path:     /{idActeviolphys}/edit
+    defaults: { _controller: "ReferencielBundle:RefActeViolencePhysique:edit" }
+    methods:  [GET, POST]
+
+refacteviolencephysique_delete:
+    path:     /{idActeviolphys}/delete
+    defaults: { _controller: "ReferencielBundle:RefActeViolencePhysique:delete" }
+    methods:  DELETE
+
+csv_export_acteviolencephysique:
+    path: /exportcsv
+    defaults: { _controller: "ReferencielBundle:RefActeViolencePhysique:generateCsv" }

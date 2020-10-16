@@ -1,0 +1,11 @@
+social_index:
+    path:     /
+    defaults: { _controller: "CoreBundle:Social:index" }
+    methods:  [GET, POST]
+
+social_incoherence_list:
+    path:     /incoherence
+    defaults: { _controller: "CoreBundle:Social:showIncoherenceInForm" }
+    methods:  GET
+#@Security("has_role('ROLE_COLLECTIVITY')")
+

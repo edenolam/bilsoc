@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement" repository-class="Bilan_Social\Bundle\CollectiviteBundle\Repository\DepartementRepository" table="departement">
+    <cache usage="NONSTRICT_READ_WRITE" region="referentiel_entities" />
+    <id name="idDepa" type="integer" column="ID_DEPA">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="cdDepa" type="string" column="CD_DEPA" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lbDepa" type="string" column="LB_DEPA" length="150" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nbSIASP" type="integer" column="NB_SIASP" nullable="true"/>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+    
+    <one-to-many field="collectivites" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite" mapped-by="departement" />
+    <one-to-many field="historiqueCollectivites" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\HistoriqueCollectivite" mapped-by="departement" />
+
+    <one-to-many field="maps" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\UrlMap" mapped-by="departement">
+        <cascade>
+            <cascade-persist/>
+            <cascade-merge/>
+            <cascade-remove/>
+        </cascade>
+    </one-to-many>
+        
+    <one-to-many field="groups" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\DepartementsGroups" mapped-by="departement">
+    </one-to-many>
+        
+    <many-to-many field="enquetes" inversed-by="departements" target-entity="Bilan_Social\Bundle\EnqueteBundle\Entity\Enquete">
+        <join-table name="departements_enquetes">
+            <join-columns>
+                <join-column name="ID_DEPA" referenced-column-name="ID_DEPA" />
+            </join-columns>
+            <inverse-join-columns>
+                <join-column name="ID_ENQU" referenced-column-name="ID_ENQU" />
+            </inverse-join-columns>
+        </join-table>
+    </many-to-many>
+
+    <many-to-many field="user" mapped-by="departements" target-entity="Bilan_Social\Bundle\UserBundle\Entity\User"/>
+  </entity>
+</doctrine-mapping>

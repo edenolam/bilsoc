@@ -1,0 +1,41 @@
+{#
+*	template de rendu d'une ligne du filter_form
+*
+*	/!\
+*	|	il ne doit pas être utilisé tel quel mais à l'intérieur 
+*	|	du filter_form.html.twig car utilisant les variables du template parent 
+*	/!\
+#}
+{% if fields_group|length > 0 %}
+	{% set nb_in_group = 0 %}
+	{% set class_for_group_item = 'col-md-12' %}
+	{% for field_key, field_options in fields_group %}
+		{% set sub_group_config = field_options %}
+		{% if attribute(field_options,sub_fields_key) is defined %}
+			{% for field_key, field_options in attribute(sub_group_config,sub_fields_key) %}
+				{% if attribute(filter_form,field_key) is defined %}
+					{% set nb_in_group = nb_in_group + 1 %}
+				{% endif %}
+			{% endfor %}
+		{% elseif attribute(filter_form,field_key) is defined %}
+			{% set nb_in_group = nb_in_group + 1 %}
+		{% endif %}
+	{% endfor %}
+	{% if nb_in_group >= 4 %}
+		{% set col_class_for_group_item = 'col-md-' ~ (12 / 4) %}
+	{% elseif nb_in_group > 0 %}
+		{% set col_class_for_group_item = 'col-md-' ~ (12 / nb_in_group) %}
+	{% else %}
+		{% set col_class_for_group_item = 'col-md-12' %}
+	{% endif %}
+	<div class='row'>
+		{% for field_key, field_options in fields_group %}
+			{#  if (field_key not in reserved_keys) or (field_key == sub_fields_key) #}
+			{% if field_options is not empty and attribute(field_options,sub_fields_key) is defined %}
+				{{ include('@InfoCentre/filter_form/filter_form_items_sub_group.html.twig') }}
+			{% else %}
+				{{ include('@InfoCentre/filter_form/filter_form_item.html.twig') }}
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endif %}

@@ -1,0 +1,4 @@
+services:
+#    model_vues.example:
+#        class: ModelVuesBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

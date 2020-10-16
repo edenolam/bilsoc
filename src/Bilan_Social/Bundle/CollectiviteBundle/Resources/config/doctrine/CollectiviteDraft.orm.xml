@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bilan_Social\Bundle\CollectiviteBundle\Entity\CollectiviteDraft" table="collectivite_draft">
+    <indexes>
+      <index name="FK_TYPECOLLECTIVITE_COLLECTIVITEDRAFT" columns="ID_TYPE_COLL"/>
+      <index name="FK_COLLECTIVITE_COLLECTIVITEDRAFT" columns="ID_COLL"/>
+    </indexes>
+    <id name="idCollDraft" type="integer" column="ID_COLL_DRAFT">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="refTypeCollectivite" target-entity="Bilan_Social\Bundle\ReferencielBundle\Entity\RefTypeCollectivite">
+        <join-column name="ID_TYPE_COLL" referenced-column-name="ID_TYPE_COLL" nullable="true"/>
+    </many-to-one>
+    <one-to-one field="collectivite" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Collectivite">
+        <join-column name="ID_COLL" referenced-column-name="ID_COLL" />
+    </one-to-one>
+    <many-to-one field="departement" target-entity="Bilan_Social\Bundle\CollectiviteBundle\Entity\Departement" inversed-by="collectivites">
+        <join-column name="ID_DEPA" referenced-column-name="ID_DEPA" nullable="true"/>
+    </many-to-one>
+    <field name="lbColl" type="string" column="LB_COLL" length="150" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="cdPost" type="string" column="CD_POST" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lbVill" type="string" column="LB_VILL" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nmSire" type="string" column="NM_SIRE" length="14" nullable="true" unique="true">
+        <options>
+            <option name="fixed"/>
+        </options>
+    </field>
+    <field name="cdUtilcrea" type="string" column="CD_UTILCREA" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dtCrea" type="datetime" column="DT_CREA" nullable="true"/>
+    <field name="cdUtilmodi" type="string" column="CD_UTILMODI" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dtModi" type="datetime" column="DT_MODI" nullable="true"/>
+  </entity>
+</doctrine-mapping>

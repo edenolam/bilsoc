@@ -1,0 +1,34 @@
+i{font-size:30px;color:#4d4d4d;margin-top:10px;}
+.modal-footer{border:none;}
+.modal .btn-primary{background-color:#1b1464;color:#ffffff;}
+
+table#table-modif-coll{table-layout: fixed}
+
+#liste-champs-export .row.panel-body, #ajout-colonnes .row.panel-body{margin-left:0;margin-right:0;}
+#table-gest-coll_filter, .dataTables_info{display:none;}
+#liste-filtres table td{text-align:left;}
+
+table#table-gest-coll{display:none;table-layout: fixed; margin:40px auto 0px auto;width:auto !important;}
+#table-gest-coll-wrapper, #table-rech-coll-wrapper{margin-bottom:10px;}
+#ajout-colonnes div.panel-body, #ajout-filtres div.panel-body{display:none;}
+button a, button a:focus, button a:hover{color:#ffffff;text-decoration:none;}
+.suppr, .suppr-param{cursor:pointer;padding:10px;}
+
+th button{color:#000;}
+
+#table-gest-coll td a .icone-menu{height:25px;}
+#table-gest-coll td a{display:inline-block;}
+
+.bold{font-weight:bold;}
+.row.panel-body{margin-left:0;margin-right:0;}
+#file-select{display:none;}
+
+.contact{padding:20px;}
+
+.tab-pane{margin-top:20px;}
+
+.checkbox-export{width: 50px !important;}
+
+.edit-echange{cursor:pointer;color:#337ab7;}
+#ajout-echange{margin-bottom: 15px;}
+.suppr-echange span{cursor:pointer;}

@@ -1,0 +1,11 @@
+dashboard_enquete_departements:
+    path:     /infos-departements
+    defaults: { _controller: CoreBundle:Default:getInfosDepartementsAjax }
+    options:
+        expose: true
+        
+dashboard_enquete_dgcl:
+    path:     /enquete-dgcl
+    defaults: { _controller: CoreBundle:Default:userdgcl }
+    options:
+        expose: true

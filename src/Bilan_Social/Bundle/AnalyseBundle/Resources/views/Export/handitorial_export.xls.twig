@@ -1,0 +1,20 @@
+{% xlssheet 'Handitorial' {
+    columnDimension: {
+        'A': {
+            width: '60'
+        }
+    }
+    } %}
+    {% xlsrow %}
+        {% xlscell %}Métier{% endxlscell %}
+        {% xlscell %}Homme{% endxlscell %}
+        {% xlscell %}Femme{% endxlscell %}
+    {% endxlsrow %}
+    {% for value in handi %}
+        {% xlsrow %}
+            {% xlscell %} {{ value.refMetier.lbMetier }} {% endxlscell %}
+            {% xlscell %}{{ value.metierH }}{% endxlscell %}
+            {% xlscell %}{{ value.metierF }}{% endxlscell %}
+        {% endxlsrow %}
+    {% endfor %}
+{% endxlssheet %}
